@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ailen Sampó — Sistemas a Medida</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="mask-icon" href="favicon.svg" color="#F656BF">
+
+<style>
+@font-face {
+  font-family: 'Egyptian Slate';
+  src: url('fonts/EgyptianSlateLight.woff2') format('woff2');
+  font-weight: 300; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Egyptian Slate';
+  src: url('fonts/EgyptianSlateLightIt.woff2') format('woff2');
+  font-weight: 300; font-style: italic; font-display: swap;
+}
+@font-face {
+  font-family: 'Egyptian Slate';
+  src: url('fonts/EgyptianSlateRg.woff2') format('woff2');
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Egyptian Slate';
+  src: url('fonts/EgyptianSlateIt.woff2') format('woff2');
+  font-weight: 400; font-style: italic; font-display: swap;
+}
+@font-face {
+  font-family: 'Egyptian Slate';
+  src: url('fonts/EgyptianSlateMedium.woff2') format('woff2');
+  font-weight: 500; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Egyptian Slate';
+  src: url('fonts/EgyptianSlateMediumIt.woff2') format('woff2');
+  font-weight: 500; font-style: italic; font-display: swap;
+}
+@font-face {
+  font-family: 'Egyptian Slate';
+  src: url('fonts/EgyptianSlateBk.woff2') format('woff2');
+  font-weight: 600; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Egyptian Slate';
+  src: url('fonts/EgyptianSlateBkIt.woff2') format('woff2');
+  font-weight: 600; font-style: italic; font-display: swap;
+}
+@font-face {
+  font-family: 'Egyptian Slate';
+  src: url('fonts/EgyptianSlateBd.woff2') format('woff2');
+  font-weight: 700; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Egyptian Slate';
+  src: url('fonts/EgyptianSlateBdIt.woff2') format('woff2');
+  font-weight: 700; font-style: italic; font-display: swap;
+}
+@font-face {
+  font-family: 'Nunito Sans';
+  src: url('fonts/Nunito-VariableFont_wght.woff2') format('woff2');
+  font-weight: 100 900; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Nunito Sans';
+  src: url('fonts/Nunito-Italic-VariableFont_wght.woff2') format('woff2');
+  font-weight: 100 900; font-style: italic; font-display: swap;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --ink: #0e0e0e;
+  --white: #faf9f7;
+  --rose: #F656BF;
+  --rose-dark: #d63da5;
+  --rose-rgb: 246,86,191;
+  --lila: #AEBFF2;
+  --lila-rgb: 174,191,242;
+  --muted: rgba(250,249,247,.35);
+  --very-muted: rgba(250,249,247,.12);
+}
+
+html, body {
+  height: 100%;
+  background: var(--ink);
+  color: var(--white);
+  cursor: none;
+  overflow: hidden;
+}
+
+/* CURSOR */
+#cur {
+  position: fixed;
+  width: 7px; height: 7px;
+  background: var(--rose);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: width .25s, height .25s;
+}
+#cur-r {
+  position: fixed;
+  width: 32px; height: 32px;
+  border: 1px solid var(--lila);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998;
+  transform: translate(-50%, -50%);
+  opacity: .35;
+  transition: width .3s, height .3s, opacity .3s;
+}
+
+/* GRID */
+#grid {
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(var(--lila-rgb),.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(var(--lila-rgb),.04) 1px, transparent 1px);
+  background-size: 52px 52px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* CORNERS */
+.corner {
+  position: fixed;
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 9px;
+  font-weight: 400;
+  letter-spacing: .22em;
+  color: var(--very-muted);
+  text-transform: uppercase;
+  z-index: 10;
+  opacity: 0;
+  transition: opacity 1s;
+}
+.corner.tl { top: 28px; left: 36px; }
+.corner.tr { top: 28px; right: 36px; text-align: right; }
+.corner.bl { bottom: 28px; left: 36px; }
+.corner.br { bottom: 28px; right: 36px; text-align: right; }
+
+/* BRAND LOGO */
+.brand-logo {
+  position: fixed;
+  bottom: 24px;
+  right: 36px;
+  width: 150px;
+  height: auto;
+  z-index: 10;
+  filter: brightness(0) invert(1);
+  opacity: 0;
+  transition: opacity 1s;
+}
+
+/* MAIN */
+main {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: safe center;
+  z-index: 5;
+  padding: 40px 24px;
+  overflow-y: auto;
+}
+main > * { flex-shrink: 0; }
+
+.eyebrow {
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 9px;
+  font-weight: 400;
+  letter-spacing: .35em;
+  color: var(--rose);
+  text-transform: uppercase;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  opacity: 0;
+  transition: opacity .8s;
+}
+.eyebrow::before, .eyebrow::after {
+  content: '';
+  width: 20px; height: 1px;
+  background: var(--rose);
+  opacity: .6;
+}
+
+.headline {
+  font-family: 'Egyptian Slate', serif;
+  font-weight: 700;
+  font-size: clamp(32px, 5.5vw, 72px);
+  line-height: 1.02;
+  letter-spacing: -.02em;
+  text-align: center;
+  color: var(--white);
+  max-width: 800px;
+  min-height: 80px;
+}
+
+.cursor-blink {
+  display: inline-block;
+  width: 3px;
+  height: .9em;
+  background: var(--rose);
+  vertical-align: middle;
+  margin-left: 3px;
+  animation: blink .85s step-end infinite;
+}
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+.subline {
+  font-family: 'Egyptian Slate', serif;
+  font-weight: 400;
+  font-style: italic;
+  font-size: clamp(15px, 1.8vw, 20px);
+  color: var(--muted);
+  text-align: center;
+  max-width: 480px;
+  line-height: 1.55;
+  margin-top: 28px;
+  opacity: 0;
+  transition: opacity .7s;
+}
+
+/* FORM */
+.form-wrap {
+  margin-top: 34px;
+  width: 100%;
+  max-width: 440px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  opacity: 0;
+  transition: opacity .7s;
+}
+.form-label {
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 9px;
+  font-weight: 400;
+  letter-spacing: .2em;
+  color: rgba(250,249,247,.25);
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  align-self: flex-start;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+.label-icon {
+  width: 22px;
+  height: 22px;
+  opacity: .8;
+}
+.form-row {
+  display: flex;
+  width: 100%;
+}
+.form-input {
+  flex: 1;
+  background: rgba(255,255,255,.03);
+  border: 1px solid rgba(var(--rose-rgb),.25);
+  border-right: none;
+  outline: none;
+  padding: 15px 18px;
+  font-family: 'Egyptian Slate', serif;
+  font-style: italic;
+  font-weight: 300;
+  font-size: 16px;
+  color: var(--white);
+  transition: border-color .25s;
+  -webkit-appearance: none;
+}
+.form-input::placeholder { color: rgba(250,249,247,.2); }
+.form-input:focus { border-color: rgba(var(--rose-rgb),.7); }
+.form-btn {
+  background: var(--rose);
+  border: 1px solid var(--rose);
+  padding: 15px 26px;
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .2em;
+  color: var(--white);
+  cursor: none;
+  text-transform: uppercase;
+  transition: background .2s;
+  white-space: nowrap;
+}
+.form-btn:hover { background: var(--rose-dark); border-color: var(--rose-dark); }
+
+/* CHAT GAME — TERMINAL */
+.chat-wrap {
+  width: 100%;
+  margin-bottom: 22px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 14px;
+}
+.terminal {
+  width: 100%;
+  border: 1px solid rgba(var(--lila-rgb), .22);
+  border-radius: 10px;
+  background: rgba(255,255,255,.02);
+  overflow: hidden;
+  font-family: ui-monospace, 'SFMono-Regular', 'Consolas', monospace;
+}
+.term-bar {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 10px 14px;
+  border-bottom: 1px solid rgba(var(--lila-rgb), .12);
+  background: rgba(255,255,255,.015);
+}
+.term-dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
+.term-dot.d1 { background: var(--rose); }
+.term-dot.d2 { background: #FAF26F; }
+.term-dot.d3 { background: #ABE3D2; }
+.term-title {
+  margin-left: 8px;
+  font-size: 9px;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: rgba(250,249,247,.4);
+}
+.term-body {
+  position: relative;
+  padding: 16px 16px 18px;
+  font-size: 12px;
+  line-height: 1.05;
+}
+.chat-wink {
+  position: absolute;
+  right: 14px;
+  bottom: 12px;
+  width: 30px;
+  height: 30px;
+  opacity: 0;
+  transform: scale(.4) rotate(-12deg);
+  transition: opacity .3s, transform .35s cubic-bezier(.34,1.56,.64,1);
+  pointer-events: none;
+}
+.chat-wink.show {
+  opacity: .9;
+  transform: scale(1) rotate(0);
+}
+.term-head {
+  color: rgba(250,249,247,.35);
+  margin-bottom: 14px;
+  letter-spacing: .02em;
+}
+.bars {
+  display: grid;
+  grid-template-columns: max-content auto max-content;
+  align-items: center;
+  gap: 9px 12px;
+}
+.bar-label {
+  color: rgba(250,249,247,.55);
+  white-space: nowrap;
+}
+.bar-label .tick { color: var(--rose); }
+.bar {
+  letter-spacing: 2px;
+  white-space: nowrap;
+}
+.bar .fill { color: var(--bar-color); }
+.bar .track { color: rgba(250,249,247,.16); }
+.pct {
+  color: rgba(250,249,247,.35);
+  white-space: nowrap;
+}
+.term-resp {
+  margin-top: 16px;
+  font-size: 12px;
+  line-height: 1.5;
+  white-space: pre-wrap;
+}
+.term-resp.idle { display: none; }
+.term-resp:not(.idle) {
+  position: relative;
+  display: inline-block;
+  max-width: 86%;
+  background: #e1adff;
+  color: #1e0c39;
+  padding: 10px 14px 11px;
+  border-radius: 13px 13px 13px 3px;
+}
+.term-resp:not(.idle)::before {
+  content: '';
+  position: absolute;
+  left: 8px;
+  bottom: -7px;
+  width: 0; height: 0;
+  border: 7px solid transparent;
+  border-top-color: #e1adff;
+  border-bottom: 0;
+}
+.term-resp::after {
+  content: '▋';
+  color: #1e0c39;
+  animation: blink .85s step-end infinite;
+  margin-left: 1px;
+}
+.term-resp.idle::after { content: ''; }
+
+.chat-q {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+}
+.chat-btn {
+  background: rgba(var(--lila-rgb), .04);
+  border: 1px solid rgba(var(--lila-rgb), .3);
+  border-radius: 100px;
+  padding: 8px 14px;
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: .04em;
+  color: rgba(250,249,247,.55);
+  cursor: none;
+  transition: border-color .2s, color .2s, background .2s;
+}
+.chat-btn:hover {
+  border-color: rgba(var(--rose-rgb), .7);
+  color: var(--white);
+  background: rgba(var(--rose-rgb), .06);
+}
+
+/* SUCCESS — DINO */
+.dino-success {
+  display: none;
+  margin-top: 44px;
+  align-items: flex-end;
+  gap: 6px;
+}
+.dino-success.show { display: flex; }
+.dino-wrap {
+  flex-shrink: 0;
+  animation: dino-bob 2.6s ease-in-out infinite;
+}
+.dino {
+  width: 86px;
+  height: 86px;
+  display: block;
+  animation: dino-pop .55s cubic-bezier(.34,1.56,.64,1) both;
+}
+.speech {
+  position: relative;
+  background: #6882eb;
+  color: #fff;
+  font-family: 'Egyptian Slate', serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 1.4;
+  padding: 14px 18px;
+  border-radius: 16px;
+  max-width: 230px;
+  margin-bottom: 20px;
+  opacity: 0;
+  transform: translateY(6px) scale(.96);
+  animation: speech-in .4s ease .4s both;
+}
+.speech::after {
+  content: '';
+  position: absolute;
+  left: -8px;
+  bottom: 14px;
+  width: 0; height: 0;
+  border: 8px solid transparent;
+  border-right-color: #6882eb;
+  border-left: 0;
+}
+.speech .caret {
+  display: inline-block;
+  width: 2px;
+  height: 1em;
+  background: #fff;
+  vertical-align: -2px;
+  margin-left: 2px;
+  animation: blink .85s step-end infinite;
+}
+@keyframes dino-pop {
+  0% { transform: translateY(22px) scale(.5); opacity: 0; }
+  100% { transform: translateY(0) scale(1); opacity: 1; }
+}
+@keyframes speech-in {
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes dino-bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+/* CLOCK */
+#clock {
+  font-family: 'Nunito Sans', monospace;
+  font-size: 9px;
+  letter-spacing: .15em;
+  color: rgba(var(--lila-rgb), .8);
+}
+
+/* MOBILE */
+@media (max-width: 600px) {
+  .corner.tr, .corner.br { display: none; }
+  .corner.tl { font-size: 8px; left: 20px; top: 20px; }
+  .corner.bl { font-size: 8px; left: 20px; bottom: 20px; max-width: 55%; }
+  .eyebrow { font-size: 8px; }
+  .form-wrap { max-width: 100%; }
+  .brand-logo { width: 96px; right: 20px; bottom: 18px; }
+  .term-body { font-size: 10px; padding: 13px 12px 15px; }
+  .bar { letter-spacing: 0; }
+  .term-resp { font-size: 11px; }
+  .chat-btn { font-size: 9px; padding: 7px 11px; }
+}
+</style>
+</head>
+<body>
+
+<div id="cur"></div>
+<div id="cur-r"></div>
+<div id="grid"></div>
+
+<div class="corner tr" id="c-tr"><span id="clock">——:——:——</span></div>
+<div class="corner bl" id="c-bl">sistemas a medida · córdoba, arg</div>
+
+<img class="brand-logo" id="brand-logo" src="assets/logo-horizontal.svg" alt="Ailen Sampó" />
+
+<main>
+  <div class="eyebrow" id="eyebrow">algo está tomando forma</div>
+
+  <div class="headline" id="headline">
+    <span class="cursor-blink"></span>
+  </div>
+
+  <div class="subline" id="subline">
+    No es magia. Es arquitectura digital.
+  </div>
+
+  <div class="form-wrap" id="form-wrap">
+    <div class="chat-wrap">
+      <div class="terminal">
+        <div class="term-bar">
+          <span class="term-dot d1"></span>
+          <span class="term-dot d2"></span>
+          <span class="term-dot d3"></span>
+          <span class="term-title">estado del proyecto</span>
+        </div>
+        <div class="term-body">
+          <div class="term-head">&gt; estado del proyecto</div>
+          <div class="bars">
+            <span class="bar-label">[<span class="tick">▪</span>] café:</span>
+            <span class="bar" id="bar-cafe" style="--bar-color: var(--rose);"></span>
+            <span class="pct" id="pct-cafe"></span>
+
+            <span class="bar-label">[<span class="tick">▪</span>] código:</span>
+            <span class="bar" id="bar-codigo" style="--bar-color: var(--lila);"></span>
+            <span class="pct" id="pct-codigo"></span>
+
+            <span class="bar-label">[ ] paciencia de la dev:</span>
+            <span class="bar" id="bar-paciencia" style="--bar-color: rgba(250,249,247,.5);"></span>
+            <span class="pct" id="pct-paciencia"></span>
+          </div>
+          <div class="term-resp idle" id="chat-resp"></div>
+          <img class="chat-wink" id="chat-wink" src="assets/face-wink.svg" alt="" />
+        </div>
+      </div>
+      <div class="chat-q">
+        <button class="chat-btn" data-chat="que">¿qué estás construyendo?</button>
+        <button class="chat-btn" data-chat="mucho">¿falta mucho?</button>
+        <button class="chat-btn" data-chat="secreto">contame un secreto</button>
+      </div>
+    </div>
+
+    <div class="form-label"><img class="label-icon" src="assets/mail.svg" alt="" />avisame cuando esté listo</div>
+    <div class="form-row">
+      <input class="form-input" id="email-input" type="email" placeholder="tu@email.com" />
+      <button class="form-btn" id="submit-btn">entrar</button>
+    </div>
+  </div>
+
+  <div class="dino-success" id="success-msg">
+    <div class="dino-wrap">
+      <img class="dino" src="assets/dino.svg" alt="Dino de Ailen Sampó" />
+    </div>
+    <div class="speech"><span id="speech-text"></span></div>
+  </div>
+</main>
+
+<script>
+/* CURSOR */
+const cur = document.getElementById('cur');
+const curR = document.getElementById('cur-r');
+let mx = 0, my = 0, rx = 0, ry = 0;
+document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+(function animCur() {
+  rx += (mx - rx) * .12;
+  ry += (my - ry) * .12;
+  cur.style.left = mx + 'px';
+  cur.style.top = my + 'px';
+  curR.style.left = rx + 'px';
+  curR.style.top = ry + 'px';
+  requestAnimationFrame(animCur);
+})();
+document.querySelectorAll('button, input').forEach(el => {
+  el.addEventListener('mouseenter', () => {
+    cur.style.width = '12px'; cur.style.height = '12px';
+    curR.style.width = '44px'; curR.style.height = '44px'; curR.style.opacity = '.6';
+  });
+  el.addEventListener('mouseleave', () => {
+    cur.style.width = '7px'; cur.style.height = '7px';
+    curR.style.width = '32px'; curR.style.height = '32px'; curR.style.opacity = '.35';
+  });
+});
+
+/* CLOCK */
+function tick() {
+  const n = new Date();
+  const pad = v => String(v).padStart(2,'0');
+  document.getElementById('clock').textContent =
+    pad(n.getHours()) + ':' + pad(n.getMinutes()) + ':' + pad(n.getSeconds());
+}
+tick(); setInterval(tick, 1000);
+
+/* CORNERS FADE IN */
+setTimeout(() => {
+  document.querySelectorAll('.corner').forEach(c => c.style.opacity = '1');
+  document.getElementById('brand-logo').style.opacity = '.55';
+}, 300);
+
+/* TYPEWRITER */
+const HEADLINE = 'Este espacio pronto\nva a abrirse.';
+const hEl = document.getElementById('headline');
+const eyEl = document.getElementById('eyebrow');
+const subEl = document.getElementById('subline');
+const formEl = document.getElementById('form-wrap');
+
+let idx = 0;
+
+setTimeout(() => { eyEl.style.opacity = '1'; }, 500);
+
+function type() {
+  if (idx <= HEADLINE.length) {
+    const chunk = HEADLINE.substring(0, idx);
+    const lines = chunk.split('\n');
+    hEl.innerHTML = lines.join('<br>') + '<span class="cursor-blink"></span>';
+    idx++;
+    const ch = HEADLINE[idx - 1];
+    const delay = idx < 2 ? 150 : ch === '\n' ? 500 : ch === '.' ? 180 : 42;
+    setTimeout(type, delay);
+  } else {
+    setTimeout(() => {
+      subEl.style.opacity = '1';
+      setTimeout(() => {
+        formEl.style.opacity = '1';
+        startBars();
+      }, 600);
+    }, 700);
+  }
+}
+
+setTimeout(type, 3000);
+
+/* CHAT GAME — TERMINAL */
+const CHAT = {
+  mucho: 'no podemos revelar detalles, pero involucra menos excel y más magia.',
+  secreto: 'confidencial: estoy construyendo este sitio mientras construyo los de mis clientes. la arquitecta también necesita su propio sistema.',
+  que: 'algo que hace que tu negocio funcione cuando vos no estás mirando. pronto.'
+};
+
+const CELLS = 14;
+const BARS = [
+  { id: 'cafe', pct: 96 },
+  { id: 'codigo', pct: 58 },
+  { id: 'paciencia', pct: 22 }
+];
+
+function renderBar(barEl, pctEl, filled, pct) {
+  const empty = CELLS - filled;
+  barEl.innerHTML =
+    '<span class="fill">' + '█'.repeat(filled) + '</span>' +
+    '<span class="track">' + '█'.repeat(empty) + '</span>';
+  pctEl.textContent = pct + '%';
+}
+
+let barsStarted = false;
+function startBars() {
+  if (barsStarted) return;
+  barsStarted = true;
+  BARS.forEach((bar, i) => {
+    const barEl = document.getElementById('bar-' + bar.id);
+    const pctEl = document.getElementById('pct-' + bar.id);
+    const target = Math.round(bar.pct / 100 * CELLS);
+    let f = 0;
+    renderBar(barEl, pctEl, 0, 0);
+    setTimeout(() => {
+      const iv = setInterval(() => {
+        f++;
+        renderBar(barEl, pctEl, f, Math.round(f / CELLS * 100));
+        if (f >= target) {
+          clearInterval(iv);
+          renderBar(barEl, pctEl, target, bar.pct);
+        }
+      }, 70);
+    }, 250 + i * 350);
+  });
+}
+
+const FACES = {
+  que: 'assets/face-admiracion.svg',
+  mucho: 'assets/face1.svg',
+  secreto: 'assets/face-wink.svg'
+};
+let typeTimer = null;
+function chatReply(k) {
+  const el = document.getElementById('chat-resp');
+  const wink = document.getElementById('chat-wink');
+  clearTimeout(typeTimer);
+  el.classList.remove('idle');
+  wink.classList.remove('show');
+  wink.src = FACES[k];
+  const full = '> ' + CHAT[k];
+  let i = 0;
+  el.textContent = '';
+  (function typeIt() {
+    if (i <= full.length) {
+      el.textContent = full.substring(0, i);
+      i++;
+      typeTimer = setTimeout(typeIt, 18);
+    } else {
+      wink.classList.add('show');
+    }
+  })();
+}
+document.querySelectorAll('.chat-btn').forEach(btn => {
+  btn.addEventListener('click', () => chatReply(btn.dataset.chat));
+});
+
+/* SUCCESS — DINO */
+const SUCCESS_MSG = '¡Listo! Te aviso apenas esté.';
+let successShown = false;
+function showSuccess() {
+  if (successShown) return;
+  successShown = true;
+  document.getElementById('form-wrap').style.display = 'none';
+  const box = document.getElementById('success-msg');
+  box.classList.add('show');
+  const txt = document.getElementById('speech-text');
+  let i = 0;
+  setTimeout(function typeMsg() {
+    txt.textContent = SUCCESS_MSG.substring(0, i);
+    if (i < SUCCESS_MSG.length) {
+      i++;
+      setTimeout(typeMsg, 32);
+    } else {
+      const caret = document.createElement('span');
+      caret.className = 'caret';
+      box.querySelector('.speech').appendChild(caret);
+    }
+  }, 650);
+}
+
+/* FORM — guarda el email en Brevo vía /api/subscribe */
+function subscribe(email) {
+  return fetch('/api/subscribe', {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({ email })
+  }).catch(() => {
+    /* sin conexión o entorno local sin serverless: la UI igual confirma */
+  });
+}
+
+document.getElementById('submit-btn').addEventListener('click', () => {
+  const val = document.getElementById('email-input').value.trim();
+  if (!val || !val.includes('@')) {
+    document.getElementById('email-input').style.borderColor = 'var(--rose)';
+    return;
+  }
+  subscribe(val);
+  showSuccess();
+});
+
+document.getElementById('email-input').addEventListener('keydown', e => {
+  if (e.key === 'Enter') document.getElementById('submit-btn').click();
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,93 @@
+/* =============================================
+   AILEN SAMPO — BRAND FONTS
+   Subí todos los archivos .woff2 a tu servidor
+   en una carpeta /fonts/ y referenciá este CSS.
+   ============================================= */
+
+/* Egyptian Slate */
+@font-face {
+  font-family: 'Egyptian Slate';
+  src: url('fonts/EgyptianSlateLight.woff2') format('woff2');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Egyptian Slate';
+  src: url('fonts/EgyptianSlateLightIt.woff2') format('woff2');
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Egyptian Slate';
+  src: url('fonts/EgyptianSlateRg.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Egyptian Slate';
+  src: url('fonts/EgyptianSlateIt.woff2') format('woff2');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Egyptian Slate';
+  src: url('fonts/EgyptianSlateMedium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Egyptian Slate';
+  src: url('fonts/EgyptianSlateMediumIt.woff2') format('woff2');
+  font-weight: 500;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Egyptian Slate';
+  src: url('fonts/EgyptianSlateBk.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Egyptian Slate';
+  src: url('fonts/EgyptianSlateBkIt.woff2') format('woff2');
+  font-weight: 600;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Egyptian Slate';
+  src: url('fonts/EgyptianSlateBd.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Egyptian Slate';
+  src: url('fonts/EgyptianSlateBdIt.woff2') format('woff2');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* Nunito Sans (variable) */
+@font-face {
+  font-family: 'Nunito Sans';
+  src: url('fonts/Nunito-VariableFont_wght.woff2') format('woff2');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Nunito Sans';
+  src: url('fonts/Nunito-Italic-VariableFont_wght.woff2') format('woff2');
+  font-weight: 100 900;
+  font-style: italic;
+  font-display: swap;
+}
