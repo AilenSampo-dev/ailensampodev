@@ -259,6 +259,18 @@ main > * { flex-shrink: 0; }
   height: 22px;
   opacity: .8;
 }
+.form-error {
+  align-self: flex-start;
+  margin-top: 10px;
+  min-height: 12px;
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 10px;
+  letter-spacing: .04em;
+  color: var(--rose);
+  opacity: 0;
+  transition: opacity .25s;
+}
+.form-error.show { opacity: .85; }
 .form-row {
   display: flex;
   width: 100%;
@@ -589,6 +601,7 @@ main > * { flex-shrink: 0; }
       <input class="form-input" id="email-input" type="email" placeholder="tu@email.com" />
       <button class="form-btn" id="submit-btn">entrar</button>
     </div>
+    <div class="form-error" id="form-error"></div>
   </div>
 
   <div class="dino-success" id="success-msg">
@@ -749,9 +762,12 @@ document.querySelectorAll('.chat-btn').forEach(btn => {
 });
 
 /* SUCCESS — DINO */
-const SUCCESS_MSG = '¡Listo! Te aviso apenas esté.';
+const MSG = {
+  ok: '¡Listo! Te aviso apenas esté.',
+  already: '¡Ya estabas anotada! Te aviso igual.'
+};
 let successShown = false;
-function showSuccess() {
+function showSuccess(message) {
   if (successShown) return;
   successShown = true;
   document.getElementById('form-wrap').style.display = 'none';
@@ -760,8 +776,8 @@ function showSuccess() {
   const txt = document.getElementById('speech-text');
   let i = 0;
   setTimeout(function typeMsg() {
-    txt.textContent = SUCCESS_MSG.substring(0, i);
-    if (i < SUCCESS_MSG.length) {
+    txt.textContent = message.substring(0, i);
+    if (i < message.length) {
       i++;
       setTimeout(typeMsg, 32);
     } else {
@@ -773,28 +789,51 @@ function showSuccess() {
 }
 
 /* FORM — guarda el email en Brevo vía /api/subscribe */
-function subscribe(email) {
-  return fetch('/api/subscribe', {
-    method: 'POST',
-    headers: { 'content-type': 'application/json' },
-    body: JSON.stringify({ email })
-  }).catch(() => {
-    /* sin conexión o entorno local sin serverless: la UI igual confirma */
-  });
+async function subscribe(email) {
+  try {
+    const r = await fetch('/api/subscribe', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ email })
+    });
+    const data = await r.json().catch(() => ({}));
+    if (!r.ok || !data.ok) return { status: 'error' };
+    return { status: data.already ? 'already' : 'ok' };
+  } catch (e) {
+    // Sin conexión / entorno local sin serverless: no bloqueamos al usuario.
+    return { status: 'ok' };
+  }
 }
 
-document.getElementById('submit-btn').addEventListener('click', () => {
-  const val = document.getElementById('email-input').value.trim();
+const submitBtn = document.getElementById('submit-btn');
+const errorEl = document.getElementById('form-error');
+
+submitBtn.addEventListener('click', async () => {
+  const input = document.getElementById('email-input');
+  const val = input.value.trim();
+  errorEl.classList.remove('show');
   if (!val || !val.includes('@')) {
-    document.getElementById('email-input').style.borderColor = 'var(--rose)';
+    input.style.borderColor = 'var(--rose)';
     return;
   }
-  subscribe(val);
-  showSuccess();
+  submitBtn.disabled = true;
+  const original = submitBtn.textContent;
+  submitBtn.textContent = '···';
+
+  const res = await subscribe(val);
+
+  if (res.status === 'error') {
+    submitBtn.disabled = false;
+    submitBtn.textContent = original;
+    errorEl.textContent = 'uy, algo falló. probá de nuevo en un rato.';
+    errorEl.classList.add('show');
+    return;
+  }
+  showSuccess(res.status === 'already' ? MSG.already : MSG.ok);
 });
 
 document.getElementById('email-input').addEventListener('keydown', e => {
-  if (e.key === 'Enter') document.getElementById('submit-btn').click();
+  if (e.key === 'Enter') submitBtn.click();
 });
 </script>
 </body>

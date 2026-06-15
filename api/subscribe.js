@@ -38,13 +38,17 @@ module.exports = async function handler(req, res) {
       })
     });
 
-    // 201 (creado) o 204 (actualizado) = ok
-    if (r.status === 201 || r.status === 204) {
-      return res.status(200).json({ ok: true });
+    // 201 = contacto nuevo creado
+    if (r.status === 201) {
+      return res.status(200).json({ ok: true, already: false });
+    }
+    // 204 = el contacto ya existía (Brevo lo actualiza)
+    if (r.status === 204) {
+      return res.status(200).json({ ok: true, already: true });
     }
 
     const data = await r.json().catch(() => ({}));
-    // Si el contacto ya existía, lo tratamos como éxito.
+    // Si el contacto ya existía, también lo tratamos como "ya suscripto".
     if (data && data.code === 'duplicate_parameter') {
       return res.status(200).json({ ok: true, already: true });
     }
