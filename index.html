@@ -294,6 +294,59 @@ html, body {
   text-align: center;
   margin-bottom: 12px;
 }
+.portfolio-mobile-scroll {
+  position: relative;
+}
+.portfolio-mobile-scroll.can-scroll .portfolio-mobile-fade,
+.portfolio-mobile-scroll.can-scroll .portfolio-mobile-arrow {
+  opacity: 1;
+  pointer-events: auto;
+}
+.portfolio-mobile-scroll.at-end .portfolio-mobile-fade,
+.portfolio-mobile-scroll.at-end .portfolio-mobile-arrow {
+  opacity: 0;
+  pointer-events: none;
+}
+.portfolio-mobile-fade {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 10px;
+  width: 56px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity .3s;
+  background: linear-gradient(to right, transparent, var(--ink) 75%);
+}
+.portfolio-mobile-arrow {
+  position: absolute;
+  right: 2px;
+  top: 38%;
+  transform: translateY(-50%);
+  width: 32px;
+  height: 32px;
+  border: 1px solid rgba(246,86,191,.35);
+  border-radius: 50%;
+  background: rgba(14,14,14,.85);
+  color: var(--rose);
+  font-size: 18px;
+  line-height: 1;
+  padding: 0 0 2px 2px;
+  cursor: none;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .3s, border-color .2s, background .2s;
+  animation: portfolio-arrow-nudge 2.2s ease-in-out infinite;
+}
+.portfolio-mobile-arrow:hover,
+.portfolio-mobile-arrow:focus-visible {
+  border-color: var(--rose);
+  background: rgba(246,86,191,.12);
+}
+@keyframes portfolio-arrow-nudge {
+  0%, 100% { transform: translateY(-50%) translateX(0); }
+  50% { transform: translateY(-50%) translateX(4px); }
+}
 .portfolio-mobile-track {
   display: flex;
   gap: 16px;
@@ -779,8 +832,12 @@ main > * { flex-shrink: 0; pointer-events: auto; }
     <div class="form-error" id="form-error"></div>
 
     <div class="portfolio-mobile" id="portfolio-mobile">
-      <div class="portfolio-mobile-label">proyectos</div>
-      <div class="portfolio-mobile-track" id="portfolio-mobile-track"></div>
+      <div class="portfolio-mobile-label">proyectos · deslizá</div>
+      <div class="portfolio-mobile-scroll" id="portfolio-mobile-scroll">
+        <div class="portfolio-mobile-track" id="portfolio-mobile-track"></div>
+        <div class="portfolio-mobile-fade" aria-hidden="true"></div>
+        <button type="button" class="portfolio-mobile-arrow" id="portfolio-mobile-next" aria-label="Ver más proyectos">›</button>
+      </div>
     </div>
   </div>
 
@@ -1077,9 +1134,68 @@ function initGlobitosDesktop() {
   });
 }
 
+function initMobileCarouselScroll(track, scrollWrap, nextBtn) {
+  if (!track || !scrollWrap) return;
+
+  let dir = 1;
+  let paused = false;
+  let pauseTimer = null;
+
+  function hasOverflow() {
+    return track.scrollWidth > track.clientWidth + 4;
+  }
+
+  function updateHints() {
+    if (!hasOverflow()) {
+      scrollWrap.classList.remove('can-scroll', 'at-end');
+      return;
+    }
+    scrollWrap.classList.add('can-scroll');
+    const atEnd = track.scrollLeft >= track.scrollWidth - track.clientWidth - 8;
+    scrollWrap.classList.toggle('at-end', atEnd);
+  }
+
+  function pauseAuto(ms) {
+    paused = true;
+    clearTimeout(pauseTimer);
+    pauseTimer = setTimeout(function() { paused = false; }, ms || 4500);
+  }
+
+  track.addEventListener('scroll', function() {
+    updateHints();
+    pauseAuto(5000);
+  }, { passive: true });
+  track.addEventListener('touchstart', function() { pauseAuto(6000); }, { passive: true });
+  window.addEventListener('resize', updateHints);
+
+  if (nextBtn) {
+    nextBtn.addEventListener('click', function() {
+      track.scrollBy({ left: 104, behavior: 'smooth' });
+      pauseAuto(6000);
+    });
+    bindCursorHover([nextBtn]);
+  }
+
+  function autoTick() {
+    if (!paused && hasOverflow()) {
+      track.scrollLeft += dir * 0.55;
+      const max = track.scrollWidth - track.clientWidth;
+      if (track.scrollLeft >= max - 2) dir = -1;
+      if (track.scrollLeft <= 2) dir = 1;
+      updateHints();
+    }
+    requestAnimationFrame(autoTick);
+  }
+
+  updateHints();
+  requestAnimationFrame(autoTick);
+}
+
 function initGlobitosMobile() {
   const wrap = document.getElementById('portfolio-mobile');
   const track = document.getElementById('portfolio-mobile-track');
+  const scrollWrap = document.getElementById('portfolio-mobile-scroll');
+  const nextBtn = document.getElementById('portfolio-mobile-next');
   if (!wrap || !track) return;
 
   const size = 68;
@@ -1091,6 +1207,7 @@ function initGlobitosMobile() {
   ).join('');
 
   bindCursorHover(track.querySelectorAll('.portfolio-mobile-item'));
+  initMobileCarouselScroll(track, scrollWrap, nextBtn);
   requestAnimationFrame(() => wrap.classList.add('show'));
 }
 
