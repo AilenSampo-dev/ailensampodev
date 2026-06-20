@@ -950,6 +950,24 @@ const PROJECTS = [
   }
 ];
 
+const MOBILE_PROJECT_ORDER = [
+  'Sofia Ciabattoni',
+  "Catita's Donuts",
+  'Mesa de Tickets',
+  'Contingencia Alicia',
+  'PsicoGestión',
+  'Color Master',
+  'Portfolio Quest',
+  'Minecraft',
+  'El Taller de Augusto'
+];
+
+function projectsForMobile() {
+  return MOBILE_PROJECT_ORDER
+    .map(function(title) { return PROJECTS.find(function(p) { return p.title === title; }); })
+    .filter(Boolean);
+}
+
 const MOBILE_GLOBITO_MAX = 600;
 
 function isMobileGlobitos() {
@@ -1213,7 +1231,7 @@ function initGlobitosMobile() {
   if (!wrap || !track) return;
 
   const size = 68;
-  track.innerHTML = PROJECTS.map(p =>
+  track.innerHTML = projectsForMobile().map(p =>
     '<a class="portfolio-mobile-item" href="' + p.url + '" aria-label="' + p.title + '">' +
       buildGlobitoBody(p, size) +
       '<span class="globito-caption">' + p.title + '</span>' +
