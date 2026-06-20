@@ -273,7 +273,7 @@ html, body {
   pointer-events: none;
 }
 
-/* PORTFOLIO MÓVIL — burbujas flotantes debajo del mail */
+/* PORTFOLIO MÓVIL — carrusel horizontal debajo del mail */
 .portfolio-mobile {
   display: none;
   width: 100%;
@@ -294,19 +294,32 @@ html, body {
   text-align: center;
   margin-bottom: 12px;
 }
-.portfolio-mobile-float {
-  position: relative;
-  width: 100%;
-  height: 340px;
-  overflow: hidden;
+.portfolio-mobile-track {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  padding: 2px 4px 10px;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
 }
-.portfolio-mobile-float .globito {
-  position: absolute;
-  top: 0;
-  left: 0;
-  will-change: transform;
+.portfolio-mobile-track::-webkit-scrollbar {
+  display: none;
 }
-.portfolio-mobile-float .globito-caption {
+.portfolio-mobile-item {
+  flex: 0 0 auto;
+  scroll-snap-align: start;
+  text-decoration: none;
+  color: inherit;
+  cursor: none;
+  text-align: center;
+  width: 88px;
+  opacity: 1;
+}
+.portfolio-mobile-item .globito-body {
+  margin: 0 auto;
+}
+.portfolio-mobile-item .globito-caption {
   max-width: 88px;
   font-size: 9px;
   letter-spacing: .06em;
@@ -696,8 +709,7 @@ main > * { flex-shrink: 0; pointer-events: auto; }
   .globito-caption { font-size: 9px; margin-top: 8px; }
   #globitos { display: none !important; }
   .portfolio-mobile { display: block; }
-  .portfolio-mobile-float { height: 360px; }
-  main { overflow-y: auto; -webkit-overflow-scrolling: touch; padding-bottom: 120px; }
+  main { overflow-y: auto; -webkit-overflow-scrolling: touch; padding-bottom: 100px; }
 }
 </style>
 </head>
@@ -768,7 +780,7 @@ main > * { flex-shrink: 0; pointer-events: auto; }
 
     <div class="portfolio-mobile" id="portfolio-mobile">
       <div class="portfolio-mobile-label">proyectos</div>
-      <div class="portfolio-mobile-float" id="portfolio-mobile-float"></div>
+      <div class="portfolio-mobile-track" id="portfolio-mobile-track"></div>
     </div>
   </div>
 
@@ -1065,93 +1077,21 @@ function initGlobitosDesktop() {
   });
 }
 
-function clampMobileGlobito(b, w, h, pad) {
-  b.x = Math.min(Math.max(b.x, pad), Math.max(pad, w - pad - b.size));
-  b.y = Math.min(Math.max(b.y, pad), Math.max(pad, h - pad - b.totalH));
-}
-
 function initGlobitosMobile() {
   const wrap = document.getElementById('portfolio-mobile');
-  const zone = document.getElementById('portfolio-mobile-float');
-  if (!wrap || !zone) return;
+  const track = document.getElementById('portfolio-mobile-track');
+  if (!wrap || !track) return;
 
-  const captionH = 34;
-  const pad = 10;
-  const zoneW = zone.clientWidth || window.innerWidth - 48;
-  const zoneH = zone.clientHeight || 360;
+  const size = 68;
+  track.innerHTML = PROJECTS.map(p =>
+    '<a class="portfolio-mobile-item" href="' + p.url + '" aria-label="' + p.title + '">' +
+      buildGlobitoBody(p, size) +
+      '<span class="globito-caption">' + p.title + '</span>' +
+    '</a>'
+  ).join('');
 
-  const bubbles = PROJECTS.map((p, i) => {
-    const size = Math.min(p.size || 78, 64);
-    const totalH = size + captionH;
-    const el = document.createElement('a');
-    el.className = 'globito';
-    el.href = p.url;
-    el.setAttribute('aria-label', p.title);
-    el.style.width = Math.max(size, 88) + 'px';
-    el.style.height = totalH + 'px';
-    el.innerHTML =
-      '<span class="globito-wrap">' +
-        buildGlobitoBody(p, size) +
-        '<span class="globito-caption">' + p.title + '</span>' +
-      '</span>';
-    zone.appendChild(el);
-    bindCursorHover([el]);
-
-    const angle = Math.random() * Math.PI * 2;
-    const speed = 0.18 + Math.random() * 0.14;
-    return {
-      el,
-      size,
-      totalH,
-      x: pad + Math.random() * Math.max(0, zoneW - size - pad * 2),
-      y: pad + Math.random() * Math.max(0, zoneH - totalH - pad * 2),
-      vx: Math.cos(angle) * speed,
-      vy: Math.sin(angle) * speed,
-      paused: false
-    };
-  });
-
-  for (let n = 0; n < 20; n++) {
-    resolveGlobitoCollisions(bubbles, 14);
-    bubbles.forEach(b => clampMobileGlobito(b, zoneW, zoneH, pad));
-  }
-
-  bubbles.forEach(b => {
-    b.el.addEventListener('mouseenter', () => { b.paused = true; });
-    b.el.addEventListener('mouseleave', () => { b.paused = false; });
-    b.el.addEventListener('touchstart', () => { b.paused = true; }, { passive: true });
-    b.el.addEventListener('touchend', () => { b.paused = false; });
-  });
-
-  function animMobileGlobitos() {
-    const w = zone.clientWidth || zoneW;
-    const h = zone.clientHeight || zoneH;
-    bubbles.forEach(b => {
-      if (!b.paused) {
-        b.x += b.vx;
-        b.y += b.vy;
-        if (b.x <= pad) { b.x = pad; b.vx = Math.abs(b.vx); }
-        if (b.x >= w - pad - b.size) { b.x = w - pad - b.size; b.vx = -Math.abs(b.vx); }
-        if (b.y <= pad) { b.y = pad; b.vy = Math.abs(b.vy); }
-        if (b.y + b.totalH >= h - pad) { b.y = h - pad - b.totalH; b.vy = -Math.abs(b.vy); }
-      }
-      clampMobileGlobito(b, w, h, pad);
-    });
-    resolveGlobitoCollisions(bubbles, 14);
-    bubbles.forEach(b => clampMobileGlobito(b, w, h, pad));
-    bubbles.forEach(b => {
-      b.el.style.transform = 'translate(' + b.x + 'px,' + b.y + 'px)';
-    });
-    requestAnimationFrame(animMobileGlobitos);
-  }
-  animMobileGlobitos();
-
-  requestAnimationFrame(() => {
-    bubbles.forEach((b, i) => {
-      setTimeout(() => b.el.classList.add('show'), i * 120);
-    });
-    wrap.classList.add('show');
-  });
+  bindCursorHover(track.querySelectorAll('.portfolio-mobile-item'));
+  requestAnimationFrame(() => wrap.classList.add('show'));
 }
 
 let globitosStarted = false;
