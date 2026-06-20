@@ -4,6 +4,21 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Ailen Sampó — Sistemas a Medida</title>
+<meta name="description" content="Sistemas digitales a medida. Tu negocio funcionando cuando vos no estás mirando.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="es_AR">
+<meta property="og:site_name" content="Ailen Sampó">
+<meta property="og:url" content="https://ailensampo.com/">
+<meta property="og:title" content="Ailen Sampó — Sistemas a Medida">
+<meta property="og:description" content="Tu negocio funcionando cuando vos no estás mirando. Sistemas digitales a medida.">
+<meta property="og:image" content="https://ailensampo.com/assets/og_ailensampo.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Ailen Sampó — Sistemas digitales a medida">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Ailen Sampó — Sistemas a Medida">
+<meta name="twitter:description" content="Tu negocio funcionando cuando vos no estás mirando. Sistemas digitales a medida.">
+<meta name="twitter:image" content="https://ailensampo.com/assets/og_ailensampo.png">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="mask-icon" href="favicon.svg" color="#F656BF">
 
@@ -167,6 +182,136 @@ html, body {
   transition: opacity 1s;
 }
 
+/* GLOBITOS — portfolio flotante */
+#globitos {
+  position: fixed;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  overflow: hidden;
+}
+.globito {
+  position: absolute;
+  left: 0;
+  top: 0;
+  pointer-events: auto;
+  cursor: none;
+  text-decoration: none;
+  will-change: transform, opacity;
+  opacity: 0;
+  transition: opacity .7s ease, box-shadow .25s;
+  color: inherit;
+}
+.globito.show {
+  opacity: 1;
+}
+.globito:hover,
+.globito:focus-visible {
+  z-index: 2;
+}
+.globito-wrap {
+  position: relative;
+  display: block;
+  width: 100%;
+}
+.globito-body {
+  display: block;
+  position: relative;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1 / 1;
+  flex-shrink: 0;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid var(--g-color, var(--lila));
+  box-shadow: 0 4px 24px rgba(0,0,0,.35);
+  transition: box-shadow .25s, border-color .25s;
+  background: var(--g-bg, transparent);
+  max-width: 100%;
+  margin: 0 auto;
+}
+.globito-body--svg {
+  border: none;
+  background: transparent;
+  box-shadow: 0 4px 20px rgba(0,0,0,.3);
+}
+.globito:hover .globito-body,
+.globito:focus-visible .globito-body {
+  box-shadow: 0 0 32px color-mix(in srgb, var(--g-color, var(--rose)) 50%, transparent);
+}
+.globito-cover {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 42%;
+  transform-origin: center center;
+}
+.globito-body--svg .globito-cover {
+  object-fit: cover;
+  object-position: center 40%;
+  transform: scale(1.14);
+}
+.globito-caption {
+  display: block;
+  margin-top: 10px;
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .08em;
+  text-transform: none;
+  color: rgba(250,249,247,.42);
+  text-align: center;
+  white-space: normal;
+  line-height: 1.35;
+  max-width: 92px;
+  margin-left: auto;
+  margin-right: auto;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  pointer-events: none;
+}
+
+/* PORTFOLIO MÓVIL — burbujas flotantes debajo del mail */
+.portfolio-mobile {
+  display: none;
+  width: 100%;
+  margin-top: 36px;
+  opacity: 0;
+  transition: opacity .7s;
+}
+.portfolio-mobile.show {
+  opacity: 1;
+}
+.portfolio-mobile-label {
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 9px;
+  font-weight: 400;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: rgba(250,249,247,.25);
+  text-align: center;
+  margin-bottom: 12px;
+}
+.portfolio-mobile-float {
+  position: relative;
+  width: 100%;
+  height: 340px;
+  overflow: hidden;
+}
+.portfolio-mobile-float .globito {
+  position: absolute;
+  top: 0;
+  left: 0;
+  will-change: transform;
+}
+.portfolio-mobile-float .globito-caption {
+  max-width: 88px;
+  font-size: 9px;
+  letter-spacing: .06em;
+  line-height: 1.4;
+}
+
 /* MAIN */
 main {
   position: fixed;
@@ -178,8 +323,9 @@ main {
   z-index: 5;
   padding: 40px 24px;
   overflow-y: auto;
+  pointer-events: none;
 }
-main > * { flex-shrink: 0; }
+main > * { flex-shrink: 0; pointer-events: auto; }
 
 .eyebrow {
   font-family: 'Nunito Sans', sans-serif;
@@ -546,6 +692,11 @@ main > * { flex-shrink: 0; }
   .bar { letter-spacing: 0; }
   .term-resp { font-size: 11px; }
   .chat-btn { font-size: 9px; padding: 7px 11px; }
+  .globito-caption { font-size: 9px; margin-top: 8px; }
+  #globitos { display: none !important; }
+  .portfolio-mobile { display: block; }
+  .portfolio-mobile-float { height: 360px; }
+  main { overflow-y: auto; -webkit-overflow-scrolling: touch; padding-bottom: 120px; }
 }
 </style>
 </head>
@@ -554,6 +705,7 @@ main > * { flex-shrink: 0; }
 <div id="cur"></div>
 <div id="cur-r"></div>
 <div id="grid"></div>
+<div id="globitos" aria-label="Proyectos"></div>
 
 <div class="corner tr" id="c-tr"><span id="clock">——:——:——</span></div>
 <div class="corner bl" id="c-bl">sistemas a medida · córdoba, arg</div>
@@ -612,6 +764,11 @@ main > * { flex-shrink: 0; }
       <button class="form-btn" id="submit-btn">entrar</button>
     </div>
     <div class="form-error" id="form-error"></div>
+
+    <div class="portfolio-mobile" id="portfolio-mobile">
+      <div class="portfolio-mobile-label">proyectos</div>
+      <div class="portfolio-mobile-float" id="portfolio-mobile-float"></div>
+    </div>
   </div>
 
   <div class="dino-success" id="success-msg">
@@ -637,16 +794,372 @@ document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; })
   curR.style.top = ry + 'px';
   requestAnimationFrame(animCur);
 })();
-document.querySelectorAll('button, input').forEach(el => {
-  el.addEventListener('mouseenter', () => {
-    cur.style.width = '12px'; cur.style.height = '12px';
-    curR.style.width = '44px'; curR.style.height = '44px'; curR.style.opacity = '.6';
+function bindCursorHover(els) {
+  els.forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      cur.style.width = '12px'; cur.style.height = '12px';
+      curR.style.width = '44px'; curR.style.height = '44px'; curR.style.opacity = '.6';
+    });
+    el.addEventListener('mouseleave', () => {
+      cur.style.width = '7px'; cur.style.height = '7px';
+      curR.style.width = '32px'; curR.style.height = '32px'; curR.style.opacity = '.35';
+    });
   });
-  el.addEventListener('mouseleave', () => {
-    cur.style.width = '7px'; cur.style.height = '7px';
-    curR.style.width = '32px'; curR.style.height = '32px'; curR.style.opacity = '.35';
+}
+bindCursorHover(document.querySelectorAll('button, input'));
+
+/* GLOBITOS — portfolio flotante */
+const PROJECTS = [
+  {
+    title: 'Sofia Ciabattoni',
+    url: 'https://www.sofiaciabattoni.com/',
+    image: 'assets/portfolio/sofiaCiabattoni.png',
+    color: '#E1ADFF',
+    bg: '#ffffff',
+    coverPos: 'center 12%',
+    size: 112
+  },
+  {
+    title: "Catita's Donuts",
+    url: 'https://catitasdonuts.netlify.app/',
+    image: 'assets/portfolio/catitasDonuts.png',
+    color: '#F656BF',
+    bg: '#ffffff',
+    coverFit: 'contain',
+    coverPos: 'center center',
+    size: 84
+  },
+  {
+    title: 'El Taller de Augusto',
+    url: 'https://lego-augusto.vercel.app/',
+    image: 'assets/portfolio/burbuja_lego.svg',
+    color: '#F656BF',
+    size: 80
+  },
+  {
+    title: 'Mesa de Tickets',
+    url: 'https://mesadetickets-18xa.vercel.app/',
+    image: 'assets/portfolio/burbuja_mesadetickets.svg',
+    color: '#5C64F2',
+    size: 78
+  },
+  {
+    title: 'PsicoGestión',
+    url: 'https://psicogestion-eta.vercel.app/',
+    image: 'assets/portfolio/burbuja_psicogestion.svg',
+    color: '#ABE3D2',
+    size: 78
+  },
+  {
+    title: 'Minecraft',
+    url: 'https://minecraft-t.vercel.app/',
+    image: 'assets/portfolio/burbuja_minecraft.svg',
+    color: '#6882EB',
+    size: 82
+  },
+  {
+    title: 'Portfolio Quest',
+    url: 'https://portfolioeli.netlify.app/arcade',
+    image: 'assets/portfolio/burbuja_portfolio.svg',
+    color: '#FAF26F',
+    size: 80
+  }
+];
+
+const MOBILE_GLOBITO_MAX = 600;
+
+function isMobileGlobitos() {
+  return window.innerWidth <= MOBILE_GLOBITO_MAX;
+}
+
+function buildGlobitoBody(p, size) {
+  const isSvg = p.image.endsWith('.svg');
+  const bodyClass = 'globito-body' + (isSvg ? ' globito-body--svg' : '');
+  const coverPos = p.coverPos || (isSvg ? 'center 40%' : 'center center');
+  let imgStyle = 'object-position:' + coverPos;
+  if (p.coverFit) imgStyle += ';object-fit:' + p.coverFit;
+  if (p.coverScale) imgStyle += ';transform:scale(' + p.coverScale + ')';
+  const bg = p.bg ? 'background:' + p.bg + ';' : '';
+  return '<span class="' + bodyClass + '" style="width:' + size + 'px;height:' + size + 'px;' + bg + '--g-color:' + p.color + '">' +
+    '<img class="globito-cover" src="' + p.image + '" alt="" style="' + imgStyle + '" />' +
+    '</span>';
+}
+
+function getGlobitoLanes(w, bubbleSize) {
+  const pad = 48;
+  const minLane = Math.max(80, bubbleSize + 8);
+  let centerW = Math.min(480, w * 0.5);
+  let centerLeft = (w - centerW) / 2;
+  let centerRight = centerLeft + centerW;
+  const gap = 12;
+  let leftMax = centerLeft - gap;
+  let rightMin = centerRight + gap;
+  while ((leftMax - pad < minLane || w - pad - rightMin < minLane) && centerW > w * 0.28) {
+    centerW = Math.max(w * 0.28, centerW - 40);
+    centerLeft = (w - centerW) / 2;
+    centerRight = centerLeft + centerW;
+    leftMax = centerLeft - gap;
+    rightMin = centerRight + gap;
+  }
+  return {
+    pad,
+    left: { minX: pad, maxX: Math.max(pad, leftMax) },
+    right: { minX: rightMin, maxX: w - pad }
+  };
+}
+
+function clampGlobito(b, lanes, h) {
+  const lane = lanes[b.side];
+  const minX = lane.minX;
+  const maxX = Math.max(minX, lane.maxX - b.size);
+  b.x = Math.min(Math.max(b.x, minX), maxX);
+  b.y = Math.min(Math.max(b.y, lanes.pad), h - lanes.pad - b.totalH);
+}
+
+function resolveGlobitoCollisions(bubbles, gap) {
+  for (let i = 0; i < bubbles.length; i++) {
+    for (let j = i + 1; j < bubbles.length; j++) {
+      const a = bubbles[i];
+      const b = bubbles[j];
+      if (a.side !== b.side) continue;
+
+      const ax = a.x + a.size * 0.5;
+      const ay = a.y + a.size * 0.5;
+      const bx = b.x + b.size * 0.5;
+      const by = b.y + b.size * 0.5;
+      let dx = bx - ax;
+      let dy = by - ay;
+      let dist = Math.hypot(dx, dy);
+      const minDist = (a.size + b.size) * 0.5 + gap;
+
+      if (dist >= minDist) continue;
+      if (dist < 0.001) {
+        dx = (Math.random() - 0.5) || 0.1;
+        dy = (Math.random() - 0.5) || 0.1;
+        dist = Math.hypot(dx, dy);
+      }
+
+      const nx = dx / dist;
+      const ny = dy / dist;
+      const overlap = minDist - dist;
+      const aMove = a.paused ? 0 : (b.paused ? 1 : 0.5);
+      const bMove = b.paused ? 0 : (a.paused ? 1 : 0.5);
+
+      if (!a.paused) {
+        a.x -= nx * overlap * aMove;
+        a.y -= ny * overlap * aMove;
+      }
+      if (!b.paused) {
+        b.x += nx * overlap * bMove;
+        b.y += ny * overlap * bMove;
+      }
+
+      if (!a.paused && !b.paused) {
+        const relVx = a.vx - b.vx;
+        const relVy = a.vy - b.vy;
+        const dot = relVx * nx + relVy * ny;
+        if (dot > 0) {
+          a.vx -= dot * nx * 0.5;
+          a.vy -= dot * ny * 0.5;
+          b.vx += dot * nx * 0.5;
+          b.vy += dot * ny * 0.5;
+        }
+      }
+    }
+  }
+}
+
+function initGlobitosDesktop() {
+  const wrap = document.getElementById('globitos');
+  if (!wrap || !PROJECTS.length) return;
+
+  const captionH = 36;
+  const maxSize = Math.max.apply(null, PROJECTS.map(p => p.size || 78));
+  const lanes = getGlobitoLanes(window.innerWidth, maxSize);
+  const viewH = window.innerHeight;
+  const perSide = Math.ceil(PROJECTS.length / 2);
+  const slotH = Math.max(100, (viewH - lanes.pad * 2 - maxSize - captionH) / Math.max(1, perSide - 0.5));
+
+  const bubbles = PROJECTS.map((p, i) => {
+    const size = p.size || 78;
+    const totalH = size + captionH;
+    const side = i % 2 === 0 ? 'left' : 'right';
+    const lane = lanes[side];
+    const laneW = Math.max(0, lane.maxX - lane.minX - size);
+    const el = document.createElement('a');
+    el.className = 'globito';
+    el.href = p.url;
+    el.setAttribute('aria-label', p.title);
+    el.style.setProperty('--g-color', p.color);
+    if (p.bg) el.style.setProperty('--g-bg', p.bg);
+    el.style.width = Math.max(size, 92) + 'px';
+    el.style.height = totalH + 'px';
+    el.innerHTML =
+      '<span class="globito-wrap">' +
+        buildGlobitoBody(p, size) +
+        '<span class="globito-caption">' + p.title + '</span>' +
+      '</span>';
+    wrap.appendChild(el);
+    bindCursorHover([el]);
+
+    const slot = Math.floor(i / 2);
+    const angle = (Math.random() - 0.5) * Math.PI * 0.35 + (side === 'left' ? Math.PI : 0);
+    const speed = 0.22 + Math.random() * 0.18;
+    return {
+      el,
+      size,
+      totalH,
+      side,
+      x: lane.minX + (laneW > 0 ? Math.random() * laneW : 0),
+      y: lanes.pad + slot * slotH + Math.random() * Math.max(0, slotH - totalH - 8),
+      vx: Math.cos(angle) * speed,
+      vy: Math.sin(angle) * speed,
+      paused: false
+    };
   });
-});
+
+  for (let n = 0; n < 16; n++) {
+    resolveGlobitoCollisions(bubbles, 16);
+    bubbles.forEach(b => clampGlobito(b, lanes, viewH));
+  }
+
+  bubbles.forEach(b => {
+    b.el.addEventListener('mouseenter', () => { b.paused = true; });
+    b.el.addEventListener('mouseleave', () => { b.paused = false; });
+    b.el.addEventListener('focus', () => { b.paused = true; });
+    b.el.addEventListener('blur', () => { b.paused = false; });
+  });
+
+  function animGlobitos() {
+    const w = window.innerWidth;
+    const h = window.innerHeight;
+    const lanes = getGlobitoLanes(w, maxSize);
+    bubbles.forEach(b => {
+      const lane = lanes[b.side];
+      const minX = lane.minX;
+      const maxX = Math.max(minX, lane.maxX - b.size);
+      if (!b.paused) {
+        b.x += b.vx;
+        b.y += b.vy;
+        if (b.x <= minX) { b.x = minX; b.vx = Math.abs(b.vx); }
+        if (b.x >= maxX) { b.x = maxX; b.vx = -Math.abs(b.vx); }
+        if (b.y <= lanes.pad) { b.y = lanes.pad; b.vy = Math.abs(b.vy); }
+        if (b.y + b.totalH >= h - lanes.pad) { b.y = h - lanes.pad - b.totalH; b.vy = -Math.abs(b.vy); }
+      }
+      clampGlobito(b, lanes, h);
+    });
+    resolveGlobitoCollisions(bubbles, 16);
+    bubbles.forEach(b => clampGlobito(b, lanes, h));
+    bubbles.forEach(b => {
+      b.el.style.transform = 'translate(' + b.x + 'px,' + b.y + 'px)';
+    });
+    requestAnimationFrame(animGlobitos);
+  }
+  animGlobitos();
+
+  requestAnimationFrame(() => {
+    bubbles.forEach((b, i) => {
+      setTimeout(() => b.el.classList.add('show'), i * 150);
+    });
+  });
+}
+
+function clampMobileGlobito(b, w, h, pad) {
+  b.x = Math.min(Math.max(b.x, pad), Math.max(pad, w - pad - b.size));
+  b.y = Math.min(Math.max(b.y, pad), Math.max(pad, h - pad - b.totalH));
+}
+
+function initGlobitosMobile() {
+  const wrap = document.getElementById('portfolio-mobile');
+  const zone = document.getElementById('portfolio-mobile-float');
+  if (!wrap || !zone) return;
+
+  const captionH = 34;
+  const pad = 10;
+  const zoneW = zone.clientWidth || window.innerWidth - 48;
+  const zoneH = zone.clientHeight || 360;
+
+  const bubbles = PROJECTS.map((p, i) => {
+    const size = Math.min(p.size || 78, 64);
+    const totalH = size + captionH;
+    const el = document.createElement('a');
+    el.className = 'globito';
+    el.href = p.url;
+    el.setAttribute('aria-label', p.title);
+    el.style.width = Math.max(size, 88) + 'px';
+    el.style.height = totalH + 'px';
+    el.innerHTML =
+      '<span class="globito-wrap">' +
+        buildGlobitoBody(p, size) +
+        '<span class="globito-caption">' + p.title + '</span>' +
+      '</span>';
+    zone.appendChild(el);
+    bindCursorHover([el]);
+
+    const angle = Math.random() * Math.PI * 2;
+    const speed = 0.18 + Math.random() * 0.14;
+    return {
+      el,
+      size,
+      totalH,
+      x: pad + Math.random() * Math.max(0, zoneW - size - pad * 2),
+      y: pad + Math.random() * Math.max(0, zoneH - totalH - pad * 2),
+      vx: Math.cos(angle) * speed,
+      vy: Math.sin(angle) * speed,
+      paused: false
+    };
+  });
+
+  for (let n = 0; n < 20; n++) {
+    resolveGlobitoCollisions(bubbles, 14);
+    bubbles.forEach(b => clampMobileGlobito(b, zoneW, zoneH, pad));
+  }
+
+  bubbles.forEach(b => {
+    b.el.addEventListener('mouseenter', () => { b.paused = true; });
+    b.el.addEventListener('mouseleave', () => { b.paused = false; });
+    b.el.addEventListener('touchstart', () => { b.paused = true; }, { passive: true });
+    b.el.addEventListener('touchend', () => { b.paused = false; });
+  });
+
+  function animMobileGlobitos() {
+    const w = zone.clientWidth || zoneW;
+    const h = zone.clientHeight || zoneH;
+    bubbles.forEach(b => {
+      if (!b.paused) {
+        b.x += b.vx;
+        b.y += b.vy;
+        if (b.x <= pad) { b.x = pad; b.vx = Math.abs(b.vx); }
+        if (b.x >= w - pad - b.size) { b.x = w - pad - b.size; b.vx = -Math.abs(b.vx); }
+        if (b.y <= pad) { b.y = pad; b.vy = Math.abs(b.vy); }
+        if (b.y + b.totalH >= h - pad) { b.y = h - pad - b.totalH; b.vy = -Math.abs(b.vy); }
+      }
+      clampMobileGlobito(b, w, h, pad);
+    });
+    resolveGlobitoCollisions(bubbles, 14);
+    bubbles.forEach(b => clampMobileGlobito(b, w, h, pad));
+    bubbles.forEach(b => {
+      b.el.style.transform = 'translate(' + b.x + 'px,' + b.y + 'px)';
+    });
+    requestAnimationFrame(animMobileGlobitos);
+  }
+  animMobileGlobitos();
+
+  requestAnimationFrame(() => {
+    bubbles.forEach((b, i) => {
+      setTimeout(() => b.el.classList.add('show'), i * 120);
+    });
+    wrap.classList.add('show');
+  });
+}
+
+let globitosStarted = false;
+function showGlobitos() {
+  if (globitosStarted) return;
+  globitosStarted = true;
+  if (isMobileGlobitos()) initGlobitosMobile();
+  else initGlobitosDesktop();
+}
 
 /* CLOCK */
 function tick() {
@@ -688,7 +1201,9 @@ function type() {
       subEl.style.opacity = '1';
       setTimeout(() => {
         formEl.style.opacity = '1';
-        startBars();
+        startBars(() => {
+          setTimeout(showGlobitos, 500);
+        });
       }, 600);
     }, 700);
   }
@@ -719,9 +1234,10 @@ function renderBar(barEl, pctEl, filled, pct) {
 }
 
 let barsStarted = false;
-function startBars() {
+function startBars(onComplete) {
   if (barsStarted) return;
   barsStarted = true;
+  let completed = 0;
   BARS.forEach((bar, i) => {
     const barEl = document.getElementById('bar-' + bar.id);
     const pctEl = document.getElementById('pct-' + bar.id);
@@ -735,6 +1251,8 @@ function startBars() {
         if (f >= target) {
           clearInterval(iv);
           renderBar(barEl, pctEl, target, bar.pct);
+          completed++;
+          if (completed === BARS.length && onComplete) onComplete();
         }
       }, 70);
     }, 250 + i * 350);
