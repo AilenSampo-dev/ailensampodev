@@ -1,10 +1,17 @@
 import type { NextConfig } from "next";
+import path from "path";
+import { fileURLToPath } from "url";
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const nextConfig: NextConfig = {
-  outputFileTracingIncludes: {
-    "/p/[slug]": ["./src/content/propuestas/**/*"],
-    "/api/proposals/[slug]/document": ["./src/content/propuestas/**/*"],
-    "/app/propuestas/[slug]": ["./src/content/propuestas/**/*"],
+  webpack(config) {
+    config.module.rules.push({
+      test: /propuesta\.html$/,
+      include: [path.join(__dirname, "src/content/propuestas")],
+      type: "asset/source",
+    });
+    return config;
   },
 };
 
