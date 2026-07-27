@@ -1,8 +1,7 @@
-node_modules
-package.json
-package-lock.json
-colores.txt
-fonts/fonts.css
-Logotipo_Ailen Sampo
-logo secundario
-recursos graficos
+# Fuentes de diseño — no se despliegan en Vercel.
+# Los assets del sitio en producción viven en public/assets/
+
+_design/
+notas_privadas/
+legacy/
+docs/

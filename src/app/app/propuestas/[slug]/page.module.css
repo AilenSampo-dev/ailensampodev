@@ -1,0 +1,73 @@
+.card {
+  border: 1px solid rgba(250, 249, 247, 0.12);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.back {
+  margin-bottom: 1rem;
+}
+
+.client {
+  color: rgba(250, 249, 247, 0.55);
+  margin-bottom: 1rem;
+}
+
+.openLink {
+  margin-top: 0.75rem;
+}
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.meta dt {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: rgba(250, 249, 247, 0.45);
+  margin-bottom: 0.25rem;
+}
+
+.meta dd {
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.link {
+  color: #aebff2;
+  word-break: break-all;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+.table th,
+.table td {
+  text-align: left;
+  padding: 0.65rem 0.5rem;
+  border-bottom: 1px solid rgba(250, 249, 247, 0.08);
+}
+
+.table th {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: rgba(250, 249, 247, 0.45);
+}
+
+.empty {
+  color: rgba(250, 249, 247, 0.45);
+  line-height: 1.6;
+}
+
+.note {
+  margin-top: 1.5rem;
+  font-size: 0.85rem;
+  color: rgba(250, 249, 247, 0.35);
+}

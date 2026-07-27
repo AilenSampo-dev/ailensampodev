@@ -1,0 +1,70 @@
+.card {
+  border: 1px solid rgba(250, 249, 247, 0.12);
+  padding: 1.5rem;
+}
+
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.toolbar h2 {
+  font-family: "Egyptian Slate", serif;
+  font-size: 1.35rem;
+}
+
+.newBtn {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  background: #f656bf;
+  color: #faf9f7;
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+.table th,
+.table td {
+  text-align: left;
+  padding: 0.75rem 0.5rem;
+  border-bottom: 1px solid rgba(250, 249, 247, 0.08);
+  vertical-align: top;
+}
+
+.table th {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: rgba(250, 249, 247, 0.45);
+}
+
+.link {
+  color: #aebff2;
+}
+
+.empty {
+  color: rgba(250, 249, 247, 0.45);
+  line-height: 1.6;
+}
+
+.note {
+  margin-top: 1rem;
+  font-size: 0.85rem;
+  color: rgba(250, 249, 247, 0.35);
+}
+
+@media (max-width: 720px) {
+  .table {
+    display: block;
+    overflow-x: auto;
+  }
+}

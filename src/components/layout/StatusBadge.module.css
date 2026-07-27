@@ -1,0 +1,54 @@
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.dot {
+  width: 0.7rem;
+  height: 0.7rem;
+  border-radius: 50%;
+  background: #32d74b;
+  flex-shrink: 0;
+}
+
+.text {
+  font-family: "Nunito Sans", sans-serif;
+  font-size: 0.8rem;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  line-height: 1.25;
+}
+
+.header {
+  color: #0e0e0e;
+}
+
+.header .text {
+  white-space: nowrap;
+}
+
+.hero {
+  color: #faf9f7;
+}
+
+.badge.hero {
+  justify-content: center;
+}
+
+.hero .text {
+  font-size: 0.72rem;
+  letter-spacing: 0.03em;
+  text-align: center;
+}
+
+@media (max-width: 640px) {
+  .header {
+    display: none;
+  }
+
+  .hero .dot {
+    width: 0.75rem;
+    height: 0.75rem;
+  }
+}

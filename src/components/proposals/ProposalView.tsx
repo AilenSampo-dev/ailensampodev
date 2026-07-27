@@ -1,0 +1,111 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import type { Proposal } from "@/types/erp";
+import styles from "./ProposalView.module.css";
+
+type Props = {
+  proposal: Proposal;
+};
+
+export default function ProposalView({ proposal: initial }: Props) {
+  const [proposal, setProposal] = useState(initial);
+  const [accepting, setAccepting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+
+    fetch(`/api/proposals/${proposal.slug}/open?${params.toString()}`, {
+      method: "POST",
+    }).catch(() => {
+      // Tracking silencioso — no bloquea la vista de la propuesta.
+    });
+  }, [proposal.slug]);
+
+  async function handleAccept() {
+    setAccepting(true);
+    setError(null);
+
+    try {
+      const res = await fetch(`/api/proposals/${proposal.slug}/accept`, {
+        method: "POST",
+      });
+      const data = (await res.json()) as {
+        error?: string;
+        status?: Proposal["status"];
+        acceptedAt?: string;
+      };
+
+      if (!res.ok) {
+        setError(data.error ?? "No se pudo aceptar la propuesta.");
+        return;
+      }
+
+      setProposal((prev) => ({
+        ...prev,
+        status: data.status ?? "accepted",
+        acceptedAt: data.acceptedAt ?? new Date().toISOString(),
+      }));
+    } catch {
+      setError("Error de conexión. Intentá de nuevo.");
+    } finally {
+      setAccepting(false);
+    }
+  }
+
+  const isAccepted = proposal.status === "accepted";
+
+  return (
+    <article className={styles.card}>
+      <header className={styles.header}>
+        <p className={styles.eyebrow}>Propuesta comercial</p>
+        <h1 className={styles.title}>{proposal.title}</h1>
+        <p className={styles.summary}>{proposal.summary}</p>
+      </header>
+
+      <div className={styles.meta}>
+        <div>
+          <span className={styles.metaLabel}>Inversión</span>
+          <strong>{proposal.price}</strong>
+        </div>
+        <div>
+          <span className={styles.metaLabel}>Plazo estimado</span>
+          <strong>{proposal.timeline}</strong>
+        </div>
+      </div>
+
+      <section className={styles.sections}>
+        {proposal.sections.map((section) => (
+          <div key={section.title} className={styles.section}>
+            <h2>{section.title}</h2>
+            <p>{section.body}</p>
+          </div>
+        ))}
+      </section>
+
+      <footer className={styles.footer}>
+        {isAccepted ? (
+          <p className={styles.accepted}>
+            Propuesta aceptada
+            {proposal.acceptedAt
+              ? ` · ${new Date(proposal.acceptedAt).toLocaleDateString("es-AR")}`
+              : ""}
+          </p>
+        ) : (
+          <>
+            <button
+              type="button"
+              className={styles.acceptBtn}
+              onClick={handleAccept}
+              disabled={accepting}
+            >
+              {accepting ? "Procesando…" : "Aceptar propuesta"}
+            </button>
+            {error ? <p className={styles.error}>{error}</p> : null}
+          </>
+        )}
+      </footer>
+    </article>
+  );
+}

@@ -1,10 +1,27 @@
 {
-  "name": "ailensampo-landing",
+  "name": "ailensampo",
   "version": "1.0.0",
   "private": true,
-  "description": "Landing de pre-lanzamiento de Ailen Sampó",
+  "description": "Sitio web y ERP de Ailen Sampó",
   "scripts": {
-    "dev": "npx --yes serve@latest -l 3000 .",
-    "start": "npx --yes serve@latest -l 3000 ."
+    "dev": "next dev -H 0.0.0.0",
+    "dev:clean": "node -e \"require('fs').rmSync('.next',{recursive:true,force:true})\" && next dev -H 0.0.0.0",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "legacy": "npx --yes serve@latest -l 3001 ."
+  },
+  "dependencies": {
+    "next": "^15.3.4",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.21",
+    "@types/react": "^19.1.6",
+    "@types/react-dom": "^19.1.5",
+    "eslint": "^9.28.0",
+    "eslint-config-next": "^15.3.4",
+    "typescript": "^5.8.3"
   }
 }

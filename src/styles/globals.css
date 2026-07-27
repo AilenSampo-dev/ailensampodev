@@ -1,0 +1,43 @@
+@import url("./fonts.css");
+@import url("./animations.css");
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --ink: #0e0e0e;
+  --white: #faf9f7;
+  --rose: #f656bf;
+  --rose-dark: #d63da5;
+  --rose-rgb: 246, 86, 191;
+  --lila: #aebff2;
+  --lila-rgb: 174, 191, 242;
+  --muted: rgba(250, 249, 247, 0.35);
+  --very-muted: rgba(250, 249, 247, 0.12);
+}
+
+html,
+body {
+  min-height: 100%;
+  background: var(--ink);
+  color: var(--white);
+}
+
+body {
+  font-family: "Nunito Sans", sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: inherit;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
