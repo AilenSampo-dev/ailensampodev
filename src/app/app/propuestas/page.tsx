@@ -64,7 +64,7 @@ export default async function PropuestasPage() {
       )}
 
       <p className={styles.note}>
-        Propuestas HTML a medida: carpeta <code>content/propuestas/[slug]/</code>.
+        Propuestas HTML a medida: carpeta <code>src/content/propuestas/[slug]/</code>.
         Formulario rápido: <Link href="/app/propuestas/nueva" className={styles.link}>Nueva propuesta</Link>.
       </p>
     </section>

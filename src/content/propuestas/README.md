@@ -3,7 +3,7 @@
 Cada propuesta vive en su propia carpeta. El ERP las lee desde acá.
 
 ```
-content/propuestas/
+src/content/propuestas/
 ├── stockin-lavanda/
 │   ├── meta.json        ← datos para el ERP (cliente, slug, precio, estado)
 │   └── propuesta.html   ← documento completo que ve el cliente
@@ -21,7 +21,7 @@ content/propuestas/
 
 ## Flujo
 
-1. Creá la carpeta `content/propuestas/[slug]/`
+1. Creá la carpeta `src/content/propuestas/[slug]/`
 2. Pegá el HTML en `propuesta.html`
 3. Completá `meta.json`
 4. Reiniciá dev (hoy) o guardás en Firebase (Fase 3)

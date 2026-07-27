@@ -17,7 +17,7 @@ export type ProposalContentMeta = {
   sentAt?: string;
 };
 
-const CONTENT_ROOT = path.join(process.cwd(), "content", "propuestas");
+const CONTENT_ROOT = path.join(process.cwd(), "src", "content", "propuestas");
 
 export function getProposalContentDir(slug: string): string {
   return path.join(CONTENT_ROOT, slug);
