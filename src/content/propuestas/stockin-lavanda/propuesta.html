@@ -88,13 +88,6 @@
   }
   .callout.plum{border-color:var(--night-plum)}
   .callout.blue{border-color:var(--blue)}
-  .callout.lilac{
-    background:var(--soft-lilac);
-    border-left-color:var(--orchid-pink);
-    color:var(--night-plum);
-  }
-  .callout.lilac p{margin-bottom:12px;color:var(--night-plum)}
-  .callout.lilac p:last-child{margin-bottom:0}
   .callout .big{font-size:20px;font-weight:700;color:var(--night-plum);line-height:1.3}
 
   /* tables */
@@ -112,7 +105,8 @@
   .tag{display:inline-block;font-family:'DM Mono',monospace;font-size:11px;padding:2px 8px;border-radius:20px;white-space:nowrap;font-weight:500}
   .t-ok{background:#e3f6ee;color:#1c7a54}
   .t-build{background:#fff0e8;color:#c1471f}
-  .t-fase2{background:#eef1fe;color:#4453b8}
+  .t-fase1{background:#fff0e8;color:#c1471f}
+  .t-fase2{background:#f3ebfc;color:#3A1E66}
   .t-no{background:#f2f2f4;color:#6b6d72}
 
   ul.clean{list-style:none;margin:14px 0}
@@ -151,6 +145,93 @@
   .step-body h3{margin-bottom:3px}
   .step-body p{margin-bottom:0;font-size:15px;color:var(--grey)}
 
+  /* ─── RECURSOS DE MARCA (del carrusel) ─── */
+
+  /* grilla de fondo tipo cuaderno */
+  .grid-bg{
+    position:absolute;inset:0;z-index:0;pointer-events:none;
+    background-image:
+      linear-gradient(rgba(225,173,255,.20) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(225,173,255,.20) 1px, transparent 1px);
+    background-size:46px 46px;
+  }
+  .page > *{position:relative;z-index:1}
+  .cover .grid-bg{
+    background-image:
+      linear-gradient(rgba(255,255,255,.07) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,.07) 1px, transparent 1px);
+  }
+
+  /* resaltador amarillo — la firma de Ailén */
+  .hl{
+    background:linear-gradient(180deg, transparent 8%, var(--yellow) 8% 88%, transparent 88%);
+    padding:0 4px;box-decoration-break:clone;-webkit-box-decoration-break:clone;
+    color:var(--night-plum);font-weight:700;
+  }
+  /* frase con pin fucsia a los costados (como "mi propósito:") */
+  .pinned{position:relative;display:inline-block;padding:0 10px}
+  .pinned:before,.pinned:after{
+    content:"";position:absolute;top:-3px;width:3px;height:calc(100% + 6px);
+    background:var(--orchid-pink);border-radius:2px;
+  }
+  .pinned:before{left:0}.pinned:after{right:0}
+  .pin-dot:before,.pin-dot:after{top:-8px;height:calc(100% + 14px)}
+  .pin-dot:before{box-shadow:0 -5px 0 -1px var(--orchid-pink)}
+
+  /* viñetas con icono (a) en rosa */
+  ul.pins{list-style:none;margin:14px 0}
+  ul.pins li{padding:8px 0 8px 36px;position:relative;border-bottom:1px solid #f2f2f2}
+  ul.pins li:last-child{border-bottom:none}
+  ul.pins li:before{
+    content:"";position:absolute;left:0;top:10px;
+    width:24px;height:13px;
+    background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 407.04 228.96'%3E%3Cpath fill='%23F656BF' d='M67.15,133.32c6.29-35.28,49.56-73.42,88.99-80.13.71-.14.71,1,0,1.14-33.14,5.71-72.28,46.99-79.13,86.99-4.14,22.71,2.14,45.14,17.71,48.99.71.29.29,1.43-.43,1.14-19.85-4.57-31.28-33.85-27.14-58.13Z'/%3E%3Cpath fill='%23F656BF' d='M195.12,161.33c-8.09,0-14.46-2-19.11-6.01-4.64-4.01-6.96-9.26-6.96-15.77s2.3-12.12,6.9-15.89c4.6-3.77,11.23-5.65,19.88-5.65h24.4v-3.21c0-11.03-6.07-16.55-18.21-16.55-9.92,0-15.91,3.73-17.97,11.19h-13.45c1.19-7.06,4.58-12.54,10.18-16.43,5.59-3.89,12.75-5.83,21.49-5.83,9.92,0,17.52,2.34,22.79,7.02,5.28,4.68,7.92,11.43,7.92,20.24v31.78h6.43v13.81h-14.29v-10.95h-5c-2.46,3.81-5.83,6.81-10.12,8.99s-9.25,3.27-14.88,3.27ZM196.9,150.62c4.29,0,8.21-.87,11.79-2.62,3.57-1.75,6.39-4.13,8.45-7.14,2.06-3.01,3.1-6.31,3.1-9.88v-3.21h-23.57c-10,0-15,3.73-15,11.19,0,3.57,1.35,6.41,4.05,8.51,2.7,2.1,6.43,3.16,11.19,3.16Z'/%3E%3Cpath fill='%23F656BF' d='M252.47,190.31c33.42-5.71,72.42-47.14,79.27-86.99,4-22.71-2.29-45.14-17.57-48.99-1-.29-.29-1.57.43-1.14,19.85,4.57,31.28,33.85,26.85,58.13-6.29,35.28-49.42,73.42-88.99,80.13-.57.14-.57-1,0-1.14Z'/%3E%3C/svg%3E") no-repeat center / contain;
+  }
+
+  /* globo de chat (como el del dino) */
+  .chat{
+    position:relative;background:var(--night-plum);color:#fff;
+    border-radius:16px;padding:16px 22px;font-size:16px;line-height:1.45;
+    display:inline-block;max-width:80%;
+  }
+  .chat:after{
+    content:"";position:absolute;left:26px;bottom:-9px;
+    border:10px solid transparent;border-top-color:var(--night-plum);border-bottom:0;
+  }
+  .chat.pink{background:var(--orchid-pink)}
+  .chat.pink:after{border-top-color:var(--orchid-pink)}
+
+  /* pixel art inline (SVG) */
+  .pix{display:inline-block;vertical-align:middle;image-rendering:pixelated}
+  .pix-corner{position:absolute;z-index:2}
+
+  /* recursos gráficos de la propuesta (PNG) */
+  .pix-brand{
+    display:block;
+    flex-shrink:0;
+    image-rendering:pixelated;
+    image-rendering:crisp-edges;
+  }
+  .cover .pix-brand{
+    mix-blend-mode:lighten;
+  }
+  .pix-brand.pix-inline{
+    display:inline-block;
+    vertical-align:-3px;
+    margin-left:6px;
+  }
+  .brand-scene{
+    margin-top:30px;
+    display:flex;
+    align-items:flex-end;
+    gap:14px;
+  }
+
+  /* barra de ventana (semáforo mac) */
+  .winbar{display:flex;gap:7px;align-items:center;background:var(--night-plum);border-radius:10px 10px 0 0;padding:11px 16px}
+  .winbar i{width:11px;height:11px;border-radius:50%;display:inline-block}
+  .win-r{background:#FF5F57}.win-y{background:#FEBC2E}.win-g{background:#28C840}
+
   @media print{
     body{background:#fff}
     .page{max-width:none;margin:0;padding:40px 44px;page-break-after:always}
@@ -162,18 +243,41 @@
     .cover{padding:44px 26px}
     h1,.cover h1{font-size:34px}
     .price-hero,.grid2{flex-direction:column;grid-template-columns:1fr}
+    .chat{max-width:100%}
   }
 </style>
 </head>
 <body>
 
+<!-- assets pixel art reutilizables (SVG data) -->
+<script>
+window.PIX = {
+  dino: `<svg class="pix" width="W" height="H" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges"><path fill="#6882EB" d="M11 2h6v2h1v6h-2v1h-1v1h1v3h-2v-2h-1v2h-1v-2H8v3H6v-1H5v-2H3v-1H2v-4h1v-1h1v-1h1V6h1V5h1V4h1V3h2V2Z"/><path fill="#fff" d="M12 4h1v1h-1V4Zm-2 1h1v1h-1V5ZM9 7h1v1H9V7ZM8 9h1v1H8V9Z"/><path fill="#1a1030" d="M14 5h1v1h-1V5Z"/></svg>`,
+  alert: `<svg class="pix" width="W" height="H" viewBox="0 0 24 22" fill="none" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges"><path fill="#FF6437" d="M11 1h2v2h-2V1Zm-2 3h1v1h1V3h2v2h1v1h1v2h1v2h1v2h1v2h1v2h1v2H2v-2h1v-2h1v-2h1v-2h1V8h1V6h1V4Zm2 5h2v5h-2V9Zm0 6h2v2h-2v-2Z"/></svg>`,
+  smile: `<svg class="pix" width="W" height="H" viewBox="0 0 30 16" fill="none" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges"><path fill="#F656BF" d="M4 3h1V2h1v3H5v6h1v1h1v1H5v-1H4v-1H3V4h1V3Zm22 0h-1V2h-1v3h1v6h-1v1h-1v1h2v-1h1v-1h1V4h-1V3ZM8 4h1v1H8V4Zm2-1h1v1h-1V3Zm2 1h1v1h-1V4Zm2 1h1v1h-1V5Zm4 0h4v1h-4V5ZM9 10h2v1h-1v1h8v-1h-1v-1h2v1h-1v1h-1v1h-6v-1H9v-1Z"/></svg>`,
+  excl: `<svg class="pix" width="W" height="H" viewBox="0 0 30 16" fill="none" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges"><path fill="#6882EB" d="M4 3h2v2H5v6h1v2H4v-1H3V4h1V3Zm22 0h-2v2h1v6h-1v2h2v-1h1V4h-1V3ZM10 4h2v5h-2V4Zm0 6h2v2h-2v-2Zm8-6h2v5h-2V4Zm0 6h2v2h-2v-2Zm-6 3h6v2h-6v-2Z"/></svg>`
+};
+function drawPix(){
+  document.querySelectorAll('[data-pix]').forEach(function(el){
+    var k=el.getAttribute('data-pix'), w=el.getAttribute('data-w')||'40', h=el.getAttribute('data-h')||'40';
+    if(window.PIX[k]) el.innerHTML=window.PIX[k].replace(/W/g,w).replace(/H/g,h);
+  });
+}
+document.addEventListener('DOMContentLoaded',drawPix);
+</script>
+
 <!-- ══════════ PORTADA ══════════ -->
 <div class="page cover">
+  <div class="grid-bg"></div>
   <div class="mark">s <span class="paren">(</span>a<span class="paren">)</span> ó &nbsp;·&nbsp; Sistemas a medida</div>
   <div>
     <span class="binary">01001110101</span>
     <h1>Un sistema que <em>funciona</em> cuando vos no estás mirando.</h1>
     <p class="sub">Propuesta de sistema de gestión a medida para Stockin Lavanda. Provisión, construcción y operación.</p>
+    <div class="brand-scene">
+      <img class="pix-brand" src="/assets/propuestas/stockin-lavanda/recursos-graficosdinosaurio.png" alt="" width="56" height="56">
+      <div class="chat">Hola, Stockin <img class="pix-brand pix-inline" src="/assets/propuestas/stockin-lavanda/recursos-graficosface-guino.png" alt="" height="24"><br>Esto es lo que armé para ustedes.</div>
+    </div>
   </div>
   <div class="cover-foot">
     <div>
@@ -182,31 +286,25 @@
     </div>
     <div style="text-align:right">
       <div class="mono">AILÉN SAMPÓ</div>
-      <div style="opacity:.6">Julio 2026 · v1</div>
+      <div style="opacity:.6">www.ailensampo.com.ar · Julio 2026 · v1</div>
     </div>
   </div>
 </div>
 
 <!-- ══════════ 1 · DIAGNÓSTICO ══════════ -->
 <div class="page">
+  <div class="grid-bg"></div>
   <span class="eyebrow">01 — Diagnóstico</span>
   <div class="kicker-line"></div>
-  <h2>El caos no es falta de esfuerzo. Es falta de arquitectura.</h2>
+  <h2>No es que falte intentarlo. Es que nada se adaptó.</h2>
 
-  <p class="lede">Stockin Lavanda creció. La operación no creció con ella. Hoy el negocio depende de que alguien esté mirando: la información vive en planillas, en cabezas y en sistemas que no se hablan entre sí.</p>
+  <p class="lede">Stockin no se quedó quieta. Fue probando sistemas, herramientas, soluciones, buscando la manera de ordenar la operación y crecer.</p>
 
-  <p>Eso tiene un costo que no aparece en ninguna factura: el tiempo estratégico se consume apagando incendios operativos. Se factura a mano lo que debería facturarse solo. Se controla stock en un lado, se venden productos en otro, y nadie tiene una única versión de la verdad.</p>
+  <p>Hoy la información de la empresa vive repartida entre planillas, cabezas y herramientas que no se hablan entre sí, y el tiempo estratégico va apagando incendios.</p>
 
-  <div class="callout plum">
-    <span class="big">Hoy la operación es el techo del crecimiento.</span><br>
-    Un negocio que factura a este volumen tiene espacio para más — pero la operación manual pone un límite. Este sistema saca ese límite. Lo que hagas con el espacio que queda es una decisión comercial, no operativa.
-  </div>
+  <p>Stockin necesita un sistema que se adapte a su funcionamiento, y no que él se adapte a un sistema que no le favorece.</p>
 
-  <div class="callout lilac">
-    <p><strong>Esta propuesta parte de algo que ya existe.</strong></p>
-    <p>El sistema no arranca de cero: gran parte ya está funcionando sobre la operación real de Stockin. No es una plantilla a la que el negocio se adapta — es la operación de Stockin, hecha software.</p>
-    <p>Se construye a medida, es propiedad del negocio desde el primer día, y crece cuando la operación lo pide. Vos no alquilás el acceso a un sistema ajeno: tenés el tuyo.</p>
-  </div>
+  <p>Un negocio que factura a este volumen tiene espacio para crecer, y lo que pone el techo es la operación manual, no el mercado. Y el sistema que diseño elimina ese techo y crece con lo que venga… Lo que la empresa haga con el espacio que queda es una decisión comercial, no operativa.</p>
 
   <div class="foot">
     <span class="mono">s (a) ó</span>
@@ -214,13 +312,17 @@
   </div>
 </div>
 
-<!-- ══════════ 2 · QUÉ CONSTRUYE ══════════ -->
+<!-- ══════════ 2 · QUÉ HACE EL SISTEMA ══════════ -->
 <div class="page">
+  <div class="grid-bg"></div>
   <span class="eyebrow">02 — Qué hace el sistema</span>
   <div class="kicker-line"></div>
-  <h2>No es una web. No es una automatización suelta. Es el sistema completo.</h2>
 
-  <p>El sistema conecta todo lo que hoy está separado en un solo lugar con una sola lógica. Esto es lo que pasa a saber hacer el negocio:</p>
+  <p class="lede">Esta propuesta parte de algo que ya existe. El sistema no arranca de cero: está construido alrededor de la operación real de la empresa, y lo llevo a cabo de forma que crezca y se adapte a medida que el negocio cambia. Y está pensado para el terreno donde Stockin trabaja de verdad: facturación electrónica ARCA, IVA, Ingresos Brutos, Convenio Multilateral, retenciones.</p>
+
+  <p>El sistema conecta todo lo que hoy está separado en un solo lugar con una sola lógica.</p>
+
+  <p><strong>Esto es lo que sucederá en el negocio:</strong></p>
 
   <div class="grid2">
     <div class="card">
@@ -242,7 +344,7 @@
   </div>
 
   <div class="callout blue">
-    <strong>La diferencia clave:</strong> los productos se cargan desde <strong>Shopify</strong> y el ERP los toma desde ahí — sin duplicar la carga en dos sistemas. Un solo catálogo, mismo stock, mismos precios, una sola fuente de verdad.
+    <strong>Un solo catálogo, todos los canales.</strong> Shopify y Mercado Libre sincronizados de forma nativa con el mismo stock y los mismos precios del sistema. Se carga una vez y vive en todos lados — sin doble carga, sin descuadres entre lo que se vende online y lo que hay en el local.
   </div>
 
   <p>El trabajo es sutil, casi imperceptible. Pero es lo que hace que el negocio siga en pie cuando los dueños están en otra cosa.</p>
@@ -255,42 +357,44 @@
 
 <!-- ══════════ 3 · ALCANCE ══════════ -->
 <div class="page">
+  <div class="grid-bg"></div>
   <span class="eyebrow">03 — Alcance funcional</span>
   <div class="kicker-line"></div>
   <h2>Todo lo que necesita el negocio, módulo por módulo.</h2>
 
   <p style="font-size:14px;color:var(--grey)">
-    <span class="tag t-ok">Incluido</span> ya funcionando o se completa en la construcción &nbsp;
-    <span class="tag t-build">Se construye</span> parte del proyecto &nbsp;
-    <span class="tag t-fase2">Fase 2</span> se suma cuando el negocio lo pida
+    <span class="tag t-fase1">Fase 1</span> alcance principal del proyecto &nbsp;
+    <span class="tag t-fase2">Fase 2</span> se suma cuando el negocio lo pida &nbsp;
+    <span class="tag t-no">No aplica</span> fuera de alcance por diseño
   </p>
 
   <h3 style="margin-top:24px">Ventas</h3>
   <table>
-    <tr><td>Pedidos multilínea y multicanal</td><td class="num"><span class="tag t-ok">Incluido</span></td></tr>
-    <tr><td>Facturación electrónica ARCA (CAE)</td><td class="num"><span class="tag t-ok">Incluido</span></td></tr>
-    <tr><td>Condiciones comerciales automáticas (descuentos, N+1, listas)</td><td class="num"><span class="tag t-ok">Incluido</span></td></tr>
-    <tr><td>Notas de Débito y Crédito</td><td class="num"><span class="tag t-build">Se construye</span></td></tr>
-    <tr><td>Control de crédito otorgado y deuda de clientes</td><td class="num"><span class="tag t-build">Se construye</span></td></tr>
-    <tr><td>Remitos</td><td class="num"><span class="tag t-build">Se construye</span></td></tr>
-    <tr><td>Percepciones IVA e IIBB</td><td class="num"><span class="tag t-fase2">Fase 2</span></td></tr>
+    <tr><td>Pedidos multilínea y multicanal</td><td class="num"><span class="tag t-fase1">Fase 1</span></td></tr>
+    <tr><td>Facturación electrónica ARCA (CAE)</td><td class="num"><span class="tag t-fase1">Fase 1</span></td></tr>
+    <tr><td>Condiciones comerciales automáticas (descuentos, N+1, listas)</td><td class="num"><span class="tag t-fase1">Fase 1</span></td></tr>
+    <tr><td>Notas de Débito y Crédito</td><td class="num"><span class="tag t-fase1">Fase 1</span></td></tr>
+    <tr><td>Control de crédito otorgado y deuda de clientes</td><td class="num"><span class="tag t-fase1">Fase 1</span></td></tr>
+    <tr><td>Remitos</td><td class="num"><span class="tag t-fase1">Fase 1</span></td></tr>
+    <tr><td>Registro de percepciones y retenciones IVA/IIBB sufridas</td><td class="num"><span class="tag t-fase1">Fase 1</span></td></tr>
+    <tr><td>Ventas discriminadas por jurisdicción (base Convenio Multilateral)</td><td class="num"><span class="tag t-fase1">Fase 1</span></td></tr>
   </table>
 
   <h3>Deudores (cuentas por cobrar)</h3>
   <table>
-    <tr><td>Cuenta corriente por cliente, cobros parciales y totales</td><td class="num"><span class="tag t-ok">Incluido</span></td></tr>
-    <tr><td>Resumen de cuenta imprimible</td><td class="num"><span class="tag t-build">Se construye</span></td></tr>
-    <tr><td>Antigüedad de deuda (aging)</td><td class="num"><span class="tag t-build">Se construye</span></td></tr>
-    <tr><td>Subdiario de IVA Ventas</td><td class="num"><span class="tag t-build">Se construye</span></td></tr>
-    <tr><td>Cartera de valores (cheques recibidos)</td><td class="num"><span class="tag t-build">Se construye</span></td></tr>
+    <tr><td>Cuenta corriente por cliente, cobros parciales y totales</td><td class="num"><span class="tag t-fase1">Fase 1</span></td></tr>
+    <tr><td>Resumen de cuenta imprimible</td><td class="num"><span class="tag t-fase1">Fase 1</span></td></tr>
+    <tr><td>Antigüedad de deuda (aging)</td><td class="num"><span class="tag t-fase1">Fase 1</span></td></tr>
+    <tr><td>Subdiario de IVA Ventas</td><td class="num"><span class="tag t-fase1">Fase 1</span></td></tr>
+    <tr><td>Cartera de valores (cheques recibidos)</td><td class="num"><span class="tag t-fase1">Fase 1</span></td></tr>
   </table>
 
   <h3>Compras y Proveedores</h3>
   <table>
-    <tr><td>Órdenes de compra, recepción y factura de compra</td><td class="num"><span class="tag t-build">Se construye</span></td></tr>
-    <tr><td>Cuenta corriente de proveedores, órdenes de pago</td><td class="num"><span class="tag t-build">Se construye</span></td></tr>
-    <tr><td>Subdiario de IVA Compras</td><td class="num"><span class="tag t-build">Se construye</span></td></tr>
-    <tr><td>Retenciones impositivas (IVA, Gan., IIBB)</td><td class="num"><span class="tag t-build">Se construye</span></td></tr>
+    <tr><td>Órdenes de compra, recepción y factura de compra</td><td class="num"><span class="tag t-fase1">Fase 1</span></td></tr>
+    <tr><td>Cuenta corriente de proveedores, órdenes de pago</td><td class="num"><span class="tag t-fase1">Fase 1</span></td></tr>
+    <tr><td>Subdiario de IVA Compras</td><td class="num"><span class="tag t-fase1">Fase 1</span></td></tr>
+    <tr><td>Retenciones impositivas (IVA, Gan., IIBB)</td><td class="num"><span class="tag t-fase1">Fase 1</span></td></tr>
   </table>
 
   <div class="foot">
@@ -301,47 +405,48 @@
 
 <!-- ══════════ 3b · ALCANCE cont ══════════ -->
 <div class="page">
+  <div class="grid-bg"></div>
   <span class="eyebrow">03 — Alcance funcional (cont.)</span>
   <div class="kicker-line"></div>
 
   <h3>Inventarios</h3>
   <table>
-    <tr><td>Stock por producto y por local, traspasos, ajuste masivo</td><td class="num"><span class="tag t-ok">Incluido</span></td></tr>
-    <tr><td>Kits y fórmulas de composición</td><td class="num"><span class="tag t-ok">Incluido</span></td></tr>
-    <tr><td>Inventario valorizado</td><td class="num"><span class="tag t-build">Se construye</span></td></tr>
-    <tr><td>Ficha Kardex por artículo</td><td class="num"><span class="tag t-build">Se construye</span></td></tr>
-    <tr><td>Punto de pedido y stock mínimo</td><td class="num"><span class="tag t-build">Se construye</span></td></tr>
+    <tr><td>Stock por producto y por local, traspasos, ajuste masivo</td><td class="num"><span class="tag t-fase1">Fase 1</span></td></tr>
+    <tr><td>Kits y fórmulas de composición</td><td class="num"><span class="tag t-fase1">Fase 1</span></td></tr>
+    <tr><td>Inventario valorizado</td><td class="num"><span class="tag t-fase1">Fase 1</span></td></tr>
+    <tr><td>Ficha Kardex por artículo</td><td class="num"><span class="tag t-fase1">Fase 1</span></td></tr>
+    <tr><td>Punto de pedido y stock mínimo</td><td class="num"><span class="tag t-fase1">Fase 1</span></td></tr>
     <tr><td>Toma de inventario (conteo físico)</td><td class="num"><span class="tag t-fase2">Fase 2</span></td></tr>
   </table>
 
   <h3>Financiera / Tesorería</h3>
   <table>
-    <tr><td>Caja por local: apertura, cierre, arqueo, conceptos</td><td class="num"><span class="tag t-ok">Incluido</span></td></tr>
-    <tr><td>Cuentas bancarias en pesos y dólares</td><td class="num"><span class="tag t-build">Se construye</span></td></tr>
-    <tr><td>Cheques: depósito, cartera, rechazos</td><td class="num"><span class="tag t-build">Se construye</span></td></tr>
-    <tr><td>Conciliación bancaria y posición de fondos</td><td class="num"><span class="tag t-build">Se construye</span></td></tr>
+    <tr><td>Caja por local: apertura, cierre, arqueo, conceptos</td><td class="num"><span class="tag t-fase1">Fase 1</span></td></tr>
+    <tr><td>Cuentas bancarias en pesos y dólares</td><td class="num"><span class="tag t-fase1">Fase 1</span></td></tr>
+    <tr><td>Cheques: depósito, cartera, rechazos</td><td class="num"><span class="tag t-fase1">Fase 1</span></td></tr>
+    <tr><td>Conciliación bancaria y posición de fondos</td><td class="num"><span class="tag t-fase1">Fase 1</span></td></tr>
   </table>
 
   <h3>Cierre contable</h3>
   <table>
-    <tr><td>Export de subdiarios para el estudio contable<br><span style="font-size:13px;color:var(--grey)">(IVA Ventas, IVA Compras, cobranzas, pagos — en formato importable)</span></td><td class="num"><span class="tag t-build">Se construye</span></td></tr>
+    <tr><td>Export de subdiarios para el estudio contable<br><span style="font-size:13px;color:var(--grey)">(IVA Ventas, IVA Compras, cobranzas, pagos — en formato importable)</span></td><td class="num"><span class="tag t-fase1">Fase 1</span></td></tr>
     <tr><td>Motor contable completo (asientos, mayor, balances)</td><td class="num"><span class="tag t-no">No aplica</span></td></tr>
   </table>
   <div class="callout">
-    <strong>Una decisión deliberada:</strong> no construimos un motor contable completo de entrada. El estudio contable de Stockin ya tiene su software y no va a migrar su contabilidad a un ERP. En su lugar, el sistema le entrega los cuatro archivos que sí necesita todos los meses. <em>No pagás por un módulo que tu contador no va a abrir.</em> Si más adelante eligen integrar contabilidad dentro del ERP, se puede sumar como módulo — pero no es el punto de partida ni un costo obligatorio.
+    <strong>Una decisión de criterio:</strong> el sistema no incluye un motor contable completo, y es a propósito. El estudio contable de Stockin ya tiene su software y su método. Lo que necesita todos los meses son cuatro archivos —subdiarios de IVA, cobranzas y pagos, en formato importable— y eso es lo que el sistema le entrega, prolijo y a tiempo. El sistema informa y calcula; la contabilidad la firma quien corresponde.
   </div>
 
   <h3>Canales digitales</h3>
   <table>
-    <tr><td>Shopify — catálogo, stock, precios y pedidos sincronizados</td><td class="num"><span class="tag t-ok">Incluido</span></td></tr>
-    <tr><td>Mercado Libre — publicaciones, ventas, stock</td><td class="num"><span class="tag t-build">Se construye</span></td></tr>
+    <tr><td>Shopify — catálogo, stock, precios y pedidos sincronizados</td><td class="num"><span class="tag t-fase1">Fase 1</span></td></tr>
+    <tr><td>Mercado Libre — publicaciones, ventas, stock</td><td class="num"><span class="tag t-fase1">Fase 1</span></td></tr>
   </table>
 
   <h3>Transversales</h3>
   <table>
-    <tr><td>Roles y permisos por sucursal, auditoría de operaciones</td><td class="num"><span class="tag t-ok">Incluido</span></td></tr>
+    <tr><td>Roles y permisos por sucursal, auditoría de operaciones</td><td class="num"><span class="tag t-fase1">Fase 1</span></td></tr>
     <tr><td>Documentos adjuntos en comprobantes</td><td class="num"><span class="tag t-fase2">Fase 2</span></td></tr>
-    <tr><td>Convenio Multilateral IIBB</td><td class="num"><span class="tag t-fase2">Fase 2</span></td></tr>
+    <tr><td>Export por jurisdicción para liquidación IIBB/CM del contador</td><td class="num"><span class="tag t-fase1">Fase 1</span></td></tr>
   </table>
 
   <div class="foot">
@@ -352,21 +457,25 @@
 
 <!-- ══════════ 4 · IMPLEMENTACIÓN ══════════ -->
 <div class="page">
+  <div class="grid-bg"></div>
   <span class="eyebrow">04 — Plan de implementación</span>
   <div class="kicker-line"></div>
-  <h2>Por etapas. Cada una se entrega, se prueba y se cobra.</h2>
+  <h2>Primero facturar. Después, todo lo demás.</h2>
 
-  <p>El sistema no se construye en una caja negra de seis meses. Se entrega por bloques, cada uno productivo por sí mismo. Vos ves el avance real contra cada pago.</p>
+  <p>La prioridad de Stockin es clara: los puntos de venta tienen que facturar electrónicamente en producción. Por eso el plan arranca por ahí. Cada etapa se entrega, se prueba y se cobra por separado — el negocio ve el avance real contra cada pago.</p>
 
   <div style="margin-top:26px">
-    <div class="step"><div class="step-n">1</div><div class="step-body"><h3>Producción y cierre fiscal</h3><p>Base de datos productiva, HTTPS, backups automáticos, facturación ARCA real, Notas de Crédito/Débito, subdiarios de IVA. El sistema queda listo para facturar en serio.</p></div></div>
-    <div class="step"><div class="step-n">2</div><div class="step-body"><h3>Compras y Proveedores</h3><p>Órdenes de compra, factura de compra, cuenta corriente de proveedores, pagos y retenciones. Se cierra el circuito fiscal completo.</p></div></div>
-    <div class="step"><div class="step-n">3</div><div class="step-body"><h3>Tesorería</h3><p>Cuentas bancarias, cartera de cheques, conciliación y posición de fondos consolidada. El dinero deja de desaparecer del sistema cuando sale del mostrador.</p></div></div>
-    <div class="step"><div class="step-n">4</div><div class="step-body"><h3>Inventario y cobranzas avanzadas</h3><p>Valuación, Kardex, punto de pedido, antigüedad de deuda y resumen de cuenta. El negocio pasa a anticipar en vez de reaccionar.</p></div></div>
-    <div class="step"><div class="step-n">5</div><div class="step-body"><h3>Canales</h3><p>Shopify productivo validado y Mercado Libre integrado. Un catálogo, todos los canales, mismo stock.</p></div></div>
+    <div class="step"><div class="step-n">1</div><div class="step-body"><h3>Facturación en producción &nbsp;<span class="tag t-build">prioridad</span></h3><p>Base de datos productiva (PostgreSQL), HTTPS y dominio, backups verificados, CAE, puntos de venta configurados en ARCA, y el circuito pedido → caja → cobro → factura electrónica funcionando de punta a punta. Incluye Notas de Crédito/Débito y captura de jurisdicción por venta. <strong>Con esta etapa, Stockin puede reemplazar al sistema anterior y facturar.</strong></p></div></div>
+    <div class="step"><div class="step-n">2</div><div class="step-body"><h3>Registro fiscal de percepciones y retenciones sufridas</h3><p>Registro de las percepciones y retenciones de IVA e IIBB que le practican a Stockin. Subdiarios de IVA Ventas.</p></div></div>
+    <div class="step"><div class="step-n">3</div><div class="step-body"><h3>Registro fiscal de percepciones y retenciones sufridas</h3><p>Registro de las percepciones y retenciones de IVA e IIBB que le practican a Stockin, para no perder crédito fiscal. Subdiarios de IVA Ventas.</p></div></div>
+    <div class="step"><div class="step-n">4</div><div class="step-body"><h3>Tesorería</h3><p>Cuentas bancarias, cartera de cheques, conciliación y posición de fondos consolidada. El dinero deja de desaparecer del sistema cuando sale del mostrador.</p></div></div>
+    <div class="step"><div class="step-n">5</div><div class="step-body"><h3>Inventario, cobranzas y export Convenio Multilateral</h3><p>Valuación, Kardex, punto de pedido, antigüedad de deuda, resumen de cuenta, y export de ventas por jurisdicción para la liquidación de IIBB/CM del contador.</p></div></div>
+    <div class="step"><div class="step-n">6</div><div class="step-body"><h3>Canales</h3><p>Shopify productivo validado y Mercado Libre integrado. Un catálogo, todos los canales, mismo stock.</p></div></div>
   </div>
 
-  <p style="font-size:14px;color:var(--grey);margin-top:20px">Los plazos se definen sobre el relevamiento de detalle de cada etapa. La migración de datos históricos se cotiza aparte (ver alcance).</p>
+  <div class="callout blue">
+    <strong>Transición sin riesgo:</strong> el sistema anterior no se apaga el mismo día que enciende el nuevo. Ambas facturaciones corren en paralelo una o dos semanas, hasta confirmar que cada CAE es válido en ARCA y que la numeración es correcta. El viejo se da de baja solo cuando el nuevo está probado en la operación real.
+  </div>
 
   <div class="foot">
     <span class="mono">s (a) ó</span>
@@ -376,27 +485,33 @@
 
 <!-- ══════════ 5 · OPERACIÓN ══════════ -->
 <div class="page">
-  <span class="eyebrow">05 — Operación</span>
+  <div class="grid-bg"></div>
+  <span class="eyebrow">05 — Licencia y operación</span>
   <div class="kicker-line"></div>
-  <h2>El fee mensual: lo que mantiene el sistema vivo.</h2>
+  <h2>Una licencia mensual: el sistema vivo, actualizado y operando.</h2>
 
-  <p>Esta es la estructura mensual para mantener su funcionamiento:</p>
+  <p>El sistema es un servicio, no un archivo que se entrega y se abandona. La licencia mensual es el derecho a usarlo con todo funcionando detrás: la infraestructura corriendo, los datos respaldados, el sistema monitoreado, y la evolución continua a medida que el negocio y la normativa cambian. Tiene tres capas:</p>
 
-  <ul class="clean">
-    <li><strong>Base operativa.</strong> Infraestructura gestionada, backups verificados, monitoreo, uptime, parches de seguridad y horas de soporte incluidas por mes.</li>
-    <li><strong>Por canal activo.</strong> Cada superficie viva suma: Shopify, Mercado Libre, y las que se agreguen. Los canales se degradan solos — las plataformas cambian sus reglas, y mantenerlos al día es trabajo continuo.</li>
+  <ul class="pins">
+    <li><strong>Uso y operación.</strong> Licencia de uso del sistema, infraestructura gestionada, backups verificados, monitoreo, uptime y horas de soporte incluidas por mes.</li>
+    <li><strong>Evolución.</strong> El sistema no queda congelado. Se mantiene al día con los cambios de ARCA y de las plataformas, y suma mejoras. Cada canal activo (Shopify, Mercado Libre, y los que se agreguen) es parte del servicio vivo.</li>
     <li><strong>Consumo.</strong> Cuando se sumen capacidades con IA o mensajería, el consumo se traslada con transparencia.</li>
   </ul>
+
+  <div class="callout plum">
+    Como cualquier sistema de gestión, la licencia es la condición para usarlo. Y como debe ser: <strong>los datos del negocio son siempre de Stockin.</strong> Clientes, ventas, stock e historial fiscal se pueden exportar en cualquier momento, en formato estándar. El negocio nunca queda rehén de su propia información.
+  </div>
+
   <h3 style="margin-top:28px">El sistema crece con el negocio</h3>
   <p>La arquitectura está pensada para sumar capacidades sin rehacer nada. Cada una corre sobre la misma base:</p>
   <table>
-    <tr><th>Momento</th><th>Capacidades activas</th><th>Mensual estimado</th></tr>
-    <tr><td>Go-live</td><td>ERP + Shopify</td><td class="num">USD 950</td></tr>
-    <tr><td>+6 meses</td><td>+ Mercado Libre</td><td class="num">USD 1.100</td></tr>
-    <tr><td>+12 meses</td><td>+ WhatsApp con agente</td><td class="num">USD 1.350 <span style="font-size:12px;color:var(--grey)">+ consumo</span></td></tr>
-    <tr><td>+18 meses</td><td>+ CRM y automatizaciones</td><td class="num">USD 1.500 <span style="font-size:12px;color:var(--grey)">+ consumo</span></td></tr>
+    <tr><th>Momento</th><th>Capacidades activas</th><th>Licencia mensual</th></tr>
+    <tr><td>Go-live</td><td>ERP + Shopify</td><td class="num">USD 1.200</td></tr>
+    <tr><td>+6 meses</td><td>+ Mercado Libre</td><td class="num">USD 1.350</td></tr>
+    <tr><td>+12 meses</td><td>+ WhatsApp con agente</td><td class="num">USD 1.600 <span style="font-size:12px;color:var(--grey)">+ consumo</span></td></tr>
+    <tr><td>+18 meses</td><td>+ CRM y automatizaciones</td><td class="num">USD 1.800 <span style="font-size:12px;color:var(--grey)">+ consumo</span></td></tr>
   </table>
-  <p style="font-size:14px;color:var(--grey)">Incluso en el escenario más completo, el costo sigue por debajo de la mitad de una solución enlatada. Sumar un canal o un agente es una decisión de negocio simple, no un proyecto nuevo.</p>
+  <p style="font-size:14px;color:var(--grey)">Sumar un canal, un agente o un CRM es una decisión de negocio simple, no un proyecto nuevo. Todo corre sobre la misma infraestructura.</p>
 
   <div class="foot">
     <span class="mono">s (a) ó</span>
@@ -406,34 +521,39 @@
 
 <!-- ══════════ 6 · INVERSIÓN ══════════ -->
 <div class="page">
+  <div class="grid-bg"></div>
   <span class="eyebrow">06 — Inversión</span>
   <div class="kicker-line"></div>
+  <h2>Una puesta en marcha a medida. Una licencia que acompaña.</h2>
 
   <div class="price-hero">
     <div class="price-box">
-      <div class="label">Construcción</div>
-      <div class="amt">USD 18.000</div>
-      <div class="note">Pago por etapas, contra entrega de cada bloque</div>
+      <div class="label">Puesta en marcha</div>
+      <div class="amt">USD 13.000</div>
     </div>
     <div class="price-box accent">
-      <div class="label">Operación mensual</div>
-      <div class="amt">USD 950</div>
-      <div class="note">Desde go-live · ERP + Shopify</div>
+      <div class="label">Licencia mensual</div>
+      <div class="amt">USD 1.200</div>
+      <div class="note">Desde go-live · uso + operación + evolución</div>
     </div>
   </div>
 
-  <h3>Construcción por etapas</h3>
+  <h3>Puesta en marcha por etapas</h3>
   <table>
-    <tr><th>Etapa</th><th>Bloque</th><th>Pago</th></tr>
-    <tr><td>1</td><td>Producción y cierre fiscal</td><td class="num">USD 4.500</td></tr>
-    <tr><td>2</td><td>Compras y Proveedores</td><td class="num">USD 3.800</td></tr>
-    <tr><td>3</td><td>Tesorería</td><td class="num">USD 3.200</td></tr>
-    <tr><td>4</td><td>Inventario y cobranzas</td><td class="num">USD 3.500</td></tr>
-    <tr><td>5</td><td>Canales (ML + Shopify prod.)</td><td class="num">USD 3.000</td></tr>
-    <tr class="tot"><td colspan="2">Total construcción</td><td class="num">USD 18.000</td></tr>
+    <tr><th>Etapa</th><th>Bloque</th></tr>
+    <tr><td>1</td><td>Facturación en producción <span class="tag t-build">prioridad</span></td></tr>
+    <tr><td>2</td><td>Registro de percepciones y retenciones sufridas</td></tr>
+    <tr><td>3</td><td>Registro fiscal de percepciones y retenciones sufridas</td></tr>
+    <tr><td>4</td><td>Tesorería</td></tr>
+    <tr><td>5</td><td>Inventario, cobranzas y export CM</td></tr>
+    <tr><td>6</td><td>Canales (ML + Shopify prod.)</td></tr>
   </table>
 
-  <p style="font-size:13px;color:var(--grey)">Valores en dólares, sin impuestos. Conversión a pesos al tipo de cambio vendedor BNA del día de cada factura. Módulos contratados por separado más adelante: precio + 20% (costo real de retomar e integrar).</p>
+  <div style="display:flex;align-items:flex-end;gap:12px;margin-top:22px">
+    <div class="chat pink" style="font-size:15px">Sin licencias por usuario, sin sorpresas. Sumás gente al equipo y el sistema no te cobra de más <span data-pix="smile" data-w="38" data-h="20" style="margin-left:2px"></span></div>
+  </div>
+
+  <p style="font-size:13px;color:var(--grey)">Valores en dólares, sin impuestos. Conversión a pesos al tipo de cambio vendedor BNA del día de cada factura.</p>
 
   <div class="foot">
     <span class="mono">s (a) ó</span>
@@ -443,28 +563,28 @@
 
 <!-- ══════════ 7 · PROPIEDAD + FUERA DE ALCANCE ══════════ -->
 <div class="page">
-  <span class="eyebrow">07 — Propiedad, continuidad y límites</span>
+  <div class="grid-bg"></div>
+  <span class="eyebrow">07 — A medida, datos y límites</span>
   <div class="kicker-line"></div>
-  <h2>Tu sistema. Tu código. Tus datos.</h2>
+  <h2>A medida, y con tus datos siempre en tu poder.</h2>
 
-  <p>La diferencia más importante frente a una solución enlatada no es el precio. Es que <strong>el sistema es propiedad de Stockin</strong>, no de un proveedor que lo hospeda y se queda con los datos.</p>
+  <p>El sistema se construye sobre la operación real de Stockin. No es una plantilla configurada: es un sistema pensado para cómo trabaja este negocio, y para el terreno donde opera.</p>
 
-  <ul class="clean">
-    <li><strong>Repositorio a nombre de Stockin</strong> desde el primer día. El código es del negocio.</li>
-    <li><strong>Documentación técnica y operativa</strong> como entregable, no como favor.</li>
-    <li><strong>Stack estándar y abierto.</strong> Cualquier desarrollador puede tomarlo. Sin dependencia de una sola persona ni de una sola empresa.</li>
-    <li><strong>Cláusula de continuidad.</strong> Si en algún momento se corta la relación, se entrega código, base de datos y documentación completa en 30 días. Sin rehenes.</li>
-    <li><strong>Sin licencias por usuario.</strong> El negocio suma puestos de trabajo sin que le cueste más.</li>
-    <li><strong>Sin hosting cautivo.</strong> La infraestructura es estándar y portable. Stockin puede llevársela.</li>
+  <ul class="pins">
+    <li><strong>Tus datos son tuyos, siempre.</strong> Clientes, ventas, stock, historial fiscal — todo es de Stockin y se puede exportar en cualquier momento, en formato estándar. Pase lo que pase con la relación, los datos se van con el negocio.</li>
+    <li><strong>Arquitectura moderna, ventaja operativa.</strong> Tecnología actual al servicio del negocio — flexible, escalable y pensada para durar.</li>
+    <li><strong>Puestos de trabajo ilimitados.</strong> El equipo crece; el sistema acompaña, sin costo por usuario.</li>
+    <li><strong>Evoluciona con el negocio.</strong> No es una versión congelada: se mantiene, se actualiza y suma capacidades a medida que Stockin las necesita.</li>
+    <li><strong>Equipo de soporte que acompaña la operación día a día.</strong> Arquitectura, construcción, evolución y soporte.</li>
   </ul>
 
-  <h3 style="margin-top:30px">Fuera de alcance</h3>
-  <p style="font-size:15px;color:var(--grey)">Para que no haya sorpresas, esto no está incluido:</p>
-  <ul class="clean">
+  <h3 style="margin-top:30px">Para tener en cuenta</h3>
+  <p style="font-size:15px;color:var(--grey)">Algunas cosas que quedan del lado de Stockin:</p>
+  <ul class="pins">
     <li><strong>Contenido y copy comercial.</strong> Los textos del negocio los provee Stockin.</li>
     <li><strong>Diseño gráfico e identidad de marca.</strong> La interfaz del sistema sí está incluida; el logo, la paleta y la identidad visual del negocio, no.</li>
     <li><strong>Migración de datos históricos.</strong> Se cotiza aparte según el volumen y estado de los datos actuales.</li>
-    <li><strong>Soporte posterior a la entrega.</strong> Va por el fee mensual.</li>
+    <li><strong>Cuentas de servicios a nombre de Stockin.</strong> Facturación electrónica, hosting, Shopify y Mercado Libre se contratan a nombre del negocio. El sistema los usa y los opera; la titularidad es de Stockin.</li>
   </ul>
 
   <div class="callout blue">
@@ -479,25 +599,29 @@
 
 <!-- ══════════ 8 · CIERRE ══════════ -->
 <div class="page cover" style="min-height:760px">
+  <div class="grid-bg"></div>
   <div class="mark">s <span class="paren">(</span>a<span class="paren">)</span> ó</div>
   <div>
     <span class="binary">Say Hi ( ) al sistema que trabaja por vos</span>
     <h1 style="font-size:40px">Tu negocio funcionando mientras vos estás en otra cosa.<br><em>No es magia. Es arquitectura.</em></h1>
     <div style="margin-top:34px">
       <table style="max-width:420px">
-        <tr><td style="color:#fff;border-color:rgba(255,255,255,.15)">Forma de pago</td><td style="color:var(--soft-lilac);border-color:rgba(255,255,255,.15)">Contrato completo, pago por etapas</td></tr>
         <tr><td style="color:#fff;border-color:rgba(255,255,255,.15)">Vigencia</td><td style="color:var(--soft-lilac);border-color:rgba(255,255,255,.15)">30 días desde la emisión</td></tr>
-        <tr><td style="color:#fff;border-color:rgba(255,255,255,.15)">Próximo paso</td><td style="color:var(--soft-lilac);border-color:rgba(255,255,255,.15)">Relevamiento de detalle de la etapa 1</td></tr>
       </table>
+    </div>
+    <div class="brand-scene">
+      <img class="pix-brand" src="/assets/propuestas/stockin-lavanda/recursos-graficosdinosaurio.png" alt="" width="52" height="52">
+      <div class="chat">¿Empezamos? <img class="pix-brand pix-inline" src="/assets/propuestas/stockin-lavanda/recursos-graficosface-guino.png" alt="" height="22"></div>
     </div>
   </div>
   <div class="cover-foot">
     <div>
       <div class="mono">AILÉN SAMPÓ</div>
-      <div style="opacity:.6">Arquitecta de sistemas digitales a medida</div>
+      <div style="opacity:.6">www.ailensampo.com.ar</div>
+      <div style="opacity:.6;margin-top:2px">Arquitecta de sistemas digitales a medida</div>
     </div>
     <div style="text-align:right;opacity:.6">
-      <div class="mono">ailensampo.com</div>
+      <div class="mono">Julio 2026 · v1</div>
     </div>
   </div>
 </div>
