@@ -32,6 +32,8 @@ module.exports = async function handler(req, res) {
   const url = new URL(req.url, "https://ailensampo.com");
 
   const store = await loadStore();
+  const hadOpenFromIp = store.opens.some((entry) => entry.ipHash === ipHash);
+
   store.opens.push({
     id: `open_${Date.now()}`,
     ipHash,
@@ -49,12 +51,18 @@ module.exports = async function handler(req, res) {
   }
 
   await saveStore(store);
-  await notifyOpen({
-    ipHash,
-    openedAt: now,
-    geoCountry: geo.geoCountry,
-    geoCity: geo.geoCity,
-  });
+
+  // Brevo alerta por IP nueva en cada invocación serverless de Vercel.
+  // Por defecto no enviamos email al abrir; solo al aceptar (accept.js).
+  // Para reactivar: PROPOSAL_NOTIFY_ON_OPEN=true (solo 1º open por IP).
+  if (process.env.PROPOSAL_NOTIFY_ON_OPEN === "true" && !hadOpenFromIp) {
+    await notifyOpen({
+      ipHash,
+      openedAt: now,
+      geoCountry: geo.geoCountry,
+      geoCity: geo.geoCity,
+    });
+  }
 
   return res.status(200).json({ ok: true });
 };

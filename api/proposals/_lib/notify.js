@@ -1,4 +1,6 @@
 async function notifyOpen({ ipHash, openedAt, geoCountry, geoCity }) {
+  if (process.env.PROPOSAL_NOTIFY_ON_OPEN !== "true") return;
+
   const apiKey = process.env.BREVO_API_KEY;
   const to = process.env.PROPOSAL_NOTIFY_EMAIL;
   if (!apiKey || !to) return;
