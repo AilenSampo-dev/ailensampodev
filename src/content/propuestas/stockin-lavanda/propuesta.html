@@ -146,6 +146,9 @@
   .price-box .label{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--grey)}
   .price-box.accent .label{color:var(--soft-lilac)}
   .price-box .amt{font-size:40px;font-weight:900;line-height:1.1;margin:8px 0;color:var(--night-plum)}
+  .price-was{font-size:20px;font-weight:700;color:var(--grey);margin:6px 0 0;position:relative;display:inline-block;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+  .price-was::after{content:'';position:absolute;left:-3px;right:-3px;top:58%;height:2px;background:var(--grey);transform:rotate(-4deg)}
+  .price-was.inline{font-size:15px;margin:0 8px 0 0;vertical-align:middle}
   .price-box.accent .amt{color:#fff}
   .price-box .note{font-size:13px;color:var(--grey)}
   .price-box.accent .note{color:var(--soft-lilac)}
@@ -155,7 +158,8 @@
   .page.investment h2{margin-bottom:12px;font-size:24px}
   .page.investment .price-hero{margin:14px 0 18px;gap:14px}
   .page.investment .price-box{padding:16px 14px;border-radius:12px}
-  .page.investment .price-box .amt{font-size:30px;margin:4px 0}
+  .page.investment .price-box .amt{font-size:30px;margin:2px 0 4px}
+  .page.investment .price-was{font-size:17px;margin:2px 0 0}
   .page.investment .price-box .note{font-size:12px;line-height:1.35}
   .page.investment h3{margin-top:16px;margin-bottom:8px;font-size:17px}
   .page.investment table{margin:8px 0 14px;font-size:14px}
@@ -293,6 +297,7 @@
     .page.investment .price-box{padding:12px 8px}
     .page.investment .price-box .label{font-size:8px;letter-spacing:.06em}
     .page.investment .price-box .amt{font-size:21px}
+    .page.investment .price-was{font-size:14px}
     .page.investment .price-box .note{font-size:10px}
     .page.investment .chat.pink{font-size:13px;padding:10px 14px;max-width:100%}
     .page.investment .pix-brand.pix-wink{height:32px}
@@ -637,8 +642,9 @@ document.addEventListener('DOMContentLoaded',drawPix);
   <div class="price-hero">
     <div class="price-box">
       <div class="label">Puesta en marcha</div>
-      <div class="amt">USD 15.400</div>
-      <div class="note">ERP USD 13.400 + portal USD 2.000</div>
+      <div class="price-was">USD 18.000</div>
+      <div class="amt">USD 13.000</div>
+      <div class="note">ERP USD 11.000 + portal USD 2.000</div>
     </div>
     <div class="price-box accent">
       <div class="label">Licencia mensual</div>
@@ -650,9 +656,9 @@ document.addEventListener('DOMContentLoaded',drawPix);
   <h3>Desglose</h3>
   <table>
     <tr><th>Componente</th><th>Puesta en marcha</th><th>Licencia/mes</th></tr>
-    <tr><td>Sistema de gestión (ERP + canales)</td><td class="num">USD 13.400</td><td class="num">USD 1.250</td></tr>
+    <tr><td>Sistema de gestión (ERP + canales)</td><td class="num">USD 11.000</td><td class="num">USD 1.250</td></tr>
     <tr><td>Portal mayoristas (autogestión B2B)</td><td class="num">USD 2.000</td><td class="num">+ USD 250</td></tr>
-    <tr class="tot"><td>Total</td><td class="num">USD 15.400</td><td class="num">USD 1.500</td></tr>
+    <tr class="tot"><td>Total</td><td class="num"><span class="price-was inline">USD 18.000</span>USD 13.000</td><td class="num">USD 1.500</td></tr>
   </table>
 
   <h3>Puesta en marcha por etapas</h3>
