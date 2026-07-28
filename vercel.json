@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/p/stockin-lavanda",
+      "destination": "/p/stockin-lavanda/index.html"
+    }
+  ]
+}

@@ -1,0 +1,630 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Propuesta ┬À Sistema de Gesti├│n Stockin Lavanda ┬À Ail├®n Samp├│</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,400;0,6..12,600;0,6..12,700;0,6..12,900;1,6..12,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --night-plum:#3A1E66;
+    --soft-lilac:#E1ADFF;
+    --orchid-pink:#F656BF;
+    --orange:#FF6437;
+    --blue:#6882EB;
+    --blue-deep:#5C64F2;
+    --blue-soft:#AEBFF2;
+    --mint:#ABE3D2;
+    --yellow:#FAF26F;
+    --grey:#4D4F54;
+    --ink:#1a1030;
+    --paper:#ffffff;
+    --paper-2:#faf7fe;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Nunito Sans',system-ui,sans-serif;
+    color:var(--ink);
+    background:var(--night-plum);
+    line-height:1.6;
+    font-size:16px;
+    -webkit-font-smoothing:antialiased;
+  }
+  .mono{font-family:'DM Mono',monospace}
+  .page{
+    max-width:820px;
+    margin:0 auto;
+    background:var(--paper);
+    padding:64px 68px;
+    position:relative;
+  }
+  .page + .page{margin-top:28px}
+
+  h1,h2,h3{font-family:'Nunito Sans',sans-serif;font-weight:900;line-height:1.12;letter-spacing:-.02em}
+  h1{font-size:44px}
+  h2{font-size:27px;margin-bottom:18px;color:var(--night-plum)}
+  h3{font-size:19px;margin-bottom:10px;color:var(--night-plum);font-weight:700}
+  p{margin-bottom:14px}
+  strong{font-weight:700}
+  a{color:var(--orchid-pink)}
+
+  .paren{color:var(--orchid-pink);font-weight:400}
+  .eyebrow{
+    font-family:'DM Mono',monospace;
+    font-size:12px;letter-spacing:.18em;text-transform:uppercase;
+    color:var(--orchid-pink);margin-bottom:14px;display:block;
+  }
+  .lede{font-size:19px;color:var(--grey);font-weight:400}
+
+  /* COVER */
+  .cover{
+    background:var(--night-plum);
+    color:#fff;
+    min-height:920px;
+    display:flex;flex-direction:column;justify-content:space-between;
+    padding:72px 68px;
+  }
+  .cover .mark{font-size:15px;letter-spacing:.05em;font-weight:400;opacity:.85}
+  .cover .mark .paren{color:var(--soft-lilac)}
+  .cover h1{color:#fff;font-size:52px;max-width:15ch}
+  .cover h1 em{font-style:normal;color:var(--soft-lilac)}
+  .cover .sub{font-size:18px;color:var(--soft-lilac);margin-top:22px;max-width:40ch;font-weight:400}
+  .cover-foot{display:flex;justify-content:space-between;align-items:flex-end;font-size:13px;opacity:.8}
+  .cover-foot .mono{letter-spacing:.05em}
+  .binary{color:var(--orange);font-family:'DM Mono',monospace;font-size:13px;letter-spacing:.1em;opacity:.9}
+
+  /* generic blocks */
+  .kicker-line{width:44px;height:4px;background:var(--orchid-pink);margin-bottom:24px;border-radius:2px}
+  section{margin-bottom:40px}
+
+  .callout{
+    background:var(--paper-2);
+    border-left:4px solid var(--orchid-pink);
+    padding:20px 24px;border-radius:0 10px 10px 0;
+    margin:22px 0;font-size:17px;
+  }
+  .callout.plum{border-color:var(--night-plum)}
+  .callout.blue{border-color:var(--blue)}
+  .callout .big{font-size:20px;font-weight:700;color:var(--night-plum);line-height:1.3}
+
+  /* tables */
+  table{width:100%;border-collapse:collapse;margin:18px 0;font-size:15px}
+  th{
+    text-align:left;font-family:'DM Mono',monospace;font-size:11px;
+    letter-spacing:.1em;text-transform:uppercase;color:var(--grey);
+    padding:10px 12px;border-bottom:2px solid var(--night-plum);
+  }
+  td{padding:11px 12px;border-bottom:1px solid #eee;vertical-align:top}
+  td.num{text-align:right;font-family:'DM Mono',monospace;white-space:nowrap}
+  tr:last-child td{border-bottom:none}
+  .tot td{font-weight:900;color:var(--night-plum);border-top:2px solid var(--night-plum);font-size:16px}
+
+  .tag{display:inline-block;font-family:'DM Mono',monospace;font-size:11px;padding:2px 8px;border-radius:20px;white-space:nowrap;font-weight:500}
+  .t-ok{background:#e3f6ee;color:#1c7a54}
+  .t-build{background:#fff0e8;color:#c1471f}
+  .t-fase1{background:#fff0e8;color:#c1471f}
+  .t-fase2{background:#f3ebfc;color:#3A1E66}
+  .t-no{background:#f2f2f4;color:#6b6d72}
+
+  ul.clean{list-style:none;margin:14px 0}
+  ul.clean li{padding:7px 0 7px 26px;position:relative;border-bottom:1px solid #f2f2f2}
+  ul.clean li:before{content:"(a)";position:absolute;left:0;color:var(--orchid-pink);font-size:12px;top:9px}
+  ul.clean li:last-child{border-bottom:none}
+
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:18px 0}
+  .card{background:var(--paper-2);border-radius:12px;padding:22px}
+  .card h3{margin-bottom:6px}
+  .card .mono{font-size:12px;color:var(--grey);letter-spacing:.05em}
+
+  .compare{background:var(--night-plum);color:#fff;border-radius:16px;padding:30px 34px;margin:24px 0}
+  .compare h3{color:#fff;margin-bottom:16px}
+  .compare table{margin:0}
+  .compare th{color:var(--soft-lilac);border-color:rgba(255,255,255,.25)}
+  .compare td{color:#fff;border-color:rgba(255,255,255,.12)}
+  .compare td.num{color:var(--soft-lilac)}
+  .compare .win{color:var(--mint);font-weight:700}
+
+  .price-hero{display:flex;gap:20px;margin:24px 0}
+  .price-box{flex:1;border:2px solid var(--night-plum);border-radius:16px;padding:26px;text-align:center}
+  .price-box.accent{background:var(--night-plum);color:#fff;border-color:var(--night-plum)}
+  .price-box .label{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--grey)}
+  .price-box.accent .label{color:var(--soft-lilac)}
+  .price-box .amt{font-size:40px;font-weight:900;line-height:1.1;margin:8px 0;color:var(--night-plum)}
+  .price-box.accent .amt{color:#fff}
+  .price-box .note{font-size:13px;color:var(--grey)}
+  .price-box.accent .note{color:var(--soft-lilac)}
+
+  .foot{font-size:12px;color:var(--grey);border-top:1px solid #eee;padding-top:16px;margin-top:40px;display:flex;justify-content:space-between}
+  .foot .mono{letter-spacing:.05em}
+
+  .step{display:flex;gap:16px;margin-bottom:16px;align-items:flex-start}
+  .step-n{flex-shrink:0;width:34px;height:34px;border-radius:50%;background:var(--night-plum);color:#fff;display:flex;align-items:center;justify-content:center;font-family:'DM Mono',monospace;font-weight:500;font-size:14px}
+  .step-body h3{margin-bottom:3px}
+  .step-body p{margin-bottom:0;font-size:15px;color:var(--grey)}
+
+  /* ÔöÇÔöÇÔöÇ RECURSOS DE MARCA (del carrusel) ÔöÇÔöÇÔöÇ */
+
+  /* grilla de fondo tipo cuaderno */
+  .grid-bg{
+    position:absolute;inset:0;z-index:0;pointer-events:none;
+    background-image:
+      linear-gradient(rgba(225,173,255,.20) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(225,173,255,.20) 1px, transparent 1px);
+    background-size:46px 46px;
+  }
+  .page > *{position:relative;z-index:1}
+  .cover .grid-bg{
+    background-image:
+      linear-gradient(rgba(255,255,255,.07) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,.07) 1px, transparent 1px);
+  }
+
+  /* resaltador amarillo ÔÇö la firma de Ail├®n */
+  .hl{
+    background:linear-gradient(180deg, transparent 8%, var(--yellow) 8% 88%, transparent 88%);
+    padding:0 4px;box-decoration-break:clone;-webkit-box-decoration-break:clone;
+    color:var(--night-plum);font-weight:700;
+  }
+  /* frase con pin fucsia a los costados (como "mi prop├│sito:") */
+  .pinned{position:relative;display:inline-block;padding:0 10px}
+  .pinned:before,.pinned:after{
+    content:"";position:absolute;top:-3px;width:3px;height:calc(100% + 6px);
+    background:var(--orchid-pink);border-radius:2px;
+  }
+  .pinned:before{left:0}.pinned:after{right:0}
+  .pin-dot:before,.pin-dot:after{top:-8px;height:calc(100% + 14px)}
+  .pin-dot:before{box-shadow:0 -5px 0 -1px var(--orchid-pink)}
+
+  /* vi├▒etas con icono (a) en rosa */
+  ul.pins{list-style:none;margin:14px 0}
+  ul.pins li{padding:8px 0 8px 36px;position:relative;border-bottom:1px solid #f2f2f2}
+  ul.pins li:last-child{border-bottom:none}
+  ul.pins li:before{
+    content:"";position:absolute;left:0;top:10px;
+    width:24px;height:13px;
+    background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 407.04 228.96'%3E%3Cpath fill='%23F656BF' d='M67.15,133.32c6.29-35.28,49.56-73.42,88.99-80.13.71-.14.71,1,0,1.14-33.14,5.71-72.28,46.99-79.13,86.99-4.14,22.71,2.14,45.14,17.71,48.99.71.29.29,1.43-.43,1.14-19.85-4.57-31.28-33.85-27.14-58.13Z'/%3E%3Cpath fill='%23F656BF' d='M195.12,161.33c-8.09,0-14.46-2-19.11-6.01-4.64-4.01-6.96-9.26-6.96-15.77s2.3-12.12,6.9-15.89c4.6-3.77,11.23-5.65,19.88-5.65h24.4v-3.21c0-11.03-6.07-16.55-18.21-16.55-9.92,0-15.91,3.73-17.97,11.19h-13.45c1.19-7.06,4.58-12.54,10.18-16.43,5.59-3.89,12.75-5.83,21.49-5.83,9.92,0,17.52,2.34,22.79,7.02,5.28,4.68,7.92,11.43,7.92,20.24v31.78h6.43v13.81h-14.29v-10.95h-5c-2.46,3.81-5.83,6.81-10.12,8.99s-9.25,3.27-14.88,3.27ZM196.9,150.62c4.29,0,8.21-.87,11.79-2.62,3.57-1.75,6.39-4.13,8.45-7.14,2.06-3.01,3.1-6.31,3.1-9.88v-3.21h-23.57c-10,0-15,3.73-15,11.19,0,3.57,1.35,6.41,4.05,8.51,2.7,2.1,6.43,3.16,11.19,3.16Z'/%3E%3Cpath fill='%23F656BF' d='M252.47,190.31c33.42-5.71,72.42-47.14,79.27-86.99,4-22.71-2.29-45.14-17.57-48.99-1-.29-.29-1.57.43-1.14,19.85,4.57,31.28,33.85,26.85,58.13-6.29,35.28-49.42,73.42-88.99,80.13-.57.14-.57-1,0-1.14Z'/%3E%3C/svg%3E") no-repeat center / contain;
+  }
+
+  /* globo de chat (como el del dino) */
+  .chat{
+    position:relative;background:var(--night-plum);color:#fff;
+    border-radius:16px;padding:16px 22px;font-size:16px;line-height:1.45;
+    display:inline-block;max-width:80%;
+  }
+  .chat:after{
+    content:"";position:absolute;left:26px;bottom:-9px;
+    border:10px solid transparent;border-top-color:var(--night-plum);border-bottom:0;
+  }
+  .chat.pink{background:var(--orchid-pink)}
+  .chat.pink:after{border-top-color:var(--orchid-pink)}
+
+  /* pixel art inline (SVG) */
+  .pix{display:inline-block;vertical-align:middle;image-rendering:pixelated}
+  .pix-corner{position:absolute;z-index:2}
+
+  /* recursos gr├íficos de la propuesta (PNG) */
+  .pix-brand{
+    display:block;
+    flex-shrink:0;
+    image-rendering:pixelated;
+    image-rendering:crisp-edges;
+  }
+  .cover .pix-brand{
+    mix-blend-mode:lighten;
+  }
+  .pix-brand.pix-inline{
+    display:inline-block;
+    vertical-align:-3px;
+    margin-left:6px;
+  }
+  .brand-scene{
+    margin-top:30px;
+    display:flex;
+    align-items:flex-end;
+    gap:14px;
+  }
+
+  /* barra de ventana (sem├íforo mac) */
+  .winbar{display:flex;gap:7px;align-items:center;background:var(--night-plum);border-radius:10px 10px 0 0;padding:11px 16px}
+  .winbar i{width:11px;height:11px;border-radius:50%;display:inline-block}
+  .win-r{background:#FF5F57}.win-y{background:#FEBC2E}.win-g{background:#28C840}
+
+  @media print{
+    body{background:#fff}
+    .page{max-width:none;margin:0;padding:40px 44px;page-break-after:always}
+    .page+.page{margin-top:0}
+    .cover{min-height:100vh}
+  }
+  @media(max-width:640px){
+    .page{padding:38px 24px}
+    .cover{padding:44px 26px}
+    h1,.cover h1{font-size:34px}
+    .price-hero,.grid2{flex-direction:column;grid-template-columns:1fr}
+    .chat{max-width:100%}
+  }
+</style>
+</head>
+<body>
+
+<!-- assets pixel art reutilizables (SVG data) -->
+<script>
+window.PIX = {
+  dino: `<svg class="pix" width="W" height="H" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges"><path fill="#6882EB" d="M11 2h6v2h1v6h-2v1h-1v1h1v3h-2v-2h-1v2h-1v-2H8v3H6v-1H5v-2H3v-1H2v-4h1v-1h1v-1h1V6h1V5h1V4h1V3h2V2Z"/><path fill="#fff" d="M12 4h1v1h-1V4Zm-2 1h1v1h-1V5ZM9 7h1v1H9V7ZM8 9h1v1H8V9Z"/><path fill="#1a1030" d="M14 5h1v1h-1V5Z"/></svg>`,
+  alert: `<svg class="pix" width="W" height="H" viewBox="0 0 24 22" fill="none" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges"><path fill="#FF6437" d="M11 1h2v2h-2V1Zm-2 3h1v1h1V3h2v2h1v1h1v2h1v2h1v2h1v2h1v2h1v2H2v-2h1v-2h1v-2h1v-2h1V8h1V6h1V4Zm2 5h2v5h-2V9Zm0 6h2v2h-2v-2Z"/></svg>`,
+  smile: `<svg class="pix" width="W" height="H" viewBox="0 0 30 16" fill="none" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges"><path fill="#F656BF" d="M4 3h1V2h1v3H5v6h1v1h1v1H5v-1H4v-1H3V4h1V3Zm22 0h-1V2h-1v3h1v6h-1v1h-1v1h2v-1h1v-1h1V4h-1V3ZM8 4h1v1H8V4Zm2-1h1v1h-1V3Zm2 1h1v1h-1V4Zm2 1h1v1h-1V5Zm4 0h4v1h-4V5ZM9 10h2v1h-1v1h8v-1h-1v-1h2v1h-1v1h-1v1h-6v-1H9v-1Z"/></svg>`,
+  excl: `<svg class="pix" width="W" height="H" viewBox="0 0 30 16" fill="none" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges"><path fill="#6882EB" d="M4 3h2v2H5v6h1v2H4v-1H3V4h1V3Zm22 0h-2v2h1v6h-1v2h2v-1h1V4h-1V3ZM10 4h2v5h-2V4Zm0 6h2v2h-2v-2Zm8-6h2v5h-2V4Zm0 6h2v2h-2v-2Zm-6 3h6v2h-6v-2Z"/></svg>`
+};
+function drawPix(){
+  document.querySelectorAll('[data-pix]').forEach(function(el){
+    var k=el.getAttribute('data-pix'), w=el.getAttribute('data-w')||'40', h=el.getAttribute('data-h')||'40';
+    if(window.PIX[k]) el.innerHTML=window.PIX[k].replace(/W/g,w).replace(/H/g,h);
+  });
+}
+document.addEventListener('DOMContentLoaded',drawPix);
+</script>
+
+<!-- ÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉ PORTADA ÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉ -->
+<div class="page cover">
+  <div class="grid-bg"></div>
+  <div class="mark">s <span class="paren">(</span>a<span class="paren">)</span> ├│ &nbsp;┬À&nbsp; Sistemas a medida</div>
+  <div>
+    <span class="binary">01001110101</span>
+    <h1>Un sistema que <em>funciona</em> cuando vos no est├ís mirando.</h1>
+    <p class="sub">Propuesta de sistema de gesti├│n a medida para Stockin Lavanda. Provisi├│n, construcci├│n y operaci├│n.</p>
+    <div class="brand-scene">
+      <img class="pix-brand" src="/assets/propuestas/stockin-lavanda/recursos-graficosdinosaurio.png" alt="" width="56" height="56">
+      <div class="chat">Hola, Stockin <img class="pix-brand pix-inline" src="/assets/propuestas/stockin-lavanda/recursos-graficosface-guino.png" alt="" height="24"><br>Esto es lo que arm├® para ustedes.</div>
+    </div>
+  </div>
+  <div class="cover-foot">
+    <div>
+      <div class="mono">STOCKIN LAVANDA</div>
+      <div style="opacity:.6">At. equipo directivo</div>
+    </div>
+    <div style="text-align:right">
+      <div class="mono">AIL├ëN SAMP├ô</div>
+      <div style="opacity:.6">www.ailensampo.com.ar ┬À Julio 2026 ┬À v1</div>
+    </div>
+  </div>
+</div>
+
+<!-- ÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉ 1 ┬À DIAGN├ôSTICO ÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉ -->
+<div class="page">
+  <div class="grid-bg"></div>
+  <span class="eyebrow">01 ÔÇö Diagn├│stico</span>
+  <div class="kicker-line"></div>
+  <h2>No es que falte intentarlo. Es que nada se adapt├│.</h2>
+
+  <p class="lede">Stockin no se qued├│ quieta. Fue probando sistemas, herramientas, soluciones, buscando la manera de ordenar la operaci├│n y crecer.</p>
+
+  <p>Hoy la informaci├│n de la empresa vive repartida entre planillas, cabezas y herramientas que no se hablan entre s├¡, y el tiempo estrat├®gico va apagando incendios.</p>
+
+  <p>Stockin necesita un sistema que se adapte a su funcionamiento, y no que ├®l se adapte a un sistema que no le favorece.</p>
+
+  <p>Un negocio que factura a este volumen tiene espacio para crecer, y lo que pone el techo es la operaci├│n manual, no el mercado. Y el sistema que dise├▒o elimina ese techo y crece con lo que vengaÔÇª Lo que la empresa haga con el espacio que queda es una decisi├│n comercial, no operativa.</p>
+
+  <div class="foot">
+    <span class="mono">s (a) ├│</span>
+    <span>Propuesta Stockin Lavanda ┬À 01</span>
+  </div>
+</div>
+
+<!-- ÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉ 2 ┬À QU├ë HACE EL SISTEMA ÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉ -->
+<div class="page">
+  <div class="grid-bg"></div>
+  <span class="eyebrow">02 ÔÇö Qu├® hace el sistema</span>
+  <div class="kicker-line"></div>
+
+  <p class="lede">Esta propuesta parte de algo que ya existe. El sistema no arranca de cero: est├í construido alrededor de la operaci├│n real de la empresa, y lo llevo a cabo de forma que crezca y se adapte a medida que el negocio cambia. Y est├í pensado para el terreno donde Stockin trabaja de verdad: facturaci├│n electr├│nica ARCA, IVA, Ingresos Brutos, Convenio Multilateral, retenciones.</p>
+
+  <p>El sistema conecta todo lo que hoy est├í separado en un solo lugar con una sola l├│gica.</p>
+
+  <p><strong>Esto es lo que suceder├í en el negocio:</strong></p>
+
+  <div class="grid2">
+    <div class="card">
+      <h3>Vender sin fricci├│n</h3>
+      <p class="mono">Pedidos, caja por local, cobros, condiciones comerciales autom├íticas y facturaci├│n electr├│nica ARCA ÔÇö en un mismo flujo.</p>
+    </div>
+    <div class="card">
+      <h3>Saber qu├® comprar</h3>
+      <p class="mono">Stock real por dep├│sito y por local, punto de pedido y valuaci├│n. Se acaba el quiebre por no mirar a tiempo.</p>
+    </div>
+    <div class="card">
+      <h3>Cobrar y pagar con orden</h3>
+      <p class="mono">Cuentas corrientes de clientes y proveedores, antig├╝edad de deuda, cheques y posici├│n de fondos.</p>
+    </div>
+    <div class="card">
+      <h3>Vender en todos lados</h3>
+      <p class="mono">Shopify y Mercado Libre sincronizados con el mismo stock y los mismos precios. Un solo cat├ílogo, muchos canales.</p>
+    </div>
+  </div>
+
+  <div class="callout blue">
+    <strong>Un solo cat├ílogo, todos los canales.</strong> Shopify y Mercado Libre sincronizados de forma nativa con el mismo stock y los mismos precios del sistema. Se carga una vez y vive en todos lados ÔÇö sin doble carga, sin descuadres entre lo que se vende online y lo que hay en el local.
+  </div>
+
+  <p>El trabajo es sutil, casi imperceptible. Pero es lo que hace que el negocio siga en pie cuando los due├▒os est├ín en otra cosa.</p>
+
+  <div class="foot">
+    <span class="mono">s (a) ├│</span>
+    <span>Propuesta Stockin Lavanda ┬À 02</span>
+  </div>
+</div>
+
+<!-- ÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉ 3 ┬À ALCANCE ÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉ -->
+<div class="page">
+  <div class="grid-bg"></div>
+  <span class="eyebrow">03 ÔÇö Alcance funcional</span>
+  <div class="kicker-line"></div>
+  <h2>Todo lo que necesita el negocio, m├│dulo por m├│dulo.</h2>
+
+  <p style="font-size:14px;color:var(--grey)">
+    <span class="tag t-fase1">Fase 1</span> alcance principal del proyecto &nbsp;
+    <span class="tag t-fase2">Fase 2</span> se suma cuando el negocio lo pida &nbsp;
+    <span class="tag t-no">No aplica</span> fuera de alcance por dise├▒o
+  </p>
+
+  <h3 style="margin-top:24px">Ventas</h3>
+  <table>
+    <tr><td>Pedidos multil├¡nea y multicanal</td><td class="num"><span class="tag t-fase1">Fase 1</span></td></tr>
+    <tr><td>Facturaci├│n electr├│nica ARCA (CAE)</td><td class="num"><span class="tag t-fase1">Fase 1</span></td></tr>
+    <tr><td>Condiciones comerciales autom├íticas (descuentos, N+1, listas)</td><td class="num"><span class="tag t-fase1">Fase 1</span></td></tr>
+    <tr><td>Notas de D├®bito y Cr├®dito</td><td class="num"><span class="tag t-fase1">Fase 1</span></td></tr>
+    <tr><td>Control de cr├®dito otorgado y deuda de clientes</td><td class="num"><span class="tag t-fase1">Fase 1</span></td></tr>
+    <tr><td>Remitos</td><td class="num"><span class="tag t-fase1">Fase 1</span></td></tr>
+    <tr><td>Registro de percepciones y retenciones IVA/IIBB sufridas</td><td class="num"><span class="tag t-fase1">Fase 1</span></td></tr>
+    <tr><td>Ventas discriminadas por jurisdicci├│n (base Convenio Multilateral)</td><td class="num"><span class="tag t-fase1">Fase 1</span></td></tr>
+  </table>
+
+  <h3>Deudores (cuentas por cobrar)</h3>
+  <table>
+    <tr><td>Cuenta corriente por cliente, cobros parciales y totales</td><td class="num"><span class="tag t-fase1">Fase 1</span></td></tr>
+    <tr><td>Resumen de cuenta imprimible</td><td class="num"><span class="tag t-fase1">Fase 1</span></td></tr>
+    <tr><td>Antig├╝edad de deuda (aging)</td><td class="num"><span class="tag t-fase1">Fase 1</span></td></tr>
+    <tr><td>Subdiario de IVA Ventas</td><td class="num"><span class="tag t-fase1">Fase 1</span></td></tr>
+    <tr><td>Cartera de valores (cheques recibidos)</td><td class="num"><span class="tag t-fase1">Fase 1</span></td></tr>
+  </table>
+
+  <h3>Compras y Proveedores</h3>
+  <table>
+    <tr><td>├ôrdenes de compra, recepci├│n y factura de compra</td><td class="num"><span class="tag t-fase1">Fase 1</span></td></tr>
+    <tr><td>Cuenta corriente de proveedores, ├│rdenes de pago</td><td class="num"><span class="tag t-fase1">Fase 1</span></td></tr>
+    <tr><td>Subdiario de IVA Compras</td><td class="num"><span class="tag t-fase1">Fase 1</span></td></tr>
+    <tr><td>Retenciones impositivas (IVA, Gan., IIBB)</td><td class="num"><span class="tag t-fase1">Fase 1</span></td></tr>
+  </table>
+
+  <div class="foot">
+    <span class="mono">s (a) ├│</span>
+    <span>Propuesta Stockin Lavanda ┬À 03</span>
+  </div>
+</div>
+
+<!-- ÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉ 3b ┬À ALCANCE cont ÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉ -->
+<div class="page">
+  <div class="grid-bg"></div>
+  <span class="eyebrow">03 ÔÇö Alcance funcional (cont.)</span>
+  <div class="kicker-line"></div>
+
+  <h3>Inventarios</h3>
+  <table>
+    <tr><td>Stock por producto y por local, traspasos, ajuste masivo</td><td class="num"><span class="tag t-fase1">Fase 1</span></td></tr>
+    <tr><td>Kits y f├│rmulas de composici├│n</td><td class="num"><span class="tag t-fase1">Fase 1</span></td></tr>
+    <tr><td>Inventario valorizado</td><td class="num"><span class="tag t-fase1">Fase 1</span></td></tr>
+    <tr><td>Ficha Kardex por art├¡culo</td><td class="num"><span class="tag t-fase1">Fase 1</span></td></tr>
+    <tr><td>Punto de pedido y stock m├¡nimo</td><td class="num"><span class="tag t-fase1">Fase 1</span></td></tr>
+    <tr><td>Toma de inventario (conteo f├¡sico)</td><td class="num"><span class="tag t-fase2">Fase 2</span></td></tr>
+  </table>
+
+  <h3>Financiera / Tesorer├¡a</h3>
+  <table>
+    <tr><td>Caja por local: apertura, cierre, arqueo, conceptos</td><td class="num"><span class="tag t-fase1">Fase 1</span></td></tr>
+    <tr><td>Cuentas bancarias en pesos y d├│lares</td><td class="num"><span class="tag t-fase1">Fase 1</span></td></tr>
+    <tr><td>Cheques: dep├│sito, cartera, rechazos</td><td class="num"><span class="tag t-fase1">Fase 1</span></td></tr>
+    <tr><td>Conciliaci├│n bancaria y posici├│n de fondos</td><td class="num"><span class="tag t-fase1">Fase 1</span></td></tr>
+  </table>
+
+  <h3>Cierre contable</h3>
+  <table>
+    <tr><td>Export de subdiarios para el estudio contable<br><span style="font-size:13px;color:var(--grey)">(IVA Ventas, IVA Compras, cobranzas, pagos ÔÇö en formato importable)</span></td><td class="num"><span class="tag t-fase1">Fase 1</span></td></tr>
+    <tr><td>Motor contable completo (asientos, mayor, balances)</td><td class="num"><span class="tag t-no">No aplica</span></td></tr>
+  </table>
+  <div class="callout">
+    <strong>Una decisi├│n de criterio:</strong> el sistema no incluye un motor contable completo, y es a prop├│sito. El estudio contable de Stockin ya tiene su software y su m├®todo. Lo que necesita todos los meses son cuatro archivos ÔÇösubdiarios de IVA, cobranzas y pagos, en formato importableÔÇö y eso es lo que el sistema le entrega, prolijo y a tiempo. El sistema informa y calcula; la contabilidad la firma quien corresponde.
+  </div>
+
+  <h3>Canales digitales</h3>
+  <table>
+    <tr><td>Shopify ÔÇö cat├ílogo, stock, precios y pedidos sincronizados</td><td class="num"><span class="tag t-fase1">Fase 1</span></td></tr>
+    <tr><td>Mercado Libre ÔÇö publicaciones, ventas, stock</td><td class="num"><span class="tag t-fase1">Fase 1</span></td></tr>
+  </table>
+
+  <h3>Transversales</h3>
+  <table>
+    <tr><td>Roles y permisos por sucursal, auditor├¡a de operaciones</td><td class="num"><span class="tag t-fase1">Fase 1</span></td></tr>
+    <tr><td>Documentos adjuntos en comprobantes</td><td class="num"><span class="tag t-fase2">Fase 2</span></td></tr>
+    <tr><td>Export por jurisdicci├│n para liquidaci├│n IIBB/CM del contador</td><td class="num"><span class="tag t-fase1">Fase 1</span></td></tr>
+  </table>
+
+  <div class="foot">
+    <span class="mono">s (a) ├│</span>
+    <span>Propuesta Stockin Lavanda ┬À 04</span>
+  </div>
+</div>
+
+<!-- ÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉ 4 ┬À IMPLEMENTACI├ôN ÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉ -->
+<div class="page">
+  <div class="grid-bg"></div>
+  <span class="eyebrow">04 ÔÇö Plan de implementaci├│n</span>
+  <div class="kicker-line"></div>
+  <h2>Primero facturar. Despu├®s, todo lo dem├ís.</h2>
+
+  <p>La prioridad de Stockin es clara: los puntos de venta tienen que facturar electr├│nicamente en producci├│n. Por eso el plan arranca por ah├¡. Cada etapa se entrega, se prueba y se cobra por separado ÔÇö el negocio ve el avance real contra cada pago.</p>
+
+  <div style="margin-top:26px">
+    <div class="step"><div class="step-n">1</div><div class="step-body"><h3>Facturaci├│n en producci├│n &nbsp;<span class="tag t-build">prioridad</span></h3><p>Base de datos productiva (PostgreSQL), HTTPS y dominio, backups verificados, CAE, puntos de venta configurados en ARCA, y el circuito pedido ÔåÆ caja ÔåÆ cobro ÔåÆ factura electr├│nica funcionando de punta a punta. Incluye Notas de Cr├®dito/D├®bito y captura de jurisdicci├│n por venta. <strong>Con esta etapa, Stockin puede reemplazar al sistema anterior y facturar.</strong></p></div></div>
+    <div class="step"><div class="step-n">2</div><div class="step-body"><h3>Registro fiscal de percepciones y retenciones sufridas</h3><p>Registro de las percepciones y retenciones de IVA e IIBB que le practican a Stockin. Subdiarios de IVA Ventas.</p></div></div>
+    <div class="step"><div class="step-n">3</div><div class="step-body"><h3>Registro fiscal de percepciones y retenciones sufridas</h3><p>Registro de las percepciones y retenciones de IVA e IIBB que le practican a Stockin, para no perder cr├®dito fiscal. Subdiarios de IVA Ventas.</p></div></div>
+    <div class="step"><div class="step-n">4</div><div class="step-body"><h3>Tesorer├¡a</h3><p>Cuentas bancarias, cartera de cheques, conciliaci├│n y posici├│n de fondos consolidada. El dinero deja de desaparecer del sistema cuando sale del mostrador.</p></div></div>
+    <div class="step"><div class="step-n">5</div><div class="step-body"><h3>Inventario, cobranzas y export Convenio Multilateral</h3><p>Valuaci├│n, Kardex, punto de pedido, antig├╝edad de deuda, resumen de cuenta, y export de ventas por jurisdicci├│n para la liquidaci├│n de IIBB/CM del contador.</p></div></div>
+    <div class="step"><div class="step-n">6</div><div class="step-body"><h3>Canales</h3><p>Shopify productivo validado y Mercado Libre integrado. Un cat├ílogo, todos los canales, mismo stock.</p></div></div>
+  </div>
+
+  <div class="callout blue">
+    <strong>Transici├│n sin riesgo:</strong> el sistema anterior no se apaga el mismo d├¡a que enciende el nuevo. Ambas facturaciones corren en paralelo una o dos semanas, hasta confirmar que cada CAE es v├ílido en ARCA y que la numeraci├│n es correcta. El viejo se da de baja solo cuando el nuevo est├í probado en la operaci├│n real.
+  </div>
+
+  <div class="foot">
+    <span class="mono">s (a) ├│</span>
+    <span>Propuesta Stockin Lavanda ┬À 05</span>
+  </div>
+</div>
+
+<!-- ÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉ 5 ┬À OPERACI├ôN ÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉ -->
+<div class="page">
+  <div class="grid-bg"></div>
+  <span class="eyebrow">05 ÔÇö Licencia y operaci├│n</span>
+  <div class="kicker-line"></div>
+  <h2>Una licencia mensual: el sistema vivo, actualizado y operando.</h2>
+
+  <p>El sistema es un servicio, no un archivo que se entrega y se abandona. La licencia mensual es el derecho a usarlo con todo funcionando detr├ís: la infraestructura corriendo, los datos respaldados, el sistema monitoreado, y la evoluci├│n continua a medida que el negocio y la normativa cambian. Tiene tres capas:</p>
+
+  <ul class="pins">
+    <li><strong>Uso y operaci├│n.</strong> Licencia de uso del sistema, infraestructura gestionada, backups verificados, monitoreo, uptime y horas de soporte incluidas por mes.</li>
+    <li><strong>Evoluci├│n.</strong> El sistema no queda congelado. Se mantiene al d├¡a con los cambios de ARCA y de las plataformas, y suma mejoras. Cada canal activo (Shopify, Mercado Libre, y los que se agreguen) es parte del servicio vivo.</li>
+    <li><strong>Consumo.</strong> Cuando se sumen capacidades con IA o mensajer├¡a, el consumo se traslada con transparencia.</li>
+  </ul>
+
+  <div class="callout plum">
+    Como cualquier sistema de gesti├│n, la licencia es la condici├│n para usarlo. Y como debe ser: <strong>los datos del negocio son siempre de Stockin.</strong> Clientes, ventas, stock e historial fiscal se pueden exportar en cualquier momento, en formato est├índar. El negocio nunca queda reh├®n de su propia informaci├│n.
+  </div>
+
+  <h3 style="margin-top:28px">El sistema crece con el negocio</h3>
+  <p>La arquitectura est├í pensada para sumar capacidades sin rehacer nada. Cada una corre sobre la misma base:</p>
+  <table>
+    <tr><th>Momento</th><th>Capacidades activas</th><th>Licencia mensual</th></tr>
+    <tr><td>Go-live</td><td>ERP + Shopify</td><td class="num">USD 1.200</td></tr>
+    <tr><td>+6 meses</td><td>+ Mercado Libre</td><td class="num">USD 1.350</td></tr>
+    <tr><td>+12 meses</td><td>+ WhatsApp con agente</td><td class="num">USD 1.600 <span style="font-size:12px;color:var(--grey)">+ consumo</span></td></tr>
+    <tr><td>+18 meses</td><td>+ CRM y automatizaciones</td><td class="num">USD 1.800 <span style="font-size:12px;color:var(--grey)">+ consumo</span></td></tr>
+  </table>
+  <p style="font-size:14px;color:var(--grey)">Sumar un canal, un agente o un CRM es una decisi├│n de negocio simple, no un proyecto nuevo. Todo corre sobre la misma infraestructura.</p>
+
+  <div class="foot">
+    <span class="mono">s (a) ├│</span>
+    <span>Propuesta Stockin Lavanda ┬À 06</span>
+  </div>
+</div>
+
+<!-- ÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉ 6 ┬À INVERSI├ôN ÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉ -->
+<div class="page">
+  <div class="grid-bg"></div>
+  <span class="eyebrow">06 ÔÇö Inversi├│n</span>
+  <div class="kicker-line"></div>
+  <h2>Una puesta en marcha a medida. Una licencia que acompa├▒a.</h2>
+
+  <div class="price-hero">
+    <div class="price-box">
+      <div class="label">Puesta en marcha</div>
+      <div class="amt">USD 13.000</div>
+    </div>
+    <div class="price-box accent">
+      <div class="label">Licencia mensual</div>
+      <div class="amt">USD 1.200</div>
+      <div class="note">Desde go-live ┬À uso + operaci├│n + evoluci├│n</div>
+    </div>
+  </div>
+
+  <h3>Puesta en marcha por etapas</h3>
+  <table>
+    <tr><th>Etapa</th><th>Bloque</th></tr>
+    <tr><td>1</td><td>Facturaci├│n en producci├│n <span class="tag t-build">prioridad</span></td></tr>
+    <tr><td>2</td><td>Registro de percepciones y retenciones sufridas</td></tr>
+    <tr><td>3</td><td>Registro fiscal de percepciones y retenciones sufridas</td></tr>
+    <tr><td>4</td><td>Tesorer├¡a</td></tr>
+    <tr><td>5</td><td>Inventario, cobranzas y export CM</td></tr>
+    <tr><td>6</td><td>Canales (ML + Shopify prod.)</td></tr>
+  </table>
+
+  <div style="display:flex;align-items:flex-end;gap:12px;margin-top:22px">
+    <div class="chat pink" style="font-size:15px">Sin licencias por usuario, sin sorpresas. Sum├ís gente al equipo y el sistema no te cobra de m├ís <span data-pix="smile" data-w="38" data-h="20" style="margin-left:2px"></span></div>
+  </div>
+
+  <p style="font-size:13px;color:var(--grey)">Valores en d├│lares, sin impuestos. Conversi├│n a pesos al tipo de cambio vendedor BNA del d├¡a de cada factura.</p>
+
+  <div class="foot">
+    <span class="mono">s (a) ├│</span>
+    <span>Propuesta Stockin Lavanda ┬À 07</span>
+  </div>
+</div>
+
+<!-- ÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉ 7 ┬À PROPIEDAD + FUERA DE ALCANCE ÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉ -->
+<div class="page">
+  <div class="grid-bg"></div>
+  <span class="eyebrow">07 ÔÇö A medida, datos y l├¡mites</span>
+  <div class="kicker-line"></div>
+  <h2>A medida, y con tus datos siempre en tu poder.</h2>
+
+  <p>El sistema se construye sobre la operaci├│n real de Stockin. No es una plantilla configurada: es un sistema pensado para c├│mo trabaja este negocio, y para el terreno donde opera.</p>
+
+  <ul class="pins">
+    <li><strong>Tus datos son tuyos, siempre.</strong> Clientes, ventas, stock, historial fiscal ÔÇö todo es de Stockin y se puede exportar en cualquier momento, en formato est├índar. Pase lo que pase con la relaci├│n, los datos se van con el negocio.</li>
+    <li><strong>Arquitectura moderna, ventaja operativa.</strong> Tecnolog├¡a actual al servicio del negocio ÔÇö flexible, escalable y pensada para durar.</li>
+    <li><strong>Puestos de trabajo ilimitados.</strong> El equipo crece; el sistema acompa├▒a, sin costo por usuario.</li>
+    <li><strong>Evoluciona con el negocio.</strong> No es una versi├│n congelada: se mantiene, se actualiza y suma capacidades a medida que Stockin las necesita.</li>
+    <li><strong>Equipo de soporte que acompa├▒a la operaci├│n d├¡a a d├¡a.</strong> Arquitectura, construcci├│n, evoluci├│n y soporte.</li>
+  </ul>
+
+  <h3 style="margin-top:30px">Para tener en cuenta</h3>
+  <p style="font-size:15px;color:var(--grey)">Algunas cosas que quedan del lado de Stockin:</p>
+  <ul class="pins">
+    <li><strong>Contenido y copy comercial.</strong> Los textos del negocio los provee Stockin.</li>
+    <li><strong>Dise├▒o gr├ífico e identidad de marca.</strong> La interfaz del sistema s├¡ est├í incluida; el logo, la paleta y la identidad visual del negocio, no.</li>
+    <li><strong>Migraci├│n de datos hist├│ricos.</strong> Se cotiza aparte seg├║n el volumen y estado de los datos actuales.</li>
+    <li><strong>Cuentas de servicios a nombre de Stockin.</strong> Facturaci├│n electr├│nica, hosting, Shopify y Mercado Libre se contratan a nombre del negocio. El sistema los usa y los opera; la titularidad es de Stockin.</li>
+  </ul>
+
+  <div class="callout blue">
+    El sistema <strong>informa y calcula; no asesora.</strong> No reemplaza al contador ni emite opini├│n fiscal, contable o legal. Ordena los datos para que quien decide, decida mejor.
+  </div>
+
+  <div class="foot">
+    <span class="mono">s (a) ├│</span>
+    <span>Propuesta Stockin Lavanda ┬À 08</span>
+  </div>
+</div>
+
+<!-- ÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉ 8 ┬À CIERRE ÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉ -->
+<div class="page cover" style="min-height:760px">
+  <div class="grid-bg"></div>
+  <div class="mark">s <span class="paren">(</span>a<span class="paren">)</span> ├│</div>
+  <div>
+    <span class="binary">Say Hi ( ) al sistema que trabaja por vos</span>
+    <h1 style="font-size:40px">Tu negocio funcionando mientras vos est├ís en otra cosa.<br><em>No es magia. Es arquitectura.</em></h1>
+    <div style="margin-top:34px">
+      <table style="max-width:420px">
+        <tr><td style="color:#fff;border-color:rgba(255,255,255,.15)">Vigencia</td><td style="color:var(--soft-lilac);border-color:rgba(255,255,255,.15)">30 d├¡as desde la emisi├│n</td></tr>
+      </table>
+    </div>
+    <div class="brand-scene">
+      <img class="pix-brand" src="/assets/propuestas/stockin-lavanda/recursos-graficosdinosaurio.png" alt="" width="52" height="52">
+      <div class="chat">┬┐Empezamos? <img class="pix-brand pix-inline" src="/assets/propuestas/stockin-lavanda/recursos-graficosface-guino.png" alt="" height="22"></div>
+    </div>
+  </div>
+  <div class="cover-foot">
+    <div>
+      <div class="mono">AIL├ëN SAMP├ô</div>
+      <div style="opacity:.6">www.ailensampo.com.ar</div>
+      <div style="opacity:.6;margin-top:2px">Arquitecta de sistemas digitales a medida</div>
+    </div>
+    <div style="text-align:right;opacity:.6">
+      <div class="mono">Julio 2026 ┬À v1</div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
