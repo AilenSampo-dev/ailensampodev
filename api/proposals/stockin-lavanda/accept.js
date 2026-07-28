@@ -1,5 +1,6 @@
 const { getClientIp, hashIp } = require("../_lib/ip");
 const { loadStore, saveStore } = require("../_lib/store");
+const { notifyAccepted } = require("../_lib/notify");
 
 module.exports = async function handler(req, res) {
   if (req.method !== "POST") {
@@ -24,6 +25,7 @@ module.exports = async function handler(req, res) {
   store.acceptedIpHash = ipHash;
 
   await saveStore(store);
+  await notifyAccepted({ ipHash, acceptedAt: now });
 
   return res.status(200).json({
     ok: true,

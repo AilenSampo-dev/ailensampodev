@@ -1,5 +1,6 @@
 const { getClientIp, hashIp } = require("../_lib/ip");
 const { loadStore, saveStore } = require("../_lib/store");
+const { notifyOpen } = require("../_lib/notify");
 
 async function resolveGeo(ip) {
   if (!ip || ip === "unknown") return {};
@@ -48,6 +49,12 @@ module.exports = async function handler(req, res) {
   }
 
   await saveStore(store);
+  await notifyOpen({
+    ipHash,
+    openedAt: now,
+    geoCountry: geo.geoCountry,
+    geoCity: geo.geoCity,
+  });
 
   return res.status(200).json({ ok: true });
 };
