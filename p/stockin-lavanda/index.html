@@ -79,6 +79,8 @@
   .cover .mark .paren{color:var(--soft-lilac)}
   .cover h1{color:#fff;font-size:52px;max-width:15ch}
   .cover h1 em{font-style:normal;color:var(--soft-lilac)}
+  .cover.cover-close{min-height:620px}
+  .cover.cover-close h1{font-size:30px;max-width:none;line-height:1.18}
   .cover .sub{font-size:18px;color:var(--soft-lilac);margin-top:22px;max-width:40ch;font-weight:400}
   .cover-foot{display:flex;justify-content:space-between;align-items:flex-end;font-size:13px;opacity:.8}
   .cover-foot .mono{letter-spacing:.05em}
@@ -280,6 +282,7 @@
     .page + .page{margin-top:16px}
     .cover{padding:40px 22px;min-height:auto}
     h1,.cover h1{font-size:32px;line-height:1.08}
+    .cover.cover-close h1{font-size:24px;line-height:1.2}
     h2{font-size:22px}
     .lede{font-size:16px}
     .price-hero,.grid2{flex-direction:column;grid-template-columns:1fr}
@@ -683,12 +686,12 @@ document.addEventListener('DOMContentLoaded',drawPix);
 </div>
 
 <!-- ══════════ 8 · CIERRE ══════════ -->
-<div class="page cover" style="min-height:760px">
+<div class="page cover cover-close">
   <div class="grid-bg"></div>
   <div class="mark">s <span class="paren">(</span>a<span class="paren">)</span> ó</div>
   <div>
     <span class="binary">Say Hi ( ) al sistema que trabaja por vos</span>
-    <h1 style="font-size:40px">Tu negocio funcionando mientras vos estás en otra cosa.<br><em>No es magia. Es arquitectura.</em></h1>
+    <h1>Tu negocio funcionando mientras vos estás en otra cosa.<br><em>No es magia. Es arquitectura.</em></h1>
     <div style="margin-top:34px">
       <table style="max-width:420px">
         <tr><td style="color:#fff;border-color:rgba(255,255,255,.15)">Vigencia</td><td style="color:var(--soft-lilac);border-color:rgba(255,255,255,.15)">30 días desde la emisión</td></tr>
