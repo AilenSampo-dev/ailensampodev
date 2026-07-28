@@ -3,11 +3,24 @@
     {
       "source": "/p/stockin-lavanda",
       "destination": "/p/stockin-lavanda/index.html"
+    },
+    {
+      "source": "/p/mash",
+      "destination": "/p/mash/index.html"
     }
   ],
   "headers": [
     {
       "source": "/p/stockin-lavanda/(.*)",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/html; charset=utf-8"
+        }
+      ]
+    },
+    {
+      "source": "/p/mash/(.*)",
       "headers": [
         {
           "key": "Content-Type",
