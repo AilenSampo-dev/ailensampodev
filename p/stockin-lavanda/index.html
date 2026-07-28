@@ -595,7 +595,7 @@ document.addEventListener('DOMContentLoaded',drawPix);
   <p>La arquitectura está pensada para sumar capacidades sin rehacer nada. Cada una corre sobre la misma base:</p>
   <table>
     <tr><th>Momento</th><th>Capacidades activas</th><th>Licencia mensual</th></tr>
-    <tr><td>Go-live</td><td>ERP + Shopify</td><td class="num">USD 1.200</td></tr>
+    <tr><td>Go-live</td><td>ERP + Shopify</td><td class="num">USD 1.250</td></tr>
     <tr><td>+6 meses</td><td>+ Mercado Libre</td><td class="num">USD 1.350</td></tr>
     <tr><td>+12 meses</td><td>+ WhatsApp con agente</td><td class="num">USD 1.600 <span style="font-size:12px;color:var(--grey)">+ consumo</span></td></tr>
     <tr><td>+18 meses</td><td>+ CRM y automatizaciones</td><td class="num">USD 1.800 <span style="font-size:12px;color:var(--grey)">+ consumo</span></td></tr>
@@ -618,11 +618,11 @@ document.addEventListener('DOMContentLoaded',drawPix);
   <div class="price-hero">
     <div class="price-box">
       <div class="label">Puesta en marcha</div>
-      <div class="amt">USD 13.000</div>
+      <div class="amt">USD 13.400</div>
     </div>
     <div class="price-box accent">
       <div class="label">Licencia mensual</div>
-      <div class="amt">USD 1.200</div>
+      <div class="amt">USD 1.250</div>
       <div class="note">Desde go-live · uso + operación + evolución</div>
     </div>
   </div>
@@ -715,6 +715,7 @@ document.addEventListener('DOMContentLoaded',drawPix);
   </div>
 </div>
 
+
 <div id="as-proposal-actions" style="position:fixed;bottom:0;left:0;right:0;z-index:9999;padding:12px 16px;background:rgba(26,16,48,.92);backdrop-filter:blur(8px);display:flex;gap:10px;justify-content:center;align-items:center;font-family:system-ui,sans-serif">
   <button id="as-proposal-accept" type="button" style="padding:12px 20px;border:none;background:#F656BF;color:#fff;font:inherit;font-weight:700;cursor:pointer">Aceptar propuesta</button>
   <span id="as-proposal-status" style="color:#E1ADFF;font-size:14px"></span>
@@ -723,22 +724,40 @@ document.addEventListener('DOMContentLoaded',drawPix);
 <script>
 (function(){
   var slug = "stockin-lavanda";
+  var storageKey = "as-proposal-" + slug + "-accepted";
   var params = new URLSearchParams(window.location.search);
-  fetch("/api/proposals/" + slug + "/open?" + params.toString(), { method: "POST" }).catch(function(){});
   var btn = document.getElementById("as-proposal-accept");
   var status = document.getElementById("as-proposal-status");
+
+  function showAccepted() {
+    if (!btn || !status) return;
+    btn.style.display = "none";
+    status.textContent = "Propuesta aceptada";
+    try { localStorage.setItem(storageKey, "1"); } catch (e) {}
+  }
+
+  try {
+    if (localStorage.getItem(storageKey) === "1") showAccepted();
+  } catch (e) {}
+
+  fetch("/api/proposals/" + slug + "/open?" + params.toString(), { method: "POST" })
+    .then(function(r){ return r.json().catch(function(){ return {}; }); })
+    .then(function(d){ if (d && d.status === "accepted") showAccepted(); })
+    .catch(function(){});
+
+  if (!btn) return;
+
   btn.addEventListener("click", function(){
     btn.disabled = true;
     fetch("/api/proposals/" + slug + "/accept", { method: "POST" })
-      .then(function(r){ return r.json().then(function(d){ return { ok: r.ok, d: d }; }); })
+      .then(function(r){ return r.json().then(function(d){ return { ok: r.ok, status: r.status, d: d }; }); })
       .then(function(res){
-        if (!res.ok) {
-          status.textContent = res.d.error || "No se pudo aceptar.";
-          btn.disabled = false;
+        if (res.ok || res.status === 409) {
+          showAccepted();
           return;
         }
-        btn.style.display = "none";
-        status.textContent = "Propuesta aceptada";
+        status.textContent = res.d.error || "No se pudo aceptar.";
+        btn.disabled = false;
       })
       .catch(function(){
         status.textContent = "Error de conexión.";
@@ -748,5 +767,4 @@ document.addEventListener('DOMContentLoaded',drawPix);
 })();
 </script>
 </body>
-</html>
 </html>

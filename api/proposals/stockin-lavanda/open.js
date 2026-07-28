@@ -64,5 +64,9 @@ module.exports = async function handler(req, res) {
     });
   }
 
-  return res.status(200).json({ ok: true });
+  return res.status(200).json({
+    ok: true,
+    status: store.status,
+    acceptedAt: store.acceptedAt,
+  });
 };
