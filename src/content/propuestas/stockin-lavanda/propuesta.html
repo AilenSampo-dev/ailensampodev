@@ -430,6 +430,16 @@ document.addEventListener('DOMContentLoaded',drawPix);
       <h3>Vender en todos lados</h3>
       <p class="mono">Shopify y Mercado Libre sincronizados con el mismo stock y los mismos precios. Un solo catálogo, muchos canales.</p>
     </div>
+    <div class="card">
+      <h3>Portal para mayoristas</h3>
+      <p class="mono">Cada distribuidor entra con su usuario, arma su pedido y consulta su cuenta corriente — sin depender del equipo interno.</p>
+    </div>
+  </div>
+
+  <div class="callout plum" style="margin-top:8px">
+    <h3 style="margin-bottom:10px;font-size:17px">Una capa de autogestión para los clientes mayoristas de Stockin</h3>
+    <p style="margin-bottom:12px">Con la identidad de la marca. Cada distribuidor entra con su usuario, ve su lista de precios, arma su pedido y lo confirma — y ese pedido ingresa automáticamente al sistema como nota de pedido, listo para armado y facturación. Además, consulta su cuenta corriente en tiempo real: saldo, límite de crédito, vencimientos y movimientos, el mismo dato que ve el equipo internamente. Se termina el &ldquo;pasame el saldo&rdquo; por mensaje.</p>
+    <p style="margin-bottom:0">Reusa lo que el ERP ya tiene — productos, listas de precios, clientes y cuentas corrientes —, por eso es una capa nueva y no un sistema aparte. Y como cada pedido que entra solo y cada consulta que se resuelve sin intervención es tiempo que el equipo no gasta, <strong>el portal se paga con la operación que libera.</strong></p>
   </div>
 
   <div class="callout blue">
@@ -531,6 +541,14 @@ document.addEventListener('DOMContentLoaded',drawPix);
     <tr><td>Mercado Libre — publicaciones, ventas, stock</td><td class="num"><span class="tag t-fase1">Fase 1</span></td></tr>
   </table>
 
+  <h3>Portal mayoristas (autogestión B2B)</h3>
+  <table>
+    <tr><td>Acceso por usuario para cada distribuidor, con identidad de marca Stockin</td><td class="num"><span class="tag t-fase2">Fase 2</span></td></tr>
+    <tr><td>Lista de precios propia, armado y confirmación de pedidos online</td><td class="num"><span class="tag t-fase2">Fase 2</span></td></tr>
+    <tr><td>Ingreso automático al ERP como nota de pedido (armado y facturación)</td><td class="num"><span class="tag t-fase2">Fase 2</span></td></tr>
+    <tr><td>Cuenta corriente en tiempo real: saldo, límite, vencimientos y movimientos</td><td class="num"><span class="tag t-fase2">Fase 2</span></td></tr>
+  </table>
+
   <h3>Transversales</h3>
   <table>
     <tr><td>Roles y permisos por sucursal, auditoría de operaciones</td><td class="num"><span class="tag t-fase1">Fase 1</span></td></tr>
@@ -560,6 +578,7 @@ document.addEventListener('DOMContentLoaded',drawPix);
     <div class="step"><div class="step-n">4</div><div class="step-body"><h3>Tesorería</h3><p>Cuentas bancarias, cartera de cheques, conciliación y posición de fondos consolidada. El dinero deja de desaparecer del sistema cuando sale del mostrador.</p></div></div>
     <div class="step"><div class="step-n">5</div><div class="step-body"><h3>Inventario, cobranzas y export Convenio Multilateral</h3><p>Valuación, Kardex, punto de pedido, antigüedad de deuda, resumen de cuenta, y export de ventas por jurisdicción para la liquidación de IIBB/CM del contador.</p></div></div>
     <div class="step"><div class="step-n">6</div><div class="step-body"><h3>Canales</h3><p>Shopify productivo validado y Mercado Libre integrado. Un catálogo, todos los canales, mismo stock.</p></div></div>
+    <div class="step"><div class="step-n">7</div><div class="step-body"><h3>Portal mayoristas</h3><p>Capa de autogestión B2B con identidad Stockin: login por distribuidor, lista de precios, pedidos online que ingresan como nota de pedido al ERP, y consulta de cuenta corriente en tiempo real. Reusa productos, listas, clientes y cuentas corrientes del sistema — no es un desarrollo aparte.</p></div></div>
   </div>
 
   <div class="callout blue">
@@ -595,12 +614,12 @@ document.addEventListener('DOMContentLoaded',drawPix);
   <p>La arquitectura está pensada para sumar capacidades sin rehacer nada. Cada una corre sobre la misma base:</p>
   <table>
     <tr><th>Momento</th><th>Capacidades activas</th><th>Licencia mensual</th></tr>
-    <tr><td>Go-live</td><td>ERP + Shopify</td><td class="num">USD 1.250</td></tr>
-    <tr><td>+6 meses</td><td>+ Mercado Libre</td><td class="num">USD 1.350</td></tr>
-    <tr><td>+12 meses</td><td>+ WhatsApp con agente</td><td class="num">USD 1.600 <span style="font-size:12px;color:var(--grey)">+ consumo</span></td></tr>
-    <tr><td>+18 meses</td><td>+ CRM y automatizaciones</td><td class="num">USD 1.800 <span style="font-size:12px;color:var(--grey)">+ consumo</span></td></tr>
+    <tr><td>Go-live</td><td>ERP + Shopify + portal mayoristas</td><td class="num">USD 1.500</td></tr>
+    <tr><td>+6 meses</td><td>+ Mercado Libre</td><td class="num">USD 1.600</td></tr>
+    <tr><td>+12 meses</td><td>+ WhatsApp con agente</td><td class="num">USD 1.850 <span style="font-size:12px;color:var(--grey)">+ consumo</span></td></tr>
+    <tr><td>+18 meses</td><td>+ CRM y automatizaciones</td><td class="num">USD 2.050 <span style="font-size:12px;color:var(--grey)">+ consumo</span></td></tr>
   </table>
-  <p style="font-size:14px;color:var(--grey)">Sumar un canal, un agente o un CRM es una decisión de negocio simple, no un proyecto nuevo. Todo corre sobre la misma infraestructura.</p>
+  <p style="font-size:14px;color:var(--grey)">Incluye portal mayoristas (+USD 250/mes). Sumar un canal, un agente o un CRM es una decisión de negocio simple, no un proyecto nuevo. Todo corre sobre la misma infraestructura.</p>
 
   <div class="foot">
     <span class="mono">s (a) ó</span>
@@ -618,14 +637,23 @@ document.addEventListener('DOMContentLoaded',drawPix);
   <div class="price-hero">
     <div class="price-box">
       <div class="label">Puesta en marcha</div>
-      <div class="amt">USD 13.400</div>
+      <div class="amt">USD 15.400</div>
+      <div class="note">ERP USD 13.400 + portal USD 2.000</div>
     </div>
     <div class="price-box accent">
       <div class="label">Licencia mensual</div>
-      <div class="amt">USD 1.250</div>
-      <div class="note">Desde go-live · uso + operación + evolución</div>
+      <div class="amt">USD 1.500</div>
+      <div class="note">Desde go-live · ERP USD 1.250 + portal USD 250</div>
     </div>
   </div>
+
+  <h3>Desglose</h3>
+  <table>
+    <tr><th>Componente</th><th>Puesta en marcha</th><th>Licencia/mes</th></tr>
+    <tr><td>Sistema de gestión (ERP + canales)</td><td class="num">USD 13.400</td><td class="num">USD 1.250</td></tr>
+    <tr><td>Portal mayoristas (autogestión B2B)</td><td class="num">USD 2.000</td><td class="num">+ USD 250</td></tr>
+    <tr class="tot"><td>Total</td><td class="num">USD 15.400</td><td class="num">USD 1.500</td></tr>
+  </table>
 
   <h3>Puesta en marcha por etapas</h3>
   <table>
@@ -636,6 +664,7 @@ document.addEventListener('DOMContentLoaded',drawPix);
     <tr><td>4</td><td>Tesorería</td></tr>
     <tr><td>5</td><td>Inventario, cobranzas y export CM</td></tr>
     <tr><td>6</td><td>Canales (ML + Shopify prod.)</td></tr>
+    <tr><td>7</td><td>Portal mayoristas (pedidos online + cuenta corriente)</td></tr>
   </table>
 
   <div class="chat-wrap">
