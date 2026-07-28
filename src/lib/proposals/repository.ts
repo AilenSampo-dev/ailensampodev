@@ -5,7 +5,7 @@ import type {
   ProposalOpenStats,
   ProposalStatus,
 } from "@/types/erp";
-import { documentProposals } from "@/content/propuestas/registry";
+import { loadContentProposals } from "./content";
 import { createProposalSlug } from "./slug";
 
 export type ProposalListItem = Proposal & {
@@ -60,7 +60,7 @@ const DEMO_PROPOSAL: Proposal = {
 const proposals = new Map<string, Proposal>([["demo", DEMO_PROPOSAL]]);
 const opens = new Map<string, ProposalOpen[]>();
 
-for (const proposal of documentProposals) {
+for (const proposal of loadContentProposals()) {
   proposals.set(proposal.slug, proposal);
   opens.set(proposal.slug, []);
 }

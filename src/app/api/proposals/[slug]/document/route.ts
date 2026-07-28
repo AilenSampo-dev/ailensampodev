@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
 import {
   injectDocumentTracking,
+  loadDocumentHtml,
 } from "@/lib/proposals/content";
-import { getDocumentHtml } from "@/content/propuestas/registry";
 import { getProposalRepository } from "@/lib/proposals/repository";
 
 type RouteContext = {
@@ -17,7 +17,7 @@ export async function GET(_request: Request, context: RouteContext) {
     return NextResponse.json({ error: "Documento no encontrado" }, { status: 404 });
   }
 
-  const html = getDocumentHtml(slug);
+  const html = loadDocumentHtml(slug);
   if (!html) {
     return NextResponse.json({ error: "HTML no encontrado" }, { status: 404 });
   }

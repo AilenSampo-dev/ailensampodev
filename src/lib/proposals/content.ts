@@ -1,5 +1,6 @@
 import { readFileSync, readdirSync, existsSync } from "fs";
 import path from "path";
+import { fileURLToPath } from "url";
 import type { Proposal, ProposalStatus } from "@/types/erp";
 
 export type ProposalFormat = "simple" | "document";
@@ -17,7 +18,13 @@ export type ProposalContentMeta = {
   sentAt?: string;
 };
 
-const CONTENT_ROOT = path.join(process.cwd(), "src", "content", "propuestas");
+const CONTENT_ROOT = path.join(
+  path.dirname(fileURLToPath(import.meta.url)),
+  "..",
+  "..",
+  "content",
+  "propuestas"
+);
 
 export function getProposalContentDir(slug: string): string {
   return path.join(CONTENT_ROOT, slug);
