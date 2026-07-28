@@ -82,22 +82,40 @@ export function injectDocumentTracking(html: string, slug: string): string {
 <script>
 (function(){
   var slug = ${JSON.stringify(slug)};
+  var storageKey = 'as-proposal-' + slug + '-accepted';
   var params = new URLSearchParams(window.location.search);
-  fetch('/api/proposals/' + slug + '/open?' + params.toString(), { method: 'POST' }).catch(function(){});
   var btn = document.getElementById('as-proposal-accept');
   var status = document.getElementById('as-proposal-status');
+
+  function showAccepted() {
+    if (!btn || !status) return;
+    btn.style.display = 'none';
+    status.textContent = 'Propuesta aceptada';
+    try { localStorage.setItem(storageKey, '1'); } catch (e) {}
+  }
+
+  try {
+    if (localStorage.getItem(storageKey) === '1') showAccepted();
+  } catch (e) {}
+
+  fetch('/api/proposals/' + slug + '/open?' + params.toString(), { method: 'POST' })
+    .then(function(r){ return r.json().catch(function(){ return {}; }); })
+    .then(function(d){ if (d && d.status === 'accepted') showAccepted(); })
+    .catch(function(){});
+
+  if (!btn) return;
+
   btn.addEventListener('click', function(){
     btn.disabled = true;
     fetch('/api/proposals/' + slug + '/accept', { method: 'POST' })
-      .then(function(r){ return r.json().then(function(d){ return { ok: r.ok, d: d }; }); })
+      .then(function(r){ return r.json().then(function(d){ return { ok: r.ok, status: r.status, d: d }; }); })
       .then(function(res){
-        if (!res.ok) {
-          status.textContent = res.d.error || 'No se pudo aceptar.';
-          btn.disabled = false;
+        if (res.ok || res.status === 409) {
+          showAccepted();
           return;
         }
-        btn.style.display = 'none';
-        status.textContent = 'Propuesta aceptada';
+        status.textContent = res.d.error || 'No se pudo aceptar.';
+        btn.disabled = false;
       })
       .catch(function(){
         status.textContent = 'Error de conexión.';
