@@ -11,7 +11,25 @@
   ],
   "headers": [
     {
+      "source": "/p/stockin-lavanda",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/html; charset=utf-8"
+        }
+      ]
+    },
+    {
       "source": "/p/stockin-lavanda/(.*)",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/html; charset=utf-8"
+        }
+      ]
+    },
+    {
+      "source": "/p/mash",
       "headers": [
         {
           "key": "Content-Type",
