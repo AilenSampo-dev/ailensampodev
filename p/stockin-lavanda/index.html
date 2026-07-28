@@ -549,7 +549,7 @@ document.addEventListener('DOMContentLoaded',drawPix);
     <tr><td>6</td><td>Canales (ML + Shopify prod.)</td></tr>
   </table>
 
-  <div style="display:flex;align-items:flex-end;gap:12px;margin-top:22px">
+  <div style="display:flex;align-items:flex-end;gap:12px;margin-top:22px;margin-bottom:28px">
     <div class="chat pink" style="font-size:15px">Sin licencias por usuario, sin sorpresas. Sumás gente al equipo y el sistema no te cobra de más <span data-pix="smile" data-w="38" data-h="20" style="margin-left:2px"></span></div>
   </div>
 
@@ -625,6 +625,39 @@ document.addEventListener('DOMContentLoaded',drawPix);
     </div>
   </div>
 </div>
+
+<div id="as-proposal-actions" style="position:fixed;bottom:0;left:0;right:0;z-index:9999;padding:12px 16px;background:rgba(26,16,48,.92);backdrop-filter:blur(8px);display:flex;gap:10px;justify-content:center;align-items:center;font-family:system-ui,sans-serif">
+  <button id="as-proposal-accept" type="button" style="padding:12px 20px;border:none;background:#F656BF;color:#fff;font:inherit;font-weight:700;cursor:pointer">Aceptar propuesta</button>
+  <span id="as-proposal-status" style="color:#E1ADFF;font-size:14px"></span>
+</div>
+<style>@media print{#as-proposal-actions{display:none!important}} body{padding-bottom:72px}</style>
+<script>
+(function(){
+  var slug = "stockin-lavanda";
+  var params = new URLSearchParams(window.location.search);
+  fetch("/api/proposals/" + slug + "/open?" + params.toString(), { method: "POST" }).catch(function(){});
+  var btn = document.getElementById("as-proposal-accept");
+  var status = document.getElementById("as-proposal-status");
+  btn.addEventListener("click", function(){
+    btn.disabled = true;
+    fetch("/api/proposals/" + slug + "/accept", { method: "POST" })
+      .then(function(r){ return r.json().then(function(d){ return { ok: r.ok, d: d }; }); })
+      .then(function(res){
+        if (!res.ok) {
+          status.textContent = res.d.error || "No se pudo aceptar.";
+          btn.disabled = false;
+          return;
+        }
+        btn.style.display = "none";
+        status.textContent = "Propuesta aceptada";
+      })
+      .catch(function(){
+        status.textContent = "Error de conexión.";
+        btn.disabled = false;
+      });
+  });
+})();
+</script>
 
 </body>
 </html>
