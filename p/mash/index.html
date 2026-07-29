@@ -236,6 +236,26 @@ strong{font-weight:700}
   margin:16px 0;font-size:14px;color:rgba(255,255,255,.92);border-radius:0 10px 10px 0}
 .benefit b{color:var(--lilac);font-weight:700}
 
+.close-cta{
+  margin-top:48px;padding:36px 0 4px;border-top:2px solid rgba(225,173,255,.16);
+  display:flex;align-items:flex-end;gap:16px;flex-wrap:wrap
+}
+.close-cta .chat-bubble{
+  position:relative;background:var(--white);color:var(--ink);border:2.5px solid var(--ink);
+  border-radius:16px;padding:18px 24px;font-family:'Nunito Sans';font-weight:800;
+  font-size:clamp(22px,4vw,30px);letter-spacing:-.02em;line-height:1.2;
+  box-shadow:var(--card-shadow);display:inline-flex;align-items:center;gap:12px
+}
+.close-cta .chat-bubble:after{
+  content:'';position:absolute;left:28px;bottom:-10px;border:10px solid transparent;
+  border-top-color:var(--ink);border-bottom:0
+}
+.close-cta .chat-bubble:before{
+  content:'';position:absolute;left:29px;bottom:-7px;border:9px solid transparent;
+  border-top-color:var(--white);border-bottom:0;z-index:1
+}
+.close-cta .wink{width:44px;height:44px;flex:none;display:block}
+
 footer{padding:44px 0 0;border-top:2px solid rgba(225,173,255,.16);margin-top:52px;
   display:flex;align-items:center;gap:16px;flex-wrap:wrap}
 footer a{color:inherit;text-decoration:none;transition:color .15s,opacity .15s}
@@ -506,6 +526,13 @@ footer a.fine:hover{color:var(--lilac)}
       </div>
     </div>
     <div class="benefit" style="margin-top:16px"><b>El precio de cada etapa queda reservado mientras la propuesta est&eacute; vigente.</b> Pod&eacute;s pagarla en el momento que te convenga &mdash; el sistema se firma entero, se paga por partes.</div>
+  </section>
+
+  <section class="close-cta" aria-label="Cierre">
+    <div class="chat-bubble">
+      &iquest;Comenzamos?
+      <img class="wink" src="/assets/face-wink.svg" alt="" width="44" height="44">
+    </div>
   </section>
 
   <footer>
