@@ -323,90 +323,175 @@ footer a.fine:hover{color:var(--lilac)}
 
   <section>
     <div class="eyebrow">01</div>
-    <h2>El sistema, etapa por etapa. Cada una depende de la anterior.</h2>
-    <p class="dim">No es una web suelta ni una automatización aislada. Es un sistema donde todo está conectado: los datos alimentan al agente, el agente dispara los recordatorios, y vos ves el estado de todo desde un solo lugar.</p>
+    <h2>El sistema se construye en etapas. Cada una depende de la anterior.</h2>
 
     <div class="etapa" style="margin-top:28px">
       <div class="etapa-header">
-        <div class="etapa-num">1</div>
+        <div class="etapa-num">0</div>
         <div class="etapa-body">
-          <div class="req"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><rect x="4" y="0" width="2" height="4" fill="currentColor"/><rect x="4" y="6" width="2" height="4" fill="currentColor"/><rect x="0" y="4" width="4" height="2" fill="currentColor"/><rect x="6" y="4" width="4" height="2" fill="currentColor"/></svg> Base obligatoria de todo</div>
+          <div class="req">
+            <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><rect x="4" y="0" width="2" height="4" fill="currentColor"/><rect x="4" y="6" width="2" height="4" fill="currentColor"/><rect x="0" y="4" width="4" height="2" fill="currentColor"/><rect x="6" y="4" width="4" height="2" fill="currentColor"/></svg>
+            Base obligatoria de todo
+          </div>
           <h3>Núcleo — clientes, stock y calendario</h3>
-          <div class="sub">Es el cerebro de datos del sistema. Sin esto, lo demás no tiene con qué trabajar: el agente no sabe quién escribe, los recordatorios no saben a quién avisar, el stock no sabe cuándo va a faltar. Un panel propio con acceso desde el celular: cuando entra una venta, el recordatorio se agenda solo.</div>
+          <div class="sub">Sin esto, los demás módulos no tienen datos con qué trabajar. El agente no sabe quién escribe. Los recordatorios no saben a quién avisar. El stock no sabe cuándo va a faltar.</div>
           <ul class="feature-list">
-            <li><span class="dot"></span><span><strong>Clientes y productos:</strong> quién toma qué, desde cuándo, cuánto le dura.</span></li>
-            <li><span class="dot"></span><span><strong>Calendario de reposición:</strong> el sistema calcula solo cuándo se le termina a cada cliente.</span></li>
+            <li><span class="dot"></span><span><strong>Clientes y productos:</strong> quién toma qué gotero, desde cuándo, cuánto dura.</span></li>
+            <li><span class="dot"></span><span><strong>Calendario de reposición:</strong> el sistema calcula automáticamente cuándo se le termina a cada cliente.</span></li>
             <li><span class="dot"></span><span><strong>Stock y producción:</strong> sabe cuándo arrancás un lote y te avisa con tiempo para no quedarte sin stock.</span></li>
             <li><span class="dot"></span><span><strong>Opt-in:</strong> registro legal de que cada cliente aceptó recibir mensajes. Obligatorio para los recordatorios.</span></li>
           </ul>
-          <div class="etapa-price">USD 700</div>
+
+          <div style="margin-top:18px">
+            <p style="font-size:13px;color:var(--muted);margin-bottom:10px;max-width:none">Dos versiones según presupuesto inicial:</p>
+            <div class="opts">
+              <div class="opt">
+                <span class="opt-badge badge-a">Opción 0A — Entrada</span>
+                <h3>Planilla maestra</h3>
+                <p style="font-size:13px;color:var(--muted);margin-bottom:8px;max-width:none">Excel estructurado con clientes, stock y fechas de reposición calculadas automáticamente. Tiene techo conocido: funciona bien hasta ~80 clientes activos.</p>
+                <div class="pros-cons">
+                  <div class="pros"><p>A favor</p><ul><li>Entrega en días</li><li>El cliente ya sabe usarlo</li><li>Sin costo mensual</li></ul></div>
+                  <div class="cons"><p>Límite</p><ul><li>No conecta con el agente</li><li>Hay que cargar a mano</li><li>Techo en escala</li></ul></div>
+                </div>
+                <div class="opt-price">USD 500</div>
+              </div>
+              <div class="opt rec">
+                <span class="opt-badge badge-rec">Opción 0B — Recomendado</span>
+                <h3>Panel web propio</h3>
+                <p style="font-size:13px;color:var(--muted);margin-bottom:8px;max-width:none">Sistema web con acceso desde el celular. Conectado al agente: cuando entra una venta, el recordatorio se agenda solo. Sin techo de escala.</p>
+                <div class="pros-cons">
+                  <div class="pros"><p>A favor</p><ul><li>Todo conectado</li><li>Desde el celular</li><li>Sin carga manual</li></ul></div>
+                  <div class="cons"><p>Límite</p><ul><li>Requiere cargar ventas en el sistema</li></ul></div>
+                </div>
+                <div class="opt-price">USD 700</div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
 
     <div class="etapa">
       <div class="dep-chain">
-        <span class="dep-step">Etapa 1</span>
-        <span class="dep-arrow">&#8594;</span>
+        <span class="dep-step">Etapa 0</span>
+        <span class="dep-arrow">→</span>
+        <span class="dep-step active">Etapa 1</span>
+      </div>
+      <div class="etapa-header">
+        <div class="etapa-num">1</div>
+        <div class="etapa-body">
+          <h3>Agente WhatsApp — atiende, recuerda, te muestra quién escribe</h3>
+          <div class="sub">Requiere Etapa 0 funcionando. El agente necesita saber quién toma qué para responder con contexto real.</div>
+
+          <div class="opts" style="margin-top:14px">
+            <div class="opt">
+              <span class="opt-badge badge-a">Opción 1A — Meta Business Agent</span>
+              <h3>Agente nativo de WhatsApp</h3>
+              <p style="font-size:13px;color:var(--muted);margin-bottom:8px;max-width:none">Configurado y entrenado en la plataforma de Meta. Sin número separado — usa el que ya tenés. Responde consultas solo. <strong style="color:var(--urgent)">No puede iniciar conversaciones</strong>, así que los recordatorios de recompra no funcionan por este canal.</p>
+              <div class="pros-cons">
+                <div class="pros"><p>A favor</p><ul><li>Sin número nuevo</li><li>Sin costo de API</li><li>Listo rápido</li></ul></div>
+                <div class="cons"><p>Límite crítico</p><ul><li>No manda recordatorios</li><li>No ve ficha del cliente</li><li>Depende de Meta</li></ul></div>
+              </div>
+              <div class="opt-price">USD 350</div>
+            </div>
+            <div class="opt rec">
+              <span class="opt-badge badge-rec">Opción 1B — Agente custom con API</span>
+              <h3>Agente conectado al núcleo</h3>
+              <p style="font-size:13px;color:var(--muted);margin-bottom:8px;max-width:none">Número dedicado al negocio. Cuando escribe Marina, ves que toma Reishi, le quedan 6 días y el recordatorio le sale mañana a las 10:00. Atiende y recuerda — es el módulo con mayor impacto en ventas.</p>
+              <div class="pros-cons">
+                <div class="pros"><p>A favor</p><ul><li>Manda recordatorios</li><li>Ve ficha del cliente</li><li>Conectado al stock</li></ul></div>
+                <div class="cons"><p>Límite</p><ul><li>Número separado</li><li>Costo API ~USD 5–8/mes</li></ul></div>
+              </div>
+              <div class="opt-price">USD 650</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="etapa">
+      <div class="dep-chain">
+        <span class="dep-step">Etapa 0</span>
+        <span class="dep-arrow">→</span>
+        <span class="dep-step">Etapa 1B</span>
+        <span class="dep-arrow">→</span>
         <span class="dep-step active">Etapa 2</span>
       </div>
       <div class="etapa-header">
         <div class="etapa-num">2</div>
         <div class="etapa-body">
-          <h3>Agente de WhatsApp — atiende, recuerda y te muestra quién escribe</h3>
-          <div class="sub">Número dedicado al negocio. Cuando escribe Marina, ves que toma Reishi, le quedan 6 días y el recordatorio le sale mañana a las 10:00. Atiende consultas y recuerda reposiciones — es el módulo con mayor impacto directo en ventas. Necesita la Etapa 1 funcionando para responder con contexto real.</div>
-          <div class="etapa-price">USD 650</div>
+          <h3>Recordatorios de reposición automáticos</h3>
+          <div class="sub">El gotero dura 30 días. Al día 25, a las 10:00, el sistema escribe solo. Vos podés frenar el mensaje antes de esa hora si no corresponde. Requiere Etapa 1B (el agente Meta no puede iniciar conversaciones).</div>
+
+          <div class="opts" style="margin-top:14px">
+            <div class="opt">
+              <span class="opt-badge badge-a">Opción 2A — Por email</span>
+              <h3>Recordatorio por correo</h3>
+              <p style="font-size:13px;color:var(--muted);margin-bottom:8px;max-width:none">Secuencia automática al acercarse la fecha de reposición. Válido si tenés el mail del cliente. Sin restricciones de Meta.</p>
+              <div class="pros-cons">
+                <div class="pros"><p>A favor</p><ul><li>Sin opt-in de Meta</li><li>Costo casi cero</li></ul></div>
+                <div class="cons"><p>Límite</p><ul><li>Menor tasa de lectura</li><li>Requiere email</li></ul></div>
+              </div>
+              <div class="opt-price">USD 200</div>
+            </div>
+            <div class="opt rec">
+              <span class="opt-badge badge-rec">Opción 2B — Por WhatsApp</span>
+              <h3>Recordatorio directo al WhatsApp del cliente</h3>
+              <p style="font-size:13px;color:var(--muted);margin-bottom:8px;max-width:none">El mismo canal que usan todos los días. Tasa de lectura altísima. El opt-in y el template de Meta los configuramos nosotros al implementar.</p>
+              <div class="pros-cons">
+                <div class="pros"><p>A favor</p><ul><li>Canal que ya usan</li><li>Tasa de lectura real</li></ul></div>
+                <div class="pros"><p>Incluido</p><ul><li>Opt-in legal (Etapa 0)</li><li>Template Meta gestionado</li><li>Podés frenar cada envío</li></ul></div>
+              </div>
+              <div class="opt-price">USD 250</div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
 
     <div class="etapa">
       <div class="dep-chain">
-        <span class="dep-step">Etapa 1</span>
-        <span class="dep-arrow">&#8594;</span>
-        <span class="dep-step">Etapa 2</span>
-        <span class="dep-arrow">&#8594;</span>
+        <span class="dep-step">Etapa 0</span>
+        <span class="dep-arrow">→</span>
         <span class="dep-step active">Etapa 3</span>
+        <span style="font-size:12px;color:rgba(255,255,255,.5);padding:0 8px">(paralela a 1 y 2)</span>
       </div>
       <div class="etapa-header">
         <div class="etapa-num">3</div>
         <div class="etapa-body">
-          <h3>Recordatorios de reposición automáticos</h3>
-          <div class="sub">El producto dura 30 días. Al día 25, a las 10:00, el sistema le escribe solo al cliente por WhatsApp — el canal que ya usa todos los días, con tasa de lectura altísima. Vos podés frenar el mensaje antes si no corresponde. Se apoya en el opt-in de la Etapa 1.</div>
-          <div class="etapa-price">USD 250</div>
+          <h3>Presencia web — captura el dato de quien te llega por recomendación</h3>
+          <div class="sub">Hoy la gente que llega referida te busca, no te encuentra, o te escribe por Instagram y se pierde. Esta etapa transforma ese tráfico en un contacto que podés volver a activar. Puede construirse en paralelo a las etapas 1 y 2.</div>
+
+          <div class="opts" style="margin-top:14px">
+            <div class="opt">
+              <span class="opt-badge badge-a">Opción 3A — Landing page</span>
+              <h3>Una página</h3>
+              <p style="font-size:13px;color:var(--muted);margin-bottom:8px;max-width:none">Productos, beneficios, testimonios y botón directo a WhatsApp. Su trabajo es capturar el teléfono o email. Sin carrito.</p>
+              <div class="opt-price">USD 450</div>
+            </div>
+            <div class="opt">
+              <span class="opt-badge badge-a">Opción 3B — Web completa</span>
+              <h3>Home + productos + contacto</h3>
+              <p style="font-size:13px;color:var(--muted);margin-bottom:8px;max-width:none">Varias páginas, conectada al panel para mostrar stock real. Más contenido, más posicionamiento. Sin carrito.</p>
+              <div class="opt-price">USD 750</div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
 
     <div class="etapa">
       <div class="dep-chain">
-        <span class="dep-step">Etapa 2</span>
-        <span class="dep-arrow">&#8594;</span>
+        <span class="dep-step">Etapa 1B</span>
+        <span class="dep-arrow">→</span>
         <span class="dep-step active">Etapa 4</span>
       </div>
       <div class="etapa-header">
         <div class="etapa-num">4</div>
         <div class="etapa-body">
-          <h3>Agente de Instagram — responde DMs desde el mismo cerebro</h3>
-          <div class="sub">Mismo agente, mismo conocimiento del catálogo, nuevo canal. Cuando alguien te escribe por Instagram, el sistema responde igual que por WhatsApp. El agente ya existe: esto es una superficie adicional sobre lo mismo.</div>
-          <div class="etapa-price">USD 300</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="etapa">
-      <div class="dep-chain">
-        <span class="dep-step">Etapa 1</span>
-        <span class="dep-arrow">&#8594;</span>
-        <span class="dep-step active">Etapa 5</span>
-        <span style="font-size:12px;color:rgba(255,255,255,.5);padding:0 8px">(en paralelo a las demás)</span>
-      </div>
-      <div class="etapa-header">
-        <div class="etapa-num">5</div>
-        <div class="etapa-body">
-          <h3>Presencia web — captura a quien te llega por recomendación</h3>
-          <div class="sub">Hoy quien llega referido te busca y no te encuentra, o te escribe y se pierde. Una página con tus productos, beneficios y testimonios, cuyo trabajo es capturar el teléfono o el mail y llevarlo directo a WhatsApp. Se construye en paralelo, sin frenar las otras etapas.</div>
-          <div class="etapa-price">USD 450</div>
+          <h3>Agente Instagram — responde DMs desde el mismo cerebro</h3>
+          <div class="sub">Mismo agente, mismo conocimiento del catálogo, nuevo canal. Cuando alguien te escribe por Instagram, el sistema responde igual que por WhatsApp. Requiere Etapa 1B — el agente ya existe, esto es una superficie adicional. No tiene recordatorios proactivos (limitación de Instagram, no del sistema).</div>
+          <div class="opt-price" style="margin-top:14px">USD 300</div>
         </div>
       </div>
     </div>
@@ -415,97 +500,161 @@ footer a.fine:hover{color:var(--lilac)}
 
   <section>
     <div class="eyebrow">02</div>
-    <h2>La inversión</h2>
-    <p class="dim">Un pago de construcción por etapas, y una mensualidad que mantiene todo el sistema vivo. Nada más — sin facturas externas ni sorpresas.</p>
+    <h2>Tres formas de entrar. Una que aprovecha mejor la inversión.</h2>
+    <p class="dim">Al comprometerte con el proyecto completo desde esta propuesta — incluso pagando etapa por etapa — mantenés los precios de pack. Los módulos sumados por su cuenta más adelante tienen un costo adicional de integración. Según tu consulta inicial, WhatsApp e Instagram son los canales principales.</p>
 
-    <div class="total-table">
-      <div class="row"><span style="font-weight:600;color:var(--black)">Etapa 1 — Núcleo</span><span class="mono">USD 700</span></div>
-      <div class="row"><span style="font-weight:600;color:var(--black)">Etapa 2 — Agente de WhatsApp</span><span class="mono">USD 650</span></div>
-      <div class="row"><span style="font-weight:600;color:var(--black)">Etapa 3 — Recordatorios automáticos</span><span class="mono">USD 250</span></div>
-      <div class="row"><span style="font-weight:600;color:var(--black)">Etapa 4 — Agente de Instagram</span><span class="mono">USD 300</span></div>
-      <div class="row"><span style="font-weight:600;color:var(--black)">Etapa 5 — Presencia web</span><span class="mono">USD 450</span></div>
-      <div class="row"><span style="font-weight:600;color:var(--black)">Implementación y puesta en producción</span><span class="mono">USD 200</span></div>
-      <div class="row sub"><span>Configuración, permisos, opt-in legal, conexión de canales y salida a producción</span><span class="mono">incluido</span></div>
-      <div class="row big"><span>Construcción — sistema completo</span><span class="mono">USD 2.550</span></div>
+    <div class="packs">
+      <div class="pack">
+        <div class="pack-label" style="color:var(--muted)">Pack Entrada</div>
+        <h3>Lo mínimo que funciona</h3>
+        <ul class="items">
+          <li>Núcleo planilla (0A)</li>
+          <li>Agente Meta WhatsApp (1A)</li>
+          <li>Recordatorios email (2A)</li>
+          <li>Landing page (3A)</li>
+        </ul>
+        <div class="pack-total">
+          <div class="label">Proyecto completo</div>
+          <div class="price" style="color:var(--black)">USD 1.500</div>
+          <div class="fee">Fee: USD 60/mes</div>
+          <div class="save-tag" style="background:var(--muted)">Suma suelta: USD 1.800</div>
+        </div>
+      </div>
+
+      <div class="pack rec">
+        <div class="pack-label" style="color:var(--ok);font-weight:700">Pack Recomendado</div>
+        <h3>WA + IG con mayor impacto</h3>
+        <ul class="items">
+          <li>Núcleo panel web (0B)</li>
+          <li>Agente custom WA API (1B)</li>
+          <li>Recordatorios WhatsApp (2B)</li>
+          <li>Agente Instagram (4)</li>
+          <li>Landing page (3A)</li>
+        </ul>
+        <div class="pack-total">
+          <div class="label">Proyecto completo</div>
+          <div class="price" style="color:var(--ok)">USD 2.200</div>
+          <div class="fee">Fee: USD 150/mes</div>
+          <div class="save-tag">Suma suelta: USD 2.580</div>
+        </div>
+      </div>
+
+      <div class="pack">
+        <div class="pack-label" style="color:var(--orange-deep)">Pack Completo</div>
+        <h3>Todo — WA, IG, web, panel</h3>
+        <ul class="items">
+          <li>Núcleo panel web (0B)</li>
+          <li>Agente custom WA API (1B)</li>
+          <li>Recordatorios WhatsApp (2B)</li>
+          <li>Agente Instagram (4)</li>
+          <li>Web completa (3B)</li>
+        </ul>
+        <div class="pack-total">
+          <div class="label">Proyecto completo</div>
+          <div class="price" style="color:var(--orange-deep)">USD 2.500</div>
+          <div class="fee">Fee: USD 150/mes</div>
+          <div class="save-tag" style="background:var(--orange-deep)">Suma suelta: USD 3.060</div>
+        </div>
+      </div>
     </div>
 
-    <h3 style="color:var(--white);font-size:19px;margin:34px 0 4px">La mensualidad — lo que sostiene todo funcionando</h3>
-    <p class="dim">Dos cosas que no se ven pero son la razón por la que el sistema sigue trabajando cuando vos no estás mirando.</p>
-
-    <div class="fee-grid" style="margin-top:16px">
-      <div class="fee-cell">
-        <div class="l">Operación</div>
-        <div class="v" style="color:var(--pink-ink)">incluida</div>
-        <div class="d">El agente se mantiene afinado, los canales siguen vivos y tenés soporte cuando algo cambia. El sistema no se degrada solo.</div>
-      </div>
-      <div class="fee-cell">
-        <div class="l">Infraestructura</div>
-        <div class="v" style="color:var(--pink-ink)">incluida</div>
-        <div class="d">La capa invisible que sostiene todo las 24 horas: el motor que orquesta cada tarea, la inteligencia que responde y el lugar donde vive tu sistema.</div>
-      </div>
-      <div class="fee-cell" style="background:var(--lilac-soft)">
-        <div class="l">Fee mensual (desde el mes 4)</div>
-        <div class="v" style="color:var(--ok)">USD 150/mes</div>
-        <div class="d">Todo adentro: operación + infraestructura. Sin facturas externas.</div>
-      </div>
-    </div>
-
-    <div class="benefit" style="margin-top:20px">
-      <b>Primeros 3 meses — USD 250/mes.</b> En el arranque, el agente aprende de conversaciones reales: alguien revisa lo que responde, corrige lo que falla y le carga los casos que no estaban previstos. Ese entrenamiento asistido es lo que hace que, a partir del mes 4, el sistema responda solo y bien — y ahí la mensualidad baja a USD 150.
-    </div>
   </section>
 
   <section>
     <div class="eyebrow">03</div>
-    <h2>Fuera de alcance</h2>
-    <ul class="out">
-      <li><span class="x">&#10005;</span><span><strong>El sistema no asesora.</strong> No recomienda qu&eacute; tomar ni en qu&eacute; dosis. Pregunta el objetivo, presenta los productos del negocio que aplican, y deriva al asesor cuando el cliente quiere profundizar. El asesoramiento lo hac&eacute;s vos, siempre.</span></li>
-      <li><span class="x">&#10005;</span><span><strong>Textos comerciales y copy del agente.</strong> Las respuestas, el tono y las descripciones de productos las prov&eacute;s vos. El sistema las usa, no las inventa.</span></li>
-      <li><span class="x">&#10005;</span><span><strong>Dise&ntilde;o gr&aacute;fico e identidad de marca.</strong> La interfaz del sistema est&aacute; incluida. El logo, la paleta y las fotograf&iacute;as de producto, no.</span></li>
-      <li><span class="x">&#10005;</span><span><strong>Migraci&oacute;n de datos hist&oacute;ricos.</strong> Si hay clientes en papel o en chats que cargar al sistema, se cotiza aparte (aprox. USD 150).</span></li>
-      <li><span class="x">&#10005;</span><span><strong>Cobro online / carrito de compras.</strong> El sistema lleva a la venta &mdash; el cobro lo hac&eacute;s vos. Si m&aacute;s adelante quer&eacute;s cobrar online, se cotiza como fase siguiente.</span></li>
-      <li><span class="x">&#10005;</span><span><strong>Soporte posterior a la entrega.</strong> Incluido en la mensualidad. Sin mensualidad activa, no hay soporte.</span></li>
-    </ul>
+    <h2>Qué incluye el Pack Recomendado — desglosado</h2>
+
+    <div class="total-table">
+      <div class="row"><span style="font-weight:600;color:var(--black)">Etapa 0B — Núcleo panel web</span><span class="mono">USD 700</span></div>
+      <div class="row sub"><span>Clientes, stock, calendario, opt-in</span><span class="mono">incluido</span></div>
+      <div class="row"><span style="font-weight:600;color:var(--black)">Etapa 1B — Agente WhatsApp custom</span><span class="mono">USD 650</span></div>
+      <div class="row sub"><span>Responde consultas + ficha de cliente en tiempo real</span><span class="mono">incluido</span></div>
+      <div class="row"><span style="font-weight:600;color:var(--black)">Etapa 2B — Recordatorios por WhatsApp</span><span class="mono">USD 250</span></div>
+      <div class="row sub"><span>Sale al día 25 a las 10:00. Podés frenarlo antes</span><span class="mono">incluido</span></div>
+      <div class="row"><span style="font-weight:600;color:var(--black)">Etapa 4 — Agente Instagram</span><span class="mono">USD 300</span></div>
+      <div class="row sub"><span>Responde DMs con el mismo cerebro que WhatsApp</span><span class="mono">incluido</span></div>
+      <div class="row"><span style="font-weight:600;color:var(--black)">Etapa 3A — Landing page</span><span class="mono">USD 450</span></div>
+      <div class="row sub"><span>Captura teléfono y mail de quien llega por recomendación</span><span class="mono">incluido</span></div>
+      <div class="row highlight"><span>Suma de módulos sueltos</span><span class="mono">USD 2.350</span></div>
+      <div class="row saving"><span>Descuento proyecto completo</span><span class="mono" style="color:var(--ok)">− USD 150</span></div>
+      <div class="row big"><span>Proyecto completo</span><span class="mono">USD 2.200</span></div>
+    </div>
   </section>
 
   <section>
     <div class="eyebrow">04</div>
-    <h2>Cu&aacute;ndo lo ten&eacute;s funcionando</h2>
-    <p class="dim">Las etapas 1 a 4 se construyen en orden &mdash; cada una necesita la anterior. La 5 corre en paralelo. El camino hasta producci&oacute;n completa es de <strong style="color:var(--white)">2 meses</strong>, no la suma de cada etapa por separado.</p>
+    <h2>Qué pagás por mes — y por qué</h2>
+    <p class="dim">La infraestructura está incluida en el fee. No hay sorpresas de facturación externa.</p>
 
-    <div class="total-table">
-      <div class="row"><span style="font-weight:600;color:var(--black)">Semana 1-3 &mdash; N&uacute;cleo (panel + datos)</span><span class="mono">Etapa 1</span></div>
-      <div class="row"><span style="font-weight:600;color:var(--black)">Semana 3-5 &mdash; Agente de WhatsApp</span><span class="mono">Etapa 2</span></div>
-      <div class="row"><span style="font-weight:600;color:var(--black)">Semana 5-6 &mdash; Recordatorios de reposici&oacute;n</span><span class="mono">Etapa 3</span></div>
-      <div class="row"><span style="font-weight:600;color:var(--black)">Semana 6-7 &mdash; Agente de Instagram</span><span class="mono">Etapa 4</span></div>
-      <div class="row sub"><span>Presencia web &mdash; en paralelo, desde la semana 1</span><span class="mono">Etapa 5</span></div>
-      <div class="row big"><span>Semana 7-8 &mdash; Producci&oacute;n + arranque del entrenamiento</span><span class="mono" style="font-size:16px">En vivo</span></div>
+    <div class="infra-grid">
+      <div class="infra-cell">
+        <div class="l">n8n Cloud</div>
+        <div class="v">USD 24/mes</div>
+        <div class="d">Motor de automatización. Orquesta todo el sistema.</div>
+      </div>
+      <div class="infra-cell">
+        <div class="l">WhatsApp Cloud API</div>
+        <div class="v">USD 5–8/mes</div>
+        <div class="d">A 100 conversaciones/mes. Mensajes del agente y recordatorios.</div>
+      </div>
+      <div class="infra-cell">
+        <div class="l">IA + hosting</div>
+        <div class="v">USD 2–8/mes</div>
+        <div class="d">Tokens del agente + servidor del panel (Vercel/Neon).</div>
+      </div>
     </div>
 
-    <div class="warn" style="margin-top:16px">
-      <b>Dos cosas que no dependen de m&iacute; y pueden mover la fecha.</b> La aprobaci&oacute;n externa para poder enviar los recordatorios (un tr&aacute;mite del sistema de mensajer&iacute;a que puede tardar unos d&iacute;as), y la entrega de tu contenido: textos del agente, fotos y datos de productos. Los plazos corren desde que recibo el contenido y los accesos, y se pausan mientras esperamos una aprobaci&oacute;n externa o material tuyo.
+    <div class="fee-grid" style="margin-top:3px">
+      <div class="fee-cell">
+        <div class="l">Base</div>
+        <div class="v">USD 90/mes</div>
+        <div class="d">Infraestructura, monitoreo, backups y 1hs de soporte incluida.</div>
+      </div>
+      <div class="fee-cell">
+        <div class="l">Por canal activo</div>
+        <div class="v">USD 30/canal</div>
+        <div class="d">WhatsApp = 1 canal. Instagram cuando se active = 2 canales.</div>
+      </div>
+      <div class="fee-cell" style="background:var(--lilac-soft)">
+        <div class="l">Fee Pack Recomendado</div>
+        <div class="v" style="color:var(--ok)">USD 150/mes</div>
+        <div class="d">WhatsApp + Instagram. Todo incluido. Sin facturas extra.</div>
+      </div>
     </div>
   </section>
 
   <section>
     <div class="eyebrow">05</div>
+    <h2>Fuera de alcance</h2>
+    <ul class="out">
+      <li><span class="x">✕</span><span><strong>El sistema no asesora.</strong> No recomienda qué tomar ni en qué dosis. Pregunta el objetivo, presenta los productos del negocio que aplican, y deriva al asesor cuando el cliente quiere profundizar. El asesoramiento lo hacés vos, siempre.</span></li>
+      <li><span class="x">✕</span><span><strong>Textos comerciales y copy del agente.</strong> Las respuestas, el tono y las descripciones de productos las provee Mash. El sistema las usa, no las inventa.</span></li>
+      <li><span class="x">✕</span><span><strong>Diseño gráfico e identidad de marca.</strong> La interfaz del sistema está incluida. El logo, paleta y fotografías de producto, no.</span></li>
+      <li><span class="x">✕</span><span><strong>Migración de datos históricos.</strong> Si hay clientes en papel o en chats de WhatsApp que cargar al sistema, se cotiza aparte (aprox. USD 150).</span></li>
+      <li><span class="x">✕</span><span><strong>Integración con Mercado Pago o carrito de compras.</strong> El sistema lleva a la venta — el cobro lo hacés vos. Si más adelante querés cobrar online, se cotiza como Fase 2.</span></li>
+      <li><span class="x">✕</span><span><strong>Soporte posterior a la entrega.</strong> Incluido en el fee mensual. Sin fee activo, no hay soporte.</span></li>
+    </ul>
+  </section>
+
+  <section>
+    <div class="eyebrow">06</div>
     <h2>Forma de pago</h2>
-    <p class="dim">Se firma el sistema completo y se paga contra la entrega de cada etapa. No pag&aacute;s nada que no hayas visto funcionar.</p>
+    <p class="dim">Se firma el proyecto completo y se paga contra la entrega de cada etapa. No pagás nada que no hayas visto funcionar.</p>
     <div class="pago">
       <div class="pago-row">
         <span class="pc">30%</span>
-        <span class="pt">A la firma.<small>Arranca el n&uacute;cleo (panel + datos).</small></span>
+        <span class="pt">A la firma.<small>Arranca el núcleo (panel + datos).</small></span>
       </div>
       <div class="pago-row">
         <span class="pc">35%</span>
-        <span class="pt">Contra entrega del n&uacute;cleo y el agente de WhatsApp funcionando.<small>Pod&eacute;s ver el sistema en vivo antes de seguir pagando.</small></span>
+        <span class="pt">Contra entrega del núcleo y el agente de WhatsApp funcionando.<small>Podés ver el sistema en vivo antes de seguir pagando.</small></span>
       </div>
       <div class="pago-row">
         <span class="pc">35%</span>
-        <span class="pt">Contra entrega de la presencia web y el sistema en producci&oacute;n completo.<small>La mensualidad arranca el mes siguiente: USD 250 los primeros 3 meses (con entrenamiento), luego USD 150.</small></span>
+        <span class="pt">Contra entrega de la landing y el sistema en producción completo.<small>El fee mensual arranca el mes siguiente.</small></span>
       </div>
     </div>
-    <div class="benefit" style="margin-top:16px"><b>El precio de cada etapa queda reservado mientras la propuesta est&eacute; vigente.</b> Pod&eacute;s pagarla en el momento que te convenga &mdash; el sistema se firma entero, se paga por partes.</div>
+    <div class="benefit" style="margin-top:16px"><b>Al cerrar el proyecto completo con esta propuesta, cada etapa mantiene el precio de pack.</b> Podés pagarla en el momento que te convenga — el beneficio queda reservado mientras la propuesta esté vigente.</div>
   </section>
 
   <footer>
@@ -514,5 +663,12 @@ footer a.fine:hover{color:var(--lilac)}
   </footer>
 
 </div>
+<script>
+(function(){
+  var slug = "mash";
+  var params = new URLSearchParams(window.location.search);
+  fetch("/api/proposals/" + slug + "/open?" + params.toString(), { method: "POST" }).catch(function(){});
+})();
+</script>
 </body>
 </html>

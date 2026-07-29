@@ -739,5 +739,13 @@ document.addEventListener('DOMContentLoaded',drawPix);
   </div>
 </div>
 
+
+<script>
+(function(){
+  var slug = "stockin-lavanda";
+  var params = new URLSearchParams(window.location.search);
+  fetch("/api/proposals/" + slug + "/open?" + params.toString(), { method: "POST" }).catch(function(){});
+})();
+</script>
 </body>
 </html>
