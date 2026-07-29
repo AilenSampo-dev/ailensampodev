@@ -1,6 +1,10 @@
 {
   "rewrites": [
     {
+      "source": "/p/stockin-lavanda/pago",
+      "destination": "/p/stockin-lavanda/pago/index.html"
+    },
+    {
       "source": "/p/stockin-lavanda",
       "destination": "/p/stockin-lavanda/index.html"
     },
@@ -10,6 +14,24 @@
     }
   ],
   "headers": [
+    {
+      "source": "/p/stockin-lavanda/pago",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/html; charset=utf-8"
+        }
+      ]
+    },
+    {
+      "source": "/p/stockin-lavanda/pago/(.*)",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/html; charset=utf-8"
+        }
+      ]
+    },
     {
       "source": "/p/stockin-lavanda",
       "headers": [
