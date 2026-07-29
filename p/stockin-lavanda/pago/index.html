@@ -72,6 +72,27 @@
     font-variant-numeric:tabular-nums;
   }
   .plan.featured .plan-total{color:#fff}
+  .plan-fee{
+    font-size:14px;
+    color:var(--grey);
+    margin:-10px 0 18px;
+    padding-bottom:16px;
+    border-bottom:1px solid #e8e2f0;
+  }
+  .plan-fee strong{
+    display:block;
+    font-size:18px;
+    font-weight:900;
+    color:var(--night-plum);
+    margin-top:4px;
+    font-variant-numeric:tabular-nums;
+  }
+  .plan.featured .plan-fee{
+    color:var(--soft-lilac);
+    border-color:rgba(255,255,255,.18);
+  }
+  .plan.featured .plan-fee strong{color:#fff}
+  .plan-fee .option-detail{display:block;margin-top:2px;font-size:13px}
   .options{display:grid;gap:14px}
   .option{
     background:#fff;
@@ -137,6 +158,7 @@
     <section class="plan featured">
       <h2>Con portal distribuidor</h2>
       <div class="plan-total">USD 17.400</div>
+      <p class="plan-fee">Puesta en marcha · Licencia mensual desde go-live<strong>USD 1.500 / mes</strong><span class="option-detail">ERP USD 1.250 + portal USD 250</span></p>
       <div class="options">
         <div class="option">
           <div class="option-label">Un solo pago</div>
@@ -156,6 +178,7 @@
     <section class="plan">
       <h2>Sin portal distribuidor</h2>
       <div class="plan-total">USD 15.400</div>
+      <p class="plan-fee">Puesta en marcha · Licencia mensual desde go-live<strong>USD 1.250 / mes</strong><span class="option-detail">Sistema de gestión (ERP + canales)</span></p>
       <div class="options">
         <div class="option">
           <div class="option-label">Un solo pago</div>
