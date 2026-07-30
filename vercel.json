@@ -11,6 +11,10 @@
     {
       "source": "/p/mash",
       "destination": "/p/mash/index.html"
+    },
+    {
+      "source": "/p/soulful-branding",
+      "destination": "/p/soulful-branding/index.html"
     }
   ],
   "headers": [
@@ -61,6 +65,24 @@
     },
     {
       "source": "/p/mash/(.*)",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/html; charset=utf-8"
+        }
+      ]
+    },
+    {
+      "source": "/p/soulful-branding",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/html; charset=utf-8"
+        }
+      ]
+    },
+    {
+      "source": "/p/soulful-branding/(.*)",
       "headers": [
         {
           "key": "Content-Type",
