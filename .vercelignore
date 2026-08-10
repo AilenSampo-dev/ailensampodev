@@ -1,14 +1,14 @@
-node_modules
-package.json
-package-lock.json
-colores.txt
-fonts/fonts.css
-Logotipo_Ailen Sampo
-logo secundario
-recursos graficos
-notas_privadas
-.next
-docs
+/node_modules
+/package.json
+/package-lock.json
+/colores.txt
+/fonts/fonts.css
+/Logotipo_Ailen Sampo
+/logo secundario
+/recursos graficos
+/notas_privadas
+/.next
+/docs
 
 # Patrones con / al inicio = solo raiz del sitio publico.
 # Sin / excluiria tambien erp/package.json y romperia el deploy del ERP.
