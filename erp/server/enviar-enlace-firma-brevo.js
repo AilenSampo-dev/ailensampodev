@@ -1,3 +1,5 @@
+import { buildFirmaContratoEmail } from "./email-template.js";
+
 /**
  * Email al cliente con enlace único para firmar el contrato.
  */
@@ -39,11 +41,14 @@ export async function enviarEnlaceFirmaBrevo(data, env = process.env) {
     "www.ailensampo.com",
   ].join("\n");
 
+  const htmlContent = buildFirmaContratoEmail({ representante, cliente, proyecto, url });
+
   const payload = {
     sender: { name: "Ailen Sampo · s(a)", email: fromEmail },
     to: [{ email: to, name: representante || cliente }],
     subject: `Contrato para aceptar · ${proyecto || "Documento"}`,
     textContent,
+    htmlContent,
   };
 
   if (adminEmail && adminEmail !== to) {

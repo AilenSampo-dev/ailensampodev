@@ -1,3 +1,5 @@
+import { buildCertificadoEmail } from "./email-template.js";
+
 /**
  * Envío de certificado PDF vía Brevo (compartido dev + producción).
  */
@@ -36,11 +38,14 @@ export async function enviarCertificadoBrevo(data, env = process.env) {
     "www.ailensampo.com",
   ].join("\n");
 
+  const htmlContent = buildCertificadoEmail({ typedName, cliente, proyecto });
+
   const payload = {
     sender: { name: "Ailen Sampo · s(a)", email: fromEmail },
     to: [{ email: to, name: typedName || cliente }],
     subject: `Certificado de aceptacion · ${proyecto || "Contrato"}`,
     textContent,
+    htmlContent,
     attachment: [{ name: filename, content: pdfBase64 }],
   };
 
