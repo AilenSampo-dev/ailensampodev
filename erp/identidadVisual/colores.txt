@@ -1,0 +1,10 @@
+#3A1E66 — púrpura oscuro
+#E1ADFF — lila claro
+#FF6437 — naranja
+#FAF26F — amarillo
+#ABE3D2 — verde agua
+#F656BF — rosa fuerte
+#6882EB — azul medio
+#5C64F2 — azul/violeta
+#AEBFF2 — azul claro
+#4D4F54 — gris oscuro

@@ -1,0 +1,1530 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ailen Sampo · Gestión</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared/tokens.css">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--white);
+  color: var(--black);
+  font-family: var(--font-sans);
+  font-weight: 300;
+  font-size: 13.5px;
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+/* ── SIDEBAR ── */
+.sidebar {
+  width: 204px;
+  flex-shrink: 0;
+  background: var(--gray-light);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 0; left: 0; bottom: 0;
+  z-index: 100;
+  padding: 32px 0 24px;
+}
+.shell { display: flex; min-height: 100vh; }
+.main  { margin-left: 204px; flex: 1; }
+
+.sidebar-logo {
+  padding: 0 24px 28px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 20px;
+}
+.wordmark {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 19px;
+  color: var(--black);
+  letter-spacing: 0.01em;
+  line-height: 1.2;
+}
+.wordmark em { font-style: italic; color: var(--pink); }
+.logo-sub {
+  font-size: 10px;
+  color: var(--gray);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-top: 4px;
+  font-weight: 400;
+}
+
+.nav-section {
+  font-size: 9px;
+  font-weight: 500;
+  color: var(--gray);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 16px 24px 6px;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 24px;
+  cursor: pointer;
+  color: var(--gray);
+  font-size: 12.5px;
+  font-weight: 300;
+  transition: all 0.2s;
+  border-right: 2px solid transparent;
+  letter-spacing: 0.01em;
+}
+.nav-item:hover { color: var(--black); background: var(--border); }
+.nav-item.active {
+  color: var(--pink);
+  border-right-color: var(--pink);
+  background: var(--pink-light);
+  font-weight: 400;
+}
+
+.nav-dot {
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: 0.5;
+  flex-shrink: 0;
+}
+.nav-item.active .nav-dot { opacity: 1; }
+
+.sidebar-foot {
+  margin-top: auto;
+  padding: 20px 24px 0;
+  border-top: 1px solid var(--border);
+  font-size: 10px;
+  color: var(--gray);
+  line-height: 1.8;
+}
+
+/* ── TOPBAR ── */
+.topbar {
+  background: var(--gray-light);
+  border-bottom: 1px solid var(--border);
+  padding: 18px 36px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+.topbar-title {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 22px;
+  color: var(--black);
+  line-height: 1.1;
+}
+.topbar-title em { font-style: italic; color: var(--pink); }
+.topbar-sub { font-size: 11px; color: var(--gray); margin-top: 2px; letter-spacing: 0.03em; }
+.topbar-right { display: flex; align-items: center; gap: 10px; }
+
+/* ── BUTTONS ── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 18px;
+  border-radius: var(--radius-pill);
+  border: 1px solid transparent;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.btn-primary { background: var(--pink); color: var(--white); border-color: var(--pink); }
+.btn-primary:hover { background: var(--accent-deep); border-color: var(--accent-deep); }
+.btn-ghost  { background: transparent; color: var(--gray); border-color: var(--border); }
+.btn-ghost:hover  { background: var(--gray-light); color: var(--black); }
+.btn-sm { padding: 5px 12px; font-size: 11px; }
+
+/* ── PAGES ── */
+.page { display: none; padding: 36px; animation: fadeUp 0.3s ease; }
+.page.active { display: block; }
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── STATS ROW ── */
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  margin-bottom: 36px;
+}
+.stat-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 20px 22px;
+  position: relative;
+  overflow: hidden;
+}
+.stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+}
+.stat-card.c-terra::before  { background: var(--pink); }
+.stat-card.c-sage::before   { background: var(--gray); }
+.stat-card.c-sand::before   { background: var(--pink-mid); }
+.stat-card.c-blush::before  { background: var(--accent-deep); }
+
+.stat-label {
+  font-size: 10px;
+  color: var(--gray);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-weight: 500;
+}
+.stat-value {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 38px;
+  color: var(--black);
+  margin-top: 4px;
+  line-height: 1;
+}
+.stat-value.c-terra { color: var(--pink); }
+.stat-value.c-sage  { color: var(--gray); }
+.stat-value.c-sand  { color: var(--pink-mid); }
+.stat-sub { font-size: 10.5px; color: var(--gray); margin-top: 6px; }
+
+/* ── SECTION LABEL ── */
+.section-label {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 18px;
+  color: var(--black);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+}
+.section-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+  margin-left: 4px;
+}
+.section-label .label-actions { display: flex; gap: 8px; flex-shrink: 0; }
+
+/* ── TABLE ── */
+.table-wrap {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+table { width: 100%; border-collapse: collapse; }
+th {
+  background: var(--gray-light);
+  padding: 9px 16px;
+  text-align: left;
+  font-size: 9.5px;
+  font-weight: 500;
+  color: var(--gray);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--border);
+}
+td {
+  padding: 13px 16px;
+  border-bottom: 1px solid var(--border);
+  font-size: 12.5px;
+  color: var(--black);
+  vertical-align: middle;
+}
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: var(--gray-light); }
+.td-name { font-weight: 400; }
+.td-sub  { font-size: 10.5px; color: var(--gray); margin-top: 2px; }
+
+/* ── TAGS ── */
+.tag {
+  display: inline-block;
+  padding: 2px 9px;
+  border-radius: var(--radius-pill);
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  border: 1px solid transparent;
+}
+.tag-lead      { background: var(--gray-light); color: var(--gray);        border-color: var(--border);    }
+.tag-propuesta { background: var(--pink-light);  color: var(--pink);        border-color: var(--pink-mid);  }
+.tag-activo    { background: var(--gray-light);  color: var(--black);       border-color: var(--border);    }
+.tag-pausado   { background: var(--gray-light);  color: var(--gray);        border-color: var(--border);    }
+.tag-cerrado   { background: var(--pink-light);  color: var(--accent-deep); border-color: var(--pink-mid);  }
+.tag-low  { background: var(--pink-light); color: var(--pink);        border-color: var(--pink-mid); }
+.tag-mid  { background: var(--gray-light); color: var(--black);       border-color: var(--border);   }
+.tag-high { background: var(--black);      color: var(--white);       border-color: var(--black);    }
+
+.action-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--gray);
+  font-size: 13px;
+  padding: 4px 7px;
+  border-radius: 4px;
+  transition: all 0.15s;
+  font-family: inherit;
+}
+.action-btn:hover { color: var(--pink); background: var(--pink-light); }
+
+/* ── MODAL ── */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(26,26,26,0.35);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(6px);
+}
+.modal-overlay.open { display: flex; }
+.modal {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 32px;
+  width: 520px;
+  max-width: 95vw;
+  max-height: 88vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(26,26,26,0.12);
+}
+.modal-title {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 22px;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--black);
+}
+.modal-title em { font-style: italic; color: var(--pink); }
+.modal-close {
+  background: none; border: none;
+  color: var(--gray); cursor: pointer;
+  font-size: 22px; line-height: 1;
+  transition: color 0.15s;
+}
+.modal-close:hover { color: var(--pink); }
+
+.form-group { margin-bottom: 18px; }
+label {
+  display: block;
+  font-size: 10px;
+  color: var(--gray);
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 500;
+}
+input, select, textarea {
+  width: 100%;
+  background: var(--gray-light);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 10px 13px;
+  color: var(--black);
+  font-family: var(--font-sans);
+  font-size: 12.5px;
+  font-weight: 300;
+  outline: none;
+  transition: border-color 0.2s, background 0.2s;
+  -webkit-appearance: none;
+}
+input:focus, select:focus, textarea:focus {
+  border-color: var(--pink);
+  background: var(--white);
+}
+textarea { resize: vertical; min-height: 80px; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.modal-footer {
+  display: flex; gap: 10px; justify-content: flex-end;
+  margin-top: 24px; padding-top: 20px;
+  border-top: 1px solid var(--border);
+}
+
+/* ── CANVAS LAYOUT ── */
+.canvas-layout { display: grid; grid-template-columns: 1fr 320px; gap: 24px; align-items: start; }
+.canvas-sections { display: flex; flex-direction: column; gap: 18px; }
+
+.canvas-section {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+.canvas-section-head {
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--gray-light);
+}
+.section-num {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 11px;
+  color: var(--gray);
+  margin-right: 8px;
+}
+.canvas-section-title { font-size: 12.5px; font-weight: 400; color: var(--black); display: flex; align-items: center; }
+.section-hint { font-size: 10px; color: var(--gray); letter-spacing: 0.03em; }
+.sec-desc { padding: 10px 18px 6px; font-size: 11px; color: var(--gray); font-style: italic; }
+
+.items-list { padding: 10px; }
+
+.selectable-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--gray-light);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 11px 14px;
+  margin-bottom: 7px;
+  cursor: pointer;
+  transition: all 0.18s;
+  user-select: none;
+}
+.selectable-item:last-child { margin-bottom: 0; }
+.selectable-item:hover { border-color: var(--pink); background: var(--pink-light); }
+.selectable-item.selected { border-color: var(--pink); background: var(--pink-light); }
+.selectable-item.selected .item-check {
+  background: var(--pink); border-color: var(--pink); color: var(--white);
+}
+
+.item-check {
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 9px;
+  color: transparent;
+  transition: all 0.18s;
+}
+.item-check.sq { border-radius: 4px; }
+
+.item-info { flex: 1; min-width: 0; }
+.item-name { font-size: 12.5px; font-weight: 400; color: var(--black); }
+.item-sub  { font-size: 10.5px; color: var(--gray); margin-top: 1px; }
+.item-price { text-align: right; flex-shrink: 0; }
+.item-price-val   { font-family: var(--font-display); font-size: 17px; font-weight: 400; color: var(--pink); line-height: 1.1; }
+.item-price-range { font-size: 9.5px; color: var(--gray); margin-top: 1px; }
+
+/* ── SUMMARY PANEL ── */
+.summary-panel {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  position: sticky;
+  top: 80px;
+  overflow: hidden;
+}
+.summary-header {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border);
+  background: var(--gray-light);
+}
+.summary-title { font-family: var(--font-display); font-size: 17px; font-weight: 400; }
+.summary-title em { font-style: italic; color: var(--pink); }
+.summary-client { font-size: 10.5px; color: var(--gray); margin-top: 2px; }
+
+.summary-block { padding: 14px 20px; border-bottom: 1px solid var(--border); }
+.summary-block-label {
+  font-size: 9px;
+  color: var(--gray);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-weight: 500;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.summary-block-label .num {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 12px;
+  color: var(--pink);
+}
+
+.summary-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px 0;
+  border-bottom: 1px solid var(--border);
+  gap: 8px;
+}
+.summary-item:last-child { border-bottom: none; }
+.summary-item-name  { font-size: 11.5px; color: var(--black); flex: 1; line-height: 1.3; }
+.summary-item-price { font-size: 12px; color: var(--pink); white-space: nowrap; font-weight: 400; }
+.remove-btn {
+  background: none; border: none;
+  color: var(--gray); cursor: pointer;
+  font-size: 15px; padding: 0 2px;
+  opacity: 0.5; transition: all 0.15s;
+}
+.remove-btn:hover { opacity: 1; color: var(--pink); }
+.summary-empty { font-size: 10.5px; color: var(--gray); font-style: italic; padding: 2px 0; }
+
+.summary-total {
+  padding: 16px 20px;
+  background: var(--gray-light);
+  border-top: 1px solid var(--border);
+}
+.total-row-main { display: flex; align-items: baseline; justify-content: space-between; }
+.total-label-main { font-size: 10px; color: var(--gray); text-transform: uppercase; letter-spacing: 0.1em; }
+.total-val { font-family: var(--font-display); font-size: 30px; font-weight: 400; color: var(--pink); line-height: 1; }
+.total-monthly-note { font-size: 10px; color: var(--gray); margin-top: 4px; font-style: italic; }
+
+.summary-actions {
+  padding: 14px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  border-top: 1px solid var(--border);
+}
+
+/* ── ADMIN ── */
+.admin-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.admin-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+.admin-card.full { grid-column: 1 / -1; }
+.admin-card-head {
+  padding: 12px 18px;
+  border-bottom: 1px solid var(--border);
+  background: var(--gray-light);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.admin-card-title { font-size: 11.5px; font-weight: 400; color: var(--black); }
+.admin-card-title em { font-style: italic; color: var(--pink); }
+
+.admin-item {
+  padding: 11px 18px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.admin-item:last-child { border-bottom: none; }
+.admin-item-info { flex: 1; min-width: 0; }
+
+.admin-name-input, .admin-sub-input {
+  background: transparent;
+  border: none;
+  padding: 0;
+  font-family: var(--font-sans);
+  width: 100%;
+  cursor: text;
+  outline: none;
+}
+.admin-name-input { font-size: 12.5px; color: var(--black); font-weight: 400; }
+.admin-name-input:focus { color: var(--pink); }
+.admin-sub-input  { font-size: 10.5px; color: var(--gray); font-weight: 300; }
+
+.price-field {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: var(--gray-light);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 5px 8px;
+}
+.price-field span { font-size: 11px; color: var(--gray); }
+.price-field input {
+  width: 70px;
+  background: transparent;
+  border: none;
+  padding: 0;
+  font-size: 12px;
+  text-align: right;
+  color: var(--pink);
+  font-family: 'DM Mono', monospace;
+  font-weight: 400;
+}
+.price-field input:focus { outline: none; }
+
+/* ── NOTIFICATION ── */
+.notif {
+  position: fixed;
+  bottom: 28px; right: 28px;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  padding: 10px 20px;
+  font-size: 12px;
+  color: var(--black);
+  z-index: 9999;
+  transform: translateY(70px);
+  opacity: 0;
+  transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 8px 30px rgba(26,26,26,0.1);
+}
+.notif.show { transform: translateY(0); opacity: 1; }
+.notif.success { border-left: 3px solid var(--gray); }
+.notif.error   { border-left: 3px solid var(--pink); }
+
+/* ── EMPTY STATE ── */
+.empty-state { text-align: center; padding: 60px 20px; }
+.empty-glyph { font-family: var(--font-display); font-style: italic; font-size: 42px; color: var(--gray); margin-bottom: 10px; line-height: 1; }
+.empty-title { font-family: var(--font-display); font-size: 18px; color: var(--black); margin-bottom: 5px; }
+.empty-sub   { font-size: 11.5px; color: var(--gray); }
+
+/* ── FILTER SELECT ── */
+.filter-select {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  padding: 7px 14px;
+  color: var(--black);
+  font-family: var(--font-sans);
+  font-size: 11.5px;
+  font-weight: 300;
+  outline: none;
+  cursor: pointer;
+  -webkit-appearance: none;
+}
+.filter-select:focus { border-color: var(--pink); }
+
+.chip {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: var(--radius-pill);
+  font-size: 9.5px;
+  background: var(--gray-light);
+  border: 1px solid var(--border);
+  color: var(--gray);
+  letter-spacing: 0.03em;
+}
+
+@media (max-width: 1100px) {
+  .canvas-layout { grid-template-columns: 1fr; }
+  .summary-panel { position: static; }
+  .stats-row { grid-template-columns: 1fr 1fr; }
+  .admin-grid { grid-template-columns: 1fr; }
+  .admin-card.full { grid-column: auto; }
+}
+</style>
+</head>
+<body>
+
+<div class="shell">
+  <!-- SIDEBAR -->
+  <nav class="sidebar">
+    <div class="sidebar-logo">
+      <div class="wordmark">Ailen <em>Sampo</em></div>
+      <div class="logo-sub">Sistema de gestión</div>
+    </div>
+    <div class="nav-section">Principal</div>
+    <div class="nav-item active" onclick="showPage('dashboard', this)">
+      <div class="nav-dot"></div> Dashboard
+    </div>
+    <div class="nav-item" onclick="showPage('clientes', this)">
+      <div class="nav-dot"></div> Clientes
+    </div>
+    <div class="nav-item" onclick="showPage('presupuesto', this)">
+      <div class="nav-dot"></div> Presupuesto
+    </div>
+    <div class="nav-section">Configuración</div>
+    <div class="nav-item" onclick="showPage('admin', this)">
+      <div class="nav-dot"></div> Admin · Precios
+    </div>
+    <div class="sidebar-foot">
+      USD · LATAM 2025<br>
+      Tarifa hora $35–50
+    </div>
+  </nav>
+
+  <!-- MAIN -->
+  <div class="main">
+
+    <!-- ── DASHBOARD ── -->
+    <div id="page-dashboard" class="page active">
+      <div class="topbar">
+        <div>
+          <div class="topbar-title">Buenos días <em>·</em> Dashboard</div>
+          <div class="topbar-sub" id="dash-date"></div>
+        </div>
+        <button class="btn btn-primary btn-sm" onclick="openModal('modal-cliente')">+ Nuevo cliente</button>
+      </div>
+      <div style="padding:36px">
+        <div class="stats-row" id="stats-row"></div>
+        <div class="section-label">
+          Clientes recientes
+          <div class="label-actions">
+            <button class="btn btn-ghost btn-sm" onclick="showPage('clientes', document.querySelector('.nav-item:nth-child(5)'))">Ver todos</button>
+          </div>
+        </div>
+        <div class="table-wrap" id="dash-table"></div>
+      </div>
+    </div>
+
+    <!-- ── CLIENTES ── -->
+    <div id="page-clientes" class="page">
+      <div class="topbar">
+        <div>
+          <div class="topbar-title">Clientes</div>
+          <div class="topbar-sub">Todos tus contactos y proyectos</div>
+        </div>
+        <div class="topbar-right">
+          <select class="filter-select" id="filter-estado" onchange="renderClientes()">
+            <option value="">Todos los estados</option>
+            <option>Lead</option><option>Propuesta</option>
+            <option>Activo</option><option>Pausado</option><option>Cerrado</option>
+          </select>
+          <button class="btn btn-primary btn-sm" onclick="openModal('modal-cliente')">+ Nuevo cliente</button>
+        </div>
+      </div>
+      <div style="padding:36px">
+        <div class="table-wrap" id="clientes-table"></div>
+      </div>
+    </div>
+
+    <!-- ── PRESUPUESTO ── -->
+    <div id="page-presupuesto" class="page">
+      <div class="topbar">
+        <div>
+          <div class="topbar-title">Canvas de <em>presupuesto</em></div>
+          <div class="topbar-sub">Seleccioná los bloques para armar la propuesta</div>
+        </div>
+        <div class="topbar-right">
+          <select id="presup-cliente-select" class="filter-select" style="min-width:180px"></select>
+          <button class="btn btn-ghost btn-sm" onclick="clearCanvas()">Limpiar</button>
+          <button class="btn btn-primary btn-sm" onclick="guardarPresupuesto()">Guardar</button>
+        </div>
+      </div>
+      <div style="padding:36px">
+        <div class="canvas-layout">
+          <div class="canvas-sections" id="canvas-sections"></div>
+          <div class="summary-panel">
+            <div class="summary-header">
+              <div class="summary-title">Propuesta <em>·</em></div>
+              <div class="summary-client" id="presup-cliente-nombre">Sin cliente seleccionado</div>
+            </div>
+            <div id="selected-panel"></div>
+            <div class="summary-total">
+              <div class="total-row-main">
+                <div class="total-label-main">Total inicial</div>
+                <div class="total-val" id="total-value">$0</div>
+              </div>
+              <div class="total-monthly-note" id="total-monthly"></div>
+            </div>
+            <div class="summary-actions">
+              <button class="btn btn-primary" onclick="exportarPDF()" style="width:100%;justify-content:center">
+                Exportar presupuesto ↗
+              </button>
+              <button class="btn btn-ghost btn-sm" onclick="copiarResumen()" style="width:100%;justify-content:center">
+                Copiar para WhatsApp
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── ADMIN ── -->
+    <div id="page-admin" class="page">
+      <div class="topbar">
+        <div>
+          <div class="topbar-title">Admin <em>·</em> Precios</div>
+          <div class="topbar-sub">Editá valores directamente. Se guardan en el navegador.</div>
+        </div>
+        <div class="topbar-right">
+          <button class="btn btn-ghost btn-sm" onclick="resetPrices()">Restaurar defaults</button>
+          <button class="btn btn-primary btn-sm" onclick="savePrices()">Guardar cambios</button>
+        </div>
+      </div>
+      <div style="padding:36px">
+        <div class="admin-grid" id="admin-grid"></div>
+      </div>
+    </div>
+
+  </div><!-- /main -->
+</div><!-- /shell -->
+
+<!-- MODAL CLIENTE -->
+<div class="modal-overlay" id="modal-cliente">
+  <div class="modal">
+    <div class="modal-title">
+      <span id="modal-cliente-title">Nuevo <em>cliente</em></span>
+      <button class="modal-close" onclick="closeModal('modal-cliente')">×</button>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Nombre / Empresa *</label>
+        <input type="text" id="f-nombre" placeholder="Estudio Creativo SRL">
+      </div>
+      <div class="form-group">
+        <label>Persona de contacto</label>
+        <input type="text" id="f-contacto" placeholder="Nombre">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" id="f-email" placeholder="hola@empresa.com">
+      </div>
+      <div class="form-group">
+        <label>WhatsApp</label>
+        <input type="text" id="f-telefono" placeholder="+54 9 351 000 0000">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Estado</label>
+        <select id="f-estado">
+          <option>Lead</option><option>Propuesta</option>
+          <option>Activo</option><option>Pausado</option><option>Cerrado</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Origen</label>
+        <select id="f-origen">
+          <option>Web</option><option>Instagram</option>
+          <option>Referido</option><option>LinkedIn</option><option>Otro</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Notas</label>
+      <textarea id="f-notas" placeholder="Qué busca, tecnología, urgencias..."></textarea>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal('modal-cliente')">Cancelar</button>
+      <button class="btn btn-primary" onclick="guardarCliente()">Guardar</button>
+    </div>
+  </div>
+</div>
+
+<div class="notif" id="notif"></div>
+
+<script>
+// ══════════════════════════════════════════
+// DEFAULTS
+// ══════════════════════════════════════════
+const DEFAULT_PRICES = {
+  paths: [
+    { id:'core1', label:'Core 1 · Web desde cero', services: [
+      { id:'s1', name:'S1 · Arquitectura core', sub:'~1–2 semanas · frontend + backend + panel básico', price:900, range:'$700–$1.100', monthly:'$30–$40', level:'low', type:'service' },
+      { id:'s2', name:'S2 · Sistema digital core', sub:'~3–4 semanas · estados + automatizaciones + acceso por usuario', price:2000, range:'$1.600–$2.400', monthly:'$70–$100', level:'mid', type:'service' },
+      { id:'s3', name:'S3 · Sistema integral', sub:'~6–8 semanas · múltiples fuentes + dashboard analítico + roles', price:3800, range:'$3.200–$4.500', monthly:'$70–$100', level:'high', type:'service' },
+    ]},
+    { id:'core2', label:'Core 2 · Web existente', services: [
+      { id:'n1', name:'NODE 1 · Conexión digital base', sub:'~1–2 semanas · formulario + DB + automatización básica', price:650, range:'$500–$800', monthly:'$30–$40', level:'low', type:'service' },
+      { id:'n2', name:'NODE 2 · Sistema operativo', sub:'~3–5 semanas · DB relacional + flujos condicionales + roles', price:1600, range:'$1.300–$2.000', monthly:'$70–$100', level:'mid', type:'service' },
+      { id:'n3', name:'NODE 3 · Cerebro de negocio', sub:'~6–10 semanas · interconexión de áreas + dashboard tiempo real', price:3200, range:'$2.800–$4.000', monthly:'$70–$100', level:'high', type:'service' },
+    ]}
+  ],
+  maintenance: [
+    { id:'mant-base',   name:'Guardia base',   sub:'Para S1 / NODE 1 · monitoreo + reporte mensual · ~20 min/mes', price:35,  range:'$30–$40',   monthly:'$35', level:'low',  type:'maintenance' },
+    { id:'mant-active', name:'Guardia activa', sub:'Para S2, S3, NODE 2, 3 · revisión de flujos + 1 hs ajustes',   price:85,  range:'$70–$100',  monthly:'$85', level:'mid',  type:'maintenance' },
+  ],
+  infra: [
+    { id:'inf-dominio', name:'Dominio (.com)',         sub:'Prorrateado del pago anual',                 price:1,  range:'~$1/mes',     type:'infra' },
+    { id:'inf-email',   name:'Google Workspace',       sub:'Email corporativo @sudominio',               price:7,  range:'~$7/mes',     type:'infra' },
+    { id:'inf-vercel',  name:'Vercel Pro',              sub:'Frontend hosting · deploy automático',       price:20, range:'$20/mes',     type:'infra' },
+    { id:'inf-railway', name:'Railway · Backend',       sub:'Lógica + API · pago por uso',                price:10, range:'$5–$15/mes',  type:'infra' },
+    { id:'inf-neon',    name:'Neon · PostgreSQL',       sub:'Base de datos serverless',                   price:5,  range:'$0–$19/mes',  type:'infra' },
+    { id:'inf-resend',  name:'Resend · Email transaccional', sub:'Emails automáticos del sistema',        price:0,  range:'$0–$20/mes',  type:'infra' },
+    { id:'inf-n8n',     name:'n8n · Automatizaciones',  sub:'Self-hosted en Railway',                     price:8,  range:'$5–$15/mes',  type:'infra' },
+  ],
+  extras: [
+    { id:'ext-mp',       name:'Integración MercadoPago',  sub:'Pagos online en el sistema',                  price:400, range:'$300–$500',     type:'extra' },
+    { id:'ext-wsp',      name:'WhatsApp Business API',    sub:'Notificaciones automáticas',                  price:350, range:'$300–$500',     type:'extra' },
+    { id:'ext-cap',      name:'Capacitación del equipo',  sub:'Por sesión · hasta 2 hs',                     price:200, range:'$150–$300',     type:'extra' },
+    { id:'ext-urgencia', name:'Urgencia (+25%)',           sub:'Entrega acelerada · se calcula sobre base',   price:0,   range:'% sobre precio base', type:'extra' },
+  ]
+};
+
+// ══════════════════════════════════════════
+// STATE
+// ══════════════════════════════════════════
+let clients = JSON.parse(localStorage.getItem('as_clients') || '[]');
+let prices  = JSON.parse(localStorage.getItem('as_prices')  || 'null') || JSON.parse(JSON.stringify(DEFAULT_PRICES));
+let editingClientId = null;
+let canvasSelected = { service: null, maintenance: null, infra: [], extras: [] };
+
+// ══════════════════════════════════════════
+// UTILS
+// ══════════════════════════════════════════
+function saveClients()   { localStorage.setItem('as_clients', JSON.stringify(clients)); }
+function savePricesData(){ localStorage.setItem('as_prices',  JSON.stringify(prices)); }
+function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2,6); }
+function fmt(n){ return '$' + Number(n).toLocaleString('es-AR'); }
+
+function notif(msg, type='success') {
+  const el = document.getElementById('notif');
+  el.textContent = msg;
+  el.className = `notif ${type} show`;
+  clearTimeout(el._t);
+  el._t = setTimeout(() => el.className = `notif ${type}`, 3000);
+}
+
+// ══════════════════════════════════════════
+// NAVIGATION
+// ══════════════════════════════════════════
+function showPage(id, navEl) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  if (navEl) navEl.classList.add('active');
+  else document.querySelectorAll('.nav-item').forEach(n => {
+    if (n.getAttribute('onclick')?.includes(`'${id}'`)) n.classList.add('active');
+  });
+  if (id === 'dashboard')   renderDashboard();
+  if (id === 'clientes')    renderClientes();
+  if (id === 'presupuesto') { renderCanvas(); populateClientSelect(); }
+  if (id === 'admin')       renderAdmin();
+}
+
+// ══════════════════════════════════════════
+// MODAL
+// ══════════════════════════════════════════
+function openModal(id, clientId=null) {
+  editingClientId = clientId;
+  if (id === 'modal-cliente') {
+    const title = document.getElementById('modal-cliente-title');
+    title.innerHTML = clientId ? 'Editar <em>cliente</em>' : 'Nuevo <em>cliente</em>';
+    if (clientId) {
+      const c = clients.find(x => x.id === clientId);
+      if (c) {
+        document.getElementById('f-nombre').value   = c.nombre   || '';
+        document.getElementById('f-contacto').value = c.contacto || '';
+        document.getElementById('f-email').value    = c.email    || '';
+        document.getElementById('f-telefono').value = c.telefono || '';
+        document.getElementById('f-estado').value   = c.estado   || 'Lead';
+        document.getElementById('f-origen').value   = c.origen   || 'Web';
+        document.getElementById('f-notas').value    = c.notas    || '';
+      }
+    } else {
+      ['f-nombre','f-contacto','f-email','f-telefono','f-notas'].forEach(f => document.getElementById(f).value = '');
+      document.getElementById('f-estado').value = 'Lead';
+      document.getElementById('f-origen').value = 'Web';
+    }
+  }
+  document.getElementById(id).classList.add('open');
+}
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+
+// ══════════════════════════════════════════
+// CLIENTES CRUD
+// ══════════════════════════════════════════
+function guardarCliente() {
+  const nombre = document.getElementById('f-nombre').value.trim();
+  if (!nombre) { notif('El nombre es obligatorio', 'error'); return; }
+  const data = {
+    nombre,
+    contacto:  document.getElementById('f-contacto').value.trim(),
+    email:     document.getElementById('f-email').value.trim(),
+    telefono:  document.getElementById('f-telefono').value.trim(),
+    estado:    document.getElementById('f-estado').value,
+    origen:    document.getElementById('f-origen').value,
+    notas:     document.getElementById('f-notas').value.trim(),
+    updatedAt: new Date().toISOString(),
+  };
+  if (editingClientId) {
+    const idx = clients.findIndex(x => x.id === editingClientId);
+    if (idx !== -1) clients[idx] = { ...clients[idx], ...data };
+  } else {
+    clients.unshift({ id: uid(), createdAt: new Date().toISOString(), presupuestos: [], ...data });
+  }
+  saveClients();
+  closeModal('modal-cliente');
+  notif(editingClientId ? 'Cliente actualizado ✓' : 'Cliente guardado ✓');
+  renderDashboard();
+  renderClientes();
+}
+
+function deleteClient(id) {
+  if (!confirm('¿Eliminar este cliente?')) return;
+  clients = clients.filter(c => c.id !== id);
+  saveClients();
+  renderDashboard();
+  renderClientes();
+  notif('Cliente eliminado');
+}
+
+function changeEstado(id, estado) {
+  const c = clients.find(x => x.id === id);
+  if (c) { c.estado = estado; c.updatedAt = new Date().toISOString(); }
+  saveClients();
+  renderDashboard();
+}
+
+// ══════════════════════════════════════════
+// DASHBOARD
+// ══════════════════════════════════════════
+function renderDashboard() {
+  const d = new Date();
+  document.getElementById('dash-date').textContent =
+    d.toLocaleDateString('es-AR', { weekday:'long', day:'numeric', month:'long', year:'numeric' });
+
+  let activos = 0, leads = 0, ingresos = 0;
+  clients.forEach(c => {
+    if (c.estado === 'Activo')  activos++;
+    if (c.estado === 'Lead')    leads++;
+    (c.presupuestos || []).forEach(p => { if (p.total) ingresos += p.total; });
+  });
+
+  document.getElementById('stats-row').innerHTML = `
+    <div class="stat-card c-terra">
+      <div class="stat-label">Clientes totales</div>
+      <div class="stat-value">${clients.length}</div>
+      <div class="stat-sub">en el sistema</div>
+    </div>
+    <div class="stat-card c-sage">
+      <div class="stat-label">Proyectos activos</div>
+      <div class="stat-value c-sage">${activos}</div>
+      <div class="stat-sub">en producción</div>
+    </div>
+    <div class="stat-card c-sand">
+      <div class="stat-label">Leads por convertir</div>
+      <div class="stat-value c-sand">${leads}</div>
+      <div class="stat-sub">en pipeline</div>
+    </div>
+    <div class="stat-card c-blush">
+      <div class="stat-label">Total presupuestado</div>
+      <div class="stat-value" style="font-size:28px;color:var(--accent-deep)">${fmt(ingresos)}</div>
+      <div class="stat-sub">en propuestas</div>
+    </div>`;
+
+  const recent = clients.slice(0, 6);
+  document.getElementById('dash-table').innerHTML = recent.length
+    ? buildTable(recent)
+    : emptyState('Sin clientes aún', 'Agregá tu primer cliente con el botón de arriba');
+}
+
+function emptyState(title, sub) {
+  return `<div class="empty-state">
+    <div class="empty-glyph">∅</div>
+    <div class="empty-title">${title}</div>
+    <div class="empty-sub">${sub}</div>
+  </div>`;
+}
+
+function buildTable(list) {
+  return `<table>
+    <thead><tr>
+      <th>Cliente</th><th>Contacto</th><th>Estado</th><th>Origen</th><th>Alta</th><th></th>
+    </tr></thead>
+    <tbody>${list.map(c => `
+      <tr>
+        <td>
+          <div class="td-name">${c.nombre}</div>
+          ${c.notas ? `<div class="td-sub">${c.notas.slice(0,55)}${c.notas.length>55?'…':''}</div>` : ''}
+        </td>
+        <td>
+          ${c.contacto ? `<div style="font-size:12px">${c.contacto}</div>` : ''}
+          ${c.email    ? `<div class="td-sub">${c.email}</div>`    : ''}
+          ${c.telefono ? `<div class="td-sub">${c.telefono}</div>` : ''}
+        </td>
+        <td>
+          <select onchange="changeEstado('${c.id}',this.value)"
+            style="background:transparent;border:none;font-family:inherit;font-size:12px;cursor:pointer;outline:none;color:inherit;-webkit-appearance:none;padding:0">
+            ${['Lead','Propuesta','Activo','Pausado','Cerrado'].map(s =>
+              `<option ${c.estado===s?'selected':''}>${s}</option>`).join('')}
+          </select>
+        </td>
+        <td><span class="chip">${c.origen || '—'}</span></td>
+        <td style="color:var(--gray);font-size:11px">${new Date(c.createdAt).toLocaleDateString('es-AR')}</td>
+        <td style="white-space:nowrap">
+          <button class="action-btn" onclick="openModal('modal-cliente','${c.id}')" title="Editar">✎</button>
+          <button class="action-btn" onclick="abrirPresupuesto('${c.id}')"          title="Presupuesto">◈</button>
+          <button class="action-btn" onclick="deleteClient('${c.id}')"              title="Eliminar">✕</button>
+        </td>
+      </tr>`).join('')}
+    </tbody></table>`;
+}
+
+function renderClientes() {
+  const estado   = document.getElementById('filter-estado')?.value || '';
+  const filtered = estado ? clients.filter(c => c.estado === estado) : clients;
+  document.getElementById('clientes-table').innerHTML = filtered.length
+    ? buildTable(filtered)
+    : emptyState('Sin clientes' + (estado ? ' con estado ' + estado : ''), 'Ajustá el filtro o agregá nuevos clientes');
+}
+
+function abrirPresupuesto(clientId) {
+  showPage('presupuesto');
+  document.querySelectorAll('.nav-item').forEach(n => {
+    if (n.getAttribute('onclick')?.includes("'presupuesto'")) n.classList.add('active');
+    else n.classList.remove('active');
+  });
+  setTimeout(() => {
+    const sel = document.getElementById('presup-cliente-select');
+    if (sel) { sel.value = clientId; updatePresupClientName(); }
+  }, 60);
+}
+
+// ══════════════════════════════════════════
+// CANVAS
+// ══════════════════════════════════════════
+function populateClientSelect() {
+  const sel = document.getElementById('presup-cliente-select');
+  sel.innerHTML = `<option value="">— Seleccionar cliente —</option>` +
+    clients.map(c => `<option value="${c.id}">${c.nombre}</option>`).join('');
+  sel.onchange = updatePresupClientName;
+}
+
+function updatePresupClientName() {
+  const sel = document.getElementById('presup-cliente-select');
+  const c   = clients.find(x => x.id === sel.value);
+  document.getElementById('presup-cliente-nombre').textContent = c ? c.nombre : 'Sin cliente seleccionado';
+}
+
+function renderCanvas() {
+  const container = document.getElementById('canvas-sections');
+  container.innerHTML = '';
+
+  container.appendChild(buildSection({
+    num:'01', label:'Servicio de desarrollo',
+    hint:'selección única',
+    desc:'El paquete de desarrollo inicial. Elegí uno según si el cliente ya tiene web o no.',
+    items:[...prices.paths[0].services, ...prices.paths[1].services],
+    dropKey:'service', single:true
+  }));
+  container.appendChild(buildSection({
+    num:'02', label:'Mantenimiento mensual',
+    hint:'selección única',
+    desc:'Modelo de guardia mensual. Se factura a partir del mes de entrega.',
+    items:prices.maintenance,
+    dropKey:'maintenance', single:true
+  }));
+  container.appendChild(buildSection({
+    num:'03', label:'Infraestructura · costos del cliente',
+    hint:'selección múltiple',
+    desc:'Servicios externos que el cliente paga directamente a cada plataforma. Costos en USD/mes.',
+    items:prices.infra,
+    dropKey:'infra', single:false, monthlyOnly:true
+  }));
+  container.appendChild(buildSection({
+    num:'04', label:'Extras y ajustes',
+    hint:'selección múltiple',
+    desc:'Integraciones adicionales, urgencia, capacitación.',
+    items:prices.extras,
+    dropKey:'extras', single:false
+  }));
+
+  renderSelectedPanel();
+}
+
+function buildSection({num, label, hint, desc, items, dropKey, single, monthlyOnly}) {
+  const div = document.createElement('div');
+  div.className = 'canvas-section';
+  div.innerHTML = `
+    <div class="canvas-section-head">
+      <div class="canvas-section-title">
+        <span class="section-num">${num} ·</span> ${label}
+      </div>
+      <span class="section-hint">${hint}</span>
+    </div>
+    <div class="sec-desc">${desc}</div>
+    <div class="items-list">
+      ${items.map(item => buildSelectableItem(item, dropKey, monthlyOnly)).join('')}
+    </div>`;
+  return div;
+}
+
+function buildSelectableItem(item, dropKey, monthlyOnly) {
+  const sel      = isSelected(item, dropKey);
+  const isMulti  = dropKey === 'infra' || dropKey === 'extras';
+  const checkCls = isMulti ? 'item-check sq' : 'item-check';
+  const priceVal = monthlyOnly
+    ? `<div class="item-price-val">${item.range}</div><div class="item-price-range">/mes</div>`
+    : `<div class="item-price-val">${item.price > 0 ? fmt(item.price) : item.range}</div>${item.monthly ? `<div class="item-price-range">${item.monthly}/mes</div>` : ''}`;
+
+  return `<div class="selectable-item${sel ? ' selected' : ''}"
+    data-id="${item.id}" data-key="${dropKey}"
+    onclick="toggleItem('${item.id}','${dropKey}')">
+    <div class="${checkCls}">${sel ? '✓' : ''}</div>
+    <div class="item-info">
+      <div class="item-name">${item.name}</div>
+      <div class="item-sub">${item.sub || ''}</div>
+    </div>
+    <div class="item-price">${priceVal}</div>
+  </div>`;
+}
+
+function isSelected(item, dropKey) {
+  if (dropKey === 'service')     return canvasSelected.service?.id === item.id;
+  if (dropKey === 'maintenance') return canvasSelected.maintenance?.id === item.id;
+  if (dropKey === 'infra')       return canvasSelected.infra.some(x => x.id === item.id);
+  if (dropKey === 'extras')      return canvasSelected.extras.some(x => x.id === item.id);
+  return false;
+}
+
+function toggleItem(itemId, dropKey) {
+  let item = null;
+  for (const p of prices.paths) for (const s of p.services) if (s.id === itemId) item = s;
+  for (const s of prices.maintenance) if (s.id === itemId) item = s;
+  for (const s of prices.infra)       if (s.id === itemId) item = s;
+  for (const s of prices.extras)      if (s.id === itemId) item = s;
+  if (!item) return;
+
+  if (dropKey === 'service')
+    canvasSelected.service = canvasSelected.service?.id === itemId ? null : item;
+  else if (dropKey === 'maintenance')
+    canvasSelected.maintenance = canvasSelected.maintenance?.id === itemId ? null : item;
+  else if (dropKey === 'infra') {
+    const idx = canvasSelected.infra.findIndex(x => x.id === itemId);
+    idx >= 0 ? canvasSelected.infra.splice(idx, 1) : canvasSelected.infra.push(item);
+  } else if (dropKey === 'extras') {
+    const idx = canvasSelected.extras.findIndex(x => x.id === itemId);
+    idx >= 0 ? canvasSelected.extras.splice(idx, 1) : canvasSelected.extras.push(item);
+  }
+  renderCanvas();
+}
+
+function renderSelectedPanel() {
+  const panel = document.getElementById('selected-panel');
+  let html = '';
+  let totalInicial = 0, totalMensual = 0;
+
+  const block = (num, label, content) => `
+    <div class="summary-block">
+      <div class="summary-block-label"><span class="num">${num}</span>${label}</div>
+      ${content}
+    </div>`;
+
+  // 01 Servicio
+  let s1 = '';
+  if (canvasSelected.service) {
+    totalInicial += canvasSelected.service.price || 0;
+    s1 = `<div class="summary-item">
+      <div class="summary-item-name">${canvasSelected.service.name}<br>
+        <span style="font-size:10px;color:var(--gray)">${canvasSelected.service.range}</span></div>
+      <div style="display:flex;align-items:center;gap:4px">
+        <span class="summary-item-price">${fmt(canvasSelected.service.price)}</span>
+        <button class="remove-btn" onclick="toggleItem('${canvasSelected.service.id}','service')">×</button>
+      </div></div>`;
+  } else s1 = `<div class="summary-empty">Sin selección</div>`;
+  html += block('01','Servicio', s1);
+
+  // 02 Mantenimiento
+  let s2 = '';
+  if (canvasSelected.maintenance) {
+    totalMensual += parseMonthly(canvasSelected.maintenance.monthly || canvasSelected.maintenance.range);
+    s2 = `<div class="summary-item">
+      <div class="summary-item-name">${canvasSelected.maintenance.name}<br>
+        <span style="font-size:10px;color:var(--gray)">${canvasSelected.maintenance.range}/mes</span></div>
+      <div style="display:flex;align-items:center;gap:4px">
+        <span class="summary-item-price">${canvasSelected.maintenance.range}/mes</span>
+        <button class="remove-btn" onclick="toggleItem('${canvasSelected.maintenance.id}','maintenance')">×</button>
+      </div></div>`;
+  } else s2 = `<div class="summary-empty">Sin selección</div>`;
+  html += block('02','Mantenimiento', s2);
+
+  // 03 Infra
+  let s3 = canvasSelected.infra.length
+    ? canvasSelected.infra.map(item => {
+        totalMensual += item.price || 0;
+        return `<div class="summary-item">
+          <div class="summary-item-name">${item.name}</div>
+          <div style="display:flex;align-items:center;gap:4px">
+            <span class="summary-item-price">${item.range}/mes</span>
+            <button class="remove-btn" onclick="toggleItem('${item.id}','infra')">×</button>
+          </div></div>`;
+      }).join('')
+    : `<div class="summary-empty">Sin selección</div>`;
+  html += block('03','Infraestructura', s3);
+
+  // 04 Extras
+  let s4 = canvasSelected.extras.length
+    ? canvasSelected.extras.map(item => {
+        totalInicial += item.price || 0;
+        return `<div class="summary-item">
+          <div class="summary-item-name">${item.name}</div>
+          <div style="display:flex;align-items:center;gap:4px">
+            <span class="summary-item-price">${item.price > 0 ? fmt(item.price) : item.range}</span>
+            <button class="remove-btn" onclick="toggleItem('${item.id}','extras')">×</button>
+          </div></div>`;
+      }).join('')
+    : `<div class="summary-empty">Sin selección</div>`;
+  html += block('04','Extras', s4);
+
+  panel.innerHTML = html;
+  document.getElementById('total-value').textContent = fmt(totalInicial);
+  document.getElementById('total-monthly').textContent = totalMensual > 0
+    ? `+ ${fmt(totalMensual)}/mes de costo recurrente`
+    : 'Sin costo mensual seleccionado';
+}
+
+function parseMonthly(str) {
+  if (!str) return 0;
+  const nums = str.match(/\d+/g);
+  if (!nums) return 0;
+  return nums.length >= 2 ? (Number(nums[0]) + Number(nums[1])) / 2 : Number(nums[0]);
+}
+
+function clearCanvas() {
+  canvasSelected = { service: null, maintenance: null, infra: [], extras: [] };
+  renderCanvas();
+  notif('Canvas limpiado');
+}
+
+function guardarPresupuesto() {
+  const sel = document.getElementById('presup-cliente-select');
+  if (!sel.value) { notif('Seleccioná un cliente primero', 'error'); return; }
+  const c = clients.find(x => x.id === sel.value);
+  if (!c) return;
+  const total = (canvasSelected.service?.price || 0) + canvasSelected.extras.reduce((a, b) => a + (b.price || 0), 0);
+  const pres = {
+    id: uid(),
+    fecha: new Date().toISOString(),
+    service:     canvasSelected.service,
+    maintenance: canvasSelected.maintenance,
+    infra:       canvasSelected.infra,
+    extras:      canvasSelected.extras,
+    total
+  };
+  if (!c.presupuestos) c.presupuestos = [];
+  c.presupuestos.unshift(pres);
+  if (c.estado === 'Lead') c.estado = 'Propuesta';
+  saveClients();
+  notif('Presupuesto guardado ✓');
+}
+
+function exportarPDF() {
+  const sel    = document.getElementById('presup-cliente-select');
+  const c      = clients.find(x => x.id === sel.value);
+  const nombre = c ? c.nombre : 'Cliente';
+  const totalInicial = (canvasSelected.service?.price || 0) + canvasSelected.extras.reduce((a, b) => a + (b.price || 0), 0);
+  let   totalMensual = 0;
+  if (canvasSelected.maintenance) totalMensual += parseMonthly(canvasSelected.maintenance.monthly || canvasSelected.maintenance.range);
+  canvasSelected.infra.forEach(i => totalMensual += i.price || 0);
+
+  const win = window.open('', '_blank');
+  win.document.write(`<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'DM Sans',sans-serif;font-weight:300;color:#1a1a1a;background:#ffffff;padding:60px 48px;font-size:13px;line-height:1.7;max-width:720px;margin:0 auto}
+  h1{font-family:'DM Serif Display',serif;font-weight:400;font-size:32px;margin-bottom:4px}
+  h1 em{font-style:italic;color:#e8536a}
+  .meta{font-size:11px;color:#6b6b6b;margin-bottom:40px;letter-spacing:0.04em}
+  h2{font-family:'DM Serif Display',serif;font-style:italic;font-weight:400;font-size:16px;color:#6b6b6b;margin:30px 0 10px;padding-bottom:8px;border-bottom:1px solid #e8e8e4}
+  table{width:100%;border-collapse:collapse;margin-bottom:8px}
+  th{font-size:9px;text-align:left;color:#6b6b6b;letter-spacing:0.1em;text-transform:uppercase;padding:6px 4px;border-bottom:1px solid #e8e8e4}
+  td{padding:9px 4px;border-bottom:1px solid #f7f7f5;font-size:12.5px}
+  .price{text-align:right;font-family:'DM Serif Display',serif;font-size:17px;font-weight:400;color:#e8536a}
+  .total-block{margin-top:32px;padding:20px;background:#f7f7f5;border-radius:8px}
+  .total-row{display:flex;justify-content:space-between;align-items:baseline;padding:6px 0;border-bottom:1px solid #e8e8e4}
+  .total-row:last-child{border-bottom:none}
+  .total-label{font-size:10px;text-transform:uppercase;letter-spacing:0.1em;color:#6b6b6b}
+  .total-val{font-family:'DM Serif Display',serif;font-size:26px;font-weight:400;color:#e8536a}
+  .note{margin-top:28px;padding:16px;border-left:2px solid #e8e8e4;font-size:11.5px;color:#6b6b6b;line-height:1.8}
+  @media print{body{padding:30px}}
+</style></head><body>
+<h1>Propuesta <em>·</em> ${nombre}</h1>
+<div class="meta">Ailen Sampo · Desarrollo &amp; Automatización · ${new Date().toLocaleDateString('es-AR',{day:'numeric',month:'long',year:'numeric'})}</div>
+
+<h2>01 · Servicio de desarrollo</h2>
+${canvasSelected.service
+  ? `<table><tr><th>Servicio</th><th>Tiempo estimado</th><th style="text-align:right">Precio</th></tr>
+     <tr><td>${canvasSelected.service.name}</td><td style="color:#6b6b6b">${canvasSelected.service.sub}</td><td class="price">${canvasSelected.service.range}</td></tr></table>`
+  : '<p style="color:#6b6b6b;font-style:italic;font-size:12px">Sin selección</p>'}
+
+<h2>02 · Mantenimiento mensual</h2>
+${canvasSelected.maintenance
+  ? `<table><tr><th>Plan</th><th>Cobertura</th><th style="text-align:right">Precio</th></tr>
+     <tr><td>${canvasSelected.maintenance.name}</td><td style="color:#6b6b6b">${canvasSelected.maintenance.sub}</td><td class="price">${canvasSelected.maintenance.range}/mes</td></tr></table>`
+  : '<p style="color:#6b6b6b;font-style:italic;font-size:12px">Sin selección</p>'}
+
+<h2>03 · Infraestructura estimada — costo del cliente</h2>
+${canvasSelected.infra.length
+  ? `<table><tr><th>Servicio</th><th>Detalle</th><th style="text-align:right">Costo</th></tr>
+     ${canvasSelected.infra.map(i=>`<tr><td>${i.name}</td><td style="color:#6b6b6b">${i.sub||''}</td><td class="price">${i.range}/mes</td></tr>`).join('')}
+     </table>`
+  : '<p style="color:#6b6b6b;font-style:italic;font-size:12px">Sin selección</p>'}
+
+<h2>04 · Extras</h2>
+${canvasSelected.extras.length
+  ? `<table><tr><th>Extra</th><th>Detalle</th><th style="text-align:right">Precio</th></tr>
+     ${canvasSelected.extras.map(i=>`<tr><td>${i.name}</td><td style="color:#6b6b6b">${i.sub||''}</td><td class="price">${i.price>0?fmt(i.price):i.range}</td></tr>`).join('')}
+     </table>`
+  : '<p style="color:#6b6b6b;font-style:italic;font-size:12px">Sin extras</p>'}
+
+<div class="total-block">
+  <div class="total-row"><span class="total-label">Total inicial</span><span class="total-val">${fmt(totalInicial)}</span></div>
+  ${totalMensual > 0 ? `<div class="total-row"><span class="total-label">Costo recurrente mensual</span><span class="total-val" style="font-size:20px">${fmt(totalMensual)}/mes</span></div>` : ''}
+</div>
+<div class="note">
+  <strong>Estructura de pago:</strong> 50% al inicio · 50% en entrega final.<br>
+  El mantenimiento comienza el mes siguiente a la entrega.<br>
+  Los costos de infraestructura son responsabilidad del cliente y se pagan directamente a cada plataforma.<br>
+  Cambios grandes o nuevas funcionalidades se cotizan como proyecto aparte.
+</div>
+</body></html>`);
+  win.document.close();
+  setTimeout(() => win.print(), 600);
+  notif('Presupuesto listo para imprimir / guardar como PDF ✓');
+}
+
+function copiarResumen() {
+  const sel    = document.getElementById('presup-cliente-select');
+  const c      = clients.find(x => x.id === sel.value);
+  const nombre = c ? c.nombre : 'cliente';
+  const totalInicial = (canvasSelected.service?.price || 0) + canvasSelected.extras.reduce((a, b) => a + (b.price || 0), 0);
+  let totalMensual = 0;
+  if (canvasSelected.maintenance) totalMensual += parseMonthly(canvasSelected.maintenance.monthly || canvasSelected.maintenance.range);
+  canvasSelected.infra.forEach(i => totalMensual += i.price || 0);
+
+  let txt = `*Propuesta · ${nombre}*\n_Ailen Sampo · Desarrollo & Automatización_\n\n`;
+  if (canvasSelected.service)     txt += `📦 *Servicio:* ${canvasSelected.service.name} — ${canvasSelected.service.range}\n`;
+  if (canvasSelected.maintenance) txt += `🔄 *Mantenimiento:* ${canvasSelected.maintenance.name} — ${canvasSelected.maintenance.range}/mes\n`;
+  if (canvasSelected.infra.length)  txt += `🏗️ *Infra estimada:* ${fmt(canvasSelected.infra.reduce((a,b)=>a+(b.price||0),0))}/mes (costo del cliente)\n`;
+  if (canvasSelected.extras.length) txt += `✨ *Extras:* ${canvasSelected.extras.map(e=>e.name).join(', ')}\n`;
+  txt += `\n💰 *Total inicial:* ${fmt(totalInicial)}\n`;
+  if (totalMensual > 0) txt += `📅 *Recurrente:* ${fmt(totalMensual)}/mes\n`;
+  txt += `\nPago: 50% al inicio · 50% en entrega.`;
+
+  navigator.clipboard.writeText(txt).then(() => notif('Resumen copiado para WhatsApp ✓'));
+}
+
+// ══════════════════════════════════════════
+// ADMIN
+// ══════════════════════════════════════════
+function renderAdmin() {
+  const g = document.getElementById('admin-grid');
+  g.innerHTML = '';
+  g.appendChild(buildAdminCard('Core 1 · Web <em>desde cero</em>', prices.paths[0].services, 'path0'));
+  g.appendChild(buildAdminCard('Core 2 · Web <em>existente</em>',  prices.paths[1].services, 'path1'));
+  g.appendChild(buildAdminCard('<em>Mantenimiento</em>',           prices.maintenance,        'maint'));
+  g.appendChild(buildAdminCard('<em>Extras</em> y ajustes',        prices.extras,             'extra'));
+  const ic = buildAdminCard('Infraestructura · <em>costos del cliente</em>', prices.infra, 'infra');
+  ic.classList.add('full');
+  g.appendChild(ic);
+}
+
+function buildAdminCard(title, items, key) {
+  const c = document.createElement('div');
+  c.className = 'admin-card';
+  c.innerHTML = `
+    <div class="admin-card-head">
+      <div class="admin-card-title">${title}</div>
+      <button class="btn btn-ghost btn-sm" onclick="addAdminItem('${key}')">+ Agregar</button>
+    </div>
+    ${items.map((item, idx) => `
+      <div class="admin-item">
+        <div class="admin-item-info">
+          <input class="admin-name-input" value="${item.name}"
+            onchange="updateAdminField('${key}',${idx},'name',this.value)" />
+          <input class="admin-sub-input" value="${item.sub || ''}" placeholder="Descripción..."
+            onchange="updateAdminField('${key}',${idx},'sub',this.value)" />
+        </div>
+        <div class="price-field">
+          <span>$</span>
+          <input type="number" value="${item.price}"
+            onchange="updateAdminField('${key}',${idx},'price',Number(this.value))" />
+        </div>
+        <button class="action-btn" onclick="removeAdminItem('${key}',${idx})">✕</button>
+      </div>`).join('')}`;
+  return c;
+}
+
+function getAdminList(key) {
+  const m = {
+    path0: prices.paths[0].services,
+    path1: prices.paths[1].services,
+    maint: prices.maintenance,
+    infra: prices.infra,
+    extra: prices.extras
+  };
+  return m[key] || [];
+}
+function updateAdminField(key, idx, field, value) {
+  const list = getAdminList(key);
+  if (list[idx]) { list[idx][field] = value; if (field === 'price') list[idx].range = '$' + value; }
+}
+function addAdminItem(key) {
+  getAdminList(key).push({ id: uid(), name: 'Nuevo ítem', sub: '', price: 0, range: '$0', monthly: '', type: 'service' });
+  savePricesData();
+  renderAdmin();
+}
+function removeAdminItem(key, idx) {
+  if (!confirm('¿Eliminar este ítem?')) return;
+  getAdminList(key).splice(idx, 1);
+  savePricesData();
+  renderAdmin();
+}
+function savePrices()  { savePricesData(); notif('Precios guardados ✓'); renderCanvas(); }
+function resetPrices() {
+  if (!confirm('¿Restaurar todos los precios a los valores originales?')) return;
+  prices = JSON.parse(JSON.stringify(DEFAULT_PRICES));
+  savePricesData();
+  renderAdmin();
+  notif('Precios restaurados');
+}
+
+// ══════════════════════════════════════════
+// INIT
+// ══════════════════════════════════════════
+document.getElementById('dash-date').textContent =
+  new Date().toLocaleDateString('es-AR', { weekday:'long', day:'numeric', month:'long', year:'numeric' });
+
+if (clients.length === 0) {
+  clients = [
+    {
+      id: uid(), nombre: 'Estudio Raíz', contacto: 'Martina López',
+      email: 'martina@estudioraiz.com', telefono: '+54 9 351 555 1234',
+      estado: 'Lead', origen: 'Web',
+      notas: 'Quiere sistematizar captación de clientes. Tiene web en Wix.',
+      presupuestos: [], createdAt: new Date(Date.now() - 86400000 * 3).toISOString()
+    },
+    {
+      id: uid(), nombre: 'Ferretería del Centro', contacto: 'Jorge Méndez',
+      email: 'jm@ferrete.com', telefono: '+54 9 351 444 5678',
+      estado: 'Propuesta', origen: 'Referido',
+      notas: 'Sistema de pedidos online + panel de stock básico.',
+      presupuestos: [], createdAt: new Date(Date.now() - 86400000 * 7).toISOString()
+    },
+    {
+      id: uid(), nombre: 'Consultora OKR', contacto: 'Valentina Torres',
+      email: 'val@okrconsult.io', telefono: '',
+      estado: 'Activo', origen: 'LinkedIn',
+      notas: 'Sistema de gestión de clientes y propuestas. En producción.',
+      presupuestos: [], createdAt: new Date(Date.now() - 86400000 * 30).toISOString()
+    },
+  ];
+  saveClients();
+}
+renderDashboard();
+</script>
+</body>
+</html>
