@@ -21,6 +21,9 @@ export type Client = {
   company?: string;
   status: ClientStatus;
   createdAt: string;
+  proposalSlug?: string;
+  proposalTitle?: string;
+  acceptedAt?: string;
 };
 
 export type Project = {

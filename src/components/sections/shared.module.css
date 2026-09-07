@@ -1,0 +1,89 @@
+.gridLight {
+  background-color: #d4c4f5;
+  background-image:
+    linear-gradient(rgba(54, 31, 98, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(54, 31, 98, 0.08) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+.gridWhite {
+  background-color: #faf9f7;
+  background-image:
+    linear-gradient(rgba(54, 31, 98, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(54, 31, 98, 0.06) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+.gridBlue {
+  background-color: #6882eb;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.12) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.12) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+.eyebrow {
+  font-family: "Nunito Sans", sans-serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(54, 31, 98, 0.75);
+}
+
+.heading {
+  font-family: "Egyptian Slate", serif;
+  font-size: clamp(2rem, 8vw, 3.5rem);
+  font-weight: 700;
+  line-height: 1.05;
+  color: #361f62;
+}
+
+.headingLight {
+  composes: heading;
+  color: #faf9f7;
+}
+
+.btnPrimary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 3rem;
+  padding: 0.85rem 1.5rem;
+  border: none;
+  border-radius: 999px;
+  background: #f656bf;
+  color: #faf9f7;
+  font-family: "Nunito Sans", sans-serif;
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 0.15s ease, background 0.15s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.btnPrimary:active {
+  transform: scale(0.98);
+  background: #d63da5;
+}
+
+.btnGhost {
+  composes: btnPrimary;
+  background: transparent;
+  border: 1.5px solid rgba(174, 191, 242, 0.55);
+  color: #aebff2;
+}
+
+.btnOrange {
+  composes: btnPrimary;
+  background: #ff6437;
+}
+
+@media (min-width: 768px) {
+  .eyebrow {
+    font-size: 0.78rem;
+  }
+}

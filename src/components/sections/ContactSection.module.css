@@ -1,0 +1,131 @@
+.section {
+  position: relative;
+  padding: 3rem 1rem 2.5rem;
+  overflow: hidden;
+  background: linear-gradient(155deg, #e462bb 0%, #8f3f96 45%, #5a2d82 100%);
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.06) 1px, transparent 1px),
+    linear-gradient(155deg, #e462bb 0%, #8f3f96 45%, #5a2d82 100%);
+  background-size: 28px 28px, 28px 28px, auto;
+}
+
+.warning,
+.smiley {
+  display: none;
+}
+
+.scene {
+  position: relative;
+  max-width: 22rem;
+  min-height: 14rem;
+  margin: 0 auto 1.75rem;
+}
+
+.windowLight {
+  position: relative;
+  z-index: 2;
+  width: min(72%, 14rem);
+  transform: rotate(-4deg);
+}
+
+.windowLight :global(div) {
+  text-transform: uppercase;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+}
+
+.windowDark {
+  position: absolute;
+  top: 38%;
+  left: 22%;
+  width: min(78%, 16rem);
+  z-index: 3;
+  transform: rotate(2deg);
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  max-width: 20rem;
+  margin: 0 auto;
+}
+
+.cta,
+.ctaSecondary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 3rem;
+  padding: 0.85rem 1.25rem;
+  border-radius: 999px;
+  font-family: "Nunito Sans", sans-serif;
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.cta {
+  background: #faf26f;
+  color: #361f62;
+}
+
+.ctaSecondary {
+  border: 1.5px solid rgba(250, 249, 247, 0.45);
+  color: #faf9f7;
+}
+
+@media (min-width: 640px) {
+  .section {
+    padding: 4rem 1.5rem 3rem;
+  }
+
+  .warning {
+    display: block;
+    position: absolute;
+    top: 2.5rem;
+    left: max(1rem, 8vw);
+    width: 4.5rem;
+    transform: rotate(-8deg);
+    pointer-events: none;
+  }
+
+  .smiley {
+    display: block;
+    position: absolute;
+    top: 2rem;
+    right: max(1rem, 8vw);
+    font-family: "Courier New", Courier, monospace;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #faf26f;
+    pointer-events: none;
+  }
+
+  .scene {
+    max-width: 28rem;
+    min-height: 16rem;
+  }
+
+  .actions {
+    flex-direction: row;
+    justify-content: center;
+    max-width: none;
+  }
+
+  .cta,
+  .ctaSecondary {
+    min-width: 11rem;
+  }
+}
+
+@media (min-width: 900px) {
+  .scene {
+    max-width: 32rem;
+    min-height: 18rem;
+  }
+}

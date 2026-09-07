@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Propuesta — Esteparia Accesorios · Ailén Sampó</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,400;0,600;0,700;0,800;1,700;1,800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --plum:#3A1E66;
+  --plum-2:#2E1652;
+  --plum-3:#20103d;
+  --ink:#211538;
+  --lilac:#E1ADFF;
+  --lilac-soft:#F1E4FF;
+  --pink:#F656BF;
+  --pink-ink:#B31E86;
+  --blue:#6882EB;
+  --blue-2:#5C64F2;
+  --yellow:#FAF26F;
+  --mint:#ABE3D2;
+  --orange:#FF6437;
+  --orange-ink:#D63F14;
+  --white:#fff;
+  --muted:rgba(33,21,56,.56);
+  --line:rgba(33,21,56,.12);
+  --card-shadow:5px 5px 0 var(--plum-3);
+  --card-shadow-pink:6px 6px 0 var(--pink);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{
+  background:linear-gradient(178deg,var(--plum) 0%,var(--plum-2) 55%,var(--plum-3) 100%);
+  background-attachment:fixed;
+  color:var(--white);
+  font-family:'Nunito Sans',system-ui,sans-serif;
+  font-weight:400;
+  line-height:1.62;
+  -webkit-font-smoothing:antialiased;
+  min-height:100vh;
+  position:relative;
+}
+body::before{
+  content:'';
+  position:fixed;
+  inset:0;
+  background-image:radial-gradient(circle,rgba(225,173,255,.16) 1px,transparent 1px);
+  background-size:6px 6px;
+  pointer-events:none;
+  opacity:.5;
+  z-index:0;
+}
+.rail{
+  position:fixed;top:0;bottom:0;width:44px;z-index:0;pointer-events:none;
+  display:flex;align-items:center;justify-content:center;
+  writing-mode:vertical-rl;text-orientation:mixed;
+  font-family:'DM Mono',monospace;font-size:15px;letter-spacing:.5em;
+  color:var(--lilac);opacity:.1;user-select:none;white-space:nowrap;overflow:hidden;
+}
+.rail-l{left:0}.rail-r{right:0}
+.wrap{max-width:960px;margin:0 auto;padding:0 24px 100px;position:relative;z-index:1}
+.eyebrow{
+  font-family:'DM Mono',monospace;font-size:12px;font-weight:500;
+  text-transform:uppercase;letter-spacing:.18em;color:var(--lilac);
+  display:inline-flex;align-items:center;gap:8px;
+}
+.eyebrow::before{content:'';width:16px;height:2px;background:var(--pink);display:inline-block}
+.mono{font-family:'DM Mono',monospace;font-variant-numeric:tabular-nums}
+.hero{padding:64px 0 48px}
+.hero-badge{
+  display:inline-block;font-family:'DM Mono',monospace;font-size:13px;letter-spacing:.14em;
+  color:var(--lilac);border:2px solid rgba(225,173,255,.4);border-radius:999px;
+  padding:5px 14px;margin-bottom:22px;
+}
+.hero h1{
+  font-family:'Nunito Sans';font-weight:800;font-size:clamp(34px,6vw,52px);
+  letter-spacing:-.02em;line-height:1.04;margin:6px 0 20px;max-width:22ch;color:var(--white);
+}
+.hero h1 em{font-style:italic;font-weight:800;color:var(--pink)}
+.hero .lead{font-size:17px;color:rgba(255,255,255,.86);max-width:62ch}
+.hero .sub{
+  margin-top:14px;font-family:'DM Mono',monospace;font-size:13px;
+  letter-spacing:.08em;text-transform:uppercase;color:var(--mint);
+}
+.meta{display:flex;gap:30px;margin-top:34px;flex-wrap:wrap;font-size:11px;
+  text-transform:uppercase;letter-spacing:.12em;color:rgba(225,173,255,.7)}
+.meta b{display:block;color:var(--white);font-weight:400;font-size:14px;margin-top:4px;
+  letter-spacing:0;text-transform:none;font-family:'DM Mono',monospace}
+.meta a{color:inherit;text-decoration:none;border-bottom:1px solid rgba(246,86,191,.5)}
+.meta a:hover{color:var(--pink);border-bottom-color:var(--pink)}
+section{padding:50px 0;border-top:2px solid rgba(225,173,255,.16)}
+h2{font-family:'Nunito Sans';font-weight:800;font-size:clamp(22px,3.4vw,30px);
+  letter-spacing:-.02em;margin:10px 0 16px;color:var(--white);max-width:28ch}
+h3{font-family:'Nunito Sans';font-weight:700;font-size:18px;letter-spacing:-.01em;color:var(--ink)}
+p{margin-bottom:12px;max-width:64ch}
+p.dim{color:rgba(255,255,255,.72);font-size:14px}
+strong{font-weight:700}
+.tags-row{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 18px}
+.tag{
+  display:inline-block;font-family:'DM Mono',monospace;font-size:10px;font-weight:500;
+  letter-spacing:.1em;text-transform:uppercase;padding:6px 12px;border-radius:999px;
+  border:2px solid var(--ink);
+}
+.tag-nucleo{background:var(--ink);color:var(--white);border-color:var(--ink)}
+.tag-superficie{background:var(--lilac);color:var(--ink)}
+.arch-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:18px}
+.arch-card{
+  background:var(--white);color:var(--ink);border:2.5px solid var(--ink);
+  border-radius:14px;padding:22px;box-shadow:var(--card-shadow);
+}
+.arch-icon{width:36px;height:36px;border-radius:8px;margin-bottom:12px;border:2px solid var(--ink)}
+.arch-card h4{font-size:16px;font-weight:800;margin-bottom:8px;color:var(--ink)}
+.arch-card p{font-size:13px;color:var(--muted);margin:0;max-width:none;line-height:1.5}
+.hours-table{
+  background:var(--white);border:2.5px solid var(--ink);border-radius:14px;
+  overflow:hidden;box-shadow:var(--card-shadow);margin-top:18px;color:var(--ink);
+}
+.hours-table table{width:100%;border-collapse:collapse;font-size:14px}
+.hours-table th{
+  text-align:left;font-family:'DM Mono',monospace;font-size:10px;font-weight:500;
+  letter-spacing:.12em;text-transform:uppercase;color:var(--muted);
+  padding:12px 16px;border-bottom:2px solid var(--ink);background:var(--lilac-soft);
+}
+.hours-table td{padding:13px 16px;border-bottom:1px solid var(--line);vertical-align:top}
+.hours-table tr:last-child td{border-bottom:0}
+.hours-table .mono{text-align:right;white-space:nowrap;color:var(--ink)}
+.total-table{background:var(--white);border:2.5px solid var(--ink);border-radius:14px;
+  overflow:hidden;box-shadow:var(--card-shadow);margin-top:20px}
+.total-table .row{display:flex;justify-content:space-between;align-items:center;gap:14px;
+  padding:13px 20px;border-bottom:1px solid var(--line);font-size:15px;color:var(--ink)}
+.total-table .row:last-child{border-bottom:0}
+.total-table .row .mono{color:var(--ink)}
+.total-table .row.big{padding:22px 20px;background:var(--ink);color:var(--white)}
+.total-table .row.big span:first-child{font-family:'Nunito Sans';font-weight:800;font-size:18px}
+.total-table .row.big .mono{font-family:'DM Mono';font-size:clamp(26px,5vw,34px);color:var(--pink)}
+.total-table .row.big .price-old{
+  font-size:clamp(16px,3vw,22px);color:rgba(255,255,255,.45);
+  text-decoration:line-through;text-decoration-thickness:2px;
+  margin-right:12px;font-weight:400;
+}
+.demo-section{margin-top:18px}
+.demo-wrap{
+  background:var(--white);border:2.5px solid var(--ink);border-radius:14px;
+  overflow:hidden;box-shadow:var(--card-shadow);
+}
+.demo-toolbar{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding:12px 16px;border-bottom:2px solid var(--ink);background:var(--lilac-soft);
+  flex-wrap:wrap;
+}
+.demo-toolbar .label{
+  font-family:'DM Mono',monospace;font-size:11px;text-transform:uppercase;
+  letter-spacing:.12em;color:var(--ink);
+}
+.demo-toolbar a{
+  font-family:'DM Mono',monospace;font-size:11px;color:var(--pink-ink);
+  text-decoration:none;border-bottom:1px solid rgba(179,30,134,.35);
+}
+.demo-toolbar a:hover{color:var(--pink);border-bottom-color:var(--pink)}
+.demo-frame{
+  width:100%;height:min(920px,78vh);border:0;display:block;background:#FAFAF8;
+}
+@media(max-width:820px){
+  .demo-frame{height:min(820px,72vh)}
+}
+.fee-highlight{
+  background:var(--lilac);color:var(--ink);border:2.5px solid var(--ink);
+  border-radius:14px;padding:22px 24px;margin-top:18px;
+  display:flex;justify-content:space-between;align-items:center;gap:16px;
+  box-shadow:var(--card-shadow);flex-wrap:wrap;
+}
+.fee-highlight .l{font-family:'DM Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.12em}
+.fee-highlight .v{font-family:'DM Mono',monospace;font-size:clamp(24px,4vw,30px);font-weight:500}
+.infra-list{
+  background:var(--white);border:2.5px solid var(--ink);border-radius:14px;
+  overflow:hidden;box-shadow:var(--card-shadow);margin-top:18px;color:var(--ink);
+}
+.infra-row{
+  display:flex;justify-content:space-between;align-items:flex-start;gap:16px;
+  padding:14px 18px;border-bottom:1px solid var(--line);flex-wrap:wrap;
+}
+.infra-row:last-child{border-bottom:0}
+.infra-row .name{font-weight:800;font-size:15px}
+.infra-row .desc{font-size:13px;color:var(--muted);margin-top:3px;max-width:36ch}
+.infra-row .cost{font-family:'DM Mono',monospace;font-size:13px;text-align:right;white-space:nowrap}
+.badge-free,.badge-paid{
+  display:inline-block;margin-left:6px;padding:2px 10px;border-radius:999px;
+  font-family:'DM Mono',monospace;font-size:10px;font-weight:500;vertical-align:middle;
+}
+.badge-free{background:var(--mint);color:#04342C}
+.badge-paid{background:var(--yellow);color:#412402}
+.badge-included{background:var(--mint);color:#04342C}
+.accept-box{
+  background:var(--white);color:var(--ink);border:2.5px solid var(--ink);
+  border-radius:14px;padding:24px;box-shadow:var(--card-shadow);margin-top:18px;max-width:520px;
+}
+.contact-actions{display:flex;flex-direction:column;gap:10px}
+.contact-btn{
+  display:block;width:100%;text-align:center;text-decoration:none;
+  border:2.5px solid var(--ink);background:var(--pink);color:var(--white);
+  padding:14px 18px;border-radius:12px;font-family:'Nunito Sans';font-weight:800;font-size:16px;
+  box-shadow:var(--card-shadow-pink);transition:transform .15s,opacity .15s;
+}
+.contact-btn:hover{transform:translateY(-1px);color:var(--white)}
+.contact-btn.ghost{background:var(--white);color:var(--ink);box-shadow:var(--card-shadow)}
+.contact-note{font-size:13px;color:var(--muted);margin:0;line-height:1.5}
+.out{list-style:none;padding:0}
+.out li{display:flex;gap:13px;padding:13px 0;border-bottom:1px dotted rgba(225,173,255,.24);
+  font-size:14px;color:rgba(255,255,255,.9)}
+.out li:last-child{border-bottom:0}
+.out .x{color:var(--white);background:var(--orange);font-weight:700;font-size:11px;width:20px;
+  height:20px;border-radius:5px;display:flex;align-items:center;justify-content:center;flex:none;margin-top:2px}
+.vigencia{
+  display:inline-block;margin-top:20px;background:var(--orange);color:var(--white);
+  padding:8px 16px;border-radius:999px;font-family:'DM Mono',monospace;font-size:12px;
+  letter-spacing:.06em;text-transform:uppercase;border:2px solid var(--ink);
+}
+.pago{background:var(--white);border:2.5px solid var(--ink);border-radius:14px;overflow:hidden;
+  box-shadow:var(--card-shadow);margin-top:16px}
+.pago-row{display:flex;gap:18px;padding:16px 20px;border-bottom:1px solid var(--line);align-items:center}
+.pago-row:last-child{border-bottom:0}
+.pago-row .pc{font-family:'DM Mono';color:var(--white);background:var(--pink);font-size:18px;
+  font-weight:500;min-width:60px;flex:none;text-align:center;padding:8px 0;border-radius:8px}
+.pago-row .pt{font-size:14px;color:var(--ink)}
+.pago-row .pt small{display:block;font-size:12px;color:var(--muted);margin-top:3px}
+.close-cta{
+  margin-top:48px;padding:36px 0 4px;border-top:2px solid rgba(225,173,255,.16);
+  display:flex;align-items:flex-end;gap:16px;flex-wrap:wrap;
+}
+.close-cta .chat-bubble{
+  position:relative;background:var(--white);color:var(--ink);border:2.5px solid var(--ink);
+  border-radius:16px;padding:18px 24px;font-family:'Nunito Sans';font-weight:800;
+  font-size:clamp(22px,4vw,30px);letter-spacing:-.02em;line-height:1.2;
+  box-shadow:var(--card-shadow);display:inline-flex;align-items:center;gap:12px;
+}
+.close-cta .chat-bubble:after{
+  content:'';position:absolute;left:28px;bottom:-10px;border:10px solid transparent;
+  border-top-color:var(--ink);border-bottom:0;
+}
+.close-cta .chat-bubble:before{
+  content:'';position:absolute;left:29px;bottom:-7px;border:9px solid transparent;
+  border-top-color:var(--white);border-bottom:0;z-index:1;
+}
+.close-cta .wink{width:44px;height:44px;flex:none;display:block}
+footer{padding:44px 0 0;border-top:2px solid rgba(225,173,255,.16);margin-top:52px;
+  display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+footer a{color:inherit;text-decoration:none;transition:color .15s,opacity .15s}
+footer .sig{font-family:'DM Mono';font-size:16px;letter-spacing:.14em;color:var(--lilac);opacity:.85}
+footer a.sig:hover{color:var(--pink);opacity:1}
+footer .fine{margin-left:auto;font-size:12px;color:rgba(255,255,255,.55);text-align:right}
+footer a.fine:hover{color:var(--lilac)}
+@media(max-width:820px){
+  .rail{display:none}
+  .wrap{padding:0 16px 72px}
+  .hero{padding:40px 0 32px}
+  .arch-grid{grid-template-columns:1fr}
+  .hours-table td,.hours-table th{padding:10px 12px;font-size:13px}
+  .infra-row{flex-direction:column;align-items:flex-start}
+  .infra-row .cost{text-align:left}
+  .fee-highlight{flex-direction:column;align-items:flex-start}
+  .total-table .row{flex-direction:column;align-items:flex-start;gap:4px}
+  footer .fine{margin-left:0;text-align:left;width:100%}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="rail rail-l" aria-hidden="true">s (a) ó · s (a) ó · s (a) ó · s (a) ó · s (a) ó · s (a) ó · </div>
+<div class="rail rail-r" aria-hidden="true">s (a) ó · s (a) ó · s (a) ó · s (a) ó · s (a) ó · s (a) ó · </div>
+<div class="wrap">
+
+  <div class="hero">
+    <div class="hero-badge">s (a) ó · sistemas a medida</div>
+    <div class="eyebrow">Propuesta · Esteparia Accesorios</div>
+    <h1>Sistema digital<br><em>Esteparia Accesorios</em></h1>
+    <p class="sub">Núcleo + tienda + panel de gestión · 3 puntos de venta</p>
+    <p class="lead">Un cerebro para productos, categorías, kits y stock distribuido por ubicación. La tienda y el panel son dos ventanas sobre los mismos datos — no dos sistemas que hay que sincronizar a mano.</p>
+    <div class="meta">
+      <div><span>Cliente</span><b>Esteparia Accesorios</b></div>
+      <div><span>Preparada por</span><b><a href="https://www.ailensampo.com" target="_blank" rel="noopener">Ailén Sampó</a></b></div>
+      <div><span>Versión</span><b>2.0 · Septiembre 2026</b></div>
+      <div><span>Vigencia</span><b>30 días</b></div>
+    </div>
+  </div>
+
+  <section>
+    <div class="eyebrow">01 · Diagnóstico</div>
+    <h2>Vendés en 3 lugares. Los datos no se hablan entre ellos.</h2>
+    <p class="dim">Hoy la operación de Esteparia vive repartida entre dos locales físicos y el asesoramiento personalizado por WhatsApp. Cada canal sabe su propio stock, pero ninguno sabe el de los otros.</p>
+    <p class="dim">El techo real no es la demanda — es la coordinación manual entre tres puntos de venta. Este sistema no agrega un canal más: le da a los tres canales que ya existen una sola fuente de verdad.</p>
+  </section>
+
+  <section>
+    <div class="eyebrow">02 · Arquitectura</div>
+    <div class="tags-row">
+      <span class="tag tag-nucleo">Núcleo — prerrequisito</span>
+      <span class="tag tag-superficie">Superficie — tienda web</span>
+      <span class="tag tag-superficie">Superficie — panel de gestión</span>
+    </div>
+    <h2>Un cerebro, tres puntos de venta</h2>
+    <p class="dim">Productos, categorías, kits y <strong style="color:var(--white)">stock distribuido por ubicación</strong> (Local 1, Local 2, Online) viven en un solo lugar.</p>
+
+    <div class="arch-grid">
+      <div class="arch-card">
+        <div class="arch-icon" style="background:var(--pink)"></div>
+        <h4>Tienda web</h4>
+        <p>Catálogo por categorías, kits listos, armá-tu-kit con descuento automático, checkout con Mercado Pago.</p>
+      </div>
+      <div class="arch-card">
+        <div class="arch-icon" style="background:var(--blue)"></div>
+        <h4>Panel de gestión</h4>
+        <p>Carga de productos y kits, stock por local con alertas, listado de pedidos, buscador admin.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="eyebrow">03 · Demo interactivo</div>
+    <h2>Así se vería el sistema</h2>
+    <p class="dim">Tienda, armá-tu-kit, panel de gestión y stock multi-local — navegable en vivo. Es un prototipo funcional, no la versión final con tus productos reales.</p>
+
+    <div class="demo-section">
+      <div class="demo-wrap">
+        <div class="demo-toolbar">
+          <span class="label">Demo · Esteparia Accesorios</span>
+          <a href="/p/esteparia-accesorios/demo" target="_blank" rel="noopener">Abrir en pantalla completa ↗</a>
+        </div>
+        <iframe
+          class="demo-frame"
+          src="/p/esteparia-accesorios/demo"
+          title="Demo Esteparia Accesorios"
+          loading="lazy"
+        ></iframe>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="eyebrow">04 · Inversión</div>
+    <h2>Desarrollo del sistema</h2>
+    <p class="dim">Desglose por bloques. El total incluye núcleo, tienda y panel integrados sobre la misma base de datos.</p>
+
+    <div class="hours-table">
+      <table>
+        <thead>
+          <tr>
+            <th>Bloque</th>
+            <th>Incluye</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Núcleo</strong></td>
+            <td>Modelo de datos, productos, categorías, kits, stock multi-local (3 puntos de venta), pedidos</td>
+          </tr>
+          <tr>
+            <td><strong>Tienda web</strong></td>
+            <td>Catálogo, kits, armá-tu-kit, checkout Mercado Pago, conexión a API</td>
+          </tr>
+          <tr>
+            <td><strong>Panel de gestión</strong></td>
+            <td>CRUD completo + stock por local + buscador admin</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="total-table">
+      <div class="row big">
+        <span>Inversión total desarrollo</span>
+        <span class="mono"><span class="price-old">USD 1.900</span> USD 1.100</span>
+      </div>
+    </div>
+
+    <p class="dim" style="margin-top:16px">Forma de pago sugerida:</p>
+    <div class="pago">
+      <div class="pago-row">
+        <span class="pc">40%</span>
+        <span class="pt">Al confirmar el proyecto.<small>Arranque de desarrollo.</small></span>
+      </div>
+      <div class="pago-row">
+        <span class="pc">40%</span>
+        <span class="pt">Contra entrega en staging.<small>Podés revisar tienda + panel antes de publicar.</small></span>
+      </div>
+      <div class="pago-row">
+        <span class="pc">20%</span>
+        <span class="pt">Al publicar en producción.<small>Sistema en vivo con los 3 puntos de venta.</small></span>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="eyebrow">05 · Operación</div>
+    <h2>El sistema no termina el día que se publica</h2>
+    <p class="dim">El fee sostiene monitoreo, backups, correcciones y hasta 2 horas mensuales de soporte. La mensualidad es lo que sostiene la estructura de tu sistema. Es necesaria para que siga funcionando y esté actualizada a las tecnologías que requiere el funcionamiento del mismo.</p>
+
+    <div class="fee-highlight">
+      <div>
+        <div class="l">Fee mensual de operación</div>
+      </div>
+      <div class="v">USD 100/mes</div>
+    </div>
+  </section>
+
+  <section>
+    <div class="eyebrow">06 · Infraestructura</div>
+    <h2>Incluida en el presupuesto</h2>
+    <p class="dim">La configuración inicial de infraestructura y el dominio del primer año están contemplados dentro de la inversión de desarrollo. Quedan a nombre de Esteparia para que la propiedad sea siempre del negocio.</p>
+
+    <div class="infra-list">
+      <div class="infra-row">
+        <div>
+          <div class="name">Vercel</div>
+          <div class="desc">Hosting del frontend (React) — tienda + panel</div>
+        </div>
+        <div class="cost"><span class="badge-included">setup incluido</span></div>
+      </div>
+      <div class="infra-row">
+        <div>
+          <div class="name">Railway o Render</div>
+          <div class="desc">Hosting del backend (API)</div>
+        </div>
+        <div class="cost"><span class="badge-included">setup incluido</span></div>
+      </div>
+      <div class="infra-row">
+        <div>
+          <div class="name">Supabase</div>
+          <div class="desc">Base de datos PostgreSQL + storage de imágenes</div>
+        </div>
+        <div class="cost"><span class="badge-included">setup incluido</span></div>
+      </div>
+      <div class="infra-row">
+        <div>
+          <div class="name">Dominio propio</div>
+          <div class="desc">esteparia.com o similar — primer año</div>
+        </div>
+        <div class="cost"><span class="badge-included">incluido</span></div>
+      </div>
+      <div class="infra-row">
+        <div>
+          <div class="name">Mercado Pago</div>
+          <div class="desc">Checkout — comisión por transacción, sin costo fijo</div>
+        </div>
+        <div class="cost">USD 0 fijo</div>
+      </div>
+    </div>
+
+    <p class="dim" style="margin-top:18px"><strong style="color:var(--white)">Costos mensuales de hosting</strong> (Vercel, Railway, etc.) corren por cuenta de Esteparia una vez el sistema está en producción — estimado USD 6–20/mes según tráfico.</p>
+  </section>
+
+  <section>
+    <div class="eyebrow">07 · Alcance</div>
+    <h2>Fuera de alcance</h2>
+    <ul class="out">
+      <li><span class="x">✕</span><span><strong>Contenido y copy comercial</strong> — los textos los provee Esteparia</span></li>
+      <li><span class="x">✕</span><span><strong>Diseño de identidad de marca</strong> (logos, paleta) — la UI/UX del sistema sí está incluida</span></li>
+      <li><span class="x">✕</span><span><strong>Migración de datos históricos</strong> — se cotiza aparte</span></li>
+      <li><span class="x">✕</span><span><strong>Agente de WhatsApp</strong> — no incluido en esta etapa</span></li>
+    </ul>
+    <span class="vigencia">Vigencia de la propuesta: 30 días</span>
+  </section>
+
+  <section>
+    <div class="eyebrow">08 · Próximo paso</div>
+    <h2>¿Arrancamos?</h2>
+    <p class="dim">Si te cierra la propuesta, escribime directo y coordinamos el contrato y los primeros pasos.</p>
+
+    <div class="accept-box">
+      <div class="contact-actions">
+        <a
+          class="contact-btn"
+          href="mailto:hola@ailensampo.com?subject=Propuesta%20Esteparia%20Accesorios%20%E2%80%94%20quiero%20avanzar&amp;body=Hola%20Ail%C3%A9n%2C%20revis%C3%A9%20la%20propuesta%20y%20quiero%20avanzar."
+        >Escribime por mail</a>
+        <a class="contact-btn ghost" href="https://www.ailensampo.com" target="_blank" rel="noopener">ailensampo.com</a>
+      </div>
+      <p class="contact-note" style="margin-top:14px">Respondemos a la brevedad con el contrato y el calendario de arranque.</p>
+    </div>
+  </section>
+
+  <section class="close-cta" aria-label="Cierre">
+    <div class="chat-bubble">
+      ¿Comenzamos?
+      <img class="wink" src="/assets/recursos-graficos/face-wink.svg" alt="" width="44" height="44">
+    </div>
+  </section>
+
+  <footer>
+    <a class="sig" href="https://www.ailensampo.com" target="_blank" rel="noopener">Ailén Sampó</a>
+    <a class="fine" href="https://www.ailensampo.com" target="_blank" rel="noopener">s(a) — sistemas a medida · ailensampo.com</a>
+  </footer>
+
+</div>
+</body>
+</html>

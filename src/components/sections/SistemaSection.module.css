@@ -1,0 +1,201 @@
+.section {
+  padding: 2.75rem 1rem 3rem;
+  color: #faf9f7;
+}
+
+.inner {
+  max-width: 36rem;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.title {
+  margin-bottom: 1.5rem;
+  font-family: "Egyptian Slate", serif;
+  font-size: clamp(1.85rem, 7vw, 2.75rem);
+  font-weight: 700;
+  line-height: 1.08;
+}
+
+.terminal {
+  margin-bottom: 1.25rem;
+  border: 2px solid rgba(250, 249, 247, 0.85);
+  border-radius: 1rem;
+  overflow: hidden;
+  text-align: left;
+  background: rgba(14, 14, 14, 0.15);
+}
+
+.terminalBar {
+  display: grid;
+  grid-template-columns: auto auto auto 1fr;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.55rem 0.75rem;
+  background: rgba(14, 14, 14, 0.35);
+}
+
+.terminalBar span {
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 50%;
+  background: #faf26f;
+}
+
+.terminalBar span:nth-child(2) {
+  background: #abe3d2;
+}
+
+.terminalBar span:nth-child(3) {
+  background: #f656bf;
+}
+
+.terminalBar p {
+  justify-self: center;
+  font-family: "Nunito Sans", sans-serif;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.terminalBody {
+  padding: 1rem 0.9rem 1.1rem;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 0.78rem;
+  line-height: 1.5;
+}
+
+.prompt {
+  margin-bottom: 0.65rem;
+  opacity: 0.9;
+}
+
+.barRow {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: 0.35rem 0.5rem;
+  align-items: center;
+  margin-bottom: 0.45rem;
+}
+
+.barLabel {
+  font-size: 0.72rem;
+}
+
+.barTrack {
+  letter-spacing: -0.08em;
+}
+
+.barEmpty {
+  opacity: 0.25;
+}
+
+.barPct {
+  min-width: 2.2rem;
+  text-align: right;
+  font-size: 0.72rem;
+}
+
+.bubble {
+  display: flex;
+  gap: 0.65rem;
+  align-items: flex-start;
+  margin-top: 1rem;
+  padding: 0.85rem;
+  border-radius: 0.75rem;
+  background: #faf26f;
+  color: #361f62;
+}
+
+.bubble p {
+  font-family: "Nunito Sans", sans-serif;
+  font-size: 0.82rem;
+  line-height: 1.45;
+}
+
+.chips {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  margin-bottom: 1.5rem;
+}
+
+.chip {
+  min-height: 2.75rem;
+  padding: 0.65rem 1rem;
+  border: 1.5px solid rgba(250, 249, 247, 0.65);
+  border-radius: 999px;
+  background: transparent;
+  color: #faf9f7;
+  font-family: "Nunito Sans", sans-serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.waitlist {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.waitlist p {
+  font-family: "Nunito Sans", sans-serif;
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+.waitlist input {
+  width: 100%;
+  max-width: 18rem;
+  min-height: 3rem;
+  padding: 0.75rem 1rem;
+  border: none;
+  border-radius: 999px;
+  background: rgba(225, 173, 255, 0.92);
+  color: #361f62;
+  font-family: "Nunito Sans", sans-serif;
+  font-size: 0.95rem;
+  text-align: center;
+}
+
+.waitlist input::placeholder {
+  color: rgba(54, 31, 98, 0.45);
+}
+
+.waitlist button {
+  width: 100%;
+  max-width: 18rem;
+}
+
+@media (min-width: 640px) {
+  .section {
+    padding: 3.5rem 1.5rem 4rem;
+  }
+
+  .inner {
+    max-width: 42rem;
+  }
+
+  .chips {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .chip {
+    width: auto;
+  }
+}
+
+@media (min-width: 900px) {
+  .terminalBody {
+    padding: 1.15rem 1.1rem 1.25rem;
+    font-size: 0.82rem;
+  }
+}

@@ -1,0 +1,341 @@
+.section {
+  position: relative;
+  padding: 2.25rem 1rem 1.75rem;
+  overflow: hidden;
+  background-color: #e1adff;
+  background-image:
+    linear-gradient(rgba(54, 31, 98, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(54, 31, 98, 0.1) 1px, transparent 1px);
+  background-size: 26px 26px;
+}
+
+.inner {
+  position: relative;
+  z-index: 1;
+  max-width: 34rem;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.eyebrow {
+  font-family: "Nunito Sans", sans-serif;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(54, 31, 98, 0.72);
+}
+
+.title {
+  margin: 0.4rem 0 1.35rem;
+  font-family: "Egyptian Slate", serif;
+  font-size: clamp(2.1rem, 9vw, 3.75rem);
+  font-weight: 400;
+  line-height: 1.02;
+  color: #361f62;
+}
+
+.faceLeft,
+.faceRight {
+  position: absolute;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.faceLeft {
+  width: clamp(6.75rem, 26vw, 9.5rem);
+  left: clamp(-0.25rem, 1vw, 0.75rem);
+  bottom: 20%;
+  transform: rotate(-8deg);
+}
+
+.faceRight {
+  width: clamp(6.25rem, 24vw, 9rem);
+  right: clamp(-0.35rem, 0.5vw, 0.5rem);
+  top: 15%;
+  transform: rotate(7deg);
+}
+
+.card {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  padding: 1.35rem 1rem 1.35rem;
+  border-radius: 1rem;
+  background: #f3e8ff;
+  box-shadow: 0 10px 28px rgba(54, 31, 98, 0.08);
+  margin-bottom: 1.75rem;
+}
+
+.bannerWrap {
+  display: flex;
+  justify-content: center;
+  margin: 0 auto 1rem;
+  padding: 0 0.15rem;
+}
+
+.banner {
+  position: relative;
+  display: inline-block;
+  max-width: 100%;
+  padding: 0.55rem 1.15rem;
+  background: #faf26f;
+  transform: rotate(-3deg);
+  box-shadow: 0 4px 14px rgba(54, 31, 98, 0.08);
+}
+
+.bannerText {
+  margin: 0;
+  font-family: "Egyptian Slate", serif;
+  font-size: clamp(0.68rem, 2.65vw, 0.86rem);
+  font-weight: 400;
+  font-style: italic;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #361f62;
+  line-height: 1.32;
+  white-space: nowrap;
+}
+
+.palitoLeft,
+.palitoRight {
+  position: absolute;
+  top: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 0.5rem;
+}
+
+.palitoLeft {
+  left: 0;
+  transform: translate(-45%, -50%);
+}
+
+.palitoRight {
+  right: 0;
+  transform: translate(45%, -50%);
+}
+
+.palitoLine {
+  width: 2px;
+  height: 1.35rem;
+  border-radius: 999px;
+  background: #f656bf;
+}
+
+.palitoDot {
+  width: 0.42rem;
+  height: 0.42rem;
+  border-radius: 50%;
+  background: #f656bf;
+  flex-shrink: 0;
+}
+
+.formFields {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.85rem;
+  width: min(100%, 15.5rem);
+  margin: 0 auto;
+}
+
+.inputWrap {
+  position: relative;
+  display: block;
+  width: 100%;
+}
+
+.inputCursor {
+  position: absolute;
+  z-index: 2;
+  top: 50%;
+  left: 0.95rem;
+  width: 2px;
+  height: 1.05em;
+  transform: translateY(-50%);
+  background: #5c64f2;
+  pointer-events: none;
+}
+
+.input {
+  width: 100%;
+  height: 2.85rem;
+  padding: 0.65rem 1rem;
+  border: none;
+  border-radius: 0.5rem;
+  background: #faf9f7;
+  box-shadow: 0 2px 10px rgba(54, 31, 98, 0.06);
+  font-family: "Nunito Sans", sans-serif;
+  font-size: 0.95rem;
+  line-height: 1.35;
+  color: #361f62;
+}
+
+.inputWaiting {
+  padding-left: 1.45rem;
+}
+
+.input::placeholder {
+  color: rgba(54, 31, 98, 0.42);
+  font-style: italic;
+}
+
+.submit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  padding: 0.7rem 1rem;
+  border: none;
+  border-radius: 0.55rem;
+  background: #f656bf;
+  color: #faf9f7;
+  font-family: "Nunito Sans", sans-serif;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  line-height: 1.2;
+  white-space: nowrap;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+
+.submit:active {
+  transform: scale(0.98);
+  background: #d63da5;
+}
+
+.tagsWrap {
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  padding: 1.35rem 1rem 1.5rem;
+  border-radius: 1.35rem 1.35rem 0 0;
+  background: linear-gradient(180deg, #c945a8 0%, #b83898 100%);
+}
+
+.tags {
+  display: flex;
+  gap: 0.5rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.tags::-webkit-scrollbar {
+  display: none;
+}
+
+.tag {
+  flex: 0 0 auto;
+  scroll-snap-align: start;
+  min-height: 2.65rem;
+  padding: 0.6rem 0.95rem;
+  border: 1.5px solid rgba(250, 249, 247, 0.75);
+  border-radius: 999px;
+  background: transparent;
+  color: #faf9f7;
+  font-family: "Nunito Sans", sans-serif;
+  font-size: 0.76rem;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.tag:active {
+  background: rgba(250, 249, 247, 0.12);
+}
+
+@media (max-width: 380px) {
+  .bannerText {
+    white-space: normal;
+    text-align: center;
+  }
+
+  .formFields {
+    width: min(100%, 13.5rem);
+  }
+}
+
+@media (min-width: 640px) {
+  .section {
+    padding: 3.25rem 1.5rem 2rem;
+  }
+
+  .inner {
+    max-width: 38rem;
+  }
+
+  .faceLeft {
+    width: 9.5rem;
+    left: max(0.25rem, 5vw);
+    bottom: 22%;
+    transform: rotate(-10deg);
+  }
+
+  .faceRight {
+    width: 9rem;
+    right: max(0.15rem, 4vw);
+    top: 12%;
+    transform: rotate(8deg);
+  }
+
+  .card {
+    padding: 1.5rem 1.25rem 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .bannerWrap {
+    margin-bottom: 1.1rem;
+  }
+
+  .formFields {
+    width: min(100%, 17rem);
+  }
+
+  .tagsWrap {
+    padding: 1.5rem 1.25rem 1.75rem;
+    border-radius: 1.75rem 1.75rem 0 0;
+  }
+
+  .tags {
+    flex-wrap: wrap;
+    justify-content: center;
+    overflow: visible;
+  }
+}
+
+@media (min-width: 900px) {
+  .section {
+    padding-top: 4rem;
+  }
+
+  .title {
+    margin-bottom: 1.75rem;
+  }
+
+  .inner {
+    max-width: 40rem;
+  }
+
+  .faceLeft {
+    width: 10.5rem;
+    bottom: 24%;
+    transform: rotate(-11deg);
+  }
+
+  .faceRight {
+    width: 10rem;
+    transform: rotate(9deg);
+  }
+
+  .formFields {
+    width: min(100%, 18rem);
+  }
+}

@@ -8,10 +8,10 @@ import styles from "./Nav.module.css";
 const LOGO_SRC = "/assets/logos/(a)%20Ailen_logo%20secundario.svg";
 
 const LINKS = [
-  { href: "/sistema", label: "SISTEMA" },
-  { href: "/test", label: "TEST" },
-  { href: "/builder", label: "BUILDER" },
-  { href: "/contacto", label: "CONTACTO" },
+  { href: "/#sistema", label: "SISTEMA" },
+  { href: "/#demo", label: "DEMO" },
+  { href: "/#caos", label: "CAOS" },
+  { href: "/#contacto", label: "CONTACTO" },
 ] as const;
 
 export default function Nav() {

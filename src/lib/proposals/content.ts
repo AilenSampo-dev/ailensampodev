@@ -44,6 +44,12 @@ export function loadDocumentHtml(slug: string): string | null {
   return readFileSync(htmlPath, "utf8");
 }
 
+export function loadDemoHtml(slug: string): string | null {
+  const htmlPath = path.join(getProposalContentDir(slug), "demo.html");
+  if (!existsSync(htmlPath)) return null;
+  return readFileSync(htmlPath, "utf8");
+}
+
 export function listContentProposalSlugs(): string[] {
   if (!existsSync(CONTENT_ROOT)) return [];
 

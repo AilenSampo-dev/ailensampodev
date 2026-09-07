@@ -13,6 +13,7 @@ export default function ErpLayout({
         <h1 className={styles.title}>Ailen Sampó · ERP</h1>
         <nav className={styles.nav}>
           <Link href="/app/propuestas">Propuestas</Link>
+          <Link href="/app/clientes">Clientes</Link>
           <Link href="/app/propuestas/nueva">Nueva propuesta</Link>
         </nav>
       </header>

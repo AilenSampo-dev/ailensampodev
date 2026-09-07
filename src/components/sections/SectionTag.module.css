@@ -1,0 +1,50 @@
+.tag {
+  position: absolute;
+  top: 0.65rem;
+  left: 0.65rem;
+  z-index: 20;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.3rem 0.55rem;
+  border-radius: 0.35rem;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  pointer-events: none;
+  user-select: none;
+}
+
+.dark {
+  background: rgba(14, 14, 14, 0.72);
+  color: #faf26f;
+  border: 1px solid rgba(250, 242, 111, 0.35);
+}
+
+.light {
+  background: rgba(250, 249, 247, 0.88);
+  color: #361f62;
+  border: 1px solid rgba(54, 31, 98, 0.2);
+}
+
+.code {
+  padding: 0.1rem 0.35rem;
+  border-radius: 0.2rem;
+  background: rgba(246, 86, 191, 0.25);
+  color: inherit;
+  font-size: 0.58rem;
+}
+
+.light .code {
+  background: rgba(246, 86, 191, 0.15);
+}
+
+@media (min-width: 768px) {
+  .tag {
+    top: 0.85rem;
+    left: 0.85rem;
+    font-size: 0.68rem;
+  }
+}

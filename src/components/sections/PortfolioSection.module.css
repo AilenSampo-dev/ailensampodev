@@ -1,0 +1,149 @@
+.section {
+  padding: 2.5rem 0 3rem;
+  position: relative;
+  background: #faf9f7;
+  color: #361f62;
+}
+
+.diagram {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  padding: 0 1rem 1.75rem;
+}
+
+.diagramCol {
+  padding: 1rem;
+  border: 1px solid rgba(54, 31, 98, 0.12);
+  border-radius: 0.85rem;
+  background: #fff;
+}
+
+.diagramLabel {
+  margin-bottom: 0.65rem;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 0.72rem;
+  color: #5c64f2;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  list-style: none;
+  font-family: "Nunito Sans", sans-serif;
+  font-size: 0.88rem;
+  line-height: 1.4;
+}
+
+.carouselWrap {
+  padding-bottom: 0.5rem;
+}
+
+.carouselLabel {
+  padding: 0 1rem 0.75rem;
+  font-family: "Nunito Sans", sans-serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  opacity: 0.65;
+}
+
+.carousel {
+  display: flex;
+  gap: 0.85rem;
+  padding: 0 1rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.carousel::-webkit-scrollbar {
+  display: none;
+}
+
+.card {
+  flex: 0 0 auto;
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.55rem;
+  width: 6.5rem;
+  text-decoration: none;
+  color: inherit;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.cardBubble {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 5.5rem;
+  height: 5.5rem;
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(54, 31, 98, 0.12);
+}
+
+.cardBubble img {
+  width: 78%;
+  height: 78%;
+  object-fit: contain;
+}
+
+.cardTitle {
+  font-family: "Nunito Sans", sans-serif;
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-align: center;
+  line-height: 1.25;
+}
+
+@media (min-width: 640px) {
+  .section {
+    padding: 3rem 0 3.5rem;
+  }
+
+  .diagram {
+    flex-direction: row;
+    max-width: 52rem;
+    margin: 0 auto;
+    padding-inline: 1.5rem;
+  }
+
+  .diagramCol {
+    flex: 1;
+  }
+
+  .carouselLabel {
+    max-width: 52rem;
+    margin: 0 auto;
+    padding-inline: 1.5rem;
+  }
+
+  .carousel {
+    max-width: 52rem;
+    margin: 0 auto;
+    padding-inline: 1.5rem;
+    flex-wrap: wrap;
+    overflow: visible;
+  }
+
+  .card {
+    width: 7rem;
+  }
+
+  .cardBubble {
+    width: 6rem;
+    height: 6rem;
+  }
+}
+
+@media (min-width: 900px) {
+  .carousel {
+    justify-content: center;
+  }
+}
