@@ -15,6 +15,14 @@
     {
       "source": "/p/soulful-branding",
       "destination": "/p/soulful-branding/index.html"
+    },
+    {
+      "source": "/p/esteparia-accesorios/demo",
+      "destination": "/p/esteparia-accesorios/demo/index.html"
+    },
+    {
+      "source": "/p/esteparia-accesorios",
+      "destination": "/p/esteparia-accesorios/index.html"
     }
   ],
   "headers": [
@@ -83,6 +91,24 @@
     },
     {
       "source": "/p/soulful-branding/(.*)",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/html; charset=utf-8"
+        }
+      ]
+    },
+    {
+      "source": "/p/esteparia-accesorios",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/html; charset=utf-8"
+        }
+      ]
+    },
+    {
+      "source": "/p/esteparia-accesorios/(.*)",
       "headers": [
         {
           "key": "Content-Type",
