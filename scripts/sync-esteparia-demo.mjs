@@ -14,6 +14,12 @@ html = html.replace(
   "if(src.startsWith('assets/')) return DEMO_BASE + src;",
   "if(src.startsWith('assets/')) return '/' + src;"
 );
+if (!html.includes('name="robots"')) {
+  html = html.replace(
+    '<meta name="viewport" content="width=device-width, initial-scale=1">',
+    '<meta name="viewport" content="width=device-width, initial-scale=1">\n<meta name="robots" content="noindex, nofollow">'
+  );
+}
 html = html.replace(
   `'sombreroOndulado.jpg':'sombreroOndulado.svg'\n  };`,
   `'sombreroOndulado.jpg':'sombreroOndulado.svg',
