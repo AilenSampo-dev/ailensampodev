@@ -51,6 +51,7 @@
   .nav-overlay.open{display:block;opacity:1}
   body.nav-open,body.admin-nav-open{overflow:hidden}
   body.nav-open .topbar{z-index:100}
+  body.admin-nav-open .topbar{z-index:110}
   .demo-banner{
     background:linear-gradient(90deg,var(--accent-soft),#fff);
     border-bottom:1px solid var(--line);padding:10px 16px;
@@ -683,20 +684,43 @@
     display:grid;grid-template-columns:240px minmax(0,1fr);min-height:calc(100vh - var(--topbar-h));min-height:calc(100dvh - var(--topbar-h));
     width:100%;max-width:100%;
   }
+  .admin-header-row{display:flex;align-items:center;gap:12px;}
+  .admin-menu-toggle{
+    display:none;flex-shrink:0;width:40px;height:40px;border:1px solid var(--line);
+    background:#fff;border-radius:10px;cursor:pointer;padding:0;
+    align-items:center;justify-content:center;flex-direction:column;gap:5px;
+    touch-action:manipulation;-webkit-tap-highlight-color:transparent;
+  }
+  .admin-menu-toggle span{
+    display:block;width:18px;height:2px;background:var(--ink);border-radius:2px;
+    transition:transform .2s,opacity .2s;
+  }
+  .admin-menu-toggle.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+  .admin-menu-toggle.open span:nth-child(2){opacity:0}
+  .admin-menu-toggle.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+  .admin-overlay{
+    display:none;position:fixed;inset:0;background:rgba(13,13,13,.4);z-index:65;
+    opacity:0;transition:opacity .25s;
+  }
+  .admin-overlay.open{display:block;opacity:1}
+  .admin-header h1{margin-bottom:4px;font-size:clamp(20px,4vw,22px);}
+  .admin-header .lead{margin-bottom:0;font-size:13px;}
   @media(max-width:900px){
     .admin-layout{grid-template-columns:1fr;}
     .admin-sidebar{
       position:fixed;top:0;left:0;width:min(288px,88vw);height:100vh;height:100dvh;
-      z-index:70;transform:translateX(-105%);transition:transform .28s ease;
+      z-index:120;transform:translateX(-105%);transition:transform .28s ease;
       border-right:1px solid var(--line);border-bottom:none;
       box-shadow:8px 0 32px rgba(13,13,13,.12);padding-top:16px;
     }
     .admin-sidebar.open{transform:translateX(0)}
     .admin-nav{flex-direction:column!important;overflow-x:visible;padding-bottom:16px;}
     .admin-nav-item{white-space:normal;min-width:0;}
-    .admin-menu-toggle{display:inline-flex}
+    .admin-menu-toggle{display:inline-flex!important}
     .admin-header-row{align-items:flex-start}
     .admin-content{padding:16px 14px 48px}
+    body.admin-nav-open .admin-content{position:relative;z-index:121}
+    .admin-overlay{z-index:119}
   }
   @media(min-width:901px){
     .admin-menu-toggle{display:none!important}
@@ -716,32 +740,13 @@
     border:none;background:transparent;text-align:left;
     padding:10px 12px;border-radius:10px;cursor:pointer;
     font-size:13px;color:var(--muted);transition:.15s;
+    touch-action:manipulation;-webkit-tap-highlight-color:transparent;
   }
   .admin-nav-item svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.7;flex-shrink:0;}
   .admin-nav-item:hover{background:var(--bg);color:var(--ink);}
   .admin-nav-item.active{background:var(--accent-soft);color:#8A1A5A;font-weight:600;}
   .admin-content{padding:28px 24px 60px;max-width:1100px;min-width:0;width:100%;}
   .admin-header{margin-bottom:22px;}
-  .admin-header-row{display:flex;align-items:center;gap:12px;}
-  .admin-menu-toggle{
-    display:none;flex-shrink:0;width:40px;height:40px;border:1px solid var(--line);
-    background:#fff;border-radius:10px;cursor:pointer;padding:0;
-    align-items:center;justify-content:center;flex-direction:column;gap:5px;
-  }
-  .admin-menu-toggle span{
-    display:block;width:18px;height:2px;background:var(--ink);border-radius:2px;
-    transition:transform .2s,opacity .2s;
-  }
-  .admin-menu-toggle.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
-  .admin-menu-toggle.open span:nth-child(2){opacity:0}
-  .admin-menu-toggle.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
-  .admin-overlay{
-    display:none;position:fixed;inset:0;background:rgba(13,13,13,.4);z-index:65;
-    opacity:0;transition:opacity .25s;
-  }
-  .admin-overlay.open{display:block;opacity:1}
-  .admin-header h1{margin-bottom:4px;font-size:clamp(20px,4vw,22px);}
-  .admin-header .lead{margin-bottom:0;font-size:13px;}
   .admin-panel{display:none;animation:adminIn .25s ease;max-width:100%;min-width:0;}
   .admin-panel.active{display:block;}
   @keyframes adminIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
