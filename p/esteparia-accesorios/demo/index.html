@@ -709,7 +709,7 @@
     .admin-layout{grid-template-columns:1fr;}
     .admin-sidebar{
       position:fixed;top:0;left:0;width:min(288px,88vw);height:100vh;height:100dvh;
-      z-index:120;transform:translateX(-105%);transition:transform .28s ease;
+      z-index:130;transform:translateX(-105%);transition:transform .28s ease;
       border-right:1px solid var(--line);border-bottom:none;
       box-shadow:8px 0 32px rgba(13,13,13,.12);padding-top:16px;
     }
@@ -719,16 +719,19 @@
     .admin-menu-toggle{display:inline-flex!important}
     .admin-header-row{align-items:flex-start}
     .admin-content{padding:16px 14px 48px}
-    body.admin-nav-open .admin-content{position:relative;z-index:121}
-    .admin-overlay{z-index:119}
+    .admin-overlay{z-index:125}
   }
   @media(min-width:901px){
     .admin-menu-toggle{display:none!important}
     .admin-overlay{display:none!important}
+    .admin-sidebar{
+      position:sticky;top:var(--topbar-h);
+      height:calc(100vh - var(--topbar-h));height:calc(100dvh - var(--topbar-h));
+    }
   }
   .admin-sidebar{
     background:#fff;border-right:1px solid var(--line);padding:20px 12px;
-    position:sticky;top:var(--topbar-h);height:calc(100vh - var(--topbar-h));height:calc(100dvh - var(--topbar-h));overflow-y:auto;
+    overflow-y:auto;
   }
   .admin-sidebar-label{
     font-size:10px;text-transform:uppercase;letter-spacing:.1em;
@@ -817,11 +820,12 @@
     .topbar{padding:8px 12px}
     .topbar .tag{display:none}
     .menu-toggle{display:inline-flex}
+    .nav-overlay{z-index:140}
     .nav{
       position:fixed;top:0;right:0;width:min(280px,86vw);height:100vh;height:100dvh;
       background:#fff;flex-direction:column;align-items:stretch;gap:8px;
       padding:72px 16px 24px;transform:translateX(105%);transition:transform .28s ease;
-      z-index:50;box-shadow:-8px 0 32px rgba(13,13,13,.12);border-left:1px solid var(--line);
+      z-index:145;box-shadow:-8px 0 32px rgba(13,13,13,.12);border-left:1px solid var(--line);
     }
     .nav.open{transform:translateX(0)}
     .navbtn{width:100%;text-align:left;border-radius:12px;padding:12px 16px;font-size:14px}
