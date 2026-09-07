@@ -41,6 +41,7 @@
   .navbtn{
     border:1px solid var(--line);background:#fff;color:var(--ink);
     padding:7px 14px;border-radius:999px;cursor:pointer;font-size:12px;
+    touch-action:manipulation;-webkit-tap-highlight-color:transparent;
   }
   .navbtn.active{background:var(--ink);color:#fff;border-color:var(--ink);}
   .nav-overlay{
@@ -49,6 +50,14 @@
   }
   .nav-overlay.open{display:block;opacity:1}
   body.nav-open,body.admin-nav-open{overflow:hidden}
+  body.nav-open .topbar{z-index:100}
+  .demo-banner{
+    background:linear-gradient(90deg,var(--accent-soft),#fff);
+    border-bottom:1px solid var(--line);padding:10px 16px;
+    font-size:12px;color:#5a2040;line-height:1.45;
+  }
+  .demo-banner strong{display:block;font-size:13px;margin-bottom:2px}
+  .demo-banner a{color:var(--accent);font-weight:600}
   .tag{font-size:10px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;}
   .view{display:none;max-width:1120px;margin:0 auto;padding:28px 20px 60px;width:100%;}
   .view.active{display:block;}
@@ -861,6 +870,12 @@
 </head>
 <body>
 
+<div class="demo-banner" id="demoBanner">
+  <strong>Demo interactivo</strong>
+  Podés probar todo y <em>subir fotos desde tu celu o PC</em> en Gestión → Productos → Subir foto. Se guardan en este navegador.
+  <span id="iframeHint" hidden> · <a href="/p/esteparia-accesorios/demo" target="_blank" rel="noopener">Abrí en pantalla completa</a> para navegar mejor.</span>
+</div>
+
 <header class="topbar">
   <div class="topbar-left">
     <button type="button" class="menu-toggle" id="mainMenuToggle" aria-label="Abrir menú" aria-expanded="false">
@@ -869,9 +884,9 @@
     <div class="brand" onclick="navigate('tienda')" title="Ir a la tienda">esteparia <em>accesorios</em></div>
   </div>
   <nav class="nav" id="mainNav" aria-label="Secciones">
-    <button class="navbtn active" data-view="tienda">Tienda</button>
-    <button class="navbtn" data-view="capsula">Cápsula</button>
-    <button class="navbtn" data-view="admin">Gestión</button>
+    <button type="button" class="navbtn active" data-view="tienda">Tienda</button>
+    <button type="button" class="navbtn" data-view="capsula">Cápsula</button>
+    <button type="button" class="navbtn" data-view="admin">Gestión</button>
   </nav>
   <div class="tag">demo · s(a)</div>
 </header>
@@ -1391,7 +1406,7 @@
           <div style="grid-column:1/-1">
             <label>Imagen del artículo</label>
             <div class="img-upload">
-              <input type="file" id="aImgFile" accept="image/*" hidden>
+              <input type="file" id="aImgFile" accept="image/*" capture="environment" hidden>
               <button type="button" class="btn ghost" id="aImgPick">Subir foto</button>
               <button type="button" class="btn ghost" id="aImgClear" style="display:none">Quitar</button>
               <img id="aImgPreview" class="img-preview" alt="">
@@ -1508,9 +1523,9 @@
       </div>
       <div class="form-row">
         <div style="grid-column:1/-1">
-          <label>Imagen del producto</label>
+          <label>Imagen del producto <span style="font-weight:400;color:var(--muted)">— probá con una foto tuya</span></label>
           <div class="img-upload">
-            <input type="file" id="pImgFile" accept="image/*" hidden>
+            <input type="file" id="pImgFile" accept="image/*" capture="environment" hidden>
             <button type="button" class="btn ghost" id="pImgPick">Subir foto</button>
             <button type="button" class="btn ghost" id="pImgClear" style="display:none">Quitar</button>
             <img id="pImgPreview" class="img-preview" alt="">
@@ -1568,15 +1583,33 @@ const DEFAULT_CATEGORIES = [
   'Prendedores','Pulseras','Cintos','Collares',
   'Pashminas - pareos','Anteojos','Aros','Bolsos playeros'
 ];
-const IMG = 'assets/web/fotoproductos/';
+const DEMO_BASE = '/p/esteparia-accesorios/demo/';
+const IMG = DEMO_BASE + 'assets/web/fotoproductos/';
+
+function resolveImg(src){
+  if(!src) return '';
+  if(src.startsWith('data:') || src.startsWith('http')) return src;
+  const legacy = {
+    'anteojosVintage.jpg':'anteojosVintage.svg',
+    'cadenaCirculoCorazon.jpg':'cadenaCirculoCorazon.svg',
+    'collarBolas.jpg':'collarBolas.svg',
+    'sombreroOndulado.jpg':'sombreroOndulado.svg'
+  };
+  for(const [oldName, newName] of Object.entries(legacy)){
+    if(src.includes(oldName)) return IMG + newName;
+  }
+  if(src.startsWith('/')) return src;
+  if(src.startsWith('assets/')) return DEMO_BASE + src;
+  return IMG + src.replace(/^.*\//, '');
+}
 
 const DEFAULT = {
   categories: DEFAULT_CATEGORIES,
   products: [
-    {id:1,name:'Anteojos vintage',cat:'Anteojos',price:4200,stock:14,img:IMG+'anteojosVintage.jpg'},
-    {id:2,name:'Cadena círculo corazón',cat:'Cintos',price:3800,stock:9,img:IMG+'cadenaCirculoCorazon.jpg'},
-    {id:3,name:'Collar bolas',cat:'Collares',price:2900,stock:18,img:IMG+'collarBolas.jpg'},
-    {id:4,name:'Sombrero ondulado',cat:'Pashminas - pareos',price:4500,stock:6,img:IMG+'sombreroOndulado.jpg'},
+    {id:1,name:'Anteojos vintage',cat:'Anteojos',price:4200,stock:14,img:IMG+'anteojosVintage.svg'},
+    {id:2,name:'Cadena círculo corazón',cat:'Cintos',price:3800,stock:9,img:IMG+'cadenaCirculoCorazon.svg'},
+    {id:3,name:'Collar bolas',cat:'Collares',price:2900,stock:18,img:IMG+'collarBolas.svg'},
+    {id:4,name:'Sombrero ondulado',cat:'Pashminas - pareos',price:4500,stock:6,img:IMG+'sombreroOndulado.svg'},
     {id:5,name:'Aros mini aro',cat:'Aros',price:1800,stock:22,img:''},
     {id:6,name:'Pulsera trenzada',cat:'Pulseras',price:2200,stock:11,img:''},
     {id:7,name:'Prendedor flor',cat:'Prendedores',price:1500,stock:8,img:''},
@@ -1592,8 +1625,8 @@ const DEFAULT = {
     {id:1,name:'Lanzamiento demo',pct:10,cat:'',until:'2026-09-30',active:true},
   ],
   articles: [
-    {id:1,title:'Cómo armar tu kit ideal',body:'Sumá al menos 3 piezas de distintas categorías para un look completo y desbloquear precio combo.\n\nTip: combiná un collar con aros de la misma paleta y sumá un cinto o pulsera para redondear el outfit.',img:IMG+'collarBolas.jpg'},
-    {id:2,title:'Tendencia verano: anteojos + cintos',body:'Los anteojos vintage combinan perfecto con cadenas de cintura. Probá el combo en la tienda.\n\nEste verano la tendencia es mezclar accesorios de playa con piezas doradas. El contraste entre lo casual y lo brillante es lo que hace especial el look.',img:IMG+'anteojosVintage.jpg'},
+    {id:1,title:'Cómo armar tu kit ideal',body:'Sumá al menos 3 piezas de distintas categorías para un look completo y desbloquear precio combo.\n\nTip: combiná un collar con aros de la misma paleta y sumá un cinto o pulsera para redondear el outfit.',img:IMG+'collarBolas.svg'},
+    {id:2,title:'Tendencia verano: anteojos + cintos',body:'Los anteojos vintage combinan perfecto con cadenas de cintura. Probá el combo en la tienda.\n\nEste verano la tendencia es mezclar accesorios de playa con piezas doradas. El contraste entre lo casual y lo brillante es lo que hace especial el look.',img:IMG+'anteojosVintage.svg'},
   ],
   orders: [],
   comboGoal: 8000
@@ -1642,7 +1675,7 @@ function loadState(){
         cat: p.cat,
         price: Number(p.price) || 0,
         stock: Math.max(0, Number(p.stock) || 0),
-        img: p.img || ''
+        img: resolveImg(p.img || '')
       }));
     if(data.products.length === 0) data.products = fallback.products;
   }
@@ -1659,6 +1692,11 @@ function loadState(){
   }
   if(!Array.isArray(data.articles) || data.articles.length === 0){
     data.articles = fallback.articles;
+  } else {
+    data.articles = data.articles.map(a => ({
+      ...a,
+      img: resolveImg(a.img || '')
+    }));
   }
   if(!Array.isArray(data.orders)) data.orders = [];
   if(typeof data.comboGoal !== 'number') data.comboGoal = fallback.comboGoal;
@@ -1815,7 +1853,11 @@ window.navigate = navigate;
 window.openAdminPanel = openAdminPanel;
 
 document.querySelectorAll('.navbtn').forEach(b=>{
-  b.onclick=()=>navigate(b.dataset.view);
+  b.addEventListener('click', (e)=>{
+    e.preventDefault();
+    e.stopPropagation();
+    navigate(b.dataset.view);
+  });
 });
 
 document.getElementById('adminNav').addEventListener('click', e=>{
@@ -1867,13 +1909,15 @@ function openAdminNav(){
   document.body.classList.add('admin-nav-open');
 }
 
-document.getElementById('mainMenuToggle').addEventListener('click', ()=>{
+document.getElementById('mainMenuToggle').addEventListener('click', (e)=>{
+  e.stopPropagation();
   const nav = document.getElementById('mainNav');
   if(nav.classList.contains('open')) closeMainNav();
   else openMainNav();
 });
 document.getElementById('navOverlay').addEventListener('click', closeMainNav);
-document.getElementById('adminMenuToggle').addEventListener('click', ()=>{
+document.getElementById('adminMenuToggle').addEventListener('click', (e)=>{
+  e.stopPropagation();
   const sidebar = document.getElementById('adminSidebar');
   if(sidebar.classList.contains('open')) closeAdminNav();
   else openAdminNav();
@@ -1883,6 +1927,10 @@ window.addEventListener('resize', ()=>{
   if(window.innerWidth > 768) closeMainNav();
   if(window.innerWidth > 900) closeAdminNav();
 });
+if(window.self !== window.top){
+  const hint = document.getElementById('iframeHint');
+  if(hint) hint.hidden = false;
+}
 
 /* TIENDA */
 const CATEGORY_ICONS = {
