@@ -1,9 +1,9 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Esteparia Accesorios ÔÇö Demo</title>
+<title>Esteparia Accesorios ??? Demo</title>
 <style>
   :root{
     --ink:#0D0D0D; --muted:#6B6B6B; --line:#E8E4DF; --bg:#FAFAF8;
@@ -51,6 +51,7 @@
   .nav-overlay.open{display:block;opacity:1}
   body.nav-open,body.admin-nav-open{overflow:hidden}
   body.nav-open .topbar{z-index:100}
+  body.admin-nav-open .topbar{z-index:110}
   .demo-banner{
     background:linear-gradient(90deg,var(--accent-soft),#fff);
     border-bottom:1px solid var(--line);padding:10px 16px;
@@ -583,7 +584,7 @@
     display:inline-flex;align-items:center;gap:6px;line-height:1;
   }
   .rt-dd-btn:hover{border-color:var(--accent);background:var(--accent-soft);}
-  .rt-dd-btn::after{content:'Ôû¥';font-size:10px;color:var(--muted);}
+  .rt-dd-btn::after{content:'???';font-size:10px;color:var(--muted);}
   .rt-dd-menu{
     display:none;position:absolute;top:calc(100% + 6px);left:0;min-width:148px;
     background:#fff;border:1px solid var(--line);border-radius:10px;
@@ -683,20 +684,43 @@
     display:grid;grid-template-columns:240px minmax(0,1fr);min-height:calc(100vh - var(--topbar-h));min-height:calc(100dvh - var(--topbar-h));
     width:100%;max-width:100%;
   }
+  .admin-header-row{display:flex;align-items:center;gap:12px;}
+  .admin-menu-toggle{
+    display:none;flex-shrink:0;width:40px;height:40px;border:1px solid var(--line);
+    background:#fff;border-radius:10px;cursor:pointer;padding:0;
+    align-items:center;justify-content:center;flex-direction:column;gap:5px;
+    touch-action:manipulation;-webkit-tap-highlight-color:transparent;
+  }
+  .admin-menu-toggle span{
+    display:block;width:18px;height:2px;background:var(--ink);border-radius:2px;
+    transition:transform .2s,opacity .2s;
+  }
+  .admin-menu-toggle.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+  .admin-menu-toggle.open span:nth-child(2){opacity:0}
+  .admin-menu-toggle.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+  .admin-overlay{
+    display:none;position:fixed;inset:0;background:rgba(13,13,13,.4);z-index:65;
+    opacity:0;transition:opacity .25s;
+  }
+  .admin-overlay.open{display:block;opacity:1}
+  .admin-header h1{margin-bottom:4px;font-size:clamp(20px,4vw,22px);}
+  .admin-header .lead{margin-bottom:0;font-size:13px;}
   @media(max-width:900px){
     .admin-layout{grid-template-columns:1fr;}
     .admin-sidebar{
       position:fixed;top:0;left:0;width:min(288px,88vw);height:100vh;height:100dvh;
-      z-index:70;transform:translateX(-105%);transition:transform .28s ease;
+      z-index:120;transform:translateX(-105%);transition:transform .28s ease;
       border-right:1px solid var(--line);border-bottom:none;
       box-shadow:8px 0 32px rgba(13,13,13,.12);padding-top:16px;
     }
     .admin-sidebar.open{transform:translateX(0)}
     .admin-nav{flex-direction:column!important;overflow-x:visible;padding-bottom:16px;}
     .admin-nav-item{white-space:normal;min-width:0;}
-    .admin-menu-toggle{display:inline-flex}
+    .admin-menu-toggle{display:inline-flex!important}
     .admin-header-row{align-items:flex-start}
     .admin-content{padding:16px 14px 48px}
+    body.admin-nav-open .admin-content{position:relative;z-index:121}
+    .admin-overlay{z-index:119}
   }
   @media(min-width:901px){
     .admin-menu-toggle{display:none!important}
@@ -716,32 +740,13 @@
     border:none;background:transparent;text-align:left;
     padding:10px 12px;border-radius:10px;cursor:pointer;
     font-size:13px;color:var(--muted);transition:.15s;
+    touch-action:manipulation;-webkit-tap-highlight-color:transparent;
   }
   .admin-nav-item svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.7;flex-shrink:0;}
   .admin-nav-item:hover{background:var(--bg);color:var(--ink);}
   .admin-nav-item.active{background:var(--accent-soft);color:#8A1A5A;font-weight:600;}
   .admin-content{padding:28px 24px 60px;max-width:1100px;min-width:0;width:100%;}
   .admin-header{margin-bottom:22px;}
-  .admin-header-row{display:flex;align-items:center;gap:12px;}
-  .admin-menu-toggle{
-    display:none;flex-shrink:0;width:40px;height:40px;border:1px solid var(--line);
-    background:#fff;border-radius:10px;cursor:pointer;padding:0;
-    align-items:center;justify-content:center;flex-direction:column;gap:5px;
-  }
-  .admin-menu-toggle span{
-    display:block;width:18px;height:2px;background:var(--ink);border-radius:2px;
-    transition:transform .2s,opacity .2s;
-  }
-  .admin-menu-toggle.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
-  .admin-menu-toggle.open span:nth-child(2){opacity:0}
-  .admin-menu-toggle.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
-  .admin-overlay{
-    display:none;position:fixed;inset:0;background:rgba(13,13,13,.4);z-index:65;
-    opacity:0;transition:opacity .25s;
-  }
-  .admin-overlay.open{display:block;opacity:1}
-  .admin-header h1{margin-bottom:4px;font-size:clamp(20px,4vw,22px);}
-  .admin-header .lead{margin-bottom:0;font-size:13px;}
   .admin-panel{display:none;animation:adminIn .25s ease;max-width:100%;min-width:0;}
   .admin-panel.active{display:block;}
   @keyframes adminIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
@@ -872,23 +877,23 @@
 
 <div class="demo-banner" id="demoBanner">
   <strong>Demo interactivo</strong>
-  Pod├®s probar todo y <em>subir fotos desde tu celu o PC</em> en Gesti├│n ÔåÆ Productos ÔåÆ Subir foto. Se guardan en este navegador.
-  <span id="iframeHint" hidden> ┬À <a href="/p/esteparia-accesorios/demo" target="_blank" rel="noopener">Abr├¡ en pantalla completa</a> para navegar mejor.</span>
+  Pod??s probar todo y <em>subir fotos desde tu celu o PC</em> en Gesti??n ??? Productos ??? Subir foto. Se guardan en este navegador.
+  <span id="iframeHint" hidden> ?? <a href="/p/esteparia-accesorios/demo" target="_blank" rel="noopener">Abr?? en pantalla completa</a> para navegar mejor.</span>
 </div>
 
 <header class="topbar">
   <div class="topbar-left">
-    <button type="button" class="menu-toggle" id="mainMenuToggle" aria-label="Abrir men├║" aria-expanded="false">
+    <button type="button" class="menu-toggle" id="mainMenuToggle" aria-label="Abrir men??" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
     <div class="brand" onclick="navigate('tienda')" title="Ir a la tienda">esteparia <em>accesorios</em></div>
   </div>
   <nav class="nav" id="mainNav" aria-label="Secciones">
     <button type="button" class="navbtn active" data-view="tienda">Tienda</button>
-    <button type="button" class="navbtn" data-view="capsula">C├ípsula</button>
-    <button type="button" class="navbtn" data-view="admin">Gesti├│n</button>
+    <button type="button" class="navbtn" data-view="capsula">C??psula</button>
+    <button type="button" class="navbtn" data-view="admin">Gesti??n</button>
   </nav>
-  <div class="tag">demo ┬À s(a)</div>
+  <div class="tag">demo ?? s(a)</div>
 </header>
 <div class="nav-overlay" id="navOverlay" aria-hidden="true"></div>
 
@@ -896,8 +901,8 @@
 <section class="view active" id="tienda">
   <div class="store-hero" id="storeHero"></div>
 
-  <nav class="cat-nav" aria-label="Categor├¡as">
-    <div class="cat-nav-title">Categor├¡as</div>
+  <nav class="cat-nav" aria-label="Categor??as">
+    <div class="cat-nav-title">Categor??as</div>
     <div class="cat-menu" id="catFilters"></div>
   </nav>
 
@@ -910,9 +915,9 @@
   <div class="section-block kits-band" id="storeKitsBlock">
     <h2 class="section-title">Kits listos para vos</h2>
     <div class="kits-carousel-wrap">
-      <button type="button" class="kits-arrow prev" id="kitsPrev" aria-label="Anterior">ÔÇ╣</button>
+      <button type="button" class="kits-arrow prev" id="kitsPrev" aria-label="Anterior">???</button>
       <div class="kits-scroll" id="storeKits"></div>
-      <button type="button" class="kits-arrow next" id="kitsNext" aria-label="Siguiente">ÔÇ║</button>
+      <button type="button" class="kits-arrow next" id="kitsNext" aria-label="Siguiente">???</button>
     </div>
   </div>
 
@@ -925,8 +930,8 @@
           <h3>Mis kits</h3>
           <span class="side-count" id="kitCount">0</span>
         </div>
-        <div class="sub">Sum├í productos sueltos o eleg├¡ un kit listo en la tienda</div>
-        <div id="kitlist"><div class="empty">Agreg├í productos o un kit listo de la tienda</div></div>
+        <div class="sub">Sum?? productos sueltos o eleg?? un kit listo en la tienda</div>
+        <div id="kitlist"><div class="empty">Agreg?? productos o un kit listo de la tienda</div></div>
         <div class="goal" id="goalmsg"></div>
         <div class="progress"><div id="progressbar" style="width:0%"></div></div>
         <div class="total"><span>Total</span><span id="totalval">$0</span></div>
@@ -938,9 +943,9 @@
 
 <!-- CHECKOUT -->
 <section class="view overlay-page" id="checkout">
-  <button class="back" onclick="navigate('tienda')">ÔåÉ Volver a la tienda</button>
+  <button class="back" onclick="navigate('tienda')">??? Volver a la tienda</button>
   <h1>Finalizar compra</h1>
-  <p class="lead">Revis├í tu pedido antes de confirmar.</p>
+  <p class="lead">Revis?? tu pedido antes de confirmar.</p>
   <div class="grid2">
     <div>
       <div class="box">
@@ -961,7 +966,7 @@
     </div>
     <aside class="side">
       <h3>Pago</h3>
-      <div class="sub">En la versi├│n final se conecta Mercado Pago</div>
+      <div class="sub">En la versi??n final se conecta Mercado Pago</div>
       <div class="form-row" style="margin-top:12px">
         <div style="grid-column:1/-1"><label>Medio de pago</label>
           <select id="coPay">
@@ -983,29 +988,29 @@
     <p id="pedidoOkMsg">Tu pedido fue registrado. Te contactamos por WhatsApp.</p>
     <div class="btn-row" style="justify-content:center">
       <button class="btn" onclick="navigate('tienda')">Seguir comprando</button>
-      <button class="btn ghost" onclick="navigate('admin','pedidos')">Ver en gesti├│n</button>
+      <button class="btn ghost" onclick="navigate('admin','pedidos')">Ver en gesti??n</button>
     </div>
   </div>
 </section>
 
-<!-- ART├ìCULO C├üPSULA -->
+<!-- ART??CULO C??PSULA -->
 <section class="view overlay-page" id="articulo">
-  <button class="back" onclick="navigate('capsula')">ÔåÉ Volver a la c├ípsula</button>
+  <button class="back" onclick="navigate('capsula')">??? Volver a la c??psula</button>
   <article class="article-full" id="articuloContent"></article>
 </section>
 
-<!-- C├üPSULA DE CONTENIDO -->
+<!-- C??PSULA DE CONTENIDO -->
 <section class="view" id="capsula">
   <header class="capsula-hero">
-    <span class="capsula-eyebrow">C├ípsula esteparia</span>
-    <h1>Inspiraci├│n & tips</h1>
-    <p class="lead">Tendencias, c├│mo combinar y secretos para armar tu look con nuestros accesorios.</p>
+    <span class="capsula-eyebrow">C??psula esteparia</span>
+    <h1>Inspiraci??n & tips</h1>
+    <p class="lead">Tendencias, c??mo combinar y secretos para armar tu look con nuestros accesorios.</p>
   </header>
   <div class="capsule-featured" id="capsulaFeatured"></div>
   <div class="content-grid" id="contentGrid"></div>
 </section>
 
-<!-- PANEL DE GESTI├ôN -->
+<!-- PANEL DE GESTI??N -->
 <section class="view" id="admin">
   <div class="admin-overlay" id="adminOverlay" aria-hidden="true"></div>
   <div class="admin-layout">
@@ -1022,7 +1027,7 @@
         </button>
         <button type="button" class="admin-nav-item" data-panel="categorias">
           <svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h10M4 18h14"/></svg>
-          Categor├¡as
+          Categor??as
         </button>
         <button type="button" class="admin-nav-item" data-panel="kits">
           <svg viewBox="0 0 24 24"><path d="M12 3l8 4v6c0 5-3.5 8-8 8s-8-3-8-8V7z"/></svg>
@@ -1038,7 +1043,7 @@
         </button>
         <button type="button" class="admin-nav-item" data-panel="campanas">
           <svg viewBox="0 0 24 24"><path d="M4 12h4l2-6 4 12 2-6h4"/></svg>
-          Campa├▒as
+          Campa??as
         </button>
         <button type="button" class="admin-nav-item" data-panel="pedidos">
           <svg viewBox="0 0 24 24"><path d="M9 5H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-4"/><path d="M9 5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2"/></svg>
@@ -1054,7 +1059,7 @@
     <div class="admin-content">
       <header class="admin-header">
         <div class="admin-header-row">
-          <button type="button" class="admin-menu-toggle" id="adminMenuToggle" aria-label="Abrir men├║ del panel" aria-expanded="false">
+          <button type="button" class="admin-menu-toggle" id="adminMenuToggle" aria-label="Abrir men?? del panel" aria-expanded="false">
             <span></span><span></span><span></span>
           </button>
           <div>
@@ -1069,23 +1074,23 @@
         <div class="quick-actions">
           <button type="button" class="quick-btn" onclick="openProductModal()">+ Nuevo producto</button>
           <button type="button" class="quick-btn" onclick="openAdminPanel('kits')">+ Armar kit</button>
-          <button type="button" class="quick-btn" onclick="openAdminPanel('campanas')">+ Campa├▒a</button>
+          <button type="button" class="quick-btn" onclick="openAdminPanel('campanas')">+ Campa??a</button>
         </div>
         <div class="dash-kpis" id="kpis"></div>
         <div class="dash-charts">
           <div class="chart-box">
-            <h4>Stock por categor├¡a</h4>
+            <h4>Stock por categor??a</h4>
             <canvas id="chartStock"></canvas>
             <div class="chart-empty" id="chartStockEmpty" style="display:none">Sin datos de stock</div>
           </div>
           <div class="chart-box">
             <h4>Ventas (pedidos demo)</h4>
             <canvas id="chartOrders"></canvas>
-            <div class="chart-empty" id="chartOrdersEmpty" style="display:none">Todav├¡a no hay pedidos</div>
+            <div class="chart-empty" id="chartOrdersEmpty" style="display:none">Todav??a no hay pedidos</div>
           </div>
         </div>
         <div class="box">
-          <div class="box-header"><h3>├Ültimos pedidos</h3><button type="button" class="btn ghost" onclick="openAdminPanel('pedidos')">Ver todos</button></div>
+          <div class="box-header"><h3>??ltimos pedidos</h3><button type="button" class="btn ghost" onclick="openAdminPanel('pedidos')">Ver todos</button></div>
           <div class="data-table-wrap"><table class="data-table" id="dashboardOrdersTable"></table></div>
         </div>
       </div>
@@ -1094,7 +1099,7 @@
       <div class="admin-panel" id="panel-productos">
     <div class="box admin-card">
       <div class="box-header">
-        <h3>Cat├ílogo</h3>
+        <h3>Cat??logo</h3>
         <button type="button" class="btn" onclick="openProductModal()">+ Nuevo producto</button>
       </div>
       <div class="catalog-toolbar">
@@ -1103,31 +1108,31 @@
             <label for="catalogSearch">Buscar producto</label>
             <div class="catalog-search">
               <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
-              <input id="catalogSearch" type="search" placeholder="Nombre, categor├¡a o c├│digo...">
+              <input id="catalogSearch" type="search" placeholder="Nombre, categor??a o c??digo...">
             </div>
           </div>
           <div class="catalog-filters">
             <span class="catalog-filters-label">Filtros y orden</span>
             <div class="list-toolbar-filters">
               <div class="catalog-select-wrap">
-                <select id="catalogCatFilter" title="Categor├¡a">
-                  <option value="">Todas las categor├¡as</option>
+                <select id="catalogCatFilter" title="Categor??a">
+                  <option value="">Todas las categor??as</option>
                 </select>
               </div>
               <div class="catalog-select-wrap">
                 <select id="catalogStockFilter" title="Estado de stock">
                   <option value="">Todo el stock</option>
-                  <option value="low">Stock bajo (Ôëñ5)</option>
+                  <option value="low">Stock bajo (???5)</option>
                   <option value="out">Sin stock</option>
                 </select>
               </div>
               <div class="catalog-select-wrap">
                 <select id="catalogSort" title="Ordenar por">
-                  <option value="cat-name">Categor├¡a ÔåÆ nombre</option>
-                  <option value="name">Nombre A ÔåÆ Z</option>
-                  <option value="name-desc">Nombre Z ÔåÆ A</option>
+                  <option value="cat-name">Categor??a ??? nombre</option>
+                  <option value="name">Nombre A ??? Z</option>
+                  <option value="name-desc">Nombre Z ??? A</option>
                   <option value="stock-asc">Menos stock primero</option>
-                  <option value="stock-desc">M├ís stock primero</option>
+                  <option value="stock-desc">M??s stock primero</option>
                   <option value="price-asc">Precio menor</option>
                   <option value="price-desc">Precio mayor</option>
                 </select>
@@ -1147,32 +1152,32 @@
     </div>
   </div>
 
-  <!-- Categor├¡as -->
+  <!-- Categor??as -->
   <div class="admin-panel" id="panel-categorias">
     <div class="admin-stack">
       <div class="admin-stats" id="catStats"></div>
       <div class="box admin-card">
         <div class="admin-form-head">
-          <h3>Nueva categor├¡a</h3>
-          <p>Agreg├í un tipo de accesorio para organizar el cat├ílogo</p>
+          <h3>Nueva categor??a</h3>
+          <p>Agreg?? un tipo de accesorio para organizar el cat??logo</p>
         </div>
         <div class="form-row">
           <div><label>Nombre</label><input id="catName" placeholder="Ej: Anillos"></div>
         </div>
         <div class="admin-form-actions">
-          <button class="btn" id="saveCategory">Crear categor├¡a</button>
+          <button class="btn" id="saveCategory">Crear categor??a</button>
         </div>
       </div>
       <div class="box admin-card">
         <div class="box-header">
-          <h3>Categor├¡as del cat├ílogo</h3>
+          <h3>Categor??as del cat??logo</h3>
           <span class="catalog-meta" id="catListMeta"></span>
         </div>
         <div class="section-toolbar">
           <div class="catalog-search-wrap">
             <div class="catalog-search">
               <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
-              <input id="catSearch" type="search" placeholder="Buscar categor├¡a...">
+              <input id="catSearch" type="search" placeholder="Buscar categor??a...">
             </div>
           </div>
         </div>
@@ -1188,17 +1193,17 @@
       <div class="box admin-card">
         <div class="admin-form-head">
           <h3>Armar kit para vender</h3>
-          <p>Seleccion├í productos y defin├¡ el descuento. El precio se calcula autom├íticamente.</p>
+          <p>Seleccion?? productos y defin?? el descuento. El precio se calcula autom??ticamente.</p>
         </div>
         <div class="form-row">
           <div><label>Nombre del kit</label><input id="kName" placeholder="Ej: Kit Verano Playa"></div>
           <div><label>Descuento sobre la suma (%)</label><input id="kDiscount" type="number" min="0" max="50" value="10" oninput="updateKitPricePreview()"></div>
         </div>
         <div id="kitPricePreview" class="kit-price-preview">
-          Seleccion├í al menos 2 productos para calcular el precio
+          Seleccion?? al menos 2 productos para calcular el precio
         </div>
         <div class="form-row">
-          <div style="grid-column:1/-1"><label>Descripci├│n corta</label><input id="kDesc" placeholder="Ideal para la playa"></div>
+          <div style="grid-column:1/-1"><label>Descripci??n corta</label><input id="kDesc" placeholder="Ideal para la playa"></div>
         </div>
         <label class="catalog-filters-label" style="display:block;margin-bottom:10px;">Productos del kit</label>
         <div class="section-toolbar">
@@ -1211,7 +1216,7 @@
           <div class="list-toolbar-filters" style="margin-top:10px">
             <div class="catalog-select-wrap">
               <select id="kitPickerCat">
-                <option value="">Todas las categor├¡as</option>
+                <option value="">Todas las categor??as</option>
               </select>
             </div>
           </div>
@@ -1245,28 +1250,28 @@
             <div class="catalog-search-wrap">
               <div class="catalog-search">
                 <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
-                <input id="stockSearch" type="search" placeholder="Buscar producto o categor├¡a...">
+                <input id="stockSearch" type="search" placeholder="Buscar producto o categor??a...">
               </div>
             </div>
             <div class="list-toolbar-filters">
               <div class="catalog-select-wrap">
                 <select id="stockCatFilter">
-                  <option value="">Todas las categor├¡as</option>
+                  <option value="">Todas las categor??as</option>
                 </select>
               </div>
               <div class="catalog-select-wrap">
                 <select id="stockStatusFilter">
                   <option value="">Todo el stock</option>
-                  <option value="low">Stock bajo (Ôëñ5)</option>
+                  <option value="low">Stock bajo (???5)</option>
                   <option value="out">Sin stock</option>
                 </select>
               </div>
               <div class="catalog-select-wrap">
                 <select id="stockSort">
-                  <option value="cat-name">Categor├¡a ÔåÆ nombre</option>
+                  <option value="cat-name">Categor??a ??? nombre</option>
                   <option value="stock-asc">Menos stock primero</option>
-                  <option value="stock-desc">M├ís stock primero</option>
-                  <option value="name">Nombre A ÔåÆ Z</option>
+                  <option value="stock-desc">M??s stock primero</option>
+                  <option value="name">Nombre A ??? Z</option>
                 </select>
               </div>
             </div>
@@ -1295,26 +1300,26 @@
       <div class="admin-stats" id="priceStats"></div>
       <div class="box admin-card">
         <div class="box-header">
-          <h3>Gesti├│n de precios</h3>
+          <h3>Gesti??n de precios</h3>
         </div>
         <div class="section-toolbar">
           <div class="catalog-toolbar-top">
             <div class="catalog-search-wrap">
               <div class="catalog-search">
                 <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
-                <input id="priceSearch" type="search" placeholder="Buscar producto o categor├¡a...">
+                <input id="priceSearch" type="search" placeholder="Buscar producto o categor??a...">
               </div>
             </div>
             <div class="list-toolbar-filters">
               <div class="catalog-select-wrap">
                 <select id="priceCatFilter">
-                  <option value="">Todas las categor├¡as</option>
+                  <option value="">Todas las categor??as</option>
                 </select>
               </div>
               <div class="catalog-select-wrap">
                 <select id="priceSort">
-                  <option value="cat-name">Categor├¡a ÔåÆ nombre</option>
-                  <option value="name">Nombre A ÔåÆ Z</option>
+                  <option value="cat-name">Categor??a ??? nombre</option>
+                  <option value="name">Nombre A ??? Z</option>
                   <option value="price-asc">Precio menor</option>
                   <option value="price-desc">Precio mayor</option>
                 </select>
@@ -1334,33 +1339,33 @@
     </div>
   </div>
 
-  <!-- Campa├▒as -->
+  <!-- Campa??as -->
   <div class="admin-panel" id="panel-campanas">
     <div class="admin-stack">
       <div class="admin-stats" id="campaignStats"></div>
       <div class="box admin-card">
         <div class="admin-form-head">
-          <h3>Nueva campa├▒a de descuento</h3>
-          <p>Activ├í promociones por categor├¡a o en todo el cat├ílogo</p>
+          <h3>Nueva campa??a de descuento</h3>
+          <p>Activ?? promociones por categor??a o en todo el cat??logo</p>
         </div>
         <div class="form-row">
           <div><label>Nombre</label><input id="cName" placeholder="Ej: Hot Sale Verano"></div>
           <div><label>Descuento (%)</label><input id="cPct" type="number" min="1" max="50" value="15"></div>
           <div>
-            <label>Categor├¡a</label>
+            <label>Categor??a</label>
             <div class="catalog-select-wrap">
               <select id="cCat"><option value="">Todas</option></select>
             </div>
           </div>
-          <div><label>V├ílida hasta</label><input id="cUntil" type="date"></div>
+          <div><label>V??lida hasta</label><input id="cUntil" type="date"></div>
         </div>
         <div class="admin-form-actions">
-          <button class="btn" id="saveCampaign">Activar campa├▒a</button>
+          <button class="btn" id="saveCampaign">Activar campa??a</button>
         </div>
       </div>
       <div class="box admin-card">
         <div class="box-header">
-          <h3>Campa├▒as</h3>
+          <h3>Campa??as</h3>
           <span class="catalog-meta" id="campaignListMeta"></span>
         </div>
         <div class="data-table-wrap"><table class="data-table" id="campaignsTable"></table></div>
@@ -1380,7 +1385,7 @@
           <div class="catalog-search-wrap">
             <div class="catalog-search">
               <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
-              <input id="orderSearch" type="search" placeholder="Buscar por cliente, tel├®fono o n┬║ de pedido...">
+              <input id="orderSearch" type="search" placeholder="Buscar por cliente, tel??fono o n?? de pedido...">
             </div>
           </div>
           <div class="catalog-meta" id="ordersMeta" style="margin-top:10px"></div>
@@ -1396,15 +1401,15 @@
       <div class="admin-stats" id="contentStats"></div>
       <div class="box admin-card">
         <div class="admin-form-head">
-          <h3>Publicar en la c├ípsula</h3>
-          <p>Compart├¡ tips, tendencias y novedades con tus clientas</p>
+          <h3>Publicar en la c??psula</h3>
+          <p>Compart?? tips, tendencias y novedades con tus clientas</p>
         </div>
         <div class="form-row">
-          <div style="grid-column:1/-1"><label>T├¡tulo</label><input id="aTitle" placeholder="C├│mo combinar collares"></div>
+          <div style="grid-column:1/-1"><label>T??tulo</label><input id="aTitle" placeholder="C??mo combinar collares"></div>
         </div>
         <div class="form-row">
           <div style="grid-column:1/-1">
-            <label>Imagen del art├¡culo</label>
+            <label>Imagen del art??culo</label>
             <div class="img-upload">
               <input type="file" id="aImgFile" accept="image/*" capture="environment" hidden>
               <button type="button" class="btn ghost" id="aImgPick">Subir foto</button>
@@ -1423,9 +1428,9 @@
                 <button type="button" class="rt-btn" title="Subrayado" data-cmd="underline"><u>U</u></button>
                 <button type="button" class="rt-btn" title="Tachado" data-cmd="strikeThrough"><s>S</s></button>
                 <span class="rt-sep"></span>
-                <button type="button" class="rt-btn" title="T├¡tulo grande" data-cmd="formatBlock" data-val="h2">H2</button>
-                <button type="button" class="rt-btn" title="Subt├¡tulo" data-cmd="formatBlock" data-val="h3">H3</button>
-                <button type="button" class="rt-btn" title="P├írrafo" data-cmd="formatBlock" data-val="p">P</button>
+                <button type="button" class="rt-btn" title="T??tulo grande" data-cmd="formatBlock" data-val="h2">H2</button>
+                <button type="button" class="rt-btn" title="Subt??tulo" data-cmd="formatBlock" data-val="h3">H3</button>
+                <button type="button" class="rt-btn" title="P??rrafo" data-cmd="formatBlock" data-val="p">P</button>
                 <span class="rt-sep"></span>
                 <div class="rt-dropdown" id="fontDropdown">
                   <button type="button" class="rt-dd-btn" id="fontDropdownBtn">Fuente</button>
@@ -1437,9 +1442,9 @@
                   </div>
                 </div>
                 <div class="rt-dropdown" id="sizeDropdown">
-                  <button type="button" class="rt-dd-btn" id="sizeDropdownBtn">Tama├▒o</button>
+                  <button type="button" class="rt-dd-btn" id="sizeDropdownBtn">Tama??o</button>
                   <div class="rt-dd-menu">
-                    <button type="button" data-size="13px">Peque├▒o</button>
+                    <button type="button" data-size="13px">Peque??o</button>
                     <button type="button" data-size="16px">Normal</button>
                     <button type="button" data-size="20px">Grande</button>
                     <button type="button" data-size="26px">Titular</button>
@@ -1466,32 +1471,32 @@
                   <button type="button" class="rt-swatch" data-color-type="bg" data-color="#EEF0FF" style="background:#EEF0FF" title="Azul suave"></button>
                   <button type="button" class="rt-swatch" data-color-type="bg" data-color="#FFFFFF" style="background:#FFFFFF" title="Sin fondo"></button>
                   <label class="rt-color-picker" title="Elegir color de fondo">
-                    <span class="rt-btn" style="background:var(--accent-soft)">Ôû«</span>
+                    <span class="rt-btn" style="background:var(--accent-soft)">???</span>
                     <input type="color" id="aBgColor" value="#FDE8F4">
                   </label>
                 </div>
                 <span class="rt-sep"></span>
-                <button type="button" class="rt-btn" title="Lista con vi├▒etas" data-cmd="insertUnorderedList">ÔÇó</button>
+                <button type="button" class="rt-btn" title="Lista con vi??etas" data-cmd="insertUnorderedList">???</button>
                 <button type="button" class="rt-btn" title="Lista numerada" data-cmd="insertOrderedList">1.</button>
-                <button type="button" class="rt-btn" title="Cita" data-cmd="formatBlock" data-val="blockquote">ÔØØ</button>
+                <button type="button" class="rt-btn" title="Cita" data-cmd="formatBlock" data-val="blockquote">???</button>
                 <span class="rt-sep"></span>
-                <button type="button" class="rt-btn" title="Alinear izquierda" data-cmd="justifyLeft">Ô½À</button>
-                <button type="button" class="rt-btn" title="Centrar" data-cmd="justifyCenter">Ôëí</button>
-                <button type="button" class="rt-btn" title="Alinear derecha" data-cmd="justifyRight">Ô½©</button>
+                <button type="button" class="rt-btn" title="Alinear izquierda" data-cmd="justifyLeft">???</button>
+                <button type="button" class="rt-btn" title="Centrar" data-cmd="justifyCenter">???</button>
+                <button type="button" class="rt-btn" title="Alinear derecha" data-cmd="justifyRight">???</button>
                 <span class="rt-sep"></span>
-                <button type="button" class="rt-btn" title="Quitar formato" data-cmd="removeFormat">Ô£ò</button>
+                <button type="button" class="rt-btn" title="Quitar formato" data-cmd="removeFormat">???</button>
               </div>
-              <div id="aBodyEditor" class="rich-editor" contenteditable="true" data-placeholder="Escrib├¡ el art├¡culo con formato: t├¡tulos, listas, negritas, tama├▒os..."></div>
+              <div id="aBodyEditor" class="rich-editor" contenteditable="true" data-placeholder="Escrib?? el art??culo con formato: t??tulos, listas, negritas, tama??os..."></div>
             </div>
           </div>
         </div>
         <div class="admin-form-actions">
-          <button class="btn" id="saveArticle">Publicar art├¡culo</button>
+          <button class="btn" id="saveArticle">Publicar art??culo</button>
         </div>
       </div>
       <div class="box admin-card">
         <div class="box-header">
-          <h3>Art├¡culos publicados</h3>
+          <h3>Art??culos publicados</h3>
           <span class="catalog-meta" id="articlesMeta"></span>
         </div>
         <div class="data-table-wrap"><table class="data-table" id="articlesTable"></table></div>
@@ -1503,7 +1508,7 @@
   </div>
 </section>
 
-<div class="foot">Prototipo navegable ÔÇö los cambios se guardan en este navegador (localStorage).</div>
+<div class="foot">Prototipo navegable ??? los cambios se guardan en este navegador (localStorage).</div>
 <div class="toast" id="toast"></div>
 
 <!-- Modal producto -->
@@ -1512,25 +1517,25 @@
   <div class="modal-dialog" role="dialog" aria-labelledby="productModalTitle">
     <div class="modal-header">
       <h3 id="productModalTitle">Nuevo producto</h3>
-      <button type="button" class="modal-close" onclick="closeProductModal()" aria-label="Cerrar">├ù</button>
+      <button type="button" class="modal-close" onclick="closeProductModal()" aria-label="Cerrar">??</button>
     </div>
     <div class="modal-body">
       <div class="form-row">
         <div><label>Nombre</label><input id="pName" placeholder="Ej: Collar bolas"></div>
-        <div><label>Categor├¡a</label><select id="pCat"></select></div>
+        <div><label>Categor??a</label><select id="pCat"></select></div>
         <div><label>Precio ($)</label><input id="pPrice" type="number" min="0"></div>
         <div><label>Stock</label><input id="pStock" type="number" min="0" value="10"></div>
       </div>
       <div class="form-row">
         <div style="grid-column:1/-1">
-          <label>Imagen del producto <span style="font-weight:400;color:var(--muted)">ÔÇö prob├í con una foto tuya</span></label>
+          <label>Imagen del producto <span style="font-weight:400;color:var(--muted)">??? prob?? con una foto tuya</span></label>
           <div class="img-upload">
             <input type="file" id="pImgFile" accept="image/*" capture="environment" hidden>
             <button type="button" class="btn ghost" id="pImgPick">Subir foto</button>
             <button type="button" class="btn ghost" id="pImgClear" style="display:none">Quitar</button>
             <img id="pImgPreview" class="img-preview" alt="">
           </div>
-          <p style="font-size:11px;color:var(--muted);margin-top:6px">Eleg├¡ una foto desde tu compu o celular.</p>
+          <p style="font-size:11px;color:var(--muted);margin-top:6px">Eleg?? una foto desde tu compu o celular.</p>
         </div>
       </div>
     </div>
@@ -1547,7 +1552,7 @@
   <div class="modal-dialog" role="dialog" aria-labelledby="orderModalTitle" style="max-width:560px">
     <div class="modal-header">
       <h3 id="orderModalTitle">Editar pedido</h3>
-      <button type="button" class="modal-close" onclick="closeOrderModal()" aria-label="Cerrar">├ù</button>
+      <button type="button" class="modal-close" onclick="closeOrderModal()" aria-label="Cerrar">??</button>
     </div>
     <div class="modal-body">
       <div class="order-modal-meta" id="oDate"></div>
@@ -1566,7 +1571,7 @@
       <div class="form-row">
         <div style="grid-column:1/-1"><label>Notas</label><textarea id="oNotes" rows="2" placeholder="Retiro en local, color preferido..."></textarea></div>
       </div>
-      <label style="display:block;font-size:11px;color:var(--muted);margin-bottom:8px">├ìtems del pedido</label>
+      <label style="display:block;font-size:11px;color:var(--muted);margin-bottom:8px">??tems del pedido</label>
       <div id="orderItemsEdit"></div>
       <div class="order-modal-total"><span>Total</span><span id="orderEditTotal">$0</span></div>
     </div>
@@ -1607,7 +1612,7 @@ const DEFAULT = {
   categories: DEFAULT_CATEGORIES,
   products: [
     {id:1,name:'Anteojos vintage',cat:'Anteojos',price:4200,stock:14,img:IMG+'anteojosVintage.svg'},
-    {id:2,name:'Cadena c├¡rculo coraz├│n',cat:'Cintos',price:3800,stock:9,img:IMG+'cadenaCirculoCorazon.svg'},
+    {id:2,name:'Cadena c??rculo coraz??n',cat:'Cintos',price:3800,stock:9,img:IMG+'cadenaCirculoCorazon.svg'},
     {id:3,name:'Collar bolas',cat:'Collares',price:2900,stock:18,img:IMG+'collarBolas.svg'},
     {id:4,name:'Sombrero ondulado',cat:'Pashminas - pareos',price:4500,stock:6,img:IMG+'sombreroOndulado.svg'},
     {id:5,name:'Aros mini aro',cat:'Aros',price:1800,stock:22,img:''},
@@ -1625,8 +1630,8 @@ const DEFAULT = {
     {id:1,name:'Lanzamiento demo',pct:10,cat:'',until:'2026-09-30',active:true},
   ],
   articles: [
-    {id:1,title:'C├│mo armar tu kit ideal',body:'Sum├í al menos 3 piezas de distintas categor├¡as para un look completo y desbloquear precio combo.\n\nTip: combin├í un collar con aros de la misma paleta y sum├í un cinto o pulsera para redondear el outfit.',img:IMG+'collarBolas.svg'},
-    {id:2,title:'Tendencia verano: anteojos + cintos',body:'Los anteojos vintage combinan perfecto con cadenas de cintura. Prob├í el combo en la tienda.\n\nEste verano la tendencia es mezclar accesorios de playa con piezas doradas. El contraste entre lo casual y lo brillante es lo que hace especial el look.',img:IMG+'anteojosVintage.svg'},
+    {id:1,title:'C??mo armar tu kit ideal',body:'Sum?? al menos 3 piezas de distintas categor??as para un look completo y desbloquear precio combo.\n\nTip: combin?? un collar con aros de la misma paleta y sum?? un cinto o pulsera para redondear el outfit.',img:IMG+'collarBolas.svg'},
+    {id:2,title:'Tendencia verano: anteojos + cintos',body:'Los anteojos vintage combinan perfecto con cadenas de cintura. Prob?? el combo en la tienda.\n\nEste verano la tendencia es mezclar accesorios de playa con piezas doradas. El contraste entre lo casual y lo brillante es lo que hace especial el look.',img:IMG+'anteojosVintage.svg'},
   ],
   orders: [],
   comboGoal: 8000
@@ -1641,7 +1646,7 @@ let orderItemsDraft = [];
 
 const ORDER_STATUSES = [
   'Confirmado',
-  'En preparaci├│n',
+  'En preparaci??n',
   'Listo para retiro',
   'Enviado',
   'Entregado',
@@ -1708,7 +1713,7 @@ function saveState(){
     localStorage.setItem('esteparia_demo', JSON.stringify(state));
     return true;
   }catch(e){
-    toast('No se pudo guardar: prob├í con una imagen m├ís chica');
+    toast('No se pudo guardar: prob?? con una imagen m??s chica');
     return false;
   }
 }
@@ -1760,7 +1765,7 @@ function bindImageUpload({fileId, pickId, clearId, previewId, getDraft, setDraft
   document.getElementById(fileId).onchange = async ()=>{
     const file = document.getElementById(fileId).files[0];
     if(!file) return;
-    if(!file.type.startsWith('image/')){ toast('Eleg├¡ un archivo de imagen'); return; }
+    if(!file.type.startsWith('image/')){ toast('Eleg?? un archivo de imagen'); return; }
     try{
       const dataUrl = await compressImage(file);
       setDraft(dataUrl);
@@ -1980,7 +1985,7 @@ function kitItemThumbHtml(p){
 
 function kitItemsThumbsHtml(itemIds){
   const products = kitItemsProducts(itemIds);
-  if(!products.length) return '<span class="cell-sub">ÔÇö</span>';
+  if(!products.length) return '<span class="cell-sub">???</span>';
   return `<div class="kit-items-thumbs">${products.map(p=>kitItemThumbHtml(p)).join('')}</div>`;
 }
 
@@ -2012,8 +2017,8 @@ function renderStoreHero(){
   hero.className = cover ? 'store-hero has-img' : 'store-hero';
   hero.innerHTML = `${bg}<div class="store-hero-inner">
     <span class="store-hero-tag">Nueva temporada</span>
-    <h1>Arm├í tu look</h1>
-    <p>Accesorios que combinan entre s├¡. Arm├í tu kit y desbloque├í descuentos exclusivos.</p>
+    <h1>Arm?? tu look</h1>
+    <p>Accesorios que combinan entre s??. Arm?? tu kit y desbloque?? descuentos exclusivos.</p>
   </div>`;
 }
 
@@ -2028,11 +2033,11 @@ function updateCategoryView(scroll){
   if(kitsBlock) kitsBlock.style.display = showKits ? 'block' : 'none';
   title.textContent = activeCat === 'Todas' ? 'Productos' : activeCat;
   if(q){
-    status.innerHTML = 'Buscando <strong>"'+q+'"</strong> ┬À '+list.length+' resultado'+(list.length===1?'':'s');
+    status.innerHTML = 'Buscando <strong>"'+q+'"</strong> ?? '+list.length+' resultado'+(list.length===1?'':'s');
   } else if(activeCat === 'Todas'){
-    status.innerHTML = 'Mostrando <strong>todo el cat├ílogo</strong>';
+    status.innerHTML = 'Mostrando <strong>todo el cat??logo</strong>';
   } else {
-    status.innerHTML = 'Mostrando <strong>'+activeCat+'</strong> ┬À '+list.length+' producto'+(list.length===1?'':'s');
+    status.innerHTML = 'Mostrando <strong>'+activeCat+'</strong> ?? '+list.length+' producto'+(list.length===1?'':'s');
   }
 
   if(scroll){
@@ -2084,11 +2089,11 @@ function renderStore(){
   const q = (document.getElementById('storeSearch')?.value || '').trim();
   if(!status) return;
   if(q){
-    status.innerHTML = 'Buscando <strong>"'+q+'"</strong> ┬À '+list.length+' resultado'+(list.length===1?'':'s');
+    status.innerHTML = 'Buscando <strong>"'+q+'"</strong> ?? '+list.length+' resultado'+(list.length===1?'':'s');
   } else if(activeCat !== 'Todas'){
-    status.innerHTML = 'Mostrando <strong>'+activeCat+'</strong> ┬À '+list.length+' producto'+(list.length===1?'':'s');
+    status.innerHTML = 'Mostrando <strong>'+activeCat+'</strong> ?? '+list.length+' producto'+(list.length===1?'':'s');
   } else {
-    status.innerHTML = 'Mostrando <strong>todo el cat├ílogo</strong>';
+    status.innerHTML = 'Mostrando <strong>todo el cat??logo</strong>';
   }
   const kitsBlock = document.getElementById('storeKitsBlock');
   if(kitsBlock) kitsBlock.style.display = (activeCat==='Todas' && !q) ? 'block' : 'none';
@@ -2118,14 +2123,14 @@ window.removeFromKit = id=>{
 function renderKit(){
   const list = document.getElementById('kitlist');
   if(kit.length===0){
-    list.innerHTML = '<div class="empty">Agreg├í productos o un kit listo de la tienda</div>';
+    list.innerHTML = '<div class="empty">Agreg?? productos o un kit listo de la tienda</div>';
   } else {
     list.innerHTML = kit.map(i=>`
       <div class="kititem">
-        <span>${i.name} ├ù${i.qty}</span>
+        <span>${i.name} ??${i.qty}</span>
         <span style="display:flex;align-items:center;gap:8px">
           ${fmt(i.price*i.qty)}
-          <button type="button" onclick="event.stopPropagation();removeFromKit(${i.id})">ÔêÆ</button>
+          <button type="button" onclick="event.stopPropagation();removeFromKit(${i.id})">???</button>
         </span>
       </div>`).join('');
   }
@@ -2139,13 +2144,13 @@ function renderKit(){
   document.getElementById('progressbar').style.width = pct+'%';
   const gm = document.getElementById('goalmsg');
   if(subtotal===0){
-    gm.textContent = 'Sum├í '+fmt(goal)+' y desbloque├ís 5% de descuento';
+    gm.textContent = 'Sum?? '+fmt(goal)+' y desbloque??s 5% de descuento';
   } else if(loadedKitDiscount !== null){
-    gm.innerHTML = 'Kit listo ┬À Suma <b>'+fmt(subtotal)+'</b> ÔêÆ '+loadedKitDiscount+'% = <b>'+fmt(total)+'</b>';
+    gm.innerHTML = 'Kit listo ?? Suma <b>'+fmt(subtotal)+'</b> ??? '+loadedKitDiscount+'% = <b>'+fmt(total)+'</b>';
   } else if(subtotal < goal){
-    gm.innerHTML = 'Suma actual <b>'+fmt(subtotal)+'</b> ┬À Te faltan <b>'+fmt(goal-subtotal)+'</b> para 5% off';
+    gm.innerHTML = 'Suma actual <b>'+fmt(subtotal)+'</b> ?? Te faltan <b>'+fmt(goal-subtotal)+'</b> para 5% off';
   } else {
-    gm.innerHTML = 'Suma <b>'+fmt(subtotal)+'</b> ┬À Descuento 5% (ÔêÆ'+fmt(discountAmt)+') ┬À Total <b>'+fmt(total)+'</b>';
+    gm.innerHTML = 'Suma <b>'+fmt(subtotal)+'</b> ?? Descuento 5% (???'+fmt(discountAmt)+') ?? Total <b>'+fmt(total)+'</b>';
   }
 }
 
@@ -2159,9 +2164,9 @@ function kitCardHtml(k){
   return `<div class="kit-card">
     ${img}
     <div class="info">
-      <span class="kit-badge">Kit ┬À ÔêÆ${kp.discount}%</span>
+      <span class="kit-badge">Kit ?? ???${kp.discount}%</span>
       <h4>${k.name}</h4>
-      <div class="items">${items.map(p=>p.name).join(' ┬À ')}</div>
+      <div class="items">${items.map(p=>p.name).join(' ?? ')}</div>
       <div class="price-row">
         <strong>${fmt(kp.final)}</strong>
         <s>${fmt(kp.subtotal)}</s>
@@ -2224,7 +2229,7 @@ window.loadPresetKit = id=>{
 
   for(const pid of k.items){
     const p = state.products.find(x=>x.id===pid);
-    if(!p || p.stock <= 0){ toast('Alg├║n producto del kit no tiene stock'); return; }
+    if(!p || p.stock <= 0){ toast('Alg??n producto del kit no tiene stock'); return; }
     const inCart = kit.find(x=>x.id===pid);
     const newQty = (inCart?.qty || 0) + 1;
     if(p.stock < newQty){ toast('Sin stock suficiente: '+p.name); return; }
@@ -2251,7 +2256,7 @@ window.loadPresetKit = id=>{
 };
 
 document.getElementById('checkoutBtn').onclick=()=>{
-  if(!kit.length){ toast('Agreg├í productos al kit'); return; }
+  if(!kit.length){ toast('Agreg?? productos al kit'); return; }
   renderCheckout();
   navigate('checkout');
 };
@@ -2260,11 +2265,11 @@ function renderCheckout(){
   const {subtotal, discountPct, discountAmt, total} = getKitTotals();
   let html = kit.map(i=>`
     <div class="checkout-row">
-      <span>${i.name} ├ù${i.qty}</span><span>${fmt(i.price*i.qty)}</span>
+      <span>${i.name} ??${i.qty}</span><span>${fmt(i.price*i.qty)}</span>
     </div>`).join('');
   if(discountPct){
     html += `<div class="checkout-row" style="color:var(--accent)">
-      <span>Descuento ${discountPct}%</span><span>ÔêÆ${fmt(discountAmt)}</span>
+      <span>Descuento ${discountPct}%</span><span>???${fmt(discountAmt)}</span>
     </div>`;
   }
   document.getElementById('checkoutSummary').innerHTML = html;
@@ -2274,7 +2279,7 @@ function renderCheckout(){
 document.getElementById('confirmOrderBtn').onclick=()=>{
   const name = document.getElementById('coName').value.trim();
   const phone = document.getElementById('coPhone').value.trim();
-  if(!name || !phone){ toast('Complet├í nombre y WhatsApp'); return; }
+  if(!name || !phone){ toast('Complet?? nombre y WhatsApp'); return; }
   for(const i of kit){
     const p = state.products.find(x=>x.id===i.id);
     if(!p || p.stock < i.qty){ toast('Stock insuficiente: '+i.name); renderCheckout(); renderStore(); return; }
@@ -2304,12 +2309,12 @@ document.getElementById('confirmOrderBtn').onclick=()=>{
   kit = [];
   loadedKitDiscount = null;
   document.getElementById('pedidoOkMsg').textContent =
-    'Pedido #'+order.id+' ┬À '+fmt(order.total)+' ┬À Te escribimos a '+phone;
+    'Pedido #'+order.id+' ?? '+fmt(order.total)+' ?? Te escribimos a '+phone;
   navigate('pedidoOk');
   renderKit(); renderStore(); renderAdmin();
 };
 
-/* C├üPSULA */
+/* C??PSULA */
 function articleTag(title){
   return title.toLowerCase().includes('tendencia') ? {label:'Tendencia',cls:'trend'} : {label:'Tips',cls:''};
 }
@@ -2421,7 +2426,7 @@ function applyArticleEditorStyle(styleProp, value){
   if(!restoreArticleEditorSelection()){
     const sel = window.getSelection();
     if(!sel || !sel.rangeCount || sel.isCollapsed){
-      toast('Seleccion├í texto primero');
+      toast('Seleccion?? texto primero');
       return false;
     }
   }
@@ -2460,7 +2465,7 @@ window.articleEditorColor = (type, color)=>{
   if(!restoreArticleEditorSelection()){
     const sel = window.getSelection();
     if(!sel || !sel.rangeCount || sel.isCollapsed){
-      toast('Seleccion├í texto primero');
+      toast('Seleccion?? texto primero');
       return;
     }
   }
@@ -2504,7 +2509,7 @@ function renderCapsula(){
   const grid = document.getElementById('contentGrid');
   if(!state.articles.length){
     featured.innerHTML = '';
-    grid.innerHTML = '<div class="empty">Todav├¡a no hay contenido. Public├í desde Gesti├│n ÔåÆ Contenido.</div>';
+    grid.innerHTML = '<div class="empty">Todav??a no hay contenido. Public?? desde Gesti??n ??? Contenido.</div>';
     return;
   }
   const [main, ...rest] = state.articles;
@@ -2516,8 +2521,8 @@ function renderCapsula(){
       <span class="capsule-tag ${tag.cls}">${tag.label}</span>
       <div class="capsule-meta">${readTime(main.body)}</div>
       <h2>${main.title}</h2>
-      <p>${mainExcerpt.slice(0,160)}${mainExcerpt.length>160?'ÔÇª':''}</p>
-      <span class="capsule-read">Leer art├¡culo ÔåÆ</span>
+      <p>${mainExcerpt.slice(0,160)}${mainExcerpt.length>160?'???':''}</p>
+      <span class="capsule-read">Leer art??culo ???</span>
     </div>
   </article>`;
   grid.innerHTML = rest.map(a=>{
@@ -2528,7 +2533,7 @@ function renderCapsula(){
         <span class="capsule-tag ${t.cls}">${t.label}</span>
         <div class="capsule-meta">${readTime(a.body)}</div>
         <h4>${a.title}</h4>
-        <p>${articlePlainText(a.body).slice(0,90)}${articlePlainText(a.body).length>90?'ÔÇª':''}</p>
+        <p>${articlePlainText(a.body).slice(0,90)}${articlePlainText(a.body).length>90?'???':''}</p>
       </div>
     </article>`;
   }).join('') || '';
@@ -2542,10 +2547,10 @@ window.openArticle = id=>{
     <span class="capsule-tag ${tag.cls}">${tag.label}</span>
     ${a.img?`<img src="${a.img}" alt="">`:''}
     <h2>${a.title}</h2>
-    <div class="article-meta">${readTime(a.body)} ┬À C├ípsula esteparia</div>
+    <div class="article-meta">${readTime(a.body)} ?? C??psula esteparia</div>
     <div class="article-body">${articleBodyHtml(a.body)}</div>
     <div class="article-cta">
-      <p>┬┐Te inspir├│? Llev├í el look a tu kit</p>
+      <p>??Te inspir??? Llev?? el look a tu kit</p>
       <button class="btn" onclick="navigate('tienda')">Ver productos</button>
     </div>`;
   navigate('articulo');
@@ -2554,14 +2559,14 @@ window.openArticle = id=>{
 /* ADMIN */
 const ADMIN_META = {
   dashboard: { title: 'Dashboard', subtitle: 'Vista general de tu negocio' },
-  productos: { title: 'Productos', subtitle: 'Busc├í, filtr├í y edit├í tu cat├ílogo completo' },
-  categorias: { title: 'Categor├¡as', subtitle: 'Organiz├í el cat├ílogo por tipo de accesorio' },
-  kits: { title: 'Kits', subtitle: 'Arm├í combos con b├║squeda r├ípida de productos' },
-  stock: { title: 'Stock', subtitle: 'Control├í unidades con filtros y alertas' },
-  precios: { title: 'Precios', subtitle: 'Actualiz├í precios y revis├í campa├▒as activas' },
-  campanas: { title: 'Campa├▒as', subtitle: 'Descuentos por categor├¡a o todo el cat├ílogo' },
+  productos: { title: 'Productos', subtitle: 'Busc??, filtr?? y edit?? tu cat??logo completo' },
+  categorias: { title: 'Categor??as', subtitle: 'Organiz?? el cat??logo por tipo de accesorio' },
+  kits: { title: 'Kits', subtitle: 'Arm?? combos con b??squeda r??pida de productos' },
+  stock: { title: 'Stock', subtitle: 'Control?? unidades con filtros y alertas' },
+  precios: { title: 'Precios', subtitle: 'Actualiz?? precios y revis?? campa??as activas' },
+  campanas: { title: 'Campa??as', subtitle: 'Descuentos por categor??a o todo el cat??logo' },
   pedidos: { title: 'Pedidos', subtitle: 'Ventas confirmadas desde la tienda demo' },
-  contenido: { title: 'Contenido', subtitle: 'Public├í art├¡culos con formato en la c├ípsula' }
+  contenido: { title: 'Contenido', subtitle: 'Public?? art??culos con formato en la c??psula' }
 };
 let adminCharts = [];
 
@@ -2653,7 +2658,7 @@ function renderDashboardOrders(){
   if(!t) return;
   const recent = state.orders.slice(0, 5);
   if(!recent.length){
-    t.innerHTML = '<tr><td colspan="4" class="table-empty">Sin pedidos todav├¡a</td></tr>';
+    t.innerHTML = '<tr><td colspan="4" class="table-empty">Sin pedidos todav??a</td></tr>';
     return;
   }
   t.innerHTML = `<tr><th>#</th><th>Cliente</th><th>Total</th><th>Estado</th></tr>` +
@@ -2686,14 +2691,14 @@ function renderAdmin(){
     const dashActive = document.getElementById('panel-dashboard')?.classList.contains('active');
     if(dashActive) renderAdminCharts();
   }catch(err){
-    console.error('Error al renderizar gesti├│n:', err);
+    console.error('Error al renderizar gesti??n:', err);
   }
 }
 
 function orderStatusClass(status){
   const map = {
     'Confirmado': 'ok',
-    'En preparaci├│n': 'warn',
+    'En preparaci??n': 'warn',
     'Listo para retiro': 'live',
     'Enviado': 'live',
     'Entregado': 'ok',
@@ -2739,11 +2744,11 @@ function renderOrdersTable(){
       : `${state.orders.length} pedido${state.orders.length===1?'':'s'} en total`;
   }
   if(!state.orders.length){
-    t.innerHTML = '<tr><th>#</th><th>Cliente</th><th>Items</th><th>Total</th><th>Pago</th><th>Estado</th><th></th></tr><tr class="table-empty"><td colspan="7"><div class="table-empty-inner">Todav├¡a no hay pedidos<br><small>Confirm├í una compra desde la tienda</small></div></td></tr>';
+    t.innerHTML = '<tr><th>#</th><th>Cliente</th><th>Items</th><th>Total</th><th>Pago</th><th>Estado</th><th></th></tr><tr class="table-empty"><td colspan="7"><div class="table-empty-inner">Todav??a no hay pedidos<br><small>Confirm?? una compra desde la tienda</small></div></td></tr>';
     return;
   }
   if(!list.length){
-    t.innerHTML = '<tr><th>#</th><th>Cliente</th><th>Items</th><th>Total</th><th>Pago</th><th>Estado</th><th></th></tr><tr class="table-empty"><td colspan="7">Sin resultados para esa b├║squeda</td></tr>';
+    t.innerHTML = '<tr><th>#</th><th>Cliente</th><th>Items</th><th>Total</th><th>Pago</th><th>Estado</th><th></th></tr><tr class="table-empty"><td colspan="7">Sin resultados para esa b??squeda</td></tr>';
     return;
   }
   t.innerHTML = `<tr><th>#</th><th>Cliente</th><th>Items</th><th>Total</th><th>Pago</th><th>Estado</th><th></th></tr>` +
@@ -2752,7 +2757,7 @@ function renderOrdersTable(){
       return `<tr>
       <td><span class="order-id">#${o.id}</span><div class="cell-sub">${o.date||''}</div></td>
       <td><div class="cell-main">${o.customer}</div><div class="cell-sub">${o.phone||''}</div></td>
-      <td>${o.items.map(i=>i.name+' ├ù'+i.qty).join(', ')}</td>
+      <td>${o.items.map(i=>i.name+' ??'+i.qty).join(', ')}</td>
       <td><strong>${fmt(o.total)}</strong></td>
       <td><span class="pay-pill">${o.pay}</span></td>
       <td>
@@ -2794,7 +2799,7 @@ function renderKpis(){
     </div>
     <div class="dash-kpi" onclick="navigate('admin','campanas')">
       <div class="ico" style="background:#FFF8E1;color:#8A6A00">%</div>
-      <div class="l">Campa├▒as</div><div class="v">${activeCamp}</div>
+      <div class="l">Campa??as</div><div class="v">${activeCamp}</div>
     </div>`;
 }
 
@@ -2806,11 +2811,11 @@ function renderCategoriesTable(){
   const meta = document.getElementById('catListMeta');
   if(meta){
     meta.textContent = q
-      ? `${cats.length} de ${state.categories.length} categor├¡as`
-      : `${state.categories.length} categor├¡as`;
+      ? `${cats.length} de ${state.categories.length} categor??as`
+      : `${state.categories.length} categor??as`;
   }
   table.innerHTML = `
-    <tr><th>Categor├¡a</th><th>Productos</th><th></th></tr>` +
+    <tr><th>Categor??a</th><th>Productos</th><th></th></tr>` +
     (cats.length ? cats.map(cat=>{
       const count = state.products.filter(p=>p.cat===cat).length;
       return `<tr>
@@ -2827,14 +2832,14 @@ function renderCategoriesTable(){
             : `<span class="cell-sub">Tiene productos</span>`}
         </td>
       </tr>`;
-    }).join('') : `<tr class="table-empty"><td colspan="3">No hay categor├¡as con ese filtro</td></tr>`);
+    }).join('') : `<tr class="table-empty"><td colspan="3">No hay categor??as con ese filtro</td></tr>`);
 }
 
 document.getElementById('saveCategory').onclick=()=>{
   const name = document.getElementById('catName').value.trim();
-  if(!name){ toast('Escrib├¡ un nombre'); return; }
+  if(!name){ toast('Escrib?? un nombre'); return; }
   if(state.categories.some(c=>c.toLowerCase()===name.toLowerCase())){
-    toast('Esa categor├¡a ya existe'); return;
+    toast('Esa categor??a ya existe'); return;
   }
   state.categories.push(name);
   saveState();
@@ -2843,7 +2848,7 @@ document.getElementById('saveCategory').onclick=()=>{
   renderCatFilters();
   renderStore();
   updateCategoryView(false);
-  toast('Categor├¡a creada: '+name);
+  toast('Categor??a creada: '+name);
 };
 
 window.deleteCategory = cat=>{
@@ -2859,7 +2864,7 @@ window.deleteCategory = cat=>{
   renderCatFilters();
   renderStore();
   updateCategoryView(false);
-  toast('Categor├¡a eliminada');
+  toast('Categor??a eliminada');
 };
 
 function fillCatSelects(){
@@ -2937,15 +2942,15 @@ function renderPagination(containerId, data, onPageFn){
   const el = document.getElementById(containerId);
   if(!el) return;
   if(data.total <= PAGE_SIZE){
-    el.innerHTML = data.total ? `<span class="page-info">${data.total} ├¡tem${data.total===1?'':'s'}</span>` : '';
+    el.innerHTML = data.total ? `<span class="page-info">${data.total} ??tem${data.total===1?'':'s'}</span>` : '';
     return;
   }
   const from = (data.page - 1) * PAGE_SIZE + 1;
   const to = Math.min(data.page * PAGE_SIZE, data.total);
   el.innerHTML = `
-    <button type="button" class="page-btn" ${data.page<=1?'disabled':''} onclick="${onPageFn}(${data.page-1})">ÔåÉ Ant.</button>
-    <span class="page-info">${from}ÔÇô${to} de <strong>${data.total}</strong></span>
-    <button type="button" class="page-btn" ${data.page>=data.pages?'disabled':''} onclick="${onPageFn}(${data.page+1})">Sig. ÔåÆ</button>`;
+    <button type="button" class="page-btn" ${data.page<=1?'disabled':''} onclick="${onPageFn}(${data.page-1})">??? Ant.</button>
+    <span class="page-info">${from}???${to} de <strong>${data.total}</strong></span>
+    <button type="button" class="page-btn" ${data.page>=data.pages?'disabled':''} onclick="${onPageFn}(${data.page+1})">Sig. ???</button>`;
 }
 
 function renderListMeta(el, list, total, filters, labels){
@@ -2953,7 +2958,7 @@ function renderListMeta(el, list, total, filters, labels){
   const q = normQ(filters.q);
   const hasFilters = !!(filters.cat || filters.stockFilter || q);
   if(!hasFilters){
-    el.innerHTML = labels?.default ?? `Mostrando <strong>${total}</strong> productos ┬À ordenados por categor├¡a`;
+    el.innerHTML = labels?.default ?? `Mostrando <strong>${total}</strong> productos ?? ordenados por categor??a`;
     return;
   }
   const parts = [`Mostrando <strong>${list.length}</strong> de ${total}`];
@@ -2967,7 +2972,7 @@ function renderListMeta(el, list, total, filters, labels){
 function fillProductListSelects(){
   const counts = {};
   state.products.forEach(p=>{ counts[p.cat] = (counts[p.cat] || 0) + 1; });
-  const catOpts = '<option value="">Todas las categor├¡as</option>' +
+  const catOpts = '<option value="">Todas las categor??as</option>' +
     state.categories.map(c=>`<option value="${c}">${c} (${counts[c]||0})</option>`).join('');
   ['stockCatFilter','priceCatFilter','kitPickerCat'].forEach(id=>{
     const el = document.getElementById(id);
@@ -2988,9 +2993,9 @@ function renderAdminStats(){
 
   const catStats = document.getElementById('catStats');
   if(catStats) catStats.innerHTML = `
-    <div class="admin-stat"><div class="l">Categor├¡as</div><div class="v">${state.categories.length}</div></div>
+    <div class="admin-stat"><div class="l">Categor??as</div><div class="v">${state.categories.length}</div></div>
     <div class="admin-stat"><div class="l">Productos</div><div class="v">${totalProds}</div></div>
-    <div class="admin-stat accent"><div class="l">Vac├¡as</div><div class="v">${state.categories.filter(c=>!state.products.some(p=>p.cat===c)).length}</div></div>`;
+    <div class="admin-stat accent"><div class="l">Vac??as</div><div class="v">${state.categories.filter(c=>!state.products.some(p=>p.cat===c)).length}</div></div>`;
 
   const kitStats = document.getElementById('kitStats');
   if(kitStats) kitStats.innerHTML = `
@@ -3007,26 +3012,26 @@ function renderAdminStats(){
   const priceStats = document.getElementById('priceStats');
   if(priceStats) priceStats.innerHTML = `
     <div class="admin-stat"><div class="l">Productos</div><div class="v">${totalProds}</div></div>
-    <div class="admin-stat accent"><div class="l">Campa├▒as activas</div><div class="v">${activeCamp}</div></div>
+    <div class="admin-stat accent"><div class="l">Campa??as activas</div><div class="v">${activeCamp}</div></div>
     <div class="admin-stat"><div class="l">Con descuento</div><div class="v">${state.products.filter(p=>effectivePrice(p).pct).length}</div></div>`;
 
   const campaignStats = document.getElementById('campaignStats');
   if(campaignStats) campaignStats.innerHTML = `
-    <div class="admin-stat"><div class="l">Campa├▒as</div><div class="v">${state.campaigns.length}</div></div>
+    <div class="admin-stat"><div class="l">Campa??as</div><div class="v">${state.campaigns.length}</div></div>
     <div class="admin-stat accent"><div class="l">Activas</div><div class="v">${activeCamp}</div></div>
-    <div class="admin-stat"><div class="l">Categor├¡as</div><div class="v">${state.categories.length}</div></div>`;
+    <div class="admin-stat"><div class="l">Categor??as</div><div class="v">${state.categories.length}</div></div>`;
 
   const orderStats = document.getElementById('orderStats');
   const pending = state.orders.filter(o=>!['Entregado','Cancelado'].includes(o.status||'Confirmado')).length;
   if(orderStats) orderStats.innerHTML = `
     <div class="admin-stat"><div class="l">Pedidos</div><div class="v">${state.orders.length}</div></div>
-    <div class="admin-stat accent"><div class="l">Facturaci├│n demo</div><div class="v">${fmt(revenue)}</div></div>
+    <div class="admin-stat accent"><div class="l">Facturaci??n demo</div><div class="v">${fmt(revenue)}</div></div>
     <div class="admin-stat"><div class="l">En curso</div><div class="v">${pending}</div></div>
-    <div class="admin-stat"><div class="l">Ticket promedio</div><div class="v">${state.orders.length ? fmt(Math.round(revenue/state.orders.length)) : 'ÔÇö'}</div></div>`;
+    <div class="admin-stat"><div class="l">Ticket promedio</div><div class="v">${state.orders.length ? fmt(Math.round(revenue/state.orders.length)) : '???'}</div></div>`;
 
   const contentStats = document.getElementById('contentStats');
   if(contentStats) contentStats.innerHTML = `
-    <div class="admin-stat"><div class="l">Art├¡culos</div><div class="v">${state.articles.length}</div></div>
+    <div class="admin-stat"><div class="l">Art??culos</div><div class="v">${state.articles.length}</div></div>
     <div class="admin-stat accent"><div class="l">Con imagen</div><div class="v">${state.articles.filter(a=>a.img).length}</div></div>
     <div class="admin-stat"><div class="l">Productos en tienda</div><div class="v">${totalProds}</div></div>`;
 }
@@ -3090,7 +3095,7 @@ function fillCatalogCatFilter(){
   const cur = el.value;
   const counts = {};
   state.products.forEach(p=>{ counts[p.cat] = (counts[p.cat] || 0) + 1; });
-  el.innerHTML = '<option value="">Todas las categor├¡as ('+state.products.length+')</option>' +
+  el.innerHTML = '<option value="">Todas las categor??as ('+state.products.length+')</option>' +
     state.categories.map(c=>{
       const n = counts[c] || 0;
       return `<option value="${c}">${c} (${n})</option>`;
@@ -3130,12 +3135,12 @@ function renderProductsTable(){
 
   if(!paged.items.length){
     table.innerHTML = `
-      <tr><th>Producto</th><th>Categor├¡a</th><th>Precio</th><th>Stock</th><th></th></tr>
-      <tr class="table-empty"><td colspan="5"><div class="table-empty-inner">No hay productos con ese filtro<br><small>Prob├í otra b├║squeda o limpi├í los filtros</small></div></td></tr>`;
+      <tr><th>Producto</th><th>Categor??a</th><th>Precio</th><th>Stock</th><th></th></tr>
+      <tr class="table-empty"><td colspan="5"><div class="table-empty-inner">No hay productos con ese filtro<br><small>Prob?? otra b??squeda o limpi?? los filtros</small></div></td></tr>`;
     return;
   }
   table.innerHTML = `
-    <tr><th>Producto</th><th>Categor├¡a</th><th>Precio</th><th>Stock</th><th></th></tr>` +
+    <tr><th>Producto</th><th>Categor??a</th><th>Precio</th><th>Stock</th><th></th></tr>` +
     paged.items.map(p=>`<tr>
       <td>
         <div class="product-row">
@@ -3151,7 +3156,7 @@ function renderProductsTable(){
       <td>${p.stock} ${p.stock<=5?'<span class="badge low">Bajo</span>':''}</td>
       <td class="table-actions">
         <button class="btn ghost sm" onclick="editProduct(${p.id})">Editar</button>
-        <button class="btn danger sm" onclick="deleteProduct(${p.id})">├ù</button>
+        <button class="btn danger sm" onclick="deleteProduct(${p.id})">??</button>
       </td>
     </tr>`).join('');
 }
@@ -3251,14 +3256,14 @@ function renderOrderItemsDraft(){
   const wrap = document.getElementById('orderItemsEdit');
   if(!wrap) return;
   if(!orderItemsDraft.length){
-    wrap.innerHTML = '<div class="cell-sub" style="padding:8px 0">Sin ├¡tems en el pedido</div>';
+    wrap.innerHTML = '<div class="cell-sub" style="padding:8px 0">Sin ??tems en el pedido</div>';
   } else {
     wrap.innerHTML = orderItemsDraft.map((item, idx)=>`
       <div class="order-item-edit">
         <span class="order-item-name">${item.name}</span>
         <input type="number" min="1" value="${item.qty}" onchange="setOrderItemQty(${idx}, this.value)" aria-label="Cantidad">
         <span>${fmt(item.price * item.qty)}</span>
-        <button type="button" class="btn danger sm" onclick="removeOrderItem(${idx})" aria-label="Quitar">├ù</button>
+        <button type="button" class="btn danger sm" onclick="removeOrderItem(${idx})" aria-label="Quitar">??</button>
       </div>
     `).join('');
   }
@@ -3299,8 +3304,8 @@ document.getElementById('saveOrder').onclick = ()=>{
   if(!o) return;
   const customer = document.getElementById('oCustomer').value.trim();
   const phone = document.getElementById('oPhone').value.trim();
-  if(!customer || !phone){ toast('Complet├í cliente y WhatsApp'); return; }
-  if(!orderItemsDraft.length){ toast('El pedido necesita al menos un ├¡tem'); return; }
+  if(!customer || !phone){ toast('Complet?? cliente y WhatsApp'); return; }
+  if(!orderItemsDraft.length){ toast('El pedido necesita al menos un ??tem'); return; }
 
   o.customer = customer;
   o.phone = phone;
@@ -3335,8 +3340,8 @@ document.getElementById('saveProduct').onclick=()=>{
   const price = +document.getElementById('pPrice').value;
   const stock = +document.getElementById('pStock').value;
   const img = productImgDraft;
-  if(!name||!price){ toast('Complet├í nombre y precio'); return; }
-  if(!cat){ toast('Eleg├¡ una categor├¡a'); return; }
+  if(!name||!price){ toast('Complet?? nombre y precio'); return; }
+  if(!cat){ toast('Eleg?? una categor??a'); return; }
   if(editingProductId){
     const p = state.products.find(x=>x.id===editingProductId);
     Object.assign(p,{name,cat,price,stock,img});
@@ -3362,8 +3367,8 @@ function renderKitPicker(){
   const meta = document.getElementById('kitPickerMeta');
   if(meta){
     meta.innerHTML = list.length === state.products.length
-      ? `${state.products.length} productos ┬À ${kitSelection.size} seleccionados`
-      : `Mostrando <strong>${list.length}</strong> de ${state.products.length} ┬À ${kitSelection.size} seleccionados`;
+      ? `${state.products.length} productos ?? ${kitSelection.size} seleccionados`
+      : `Mostrando <strong>${list.length}</strong> de ${state.products.length} ?? ${kitSelection.size} seleccionados`;
   }
   const kitSelStat = document.querySelector('#kitStats .admin-stat.accent .v');
   if(kitSelStat) kitSelStat.textContent = kitSelection.size;
@@ -3381,7 +3386,7 @@ function renderKitPicker(){
       ${productThumbHtml(p)}
       <div class="kit-pick-body">
         <div class="kit-pick-name">${p.name}</div>
-        <div class="kit-pick-meta">${p.cat} ┬À ${fmt(ep.price)} ┬À Stock ${p.stock}</div>
+        <div class="kit-pick-meta">${p.cat} ?? ${fmt(ep.price)} ?? Stock ${p.stock}</div>
       </div>
     </label>`;
   }).join('');
@@ -3396,12 +3401,12 @@ window.updateKitPricePreview = ()=>{
   const discount = +document.getElementById('kDiscount').value || 0;
   const el = document.getElementById('kitPricePreview');
   if(items.length < 2){
-    el.textContent = 'Seleccion├í al menos 2 productos para calcular el precio';
+    el.textContent = 'Seleccion?? al menos 2 productos para calcular el precio';
     return;
   }
   const subtotal = kitSubtotal(items);
   const final = Math.round(subtotal * (1 - discount / 100));
-  el.innerHTML = 'Suma de productos: <b>'+fmt(subtotal)+'</b> ┬À Descuento '+discount+'% ┬À Precio del kit: <b>'+fmt(final)+'</b>';
+  el.innerHTML = 'Suma de productos: <b>'+fmt(subtotal)+'</b> ?? Descuento '+discount+'% ?? Precio del kit: <b>'+fmt(final)+'</b>';
 };
 
 function renderKitsTable(){
@@ -3409,7 +3414,7 @@ function renderKitsTable(){
   if(meta) meta.textContent = `${state.kits.length} kit${state.kits.length===1?'':'s'}`;
   const table = document.getElementById('kitsTable');
   if(!state.kits.length){
-    table.innerHTML = '<tr><th>Kit</th><th>Productos</th><th>Suma</th><th>Desc.</th><th>Precio kit</th><th></th></tr><tr class="table-empty"><td colspan="6">Todav├¡a no hay kits publicados</td></tr>';
+    table.innerHTML = '<tr><th>Kit</th><th>Productos</th><th>Suma</th><th>Desc.</th><th>Precio kit</th><th></th></tr><tr class="table-empty"><td colspan="6">Todav??a no hay kits publicados</td></tr>';
     return;
   }
   table.innerHTML = `
@@ -3445,7 +3450,7 @@ document.getElementById('saveKit').onclick=()=>{
   saveState(); renderAdmin(); renderStoreKits();
   document.getElementById('kName').value='';
   document.getElementById('kDesc').value='';
-  toast('Kit publicado ┬À '+fmt(kp.subtotal)+' ÔêÆ '+discount+'% = '+fmt(kp.final));
+  toast('Kit publicado ?? '+fmt(kp.subtotal)+' ??? '+discount+'% = '+fmt(kp.final));
 };
 
 function renderStockTable(){
@@ -3472,12 +3477,12 @@ function renderStockTable(){
   const table = document.getElementById('stockTable');
   if(!paged.items.length){
     table.innerHTML = `
-      <tr><th>Producto</th><th>Categor├¡a</th><th>Stock</th><th>Nivel</th><th>Ajustar</th></tr>
+      <tr><th>Producto</th><th>Categor??a</th><th>Stock</th><th>Nivel</th><th>Ajustar</th></tr>
       <tr class="table-empty"><td colspan="5"><div class="table-empty-inner">No hay productos con ese filtro</div></td></tr>`;
     return;
   }
   table.innerHTML = `
-    <tr><th>Producto</th><th>Categor├¡a</th><th>Stock</th><th>Nivel</th><th>Ajustar</th></tr>` +
+    <tr><th>Producto</th><th>Categor??a</th><th>Stock</th><th>Nivel</th><th>Ajustar</th></tr>` +
     paged.items.map(p=>{
       const barPct = Math.min(100, p.stock * 10);
       return `<tr>
@@ -3492,7 +3497,7 @@ function renderStockTable(){
         </td>
         <td>
           <div class="stock-controls">
-            <button type="button" class="stock-btn" onclick="adjStock(${p.id},-1)">ÔêÆ</button>
+            <button type="button" class="stock-btn" onclick="adjStock(${p.id},-1)">???</button>
             <input type="number" class="stock-input" value="${p.stock}" onchange="setStock(${p.id},+this.value)">
             <button type="button" class="stock-btn" onclick="adjStock(${p.id},1)">+</button>
           </div>
@@ -3522,19 +3527,19 @@ function renderPricesTable(){
   const table = document.getElementById('pricesTable');
   if(!paged.items.length){
     table.innerHTML = `
-      <tr><th>Producto</th><th>Categor├¡a</th><th>Precio base</th><th>Con campa├▒a</th><th>Nuevo precio</th></tr>
+      <tr><th>Producto</th><th>Categor??a</th><th>Precio base</th><th>Con campa??a</th><th>Nuevo precio</th></tr>
       <tr class="table-empty"><td colspan="5"><div class="table-empty-inner">No hay productos con ese filtro</div></td></tr>`;
     return;
   }
   table.innerHTML = `
-    <tr><th>Producto</th><th>Categor├¡a</th><th>Precio base</th><th>Con campa├▒a</th><th>Nuevo precio</th></tr>` +
+    <tr><th>Producto</th><th>Categor??a</th><th>Precio base</th><th>Con campa??a</th><th>Nuevo precio</th></tr>` +
     paged.items.map(p=>{
       const ep = effectivePrice(p);
       return `<tr>
         <td><div class="cell-main">${p.name}</div><div class="cell-sub">#${p.id}</div></td>
         <td><span class="cell-cat">${categoryIconSvg(p.cat)} ${p.cat}</span></td>
         <td>${fmt(p.price)}</td>
-        <td>${ep.pct?`<span class="price-effective">${fmt(ep.price)}</span> <span class="cell-sub">(-${ep.pct}%)</span>`:'ÔÇö'}</td>
+        <td>${ep.pct?`<span class="price-effective">${fmt(ep.price)}</span> <span class="cell-sub">(-${ep.pct}%)</span>`:'???'}</td>
         <td><input type="number" class="price-input" value="${p.price}" onchange="setPrice(${p.id},+this.value)"></td>
       </tr>`;
     }).join('');
@@ -3564,11 +3569,11 @@ function renderCampaignsTable(){
   if(meta) meta.textContent = `${active} activa${active===1?'':'s'} de ${state.campaigns.length}`;
   const table = document.getElementById('campaignsTable');
   if(!state.campaigns.length){
-    table.innerHTML = '<tr><th>Campa├▒a</th><th>Descuento</th><th>Categor├¡a</th><th>Hasta</th><th>Estado</th><th></th></tr><tr class="table-empty"><td colspan="6">No hay campa├▒as creadas</td></tr>';
+    table.innerHTML = '<tr><th>Campa??a</th><th>Descuento</th><th>Categor??a</th><th>Hasta</th><th>Estado</th><th></th></tr><tr class="table-empty"><td colspan="6">No hay campa??as creadas</td></tr>';
     return;
   }
   table.innerHTML = `
-    <tr><th>Campa├▒a</th><th>Descuento</th><th>Categor├¡a</th><th>Hasta</th><th>Estado</th><th></th></tr>` +
+    <tr><th>Campa??a</th><th>Descuento</th><th>Categor??a</th><th>Hasta</th><th>Estado</th><th></th></tr>` +
     state.campaigns.map(c=>`<tr>
       <td><div class="cell-main">${c.name}</div></td>
       <td><span class="count-pill">${c.pct}%</span></td>
@@ -3577,7 +3582,7 @@ function renderCampaignsTable(){
       <td>${c.active?'<span class="badge ok">Activa</span>':'<span class="badge low">Pausada</span>'}</td>
       <td class="table-actions">
         <button class="btn ghost sm" onclick="toggleCampaign(${c.id})">${c.active?'Pausar':'Activar'}</button>
-        <button class="btn danger sm" onclick="deleteCampaign(${c.id})">├ù</button>
+        <button class="btn danger sm" onclick="deleteCampaign(${c.id})">??</button>
       </td>
     </tr>`).join('');
 }
@@ -3597,38 +3602,38 @@ document.getElementById('saveCampaign').onclick=()=>{
   const pct = +document.getElementById('cPct').value;
   const cat = document.getElementById('cCat').value;
   const until = document.getElementById('cUntil').value;
-  if(!name||!until){ toast('Complet├í nombre y fecha'); return; }
+  if(!name||!until){ toast('Complet?? nombre y fecha'); return; }
   state.campaigns.push({id:nextId(state.campaigns),name,pct,cat,until,active:true});
   saveState(); renderAdmin(); renderStore();
   document.getElementById('cName').value='';
-  toast('Campa├▒a activada');
+  toast('Campa??a activada');
 };
 
 function renderArticlesTable(){
   const meta = document.getElementById('articlesMeta');
-  if(meta) meta.textContent = `${state.articles.length} art├¡culo${state.articles.length===1?'':'s'}`;
+  if(meta) meta.textContent = `${state.articles.length} art??culo${state.articles.length===1?'':'s'}`;
   const table = document.getElementById('articlesTable');
   if(!state.articles.length){
-    table.innerHTML = '<tr><th>Art├¡culo</th><th>Vista previa</th><th></th></tr><tr class="table-empty"><td colspan="3">Todav├¡a no hay art├¡culos publicados</td></tr>';
+    table.innerHTML = '<tr><th>Art??culo</th><th>Vista previa</th><th></th></tr><tr class="table-empty"><td colspan="3">Todav??a no hay art??culos publicados</td></tr>';
     return;
   }
   table.innerHTML = `
-    <tr><th>Art├¡culo</th><th>Vista previa</th><th></th></tr>` +
+    <tr><th>Art??culo</th><th>Vista previa</th><th></th></tr>` +
     state.articles.map(a=>`<tr>
       <td>
         <div class="article-row">
           ${a.img
             ? `<img class="article-thumb" src="${a.img}" alt="">`
-            : `<div class="article-thumb ph">Ô£Ä</div>`}
+            : `<div class="article-thumb ph">???</div>`}
           <div class="article-row-text">
             <div class="cell-main">${a.title}</div>
           </div>
         </div>
       </td>
-      <td class="cell-sub">${articlePlainText(a.body).slice(0,80)}${articlePlainText(a.body).length>80?'ÔÇª':''}</td>
+      <td class="cell-sub">${articlePlainText(a.body).slice(0,80)}${articlePlainText(a.body).length>80?'???':''}</td>
       <td class="table-actions">
         <button class="btn ghost sm" onclick="openArticle(${a.id})">Ver</button>
-        <button class="btn danger sm" onclick="deleteArticle(${a.id})">├ù</button>
+        <button class="btn danger sm" onclick="deleteArticle(${a.id})">??</button>
       </td>
     </tr>`).join('');
 }
@@ -3636,22 +3641,22 @@ function renderArticlesTable(){
 window.deleteArticle = id=>{
   state.articles = state.articles.filter(a=>a.id!==id);
   saveState(); renderAdmin();
-  toast('Art├¡culo eliminado');
+  toast('Art??culo eliminado');
 };
 
 document.getElementById('saveArticle').onclick=()=>{
   const title = document.getElementById('aTitle').value.trim();
   const body = getArticleEditorHtml();
   const img = articleImgDraft;
-  if(!title||!body){ toast('Complet├í t├¡tulo y contenido'); return; }
+  if(!title||!body){ toast('Complet?? t??tulo y contenido'); return; }
   state.articles.unshift({id:nextId(state.articles),title,body,img});
   saveState(); renderAdmin();
   document.getElementById('aTitle').value='';
   clearArticleEditor();
   articleImgDraft = '';
   setImagePreview('aImgPreview', 'aImgClear', '');
-  if(confirm('Art├¡culo publicado. ┬┐Quer├®s verlo en la C├ípsula?')) navigate('capsula');
-  else toast('Publicado en la c├ípsula');
+  if(confirm('Art??culo publicado. ??Quer??s verlo en la C??psula?')) navigate('capsula');
+  else toast('Publicado en la c??psula');
 };
 
 function setDefaultCampaignDate(){
