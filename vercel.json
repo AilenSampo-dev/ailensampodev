@@ -99,7 +99,7 @@
       ]
     },
     {
-      "source": "/p/esteparia-accesorios",
+      "source": "/p/esteparia-accesorios/demo/index.html",
       "headers": [
         {
           "key": "Content-Type",
@@ -108,7 +108,7 @@
       ]
     },
     {
-      "source": "/p/esteparia-accesorios/(.*)",
+      "source": "/p/esteparia-accesorios/index.html",
       "headers": [
         {
           "key": "Content-Type",
