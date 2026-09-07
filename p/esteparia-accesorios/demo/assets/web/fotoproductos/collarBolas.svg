@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="800" viewBox="0 0 800 800">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#fff8f0"/>
+      <stop offset="100%" stop-color="#ece7e0"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="800" fill="url(#g)"/>
+  <path d="M220 260 Q400 120 580 260" fill="none" stroke="#c9a227" stroke-width="10"/>
+  <circle cx="320" cy="300" r="28" fill="#e8d48a"/>
+  <circle cx="400" cy="270" r="32" fill="#f0e0a0"/>
+  <circle cx="480" cy="300" r="28" fill="#e8d48a"/>
+  <text x="400" y="620" text-anchor="middle" font-family="system-ui,sans-serif" font-size="42" fill="#5a5048">Collar bolas</text>
+</svg>
