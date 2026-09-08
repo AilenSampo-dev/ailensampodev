@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" style="background-color:#6882eb;color:#faf9f7">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#6882eb">
 <title>Ailen Sampó — Sistemas a Medida</title>
 <meta name="description" content="Sistemas digitales a medida.">
 <meta property="og:type" content="website">
@@ -804,9 +805,7 @@ main > * { flex-shrink: 0; pointer-events: auto; }
 <main>
   <div class="eyebrow" id="eyebrow">algo está tomando forma</div>
 
-  <div class="headline" id="headline">
-    <span class="cursor-blink"></span>
-  </div>
+  <div class="headline" id="headline"></div>
 
   <div class="subline" id="subline">
     No es magia. Es arquitectura digital.
@@ -1308,7 +1307,7 @@ const formEl = document.getElementById('form-wrap');
 
 let idx = 0;
 
-setTimeout(() => { eyEl.style.opacity = '1'; }, 500);
+setTimeout(() => { eyEl.style.opacity = '1'; }, 400);
 
 function type() {
   if (idx <= HEADLINE.length) {
@@ -1317,7 +1316,7 @@ function type() {
     hEl.innerHTML = lines.join('<br>') + '<span class="cursor-blink"></span>';
     idx++;
     const ch = HEADLINE[idx - 1];
-    const delay = idx < 2 ? 150 : ch === '\n' ? 500 : ch === '.' ? 180 : 42;
+    const delay = idx < 2 ? 120 : ch === '\n' ? 420 : ch === '.' ? 160 : 38;
     setTimeout(type, delay);
   } else {
     setTimeout(() => {
@@ -1332,7 +1331,7 @@ function type() {
   }
 }
 
-setTimeout(type, 3000);
+setTimeout(type, 900);
 
 /* CHAT GAME — TERMINAL */
 const CHAT = {
