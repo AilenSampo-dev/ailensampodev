@@ -158,6 +158,7 @@ function ErpPanel({ session, onLogout }) {
   const [modal, setModal] = useState(null);
   const [highlightCliente, setHighlightCliente] = useState(null);
   const [syncState, setSyncState] = useState("idle");
+  const [syncError, setSyncError] = useState(null);
   const migratedRef = useRef(false);
 
   useEffect(() => {
@@ -168,6 +169,8 @@ function ErpPanel({ session, onLogout }) {
       if (session.cloudBackup) {
         try {
           const cloud = await fetchErpData();
+          setSyncError(null);
+          setSyncState("ok");
           if (Array.isArray(cloud.clientes) && (cloud.clientes.length || cloud.proyectos?.length)) {
             nextClientes = cloud.clientes;
             nextProyectos = cloud.proyectos ?? [];
@@ -176,10 +179,17 @@ function ErpPanel({ session, onLogout }) {
             nextProyectos = (await store.get("proyectos", null)) ?? [];
             if ((nextClientes.length || nextProyectos.length) && !migratedRef.current) {
               migratedRef.current = true;
-              await saveErpData({ clientes: nextClientes, proyectos: nextProyectos, dataVersion: DATA_VERSION });
+              try {
+                await saveErpData({ clientes: nextClientes, proyectos: nextProyectos, dataVersion: DATA_VERSION });
+              } catch (e) {
+                setSyncState("error");
+                setSyncError(e.message || "Error de respaldo");
+              }
             }
           }
-        } catch {
+        } catch (e) {
+          setSyncState("error");
+          setSyncError(e.message || "Error de respaldo");
           nextClientes = (await store.get("clientes", null)) ?? [];
           nextProyectos = (await store.get("proyectos", null)) ?? [];
         }
@@ -215,8 +225,10 @@ function ErpPanel({ session, onLogout }) {
       try {
         await saveErpData({ clientes, proyectos, dataVersion: DATA_VERSION });
         setSyncState("ok");
+        setSyncError(null);
       } catch (e) {
         setSyncState("error");
+        setSyncError(e.message || "Error de respaldo");
       }
     }, 900);
     return () => clearTimeout(timer);
@@ -326,9 +338,16 @@ function ErpPanel({ session, onLogout }) {
 
         <div style={{ marginTop: "auto", paddingTop: 32 }}>
           {session.cloudBackup ? (
-            <div style={{ display: "flex", alignItems: "center", gap: 6, fontFamily: t.fMono, fontSize: 10, color: syncState === "error" ? t.orange : t.mint, marginBottom: 12 }}>
-              {syncState === "error" ? <CloudOff size={12} /> : <Cloud size={12} />}
-              {syncState === "pending" ? "Guardando…" : syncState === "error" ? "Error de respaldo" : "Respaldo en nube"}
+            <div style={{ marginBottom: 12 }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 6, fontFamily: t.fMono, fontSize: 10, color: syncState === "error" ? t.orange : t.mint }}>
+                {syncState === "error" ? <CloudOff size={12} /> : <Cloud size={12} />}
+                {syncState === "pending" ? "Guardando…" : syncState === "error" ? "Error de respaldo" : "Respaldo en nube"}
+              </div>
+              {syncState === "error" && syncError && (
+                <div style={{ fontFamily: t.fMono, fontSize: 9, color: t.orange, marginTop: 6, lineHeight: 1.45, maxWidth: 160 }}>
+                  {syncError}
+                </div>
+              )}
             </div>
           ) : session.offline ? null : (
             <div style={{ fontFamily: t.fMono, fontSize: 10, color: t.faint, marginBottom: 12 }}>Solo local</div>
