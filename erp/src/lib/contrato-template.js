@@ -201,3 +201,61 @@ ${bloqueInversion}
 s(a) · Ailén Sampó · Sistemas a medida · ${esc(fecha)}
 </p>`;
 }
+
+/**
+ * Addendum — Programa Elixio Coins (evolución de alcance, cláusula 6).
+ * Complementa el contrato madre de Stockin Lavanda u otro cliente con fee mensual vigente.
+ */
+export function generarAddendumElixioHtml({ cliente, proyecto, fechaAddendum, contratoOriginalFecha = "10 de agosto de 2026" }) {
+  const licencia = Number(cliente.feeMensual) || 1500;
+  const fecha =
+    fechaAddendum ||
+    new Date().toLocaleDateString("es-AR", { day: "numeric", month: "long", year: "numeric" });
+  const representante = cliente.representante?.trim() || "[nombre representante legal]";
+
+  return `<h1>Addendum — Programa Elixio Coins</h1>
+
+<p>Complementa el <strong>Contrato de prestación de servicios — Sistema de gestión a medida</strong> entre Ailén Sampó (prestador) y ${esc(cliente.negocio)} (cliente), de fecha ${esc(contratoOriginalFecha)}.</p>
+
+<hr style="border:none;border-top:1px solid rgba(26,14,51,0.12);margin:24px 0" />
+
+<p><strong>Fecha de este addendum:</strong> ${esc(fecha)}</p>
+<p><strong>Referencia:</strong> Cláusula 6 del contrato original — evoluciones y cambios de alcance.</p>
+<p><strong>Proyecto:</strong> ${esc(proyecto.nombre)} · ${esc(proyecto.tipo)}</p>
+
+<h2>Objeto</h2>
+<p>Se deja constancia de que, con posterioridad a la firma del contrato original, prestador y cliente acordaron —por comunicación directa, sin ticket formal en su momento— la incorporación del <strong>programa de fidelización Elixio Coins</strong> como evolución del sistema, fuera del Anexo A original.</p>
+
+<h2>Alcance de lo acordado</h2>
+<p>El desarrollo de Elixio Coins incluye:</p>
+<ul>
+<li><p>Motor de acreditación de Coins por compra (backend ERP)</p></li>
+<li><p>Portal cliente <a href="https://elixio.com.ar">elixio.com.ar</a> (login, saldo, historial, canje, ofertas)</p></li>
+<li><p>Canje en mostrador integrado al flujo de Pedidos</p></li>
+<li><p>Gestión interna del programa (<code>/elixio-coins</code>): participantes, sorteos, premios, estadísticas</p></li>
+<li><p>Documentación legal del portal (bases y condiciones, política de privacidad, términos)</p></li>
+</ul>
+
+<h2>Condición comercial</h2>
+<p>Se acuerda que el desarrollo de Elixio Coins queda <strong>bonificado</strong>, en los mismos términos aplicados al resto del sistema según cláusula 5 del contrato original. No genera cargo adicional a la licencia mensual vigente (${esc(fmtUsd(licencia))}).</p>
+
+<div style="background:#faf7fe;border-left:4px solid #F656BF;padding:16px 20px;margin:20px 0;border-radius:0 8px 8px 0">
+<p style="margin:0"><strong>Efecto:</strong> Este addendum no modifica ninguna otra cláusula del contrato original. Se emite únicamente para dejar registro escrito de un acuerdo que ya estaba vigente de palabra entre las partes, dando cumplimiento formal a la cláusula 6 sobre registro de evoluciones.</p>
+</div>
+
+<h2>Partes</h2>
+<p><strong>Prestador:</strong> Ailén Sampó — s(a) Sistemas a medida · <a href="https://www.ailensampo.com">www.ailensampo.com</a></p>
+<p><strong>Cliente:</strong> ${esc(cliente.negocio)} — ${esc(representante)}</p>
+
+<h2>Aceptación</h2>
+<p>La confirmación del interlocutor autorizado de ${esc(cliente.negocio)} puede realizarse:</p>
+<ul>
+<li><p>Respondiendo al mail con el que se envió este documento, o</p></li>
+<li><p>Mediante el enlace de confirmación incluido en ese mail (nombre completo + casilla de conformidad).</p></li>
+</ul>
+<p>No requiere el proceso completo de firma electrónica del contrato madre. La respuesta por mail o la confirmación web deja constancia suficiente del acuerdo entre las partes.</p>
+
+<p style="margin-top:32px;font-size:13px;color:#4D4F54;border-top:1px solid #eee;padding-top:16px">
+s(a) · Ailén Sampó · Sistemas a medida · ${esc(fecha)}
+</p>`;
+}

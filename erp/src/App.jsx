@@ -1,7 +1,10 @@
 import { useState, useEffect, useRef } from "react";
 import { Plus, X, Pencil, Trash2, FileText, LogOut, Cloud, CloudOff } from "lucide-react";
 import ContratoModal from "./components/ContratoModal.jsx";
+import FacturacionModal, { FacturacionBtn } from "./components/FacturacionModal.jsx";
+import AddendumModal, { AddendumBtn } from "./components/AddendumModal.jsx";
 import LoginScreen from "./components/LoginScreen.jsx";
+import { obtenerAddendumElixio, mergeAddendumEnProyecto } from "./lib/addendum-model.js";
 import { checkAuthStatus, fetchErpData, saveErpData, logout as logoutSession, getToken } from "./lib/erp-api.js";
 
 /**
@@ -155,6 +158,7 @@ function ErpPanel({ session, onLogout }) {
   const [modal, setModal] = useState(null);
   const [highlightCliente, setHighlightCliente] = useState(null);
   const [syncState, setSyncState] = useState("idle");
+  const [syncError, setSyncError] = useState(null);
   const migratedRef = useRef(false);
 
   useEffect(() => {
@@ -165,6 +169,8 @@ function ErpPanel({ session, onLogout }) {
       if (session.cloudBackup) {
         try {
           const cloud = await fetchErpData();
+          setSyncError(null);
+          setSyncState("ok");
           if (Array.isArray(cloud.clientes) && (cloud.clientes.length || cloud.proyectos?.length)) {
             nextClientes = cloud.clientes;
             nextProyectos = cloud.proyectos ?? [];
@@ -173,10 +179,17 @@ function ErpPanel({ session, onLogout }) {
             nextProyectos = (await store.get("proyectos", null)) ?? [];
             if ((nextClientes.length || nextProyectos.length) && !migratedRef.current) {
               migratedRef.current = true;
-              await saveErpData({ clientes: nextClientes, proyectos: nextProyectos, dataVersion: DATA_VERSION });
+              try {
+                await saveErpData({ clientes: nextClientes, proyectos: nextProyectos, dataVersion: DATA_VERSION });
+              } catch (e) {
+                setSyncState("error");
+                setSyncError(e.message || "Error de respaldo");
+              }
             }
           }
-        } catch {
+        } catch (e) {
+          setSyncState("error");
+          setSyncError(e.message || "Error de respaldo");
           nextClientes = (await store.get("clientes", null)) ?? [];
           nextProyectos = (await store.get("proyectos", null)) ?? [];
         }
@@ -212,8 +225,10 @@ function ErpPanel({ session, onLogout }) {
       try {
         await saveErpData({ clientes, proyectos, dataVersion: DATA_VERSION });
         setSyncState("ok");
+        setSyncError(null);
       } catch (e) {
         setSyncState("error");
+        setSyncError(e.message || "Error de respaldo");
       }
     }, 900);
     return () => clearTimeout(timer);
@@ -249,8 +264,31 @@ function ErpPanel({ session, onLogout }) {
     if (p && c) setModal({ tipo: "contrato", proyecto: p, cliente: c });
   };
 
+  const abrirFacturacion = (clienteId) => {
+    const c = clientes.find((x) => x.id === clienteId);
+    if (c) setModal({ tipo: "facturacion", cliente: c });
+  };
+
+  const abrirAddendum = (proyectoId) => {
+    const p = proyectos.find((x) => x.id === proyectoId);
+    const c = clientes.find((x) => x.id === p?.clienteId);
+    if (p && c) {
+      const addendum = obtenerAddendumElixio(p, c);
+      setModal({ tipo: "addendum", proyecto: mergeAddendumEnProyecto(p, addendum), cliente: c, addendum });
+    }
+  };
+
+  const saveAddendum = (proyectoActualizado) => {
+    setProyectos((prev) => prev.map((p) => (p.id === proyectoActualizado.id ? proyectoActualizado : p)));
+  };
+
   const saveContrato = (proyectoActualizado) => {
     setProyectos((prev) => prev.map((p) => (p.id === proyectoActualizado.id ? proyectoActualizado : p)));
+  };
+
+  const saveFacturacion = (clienteActualizado) => {
+    setClientes((prev) => prev.map((c) => (c.id === clienteActualizado.id ? clienteActualizado : c)));
+    setModal(null);
   };
 
   const nav = [
@@ -300,9 +338,16 @@ function ErpPanel({ session, onLogout }) {
 
         <div style={{ marginTop: "auto", paddingTop: 32 }}>
           {session.cloudBackup ? (
-            <div style={{ display: "flex", alignItems: "center", gap: 6, fontFamily: t.fMono, fontSize: 10, color: syncState === "error" ? t.orange : t.mint, marginBottom: 12 }}>
-              {syncState === "error" ? <CloudOff size={12} /> : <Cloud size={12} />}
-              {syncState === "pending" ? "Guardando…" : syncState === "error" ? "Error de respaldo" : "Respaldo en nube"}
+            <div style={{ marginBottom: 12 }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 6, fontFamily: t.fMono, fontSize: 10, color: syncState === "error" ? t.orange : t.mint }}>
+                {syncState === "error" ? <CloudOff size={12} /> : <Cloud size={12} />}
+                {syncState === "pending" ? "Guardando…" : syncState === "error" ? "Error de respaldo" : "Respaldo en nube"}
+              </div>
+              {syncState === "error" && syncError && (
+                <div style={{ fontFamily: t.fMono, fontSize: 9, color: t.orange, marginTop: 6, lineHeight: 1.45, maxWidth: 160 }}>
+                  {syncError}
+                </div>
+              )}
             </div>
           ) : session.offline ? null : (
             <div style={{ fontFamily: t.fMono, fontSize: 10, color: t.faint, marginBottom: 12 }}>Solo local</div>
@@ -335,6 +380,8 @@ function ErpPanel({ session, onLogout }) {
             onEditProyecto={(p) => setModal({ tipo: "proyecto", data: p })}
             onDelProyecto={delProyecto}
             onContrato={abrirContrato}
+            onFacturacion={abrirFacturacion}
+            onAddendum={abrirAddendum}
             highlightId={highlightCliente}
             onClearHighlight={() => setHighlightCliente(null)} />
         )}
@@ -344,6 +391,7 @@ function ErpPanel({ session, onLogout }) {
             onEdit={(p) => setModal({ tipo: "proyecto", data: p })}
             onDel={delProyecto}
             onContrato={abrirContrato}
+            onAddendum={abrirAddendum}
             onVerCliente={(id) => { setView("clientes"); setHighlightCliente(id); }} />
         )}
           </>
@@ -365,6 +413,22 @@ function ErpPanel({ session, onLogout }) {
           proyecto={modal.proyecto}
           cliente={modal.cliente}
           onSave={saveContrato}
+          onClose={() => setModal(null)}
+        />
+      )}
+      {modal?.tipo === "facturacion" && (
+        <FacturacionModal
+          cliente={modal.cliente}
+          onSave={saveFacturacion}
+          onClose={() => setModal(null)}
+        />
+      )}
+      {modal?.tipo === "addendum" && (
+        <AddendumModal
+          proyecto={modal.proyecto}
+          cliente={modal.cliente}
+          addendum={modal.addendum}
+          onSave={saveAddendum}
           onClose={() => setModal(null)}
         />
       )}
@@ -473,7 +537,7 @@ function ContratoBtn({ onClick, aceptado, enviado }) {
   );
 }
 
-function Clientes({ clientes, proyectos, onNew, onEdit, onDel, onNewProyecto, onEditProyecto, onDelProyecto, onContrato, highlightId, onClearHighlight }) {
+function Clientes({ clientes, proyectos, onNew, onEdit, onDel, onNewProyecto, onEditProyecto, onDelProyecto, onContrato, onFacturacion, onAddendum, highlightId, onClearHighlight }) {
   useEffect(() => {
     if (!highlightId) return;
     document.getElementById(`cliente-${highlightId}`)?.scrollIntoView({ behavior: "smooth", block: "center" });
@@ -500,6 +564,11 @@ function Clientes({ clientes, proyectos, onNew, onEdit, onDel, onNewProyecto, on
                   </div>
                   <div style={{ width: 160 }}><Status estado={c.estado} /></div>
                   <div style={{ width: 130, textAlign: "right", fontFamily: t.fMono, fontSize: 14 }}>{fmt(c.feeMensual)}</div>
+                  <FacturacionBtn
+                    onClick={() => onFacturacion(c.id)}
+                    count={(c.facturacion || []).length}
+                    pendientes={(c.facturacion || []).some((m) => (m.pago?.estado || "pendiente") === "pendiente")}
+                  />
                   <button
                     onClick={() => onNewProyecto(c.id)}
                     title="Agregar proyecto a este cliente"
@@ -524,6 +593,7 @@ function Clientes({ clientes, proyectos, onNew, onEdit, onDel, onNewProyecto, on
                             <span style={{ color: pend > 0 ? t.pink : t.mint }}>{fmt(pend)}</span>
                           </div>
                           <ContratoBtn onClick={() => onContrato(p.id)} aceptado={p.contratoEstado === "aceptado"} enviado={p.contratoEstado === "enviado"} />
+                          <AddendumBtn onClick={() => onAddendum(p.id)} addendum={(p.addendums || []).find((a) => a.slug === "elixio-coins")} />
                           <RowActions onEdit={() => onEditProyecto(p)} onDel={() => onDelProyecto(p.id)} />
                         </div>
                       );
@@ -540,7 +610,7 @@ function Clientes({ clientes, proyectos, onNew, onEdit, onDel, onNewProyecto, on
   );
 }
 
-function Proyectos({ proyectos, clientes, onNew, onEdit, onDel, onContrato, onVerCliente }) {
+function Proyectos({ proyectos, clientes, onNew, onEdit, onDel, onContrato, onAddendum, onVerCliente }) {
   const grupos = clientes
     .map((c) => ({ cliente: c, items: proyectos.filter((p) => p.clienteId === c.id) }))
     .filter((g) => g.items.length > 0);
@@ -568,6 +638,7 @@ function Proyectos({ proyectos, clientes, onNew, onEdit, onDel, onContrato, onVe
           <span style={{ color: t.faint }}> / {fmt(p.feeConstruccion)}</span>
         </div>
         <ContratoBtn onClick={() => onContrato(p.id)} aceptado={p.contratoEstado === "aceptado"} enviado={p.contratoEstado === "enviado"} />
+        <AddendumBtn onClick={() => onAddendum(p.id)} addendum={(p.addendums || []).find((a) => a.slug === "elixio-coins")} />
         <RowActions onEdit={() => onEdit(p)} onDel={() => onDel(p.id)} />
       </div>
     );
@@ -634,7 +705,7 @@ function ModalShell({ title, onClose, onSave, children }) {
 }
 
 function ClienteModal({ data, onSave, onClose }) {
-  const [f, setF] = useState(data || { negocio: "", representante: "", email: "", contacto: "", estado: "Prospecto", feeMensual: 0, notas: "", alta: new Date().toISOString().slice(0, 10) });
+  const [f, setF] = useState(data || { negocio: "", representante: "", email: "", contacto: "", cuit: "", slug: "", estado: "Prospecto", feeMensual: 0, notas: "", alta: new Date().toISOString().slice(0, 10), facturacion: [] });
   const set = (k, v) => setF((p) => ({ ...p, [k]: v }));
   return (
     <ModalShell title={data ? "Editar cliente" : "Nuevo cliente"} onClose={onClose} onSave={() => f.negocio.trim() && onSave(f)}>
@@ -642,6 +713,8 @@ function ClienteModal({ data, onSave, onClose }) {
       <Field label="REPRESENTANTE LEGAL"><input style={field} value={f.representante || ""} onChange={(e) => set("representante", e.target.value)} placeholder="Nombre completo de quien firma" /></Field>
       <Field label="EMAIL"><input style={field} type="email" value={f.email || (f.contacto?.includes("@") ? f.contacto : "")} onChange={(e) => set("email", e.target.value)} placeholder="certificado@cliente.com" /></Field>
       <Field label="CONTACTO / TELÉFONO"><input style={field} value={f.contacto?.includes("@") ? "" : (f.contacto || "")} onChange={(e) => set("contacto", e.target.value)} placeholder="Teléfono u otro contacto" /></Field>
+      <Field label="CUIT"><input style={field} value={f.cuit || ""} onChange={(e) => set("cuit", e.target.value)} placeholder="30-12345678-9" /></Field>
+      <Field label="SLUG (CARPETA FACTURACIÓN)"><input style={field} value={f.slug || ""} onChange={(e) => set("slug", e.target.value)} placeholder="stockin-lavanda" /></Field>
       <Field label="ESTADO"><select style={field} value={f.estado} onChange={(e) => set("estado", e.target.value)}>{ESTADOS_CLIENTE.map((s) => <option key={s}>{s}</option>)}</select></Field>
       <Field label="FEE MENSUAL (ARS)"><input style={field} type="number" value={f.feeMensual} onChange={(e) => set("feeMensual", e.target.value)} /></Field>
       <Field label="NOTAS"><textarea style={{ ...field, minHeight: 70, resize: "vertical" }} value={f.notas} onChange={(e) => set("notas", e.target.value)} /></Field>

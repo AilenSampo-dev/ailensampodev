@@ -36,6 +36,12 @@
     "api/contrato/enviar.js": {
       "maxDuration": 30
     },
+    "api/addendum/publico.js": {
+      "maxDuration": 60
+    },
+    "api/addendum/enviar.js": {
+      "maxDuration": 30
+    },
     "api/certificado/enviar.js": {
       "maxDuration": 30
     },

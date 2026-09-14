@@ -1,7 +1,7 @@
 /**
- * Email al cliente con enlace único para firmar el contrato.
+ * Email al cliente con enlace para revisar y confirmar un addendum.
  */
-export async function enviarEnlaceFirmaBrevo(data, env = process.env) {
+export async function enviarEnlaceAddendumBrevo(data, env = process.env) {
   const apiKey = env.BREVO_API_KEY;
   const fromEmail = env.BREVO_FROM_EMAIL || env.PROPOSAL_NOTIFY_EMAIL;
   const adminEmail = env.ADMIN_EMAIL || env.PROPOSAL_NOTIFY_EMAIL || fromEmail;
@@ -15,7 +15,7 @@ export async function enviarEnlaceFirmaBrevo(data, env = process.env) {
   const to = String(data.to || "").trim();
   const url = String(data.url || "");
   const cliente = String(data.cliente || "");
-  const proyecto = String(data.proyecto || "");
+  const titulo = String(data.titulo || "Addendum");
   const representante = String(data.representante || "");
 
   if (!to.includes("@") || !url) {
@@ -27,13 +27,15 @@ export async function enviarEnlaceFirmaBrevo(data, env = process.env) {
   const textContent = [
     `Hola${representante ? ` ${representante}` : ""},`,
     "",
-    `Te enviamos el contrato${proyecto ? ` — ${proyecto}` : ""}${cliente ? ` (${cliente})` : ""} para revisar y aceptar.`,
+    `Te enviamos el addendum "${titulo}"${cliente ? ` (${cliente})` : ""} para revisar y confirmar.`,
     "",
-    "Abrí este enlace único, leé el documento y firmá con tu nombre completo como representante legal:",
+    "Podés confirmar de dos formas:",
+    "· Respondiendo a este mail con tu conformidad, o",
+    "· Abriendo el enlace, leyendo el documento y confirmando con tu nombre completo:",
     "",
     url,
     "",
-    "Al aceptar recibirás por email el certificado con la huella digital del documento.",
+    "Este addendum complementa el contrato ya firmado; no requiere el proceso completo de firma electrónica del contrato madre.",
     "",
     "s(a) · Ailen Sampo · Sistemas a medida",
     "www.ailensampo.com",
@@ -42,7 +44,7 @@ export async function enviarEnlaceFirmaBrevo(data, env = process.env) {
   const payload = {
     sender: { name: "Ailen Sampo · s(a)", email: fromEmail },
     to: [{ email: to, name: representante || cliente }],
-    subject: `Contrato para aceptar · ${proyecto || "Documento"}`,
+    subject: `Addendum para confirmar · ${titulo}`,
     textContent,
   };
 
