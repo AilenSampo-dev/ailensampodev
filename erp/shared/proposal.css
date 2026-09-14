@@ -1,0 +1,741 @@
+﻿/* tokens: enlazar /shared/tokens.css en el HTML antes de este archivo */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--white);
+    color: var(--black);
+    font-size: 15px;
+    line-height: 1.7;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    padding: 3rem 4rem 3rem;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  .header-left .eyebrow {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--pink);
+    margin-bottom: 0.5rem;
+  }
+
+  .header-left h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2.4rem;
+    font-weight: 400;
+    line-height: 1.15;
+    color: var(--black);
+  }
+
+  .header-left h1 em {
+    font-style: italic;
+    color: var(--pink);
+  }
+
+  .header-right {
+    text-align: right;
+    font-size: 13px;
+    color: var(--gray);
+    line-height: 1.8;
+  }
+
+  .header-right strong {
+    display: block;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--black);
+    margin-bottom: 4px;
+  }
+
+  /* ── SECTIONS ── */
+  .section {
+    padding: 3rem 4rem;
+    border-bottom: 1px solid var(--border);
+    animation: fadeUp 0.6s ease both;
+  }
+
+  .section:nth-child(2) { animation-delay: 0.1s; }
+  .section:nth-child(3) { animation-delay: 0.15s; }
+  .section:nth-child(4) { animation-delay: 0.2s; }
+  .section:nth-child(5) { animation-delay: 0.25s; }
+  .section:nth-child(6) { animation-delay: 0.3s; }
+  .section:nth-child(7) { animation-delay: 0.35s; }
+
+  .section-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--pink);
+    margin-bottom: 1.25rem;
+  }
+
+  .section-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.6rem;
+    font-weight: 400;
+    margin-bottom: 1rem;
+    line-height: 1.25;
+  }
+
+  .section p {
+    color: var(--gray);
+    max-width: 680px;
+    margin-bottom: 0.75rem;
+  }
+
+  .section p:last-child { margin-bottom: 0; }
+
+  /* ── HIGHLIGHT BOX ── */
+  .highlight {
+    background: var(--pink-light);
+    border-left: 3px solid var(--pink);
+    padding: 1.25rem 1.5rem;
+    margin: 1.5rem 0;
+    border-radius: 0 8px 8px 0;
+  }
+
+  .highlight p {
+    color: var(--black);
+    font-style: italic;
+    margin: 0;
+  }
+
+  /* ── ENTREGABLES GRID ── */
+  .deliverables {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-top: 1.5rem;
+  }
+
+  .deliverable-item {
+    background: var(--white);
+    padding: 1.5rem;
+  }
+
+  .deliverable-item.featured {
+    background: var(--pink-light);
+    box-shadow: inset 0 0 0 2px var(--pink);
+    z-index: 1;
+  }
+
+  .deliverable-item.featured .deliverable-desc {
+    color: var(--black);
+  }
+
+  .deliverable-item:nth-child(odd):last-child {
+    grid-column: 1 / -1;
+  }
+
+  .deliverable-num {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--pink);
+    letter-spacing: 0.08em;
+    margin-bottom: 0.5rem;
+  }
+
+  .deliverable-title {
+    font-weight: 500;
+    font-size: 14px;
+    color: var(--black);
+    margin-bottom: 0.35rem;
+  }
+
+  .deliverable-desc {
+    font-size: 13px;
+    color: var(--gray);
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  /* ── ESTRUCTURA DE LA ONE-PAGER ── */
+  .site-structure {
+    margin: 1.75rem 0 0;
+    padding: 1.35rem 1.5rem;
+    background: var(--gray-light);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+  }
+
+  .site-structure-intro {
+    font-size: 14px;
+    color: var(--gray);
+    margin: 0 0 1.1rem;
+    line-height: 1.6;
+    max-width: 640px;
+  }
+
+  .site-structure-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .site-structure-list li {
+    font-size: 14px;
+    color: var(--black);
+    font-weight: 500;
+    padding: 0.65rem 0;
+    border-bottom: 1px solid var(--border);
+    padding-left: 1rem;
+    position: relative;
+  }
+
+  .site-structure-list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--pink);
+  }
+
+  .site-structure-list li:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .site-structure-list li:first-child {
+    padding-top: 0;
+  }
+
+  /* ── NO INCLUYE ── */
+  .no-incluye-list {
+    list-style: none;
+    margin-top: 1rem;
+  }
+
+  .no-incluye-list li {
+    font-size: 14px;
+    color: var(--gray);
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .no-incluye-list li:last-child { border-bottom: none; }
+
+  .no-incluye-list li::before {
+    content: '';
+    width: 16px;
+    height: 1px;
+    background: var(--border);
+    flex-shrink: 0;
+  }
+
+  /* ── PRECIO ── */
+  .precio-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+  }
+
+  .precio-card {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.75rem;
+  }
+
+  .precio-card.featured {
+    border-color: var(--pink);
+    background: var(--pink-light);
+  }
+
+  .precio-card .label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gray);
+    margin-bottom: 0.75rem;
+  }
+
+  .precio-card.featured .label { color: var(--pink); }
+
+  .precio-card .amount-old {
+    font-size: 1rem;
+    color: var(--gray);
+    text-decoration: line-through;
+    margin-bottom: 0.35rem;
+  }
+
+  .precio-card .amount {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2.5rem;
+    font-weight: 400;
+    color: var(--black);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+
+  .precio-card .currency {
+    font-size: 1rem;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    vertical-align: super;
+    margin-right: 2px;
+  }
+
+  .precio-card .sub {
+    font-size: 13px;
+    color: var(--gray);
+    margin-bottom: 1rem;
+  }
+
+  .precio-card .detail {
+    font-size: 13px;
+    color: var(--gray);
+    line-height: 1.6;
+  }
+
+  .precio-card.featured .detail { color: var(--black); }
+
+  .option-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.7rem;
+    line-height: 1.2;
+    margin-bottom: 0.5rem;
+    color: var(--black);
+  }
+
+  .precio-card .detail strong {
+    color: var(--black);
+    font-weight: 500;
+  }
+
+  /* ── CUOTAS ── */
+  .cuotas {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.25rem;
+  }
+
+  .cuota {
+    flex: 1;
+    background: var(--gray-light);
+    border-radius: 8px;
+    padding: 1rem 1.25rem;
+  }
+
+  .cuota .cuota-label {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--gray);
+    margin-bottom: 0.5rem;
+    line-height: 1.35;
+  }
+
+  .cuota .cuota-when {
+    font-size: 14px;
+    color: var(--gray);
+    margin-top: 0;
+    line-height: 1.45;
+  }
+
+  /* ── PROCESO ── */
+  .proceso-steps {
+    margin-top: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .paso {
+    display: grid;
+    grid-template-columns: 48px 1fr;
+    gap: 1rem;
+    position: relative;
+  }
+
+  .paso:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    left: 23px;
+    top: 48px;
+    bottom: 0;
+    width: 1px;
+    background: var(--border);
+  }
+
+  .paso-num {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--gray);
+    flex-shrink: 0;
+    background: var(--white);
+    z-index: 1;
+  }
+
+  .paso-num.active {
+    border-color: var(--pink);
+    color: var(--pink);
+  }
+
+  .paso-content {
+    padding: 0.75rem 0 2rem;
+  }
+
+  .paso-content:last-child { padding-bottom: 0; }
+
+  .paso-title {
+    font-weight: 500;
+    font-size: 14px;
+    margin-bottom: 4px;
+  }
+
+  .paso-desc {
+    font-size: 13px;
+    color: var(--gray);
+  }
+
+  .paso-duration {
+    display: inline-block;
+    font-size: 11px;
+    color: var(--pink);
+    font-weight: 500;
+    margin-top: 4px;
+  }
+
+  /* ── INFRA DEL CLIENTE ── */
+  .infra-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1.25rem;
+    font-size: 13px;
+  }
+
+  .infra-table th {
+    text-align: left;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--gray);
+    padding: 0 0 0.75rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .infra-table td {
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+    color: var(--gray);
+  }
+
+  .infra-table td:first-child {
+    font-weight: 500;
+    color: var(--black);
+    width: 200px;
+  }
+
+  .infra-table td:last-child {
+    text-align: right;
+    white-space: nowrap;
+  }
+
+  .infra-table tr:last-child td { border-bottom: none; }
+
+  /* ── MANTENIMIENTO (opciones y modelo) ── */
+  .mant-structure-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--pink);
+    margin: 2rem 0 1rem;
+  }
+
+  .mant-structure-label:first-of-type { margin-top: 1.5rem; }
+
+  .mant-card {
+    background: var(--gray-light);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem 1.75rem;
+    margin-top: 0.5rem;
+  }
+
+  .mant-card-kicker {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--gray);
+    margin-bottom: 0.35rem;
+  }
+
+  .mant-card-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.45rem;
+    font-weight: 400;
+    color: var(--black);
+    margin: 0 0 0.65rem;
+    line-height: 1.2;
+  }
+
+  .mant-card-desc {
+    font-size: 14px;
+    color: var(--gray);
+    margin: 0 0 1.15rem;
+    line-height: 1.65;
+    max-width: 620px;
+  }
+
+  .mant-kv-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+    padding: 0.65rem 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 14px;
+  }
+
+  .mant-kv-row:last-child { border-bottom: none; }
+
+  .mant-kv-label { color: var(--gray); flex-shrink: 0; }
+
+  .mant-kv-val {
+    font-weight: 500;
+    color: var(--black);
+    text-align: right;
+  }
+
+  .mant-features {
+    margin-top: 1.15rem;
+    padding-top: 1.1rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .mant-feature-line {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 14px;
+    color: var(--gray);
+    line-height: 1.5;
+    margin: 0.45rem 0;
+  }
+
+  .mant-feature-line .mant-ic {
+    flex-shrink: 0;
+    width: 1.1em;
+    font-weight: 600;
+    color: var(--pink);
+  }
+
+  .mant-feature-line.mant-ex .mant-ic {
+    color: var(--border);
+    font-weight: 400;
+  }
+
+  .mant-out-card {
+    background: var(--gray-light);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem 1.75rem;
+    margin-top: 1.25rem;
+  }
+
+  .mant-out-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.35rem;
+    font-weight: 400;
+    color: var(--black);
+    margin: 0 0 0.5rem;
+  }
+
+  .mant-out-desc {
+    font-size: 14px;
+    color: var(--gray);
+    margin: 0 0 1rem;
+    line-height: 1.6;
+    max-width: 560px;
+  }
+
+  @media (max-width: 680px) {
+    .mant-kv-row { flex-wrap: wrap; }
+    .mant-kv-val { text-align: left; width: 100%; }
+  }
+
+  /* ── APROBACIÓN ── */
+  .approval-section {
+    padding: 3rem 4rem;
+    border-bottom: 1px solid var(--border);
+    background: var(--pink-light);
+    animation: fadeUp 0.6s ease 0.4s both;
+  }
+
+  .approval-form {
+    max-width: 520px;
+    margin-top: 1.5rem;
+  }
+
+  .approval-form label {
+    display: block;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--gray);
+    margin-bottom: 6px;
+  }
+
+  .approval-form input[type="email"] {
+    width: 100%;
+    padding: 0.85rem 1rem;
+    border: 1px solid var(--pink-mid);
+    border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    color: var(--black);
+    background: var(--white);
+    outline: none;
+    transition: border-color 0.2s;
+    margin-bottom: 1rem;
+  }
+
+  .approval-form input[type="email"]:focus {
+    border-color: var(--pink);
+  }
+
+  .approval-form input[type="email"]::placeholder {
+    color: #bbb;
+  }
+
+  .checkbox-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 1.5rem;
+  }
+
+  .checkbox-row input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--pink);
+    margin-top: 2px;
+    flex-shrink: 0;
+    cursor: pointer;
+  }
+
+  .checkbox-row span {
+    font-size: 13px;
+    color: var(--gray);
+    line-height: 1.5;
+  }
+
+  .btn-aprobar {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--pink);
+    color: var(--white);
+    border: none;
+    border-radius: 8px;
+    padding: 0.9rem 2rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: opacity 0.2s, transform 0.1s;
+  }
+
+  .btn-aprobar:hover { opacity: 0.88; }
+  .btn-aprobar:active { transform: scale(0.98); }
+  .btn-aprobar:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  .approval-success {
+    display: none;
+    background: var(--white);
+    border: 1px solid var(--pink-mid);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-top: 1.5rem;
+  }
+
+  .approval-success .success-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.2rem;
+    color: var(--black);
+    margin-bottom: 0.5rem;
+  }
+
+  .approval-success p {
+    font-size: 13px;
+    color: var(--gray);
+    margin: 0;
+  }
+
+  /* ── FOOTER ── */
+  .footer {
+    padding: 2.5rem 4rem;
+    background: var(--black);
+    animation: fadeUp 0.6s ease 0.5s both;
+  }
+
+  .footer-left {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.1rem;
+    color: var(--white);
+    font-style: italic;
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 680px) {
+    .header, .section { padding: 2rem 1.5rem; }
+    .approval-section { padding: 2rem 1.5rem; }
+    .header { flex-direction: column; gap: 1.5rem; }
+    .header-right { text-align: left; }
+    .deliverables { grid-template-columns: 1fr; }
+    .precio-wrapper { grid-template-columns: 1fr; }
+    .cuotas { flex-direction: column; }
+    .footer { padding: 2rem 1.5rem; }
+  }
+
+  .section p em {
+    color: var(--pink);
+    font-style: italic;
+  }

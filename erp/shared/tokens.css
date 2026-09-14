@@ -1,0 +1,34 @@
+/* Tokens compartidos — propuestas comerciales (Ailen / Amazonas / Sofi) */
+:root {
+  --pink: #e8536a;
+  --pink-light: #fdf0f2;
+  --pink-mid: #f4c4cc;
+  --black: #1a1a1a;
+  --gray: #6b6b6b;
+  --gray-light: #f7f7f5;
+  --border: #e8e8e4;
+  --white: #ffffff;
+
+  /* Alias para componentes que usan --accent (p. ej. Sofi) */
+  --accent: var(--pink);
+  --accent-light: var(--pink-light);
+  --accent-mid: var(--pink-mid);
+
+  /* Ailen-sampo / dashboards */
+  --text: var(--black);
+  --muted: var(--gray);
+  --line: var(--border);
+  --bg: var(--white);
+  --surface: var(--white);
+  --surface-soft: var(--gray-light);
+  --accent-deep: #c43d56;
+  --faint: #9a9a9a;
+  --rose-tint: var(--pink-light);
+  --sage-tint: var(--gray-light);
+  --shadow: 0 1px 0 rgba(26, 26, 26, 0.04);
+  --radius-lg: 12px;
+  --radius-md: 10px;
+  --radius-pill: 999px;
+  --font-sans: "DM Sans", system-ui, -apple-system, sans-serif;
+  --font-display: "DM Serif Display", Georgia, serif;
+}

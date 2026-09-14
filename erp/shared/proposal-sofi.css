@@ -1,0 +1,639 @@
+/* Propuesta Sofi Ciabattoni — extensiones sobre shared/proposal.css */
+
+.section:nth-child(8) {
+  animation-delay: 0.36s;
+}
+
+/* Intro */
+.intro-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: start;
+  margin-top: 1rem;
+}
+
+.intro-grid .left .section-title {
+  color: var(--pink);
+  margin-bottom: 0.5rem;
+}
+
+.intro-grid .left p {
+  color: var(--black);
+  font-size: 1.1rem;
+  font-weight: 300;
+}
+
+/* Etapas (details) */
+.stage-list {
+  margin-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+details.stage {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--white);
+}
+
+details.stage[open] {
+  box-shadow: 0 2px 12px rgba(232, 83, 106, 0.08);
+}
+
+details.stage summary {
+  list-style: none;
+  padding: 1.5rem 1.75rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+details.stage summary::-webkit-details-marker {
+  display: none;
+}
+
+.stage-summary-left {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.stage-num {
+  font-family: "DM Serif Display", serif;
+  font-size: 2.2rem;
+  color: var(--pink);
+  opacity: 0.35;
+  line-height: 1;
+  flex-shrink: 0;
+  width: 2.5rem;
+}
+
+.stage-info .stage-title {
+  font-family: "DM Serif Display", serif;
+  font-size: 1.15rem;
+  color: var(--black);
+  font-weight: 400;
+}
+
+.stage-info .stage-sub {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--pink);
+  margin-top: 2px;
+}
+
+.stage-summary-right {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  flex-shrink: 0;
+}
+
+.stage-time {
+  font-size: 12px;
+  color: var(--gray);
+}
+
+.stage-chevron {
+  font-size: 18px;
+  color: var(--pink);
+  transition: transform 0.2s;
+}
+
+details.stage[open] .stage-chevron {
+  transform: rotate(180deg);
+}
+
+.stage-body {
+  padding: 0 1.75rem 1.75rem;
+  border-top: 1px solid var(--border);
+}
+
+.stage-body p {
+  color: var(--gray);
+  font-size: 14px;
+  margin-top: 1.25rem;
+  margin-bottom: 1.25rem;
+}
+
+.stage-cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+.stage-cols h4 {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--pink);
+  margin-bottom: 0.75rem;
+}
+
+.stage-cols ul {
+  list-style: none;
+}
+
+.stage-cols ul li {
+  font-size: 13px;
+  color: var(--gray);
+  padding: 0.3rem 0;
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+}
+
+.stage-cols ul li::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--pink);
+  flex-shrink: 0;
+  margin-top: 7px;
+}
+
+.stage-price {
+  font-family: "DM Serif Display", serif;
+  font-size: 1.4rem;
+  color: var(--black);
+  margin-top: 0.5rem;
+}
+
+/* Precios — tres columnas */
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.pricing-card {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: var(--white);
+}
+
+.pricing-card.featured {
+  background: var(--pink-light);
+  border-color: var(--pink);
+  color: var(--black);
+}
+
+.pricing-card .card-label {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--pink);
+  margin-bottom: 0.5rem;
+}
+
+.pricing-card.featured .card-label {
+  color: var(--pink);
+}
+
+.pricing-card .card-subtitle {
+  font-family: "DM Serif Display", serif;
+  font-size: 1.2rem;
+  margin-bottom: 1.25rem;
+  color: var(--black);
+}
+
+.pricing-card ul {
+  list-style: none;
+  margin-bottom: 1.5rem;
+}
+
+.pricing-card ul li {
+  font-size: 13px;
+  padding: 0.3rem 0;
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  color: var(--gray);
+}
+
+.pricing-card.featured ul li {
+  color: var(--gray);
+}
+
+.pricing-card ul li::before {
+  content: "✓";
+  color: var(--pink);
+  font-size: 12px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.pricing-card .divider {
+  height: 1px;
+  background: var(--border);
+  margin-bottom: 1rem;
+}
+
+.pricing-card.featured .divider {
+  background: var(--border);
+}
+
+.pricing-card .card-price {
+  font-family: "DM Serif Display", serif;
+  font-size: 1.8rem;
+  color: var(--black);
+}
+
+/* Mantenimiento */
+.maint-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.maint-card {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.maint-card.dark {
+  background: var(--pink-light);
+  border-color: var(--pink);
+  color: var(--black);
+}
+
+.maint-card .card-label {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--pink);
+  margin-bottom: 0.5rem;
+}
+
+.maint-card .card-title {
+  font-family: "DM Serif Display", serif;
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  color: var(--black);
+}
+
+.maint-card .card-desc {
+  font-size: 13px;
+  margin-bottom: 1.25rem;
+  color: var(--gray);
+}
+
+.maint-card.dark .card-desc {
+  color: var(--gray);
+}
+
+.maint-card ul {
+  list-style: none;
+  margin-bottom: 1.5rem;
+}
+
+.maint-card ul li {
+  font-size: 13px;
+  padding: 0.3rem 0;
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  color: var(--gray);
+}
+
+.maint-card.dark ul li {
+  color: var(--gray);
+}
+
+.maint-card ul li.check::before {
+  content: "✓";
+  color: var(--pink);
+  font-size: 12px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.maint-card ul li.cross::before {
+  content: "—";
+  color: var(--border);
+  font-size: 12px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.maint-card .divider {
+  height: 1px;
+  background: var(--border);
+  margin-bottom: 1rem;
+}
+
+.maint-card.dark .divider {
+  background: var(--border);
+}
+
+.maint-card .card-price {
+  font-family: "DM Serif Display", serif;
+  font-size: 1.8rem;
+  color: var(--black);
+}
+
+.maint-note {
+  margin-top: 1.25rem;
+  padding: 1.25rem 1.5rem;
+  background: var(--pink-light);
+  border: 1px solid var(--pink-mid);
+  border-radius: 12px;
+  font-size: 13px;
+  color: var(--gray);
+  line-height: 1.6;
+}
+
+/* Infra (total destacado) */
+.infra-table .total {
+  color: var(--pink);
+  font-weight: 500;
+}
+
+/* Checklist */
+.checklist-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.checklist-item {
+  padding: 1.25rem 1.5rem;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  transition: border-color 0.2s;
+}
+
+.checklist-item:hover {
+  border-color: var(--pink);
+}
+
+.checklist-item .item-num {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--pink);
+  letter-spacing: 0.08em;
+  margin-bottom: 0.4rem;
+}
+
+.checklist-item .item-title {
+  font-family: "DM Serif Display", serif;
+  font-size: 0.95rem;
+  color: var(--black);
+  margin-bottom: 0.35rem;
+}
+
+.checklist-item .item-desc {
+  font-size: 12px;
+  color: var(--gray);
+  line-height: 1.5;
+}
+
+/* Footer Sofi: dos columnas */
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer-right {
+  font-size: 12px;
+  color: var(--gray);
+  text-align: right;
+  line-height: 1.8;
+}
+
+.footer-right a {
+  color: var(--pink);
+  text-decoration: none;
+}
+
+.footer-right a:hover {
+  text-decoration: underline;
+}
+
+/* Etapa 00 — número + icono grilla */
+.stage-num-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  flex-shrink: 0;
+}
+
+.stage-num-wrap .stage-num {
+  width: auto;
+  min-width: 2.5rem;
+  text-align: center;
+}
+
+.stage-icon-grid {
+  color: var(--accent-deep);
+  display: block;
+}
+
+.stage-summary-left:has(.stage-num-wrap) {
+  align-items: flex-start;
+}
+
+.stage-time-ic {
+  margin-right: 0.25rem;
+}
+
+/* Definición completa (anidado bajo precios) */
+.stage-def-full {
+  margin-top: 1.75rem;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--gray-light);
+}
+
+.stage-def-full summary.stage-def-summary {
+  list-style: none;
+  cursor: pointer;
+  padding: 0.85rem 1.25rem;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--black);
+  border: 1px solid var(--pink-mid);
+  border-radius: var(--radius-pill);
+  margin: 1rem 1.25rem 0;
+  background: transparent;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.stage-def-full summary.stage-def-summary:hover {
+  border-color: var(--pink);
+  background: var(--white);
+}
+
+.stage-def-full summary.stage-def-summary::-webkit-details-marker {
+  display: none;
+}
+
+.stage-def-full summary.stage-def-summary::after {
+  content: "⌄";
+  font-size: 14px;
+  color: var(--pink);
+  line-height: 1;
+  transition: transform 0.2s;
+}
+
+.stage-def-full[open] summary.stage-def-summary::after {
+  transform: rotate(180deg);
+}
+
+.stage-def-full:not([open]) summary.stage-def-summary {
+  margin-bottom: 1rem;
+}
+
+.stage-def-content {
+  padding: 1.25rem 1.5rem 1.75rem;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.65;
+  color: var(--black);
+}
+
+.stage-def-content p {
+  margin: 0.65rem 0;
+  color: var(--gray);
+}
+
+.stage-def-content p strong {
+  color: var(--black);
+}
+
+.def-intro-block {
+  margin-bottom: 1.25rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.def-h3 {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 400;
+  color: var(--black);
+  margin: 1.35rem 0 0.5rem;
+}
+
+.def-h3:first-child {
+  margin-top: 0;
+}
+
+.def-intro-block .def-h3 {
+  margin-top: 0;
+}
+
+.def-list {
+  list-style: none;
+  margin: 0.35rem 0 0.75rem;
+  padding: 0;
+}
+
+.def-list li {
+  position: relative;
+  padding: 0.25rem 0 0.25rem 1.1rem;
+  color: var(--gray);
+  font-size: 13px;
+}
+
+.def-list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.65em;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--pink);
+}
+
+.def-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  margin: 0.75rem 0;
+}
+
+.def-table th,
+.def-table td {
+  border: 1px solid var(--border);
+  padding: 0.6rem 0.85rem;
+  text-align: left;
+}
+
+.def-table th {
+  background: var(--white);
+  font-weight: 600;
+  color: var(--black);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.def-table td {
+  color: var(--gray);
+  background: var(--white);
+}
+
+.def-map {
+  font-family: ui-monospace, "Cascadia Code", "Segoe UI Mono", monospace;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--gray);
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.1rem;
+  margin: 0.75rem 0;
+  overflow-x: auto;
+  white-space: pre;
+}
+
+@media (max-width: 680px) {
+  .intro-grid,
+  .stage-cols,
+  .pricing-grid,
+  .maint-grid,
+  .checklist-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .footer {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+
+  .footer-right {
+    text-align: left;
+  }
+}
