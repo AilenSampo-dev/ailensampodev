@@ -47,6 +47,9 @@
     },
     "api/erp/data.js": {
       "maxDuration": 30
+    },
+    "api/erp/health.js": {
+      "maxDuration": 15
     }
   }
 }

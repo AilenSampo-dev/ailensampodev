@@ -1,5 +1,5 @@
 import { verifyPassword, createToken, requireAuth, passwordRequired } from "./auth.js";
-import { loadErpData, saveErpData, isCloudBackupEnabled } from "./supabase-erp.js";
+import { loadErpData, saveErpData, isCloudBackupEnabled, probeSupabaseConnection } from "./supabase-erp.js";
 
 async function readJsonBody(req) {
   if (req.body && typeof req.body === "object") return req.body;
@@ -91,6 +91,27 @@ export async function handleErpData(req, res, env = process.env) {
     res.statusCode = 405;
     res.setHeader("Content-Type", "application/json");
     res.end(JSON.stringify({ error: "Method not allowed" }));
+  } catch (e) {
+    res.statusCode = 500;
+    res.setHeader("Content-Type", "application/json");
+    res.end(JSON.stringify({ error: e.message || "Error interno" }));
+  }
+}
+
+export async function handleErpHealth(req, res, env = process.env) {
+  if (req.method !== "GET") {
+    res.statusCode = 405;
+    res.setHeader("Content-Type", "application/json");
+    res.end(JSON.stringify({ error: "Method not allowed" }));
+    return;
+  }
+  if (!requireAuth(req, res, env)) return;
+
+  try {
+    const probe = await probeSupabaseConnection(env);
+    res.statusCode = probe.error ? 503 : 200;
+    res.setHeader("Content-Type", "application/json");
+    res.end(JSON.stringify({ ok: !probe.error, ...probe }));
   } catch (e) {
     res.statusCode = 500;
     res.setHeader("Content-Type", "application/json");
