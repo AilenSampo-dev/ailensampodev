@@ -3,7 +3,9 @@ import { crearMesFacturacion } from "./facturacion-model.js";
 const STOCKIN_MESES = [
   {
     mes: "2026-07",
-    etapa: "Licencia de uso — Mes 1",
+    etapa: "Licencia de uso — Mes 1 · ERP jun–ago 2026",
+    servicioDesde: "2026-06-01",
+    servicioHasta: "2026-08-31",
     documentoDetalle: {
       numero: "DS-2026-007",
       templateKey: "stockin-lavanda-2026-07",
@@ -12,11 +14,13 @@ const STOCKIN_MESES = [
       moneda: "USD",
       total: "1500",
     },
-    notas: "Detalle de valorización — primera mensualidad (USD 1.500 neto).",
+    notas: "ERP (Anexo A): desarrollo bonificado USD 0 + licencia mes 1 USD 1.500.",
   },
   {
     mes: "2026-08",
-    etapa: "Licencia de uso — Mes 2",
+    etapa: "Licencia de uso — Mes 2 · Elixio Coins sep 2026",
+    servicioDesde: "2026-09-01",
+    servicioHasta: "2026-09-30",
     documentoDetalle: {
       numero: "DS-2026-008",
       templateKey: "stockin-lavanda-2026-08",
@@ -25,7 +29,7 @@ const STOCKIN_MESES = [
       moneda: "USD",
       total: "1500",
     },
-    notas: "Detalle de valorización — segunda mensualidad (USD 1.500 neto). Incluye resumen del período (USD 3.000).",
+    notas: "Elixio Coins: desarrollo bonificado USD 0 + licencia mes 2 USD 1.500. Resumen período USD 3.000.",
   },
 ];
 
