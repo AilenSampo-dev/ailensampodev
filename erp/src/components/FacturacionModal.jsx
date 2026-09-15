@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { X, Plus, ChevronLeft, Paperclip, Download, Trash2, Receipt } from "lucide-react";
+import { X, Plus, ChevronLeft, Paperclip, Download, Trash2, Receipt, ExternalLink, Mail } from "lucide-react";
 import { base64ToBytes, descargarPdfBytes } from "../lib/pdf-utils.js";
 import {
   crearMesFacturacion,
@@ -11,6 +11,9 @@ import {
   ordenarMeses,
   resumenMes,
 } from "../lib/facturacion-model.js";
+import { asegurarFacturacionStockin } from "../lib/facturacion-stockin-seed.js";
+import { enviarDetalleFacturacionPorEmail, urlPreviewFacturacion } from "../lib/facturacion-api.js";
+import { emailCliente } from "../lib/enviar-certificado.js";
 
 const t = {
   paper: "#FFFFFF",
@@ -159,7 +162,106 @@ function descargarAdjunto(adjunto) {
   descargarPdfBytes(bytes, adjunto.nombre || "documento.pdf");
 }
 
-function MesEditor({ registro, onChange }) {
+function DetalleHtmlActions({ registro, cliente, onEnviado }) {
+  const templateKey = registro?.documentoDetalle?.templateKey;
+  const previewUrl = templateKey ? urlPreviewFacturacion(templateKey) : null;
+  const [enviando, setEnviando] = useState(false);
+  const [error, setError] = useState("");
+
+  if (!templateKey) return null;
+
+  const enviar = async () => {
+    const to = emailCliente(cliente);
+    if (!to) {
+      setError("Completá el email del cliente en la ficha del proyecto.");
+      return;
+    }
+    if (!window.confirm(`¿Enviar detalle ${registro.documentoDetalle.numero || ""} a ${to}?`)) return;
+    setEnviando(true);
+    setError("");
+    try {
+      await enviarDetalleFacturacionPorEmail({
+        to,
+        templateKey,
+        cliente: cliente.negocio,
+        representante: cliente.representante,
+        numeroDoc: registro.documentoDetalle.numero,
+        mes: registro.mes,
+      });
+      onEnviado();
+      window.alert(`Detalle enviado a ${to}.`);
+    } catch (e) {
+      setError(e.message || "No se pudo enviar.");
+    } finally {
+      setEnviando(false);
+    }
+  };
+
+  return (
+    <div
+      style={{
+        background: `${t.plum}08`,
+        border: `1px solid ${t.plum}22`,
+        borderRadius: 10,
+        padding: "12px 14px",
+        marginBottom: 16,
+      }}
+    >
+      <div style={{ fontFamily: t.fMono, fontSize: 10, letterSpacing: 1, color: t.plum, marginBottom: 10 }}>
+        DETALLE HTML (PLANTILLA)
+      </div>
+      <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+        {previewUrl && (
+          <a
+            href={previewUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 6,
+              fontSize: 12,
+              fontWeight: 600,
+              color: t.plum,
+              textDecoration: "none",
+              padding: "6px 12px",
+              borderRadius: 99,
+              border: `1px solid ${t.plum}33`,
+              background: "#fff",
+            }}
+          >
+            <ExternalLink size={13} /> Ver detalle
+          </a>
+        )}
+        <button
+          type="button"
+          onClick={enviar}
+          disabled={enviando}
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            gap: 6,
+            fontSize: 12,
+            fontWeight: 700,
+            color: "#fff",
+            padding: "6px 14px",
+            borderRadius: 99,
+            border: "none",
+            background: enviando ? t.faint : t.pink,
+            cursor: enviando ? "wait" : "pointer",
+          }}
+        >
+          <Mail size={13} /> {enviando ? "Enviando…" : "Enviar por mail"}
+        </button>
+      </div>
+      {error && (
+        <div style={{ fontSize: 12, color: t.orange, marginTop: 10, lineHeight: 1.45 }}>{error}</div>
+      )}
+    </div>
+  );
+}
+
+function MesEditor({ registro, cliente, onChange }) {
   const set = (path, value) => {
     onChange((prev) => {
       const next = structuredClone(prev);
@@ -212,6 +314,20 @@ function MesEditor({ registro, onChange }) {
           <input style={field} type="date" value={registro.documentoDetalle.fechaEnvio} onChange={(e) => set("documentoDetalle.fechaEnvio", e.target.value)} />
         </Field>
       )}
+      <DetalleHtmlActions
+        registro={registro}
+        cliente={cliente}
+        onEnviado={() => {
+          onChange((prev) => ({
+            ...prev,
+            documentoDetalle: {
+              ...prev.documentoDetalle,
+              enviadoAlCliente: true,
+              fechaEnvio: prev.documentoDetalle.fechaEnvio || new Date().toISOString().slice(0, 10),
+            },
+          }));
+        }}
+      />
       <AdjuntoSlot
         label="PDF DETALLE DE SERVICIOS"
         adjunto={registro.documentoDetalle.adjunto}
@@ -366,7 +482,9 @@ function MesEditor({ registro, onChange }) {
 }
 
 export default function FacturacionModal({ cliente, onSave, onClose }) {
-  const [facturacion, setFacturacion] = useState(() => [...(cliente.facturacion || [])]);
+  const [facturacion, setFacturacion] = useState(() =>
+    asegurarFacturacionStockin(cliente, [...(cliente.facturacion || [])])
+  );
   const [mesId, setMesId] = useState(null);
 
   const meses = useMemo(() => ordenarMeses(facturacion), [facturacion]);
@@ -555,7 +673,7 @@ export default function FacturacionModal({ cliente, onSave, onClose }) {
             )}
           </>
         ) : (
-          <MesEditor registro={mesSel} onChange={actualizarMes} />
+          <MesEditor registro={mesSel} cliente={cliente} onChange={actualizarMes} />
         )}
 
         <div style={{ display: "flex", gap: 10, marginTop: 32, paddingTop: 16, borderTop: `1px solid ${t.line}` }}>

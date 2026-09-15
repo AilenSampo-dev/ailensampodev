@@ -1,0 +1,44 @@
+cliente:
+  slug: stockin-lavanda
+  razon_social: ""
+  cuit: ""
+
+periodo:
+  mes: 2026-07
+  servicio_desde: ""
+  servicio_hasta: ""
+  etapa: "Licencia de uso — Mes 1"
+
+documento_detalle:
+  numero: DS-2026-007
+  fecha_emision: ""
+  html: detalle-servicios.html
+  template_key: stockin-lavanda-2026-07
+  pdf: adjuntos/detalle-servicios.pdf
+  enviado_al_cliente: false
+  fecha_envio: ""
+
+importe:
+  moneda: USD
+  subtotal: null
+  iva: null
+  total: 1500
+  tipo_cambio_bna: null
+  total_ars: null
+
+factura_fiscal:
+  emitida: false
+  tipo: ""
+  punto_venta: null
+  numero: null
+  cae: ""
+  vencimiento_cae: ""
+  pdf: adjuntos/factura-cae.pdf
+
+pago:
+  estado: pendiente
+  fecha: ""
+  monto_cobrado: null
+  comprobantes: []
+
+notas: "Detalle de valorización — primera mensualidad (USD 1.500 neto)."

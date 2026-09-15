@@ -1,6 +1,7 @@
 import { handleAuthLogin, handleErpData, handleErpHealth, handleAuthStatus } from "./server/erp-api-handlers.js";
 import { handleContratoEnviar, handleContratoPublico } from "./server/contrato-api-handlers.js";
 import { handleAddendumEnviar, handleAddendumPublico } from "./server/addendum-api-handlers.js";
+import { handleFacturacionEnviarDetalle } from "./server/facturacion-api-handlers.js";
 import { passwordRequired } from "./server/auth.js";
 
 const ROUTES = {
@@ -12,6 +13,7 @@ const ROUTES = {
   "/api/contrato/publico": handleContratoPublico,
   "/api/addendum/enviar": handleAddendumEnviar,
   "/api/addendum/publico": handleAddendumPublico,
+  "/api/facturacion/enviar-detalle": handleFacturacionEnviarDetalle,
 };
 
 /** Dev: auth + backup ERP vía middleware Vite */
