@@ -1,4 +1,4 @@
-import { handleAuthLogin, handleErpData, handleAuthStatus } from "./server/erp-api-handlers.js";
+import { handleAuthLogin, handleErpData, handleErpHealth, handleAuthStatus } from "./server/erp-api-handlers.js";
 import { handleContratoEnviar, handleContratoPublico } from "./server/contrato-api-handlers.js";
 import { handleAddendumEnviar, handleAddendumPublico } from "./server/addendum-api-handlers.js";
 import { passwordRequired } from "./server/auth.js";
@@ -7,6 +7,7 @@ const ROUTES = {
   "/api/auth/login": handleAuthLogin,
   "/api/auth/status": handleAuthStatus,
   "/api/erp/data": handleErpData,
+  "/api/erp/health": handleErpHealth,
   "/api/contrato/enviar": handleContratoEnviar,
   "/api/contrato/publico": handleContratoPublico,
   "/api/addendum/enviar": handleAddendumEnviar,
