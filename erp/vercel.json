@@ -45,6 +45,9 @@
     "api/certificado/enviar.js": {
       "maxDuration": 30
     },
+    "api/facturacion/enviar-detalle.js": {
+      "maxDuration": 30
+    },
     "api/erp/data.js": {
       "maxDuration": 30
     },
