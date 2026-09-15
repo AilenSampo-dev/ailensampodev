@@ -70,7 +70,7 @@ async function supabaseFetch(url, options, action) {
     res = await fetch(url, options);
   } catch (e) {
     const hint = e?.cause?.code === "ENOTFOUND"
-      ? " El proyecto Supabase no existe o la URL es incorrecta."
+      ? " Revisá SUPABASE_URL en Vercel (Settings → Environment Variables): el proyecto no existe o la URL está mal."
       : "";
     throw new Error(`No se pudo conectar a Supabase (${action}).${hint}`);
   }

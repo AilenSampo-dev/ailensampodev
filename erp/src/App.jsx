@@ -3,8 +3,10 @@ import { Plus, X, Pencil, Trash2, FileText, LogOut, Cloud, CloudOff } from "luci
 import ContratoModal from "./components/ContratoModal.jsx";
 import FacturacionModal, { FacturacionBtn } from "./components/FacturacionModal.jsx";
 import AddendumModal, { AddendumBtn } from "./components/AddendumModal.jsx";
+import EtapasProyectoModal, { EtapasBtn } from "./components/EtapasProyectoModal.jsx";
 import LoginScreen from "./components/LoginScreen.jsx";
 import { obtenerAddendumElixio, mergeAddendumEnProyecto } from "./lib/addendum-model.js";
+import { asegurarPipeline, mergePipelineEnProyecto, etapaLabel } from "./lib/proyecto-etapas.js";
 import { checkAuthStatus, fetchErpData, saveErpData, logout as logoutSession, getToken } from "./lib/erp-api.js";
 
 /**
@@ -291,6 +293,26 @@ function ErpPanel({ session, onLogout }) {
     setModal(null);
   };
 
+  const abrirEtapas = (proyectoId) => {
+    const p = proyectos.find((x) => x.id === proyectoId);
+    const c = clientes.find((x) => x.id === p?.clienteId);
+    if (p && c) setModal({ tipo: "etapas", proyecto: p, cliente: c });
+  };
+
+  const saveEtapas = (proyectoActualizado) => {
+    const merged = proyectoActualizado;
+    setProyectos((prev) => prev.map((p) => (p.id === merged.id ? merged : p)));
+    const fee = merged.pipeline?.datos?.negociacion?.feeMensualInnegociable
+      || merged.pipeline?.datos?.propuesta?.feeMensualPiso
+      || merged.pipeline?.datos?.produccion?.feeMensualActivo;
+    if (fee && merged.clienteId) {
+      setClientes((prev) =>
+        prev.map((c) => (c.id === merged.clienteId ? { ...c, feeMensual: Number(fee) || c.feeMensual } : c))
+      );
+    }
+    setModal(null);
+  };
+
   const nav = [
     { id: "dashboard", label: "Panel" },
     { id: "clientes", label: "Clientes" },
@@ -382,6 +404,7 @@ function ErpPanel({ session, onLogout }) {
             onContrato={abrirContrato}
             onFacturacion={abrirFacturacion}
             onAddendum={abrirAddendum}
+            onEtapas={abrirEtapas}
             highlightId={highlightCliente}
             onClearHighlight={() => setHighlightCliente(null)} />
         )}
@@ -392,6 +415,7 @@ function ErpPanel({ session, onLogout }) {
             onDel={delProyecto}
             onContrato={abrirContrato}
             onAddendum={abrirAddendum}
+            onEtapas={abrirEtapas}
             onVerCliente={(id) => { setView("clientes"); setHighlightCliente(id); }} />
         )}
           </>
@@ -430,6 +454,16 @@ function ErpPanel({ session, onLogout }) {
           addendum={modal.addendum}
           onSave={saveAddendum}
           onClose={() => setModal(null)}
+        />
+      )}
+      {modal?.tipo === "etapas" && (
+        <EtapasProyectoModal
+          proyecto={modal.proyecto}
+          cliente={modal.cliente}
+          onSave={saveEtapas}
+          onClose={() => setModal(null)}
+          onContrato={abrirContrato}
+          onAddendum={abrirAddendum}
         />
       )}
     </div>
@@ -537,7 +571,7 @@ function ContratoBtn({ onClick, aceptado, enviado }) {
   );
 }
 
-function Clientes({ clientes, proyectos, onNew, onEdit, onDel, onNewProyecto, onEditProyecto, onDelProyecto, onContrato, onFacturacion, onAddendum, highlightId, onClearHighlight }) {
+function Clientes({ clientes, proyectos, onNew, onEdit, onDel, onNewProyecto, onEditProyecto, onDelProyecto, onContrato, onFacturacion, onAddendum, onEtapas, highlightId, onClearHighlight }) {
   useEffect(() => {
     if (!highlightId) return;
     document.getElementById(`cliente-${highlightId}`)?.scrollIntoView({ behavior: "smooth", block: "center" });
@@ -592,6 +626,7 @@ function Clientes({ clientes, proyectos, onNew, onEdit, onDel, onNewProyecto, on
                           <div style={{ width: 120, textAlign: "right", fontFamily: t.fMono, fontSize: 12 }}>
                             <span style={{ color: pend > 0 ? t.pink : t.mint }}>{fmt(pend)}</span>
                           </div>
+                          <EtapasBtn onClick={() => onEtapas(p.id)} pipeline={p.pipeline} etapaActualId={p.pipeline?.etapaActualId} />
                           <ContratoBtn onClick={() => onContrato(p.id)} aceptado={p.contratoEstado === "aceptado"} enviado={p.contratoEstado === "enviado"} />
                           <AddendumBtn onClick={() => onAddendum(p.id)} addendum={(p.addendums || []).find((a) => a.slug === "elixio-coins")} />
                           <RowActions onEdit={() => onEditProyecto(p)} onDel={() => onDelProyecto(p.id)} />
@@ -610,7 +645,7 @@ function Clientes({ clientes, proyectos, onNew, onEdit, onDel, onNewProyecto, on
   );
 }
 
-function Proyectos({ proyectos, clientes, onNew, onEdit, onDel, onContrato, onAddendum, onVerCliente }) {
+function Proyectos({ proyectos, clientes, onNew, onEdit, onDel, onContrato, onAddendum, onEtapas, onVerCliente }) {
   const grupos = clientes
     .map((c) => ({ cliente: c, items: proyectos.filter((p) => p.clienteId === c.id) }))
     .filter((g) => g.items.length > 0);
@@ -637,6 +672,7 @@ function Proyectos({ proyectos, clientes, onNew, onEdit, onDel, onContrato, onAd
           <span style={{ color: pend > 0 ? t.pink : t.mint }}>{fmt(pend)}</span>
           <span style={{ color: t.faint }}> / {fmt(p.feeConstruccion)}</span>
         </div>
+        <EtapasBtn onClick={() => onEtapas(p.id)} pipeline={p.pipeline} etapaActualId={p.pipeline?.etapaActualId} />
         <ContratoBtn onClick={() => onContrato(p.id)} aceptado={p.contratoEstado === "aceptado"} enviado={p.contratoEstado === "enviado"} />
         <AddendumBtn onClick={() => onAddendum(p.id)} addendum={(p.addendums || []).find((a) => a.slug === "elixio-coins")} />
         <RowActions onEdit={() => onEdit(p)} onDel={() => onDel(p.id)} />
@@ -723,14 +759,28 @@ function ClienteModal({ data, onSave, onClose }) {
 }
 
 function ProyectoModal({ data, clientes, defaultClienteId, onSave, onClose }) {
-  const [f, setF] = useState(
-    data || { clienteId: defaultClienteId || clientes[0]?.id || "", nombre: "", tipo: "Web", estado: "Propuesta", feeConstruccion: 0, cobrado: 0, repo: "", notas: "" }
-  );
+  const [f, setF] = useState(() => {
+    if (data) return data;
+    const clienteId = defaultClienteId || clientes[0]?.id || "";
+    const cliente = clientes.find((c) => c.id === clienteId);
+    return {
+      clienteId,
+      nombre: "",
+      tipo: "Web",
+      estado: "Propuesta",
+      feeConstruccion: 0,
+      cobrado: 0,
+      repo: "",
+      notas: "",
+      pipeline: asegurarPipeline({ estado: "Propuesta" }, cliente),
+    };
+  });
   const set = (k, v) => setF((p) => ({ ...p, [k]: v }));
   const clienteValido = f.clienteId && clientes.some((c) => c.id === f.clienteId);
   const clienteSel = clientes.find((c) => c.id === f.clienteId);
+  const etapaTxt = f.pipeline?.etapaActualId ? etapaLabel(f.pipeline.etapaActualId) : null;
   return (
-    <ModalShell title={data ? "Editar proyecto" : "Nuevo proyecto"} onClose={onClose} onSave={() => f.nombre.trim() && clienteValido && onSave(f)}>
+    <ModalShell title={data ? "Editar proyecto" : "Nuevo proyecto"} onClose={onClose} onSave={() => f.nombre.trim() && clienteValido && onSave(f.pipeline ? mergePipelineEnProyecto(f, f.pipeline) : f)}>
       {clienteSel && (
         <div style={{ marginBottom: 24, padding: "12px 14px", background: `${t.plum}0A`, borderRadius: 8, border: `1px solid ${t.plum}18` }}>
           <Label>CLIENTE VINCULADO</Label>
@@ -755,6 +805,11 @@ function ProyectoModal({ data, clientes, defaultClienteId, onSave, onClose }) {
       </div>
       <Field label="REPO / LINK"><input style={field} value={f.repo} onChange={(e) => set("repo", e.target.value)} /></Field>
       <Field label="NOTAS"><textarea style={{ ...field, minHeight: 60, resize: "vertical" }} value={f.notas} onChange={(e) => set("notas", e.target.value)} /></Field>
+      {etapaTxt && (
+        <div style={{ fontFamily: t.fMono, fontSize: 11, color: t.faint, marginTop: 8 }}>
+          Etapa pipeline: {etapaTxt}
+        </div>
+      )}
     </ModalShell>
   );
 }
