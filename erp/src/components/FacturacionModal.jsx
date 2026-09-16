@@ -12,7 +12,7 @@ import {
   resumenMes,
 } from "../lib/facturacion-model.js";
 import { asegurarFacturacionStockin } from "../lib/facturacion-stockin-seed.js";
-import { enviarDetalleFacturacionPorEmail, urlPreviewFacturacion } from "../lib/facturacion-api.js";
+import { enviarDetalleFacturacionPorEmail, urlFacturacionCompleta, urlPreviewFacturacion } from "../lib/facturacion-api.js";
 import { emailCliente } from "../lib/enviar-certificado.js";
 
 const t = {
@@ -165,6 +165,7 @@ function descargarAdjunto(adjunto) {
 function DetalleHtmlActions({ registro, cliente, onEnviado }) {
   const templateKey = registro?.documentoDetalle?.templateKey;
   const previewUrl = templateKey ? urlPreviewFacturacion(templateKey) : null;
+  const documentUrl = templateKey ? urlFacturacionCompleta(templateKey) : null;
   const [enviando, setEnviando] = useState(false);
   const [error, setError] = useState("");
 
@@ -183,6 +184,7 @@ function DetalleHtmlActions({ registro, cliente, onEnviado }) {
       const r = await enviarDetalleFacturacionPorEmail({
         to,
         templateKey,
+        documentUrl,
         cliente: cliente.negocio,
         representante: cliente.representante,
         numeroDoc: registro.documentoDetalle.numero,
@@ -190,7 +192,8 @@ function DetalleHtmlActions({ registro, cliente, onEnviado }) {
       });
       onEnviado();
       const copiaTxt = r.copiaAdmin ? `\nCopia CC: ${r.copiaAdmin}` : "";
-      window.alert(`Detalle enviado a ${to}.${copiaTxt}`);
+      const urlTxt = r.url || documentUrl ? `\nEnlace: ${r.url || documentUrl}` : "";
+      window.alert(`Detalle enviado a ${to}.${copiaTxt}${urlTxt}`);
     } catch (e) {
       setError(e.message || "No se pudo enviar.");
     } finally {
