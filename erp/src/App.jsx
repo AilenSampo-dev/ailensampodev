@@ -5,6 +5,8 @@ import FacturacionModal, { FacturacionBtn } from "./components/FacturacionModal.
 import AddendumModal, { AddendumBtn } from "./components/AddendumModal.jsx";
 import EtapasProyectoModal, { EtapasBtn } from "./components/EtapasProyectoModal.jsx";
 import LoginScreen from "./components/LoginScreen.jsx";
+import ConfirmDeleteModal from "./components/ConfirmDeleteModal.jsx";
+import BackupHistoryPanel from "./components/BackupHistoryPanel.jsx";
 import { obtenerAddendumElixio, mergeAddendumEnProyecto } from "./lib/addendum-model.js";
 import { asegurarPipeline, mergePipelineEnProyecto, etapaLabel } from "./lib/proyecto-etapas.js";
 import { checkAuthStatus, fetchErpData, saveErpData, logout as logoutSession, getToken } from "./lib/erp-api.js";
@@ -161,6 +163,7 @@ function ErpPanel({ session, onLogout }) {
   const [highlightCliente, setHighlightCliente] = useState(null);
   const [syncState, setSyncState] = useState("idle");
   const [syncError, setSyncError] = useState(null);
+  const [deleteConfirm, setDeleteConfirm] = useState(null);
   const migratedRef = useRef(false);
 
   useEffect(() => {
@@ -259,6 +262,41 @@ function ErpPanel({ session, onLogout }) {
     setProyectos((prev) => prev.filter((p) => p.clienteId !== id));
   };
   const delProyecto = (id) => setProyectos((prev) => prev.filter((p) => p.id !== id));
+
+  const pedirEliminarCliente = (cliente) => {
+    const count = proyectos.filter((p) => p.clienteId === cliente.id).length;
+    setDeleteConfirm({
+      tipo: "cliente",
+      id: cliente.id,
+      title: "Eliminar cliente",
+      description: `Se eliminará «${cliente.negocio}» y toda su información del ERP.`,
+      warning: count
+        ? `También se borrarán ${count} proyecto${count === 1 ? "" : "s"} (contratos, addendums, facturación).`
+        : null,
+    });
+  };
+
+  const pedirEliminarProyecto = (proyecto) => {
+    setDeleteConfirm({
+      tipo: "proyecto",
+      id: proyecto.id,
+      title: "Eliminar proyecto",
+      description: `Se eliminará «${proyecto.nombre}» del ERP.`,
+      warning: "Se pierden contrato, addendum, etapas y datos asociados a este proyecto.",
+    });
+  };
+
+  const confirmarEliminacion = () => {
+    if (!deleteConfirm) return;
+    if (deleteConfirm.tipo === "cliente") delCliente(deleteConfirm.id);
+    else delProyecto(deleteConfirm.id);
+    setDeleteConfirm(null);
+  };
+
+  const restaurarDesdeBackup = ({ clientes: c, proyectos: p }) => {
+    setClientes(c);
+    setProyectos(p);
+  };
 
   const abrirContrato = (proyectoId) => {
     const p = proyectos.find((x) => x.id === proyectoId);
@@ -376,10 +414,13 @@ function ErpPanel({ session, onLogout }) {
           ) : session.offline ? null : (
             <div style={{ fontFamily: t.fMono, fontSize: 10, color: t.faint, marginBottom: 12 }}>Solo local</div>
           )}
+          {ready && session.cloudBackup && (
+            <BackupHistoryPanel onRestored={restaurarDesdeBackup} />
+          )}
           {session.passwordRequired && (
             <button
               onClick={onLogout}
-              style={{ display: "flex", alignItems: "center", gap: 8, background: "transparent", border: "none", color: t.muted, fontSize: 13, padding: "8px 0" }}
+              style={{ display: "flex", alignItems: "center", gap: 8, background: "transparent", border: "none", color: t.muted, fontSize: 13, padding: "8px 0", marginTop: 8 }}
             >
               <LogOut size={14} /> Salir
             </button>
@@ -399,10 +440,10 @@ function ErpPanel({ session, onLogout }) {
           <Clientes clientes={clientes} proyectos={proyectos}
             onNew={() => setModal({ tipo: "cliente", data: null })}
             onEdit={(c) => setModal({ tipo: "cliente", data: c })}
-            onDel={delCliente}
+            onDel={pedirEliminarCliente}
             onNewProyecto={(clienteId) => setModal({ tipo: "proyecto", data: null, clienteId })}
             onEditProyecto={(p) => setModal({ tipo: "proyecto", data: p })}
-            onDelProyecto={delProyecto}
+            onDelProyecto={pedirEliminarProyecto}
             onContrato={abrirContrato}
             onFacturacion={abrirFacturacion}
             onAddendum={abrirAddendum}
@@ -414,7 +455,7 @@ function ErpPanel({ session, onLogout }) {
           <Proyectos proyectos={proyectos} clientes={clientes}
             onNew={() => setModal({ tipo: "proyecto", data: null })}
             onEdit={(p) => setModal({ tipo: "proyecto", data: p })}
-            onDel={delProyecto}
+            onDel={pedirEliminarProyecto}
             onContrato={abrirContrato}
             onAddendum={abrirAddendum}
             onEtapas={abrirEtapas}
@@ -423,6 +464,16 @@ function ErpPanel({ session, onLogout }) {
           </>
         )}
       </main>
+
+      {deleteConfirm && (
+        <ConfirmDeleteModal
+          title={deleteConfirm.title}
+          description={deleteConfirm.description}
+          warning={deleteConfirm.warning}
+          onConfirm={confirmarEliminacion}
+          onClose={() => setDeleteConfirm(null)}
+        />
+      )}
 
       {modal?.tipo === "cliente" && <ClienteModal data={modal.data} onSave={saveCliente} onClose={() => setModal(null)} />}
       {modal?.tipo === "proyecto" && (
@@ -612,7 +663,7 @@ function Clientes({ clientes, proyectos, onNew, onEdit, onDel, onNewProyecto, on
                   >
                     <Plus size={11} /> Proyecto
                   </button>
-                  <RowActions onEdit={() => onEdit(c)} onDel={() => onDel(c.id)} />
+                  <RowActions onEdit={() => onEdit(c)} onDel={() => onDel(c)} />
                 </div>
                 {proys.length > 0 && (
                   <div style={{ paddingBottom: 12, paddingLeft: 16 }}>
@@ -631,7 +682,7 @@ function Clientes({ clientes, proyectos, onNew, onEdit, onDel, onNewProyecto, on
                           <EtapasBtn onClick={() => onEtapas(p.id)} pipeline={p.pipeline} etapaActualId={p.pipeline?.etapaActualId} />
                           <ContratoBtn onClick={() => onContrato(p.id)} aceptado={p.contratoEstado === "aceptado"} enviado={p.contratoEstado === "enviado"} />
                           <AddendumBtn onClick={() => onAddendum(p.id)} addendum={(p.addendums || []).find((a) => a.slug === "elixio-coins")} />
-                          <RowActions onEdit={() => onEditProyecto(p)} onDel={() => onDelProyecto(p.id)} />
+                          <RowActions onEdit={() => onEditProyecto(p)} onDel={() => onDelProyecto(p)} />
                         </div>
                       );
                     })}
@@ -677,7 +728,7 @@ function Proyectos({ proyectos, clientes, onNew, onEdit, onDel, onContrato, onAd
         <EtapasBtn onClick={() => onEtapas(p.id)} pipeline={p.pipeline} etapaActualId={p.pipeline?.etapaActualId} />
         <ContratoBtn onClick={() => onContrato(p.id)} aceptado={p.contratoEstado === "aceptado"} enviado={p.contratoEstado === "enviado"} />
         <AddendumBtn onClick={() => onAddendum(p.id)} addendum={(p.addendums || []).find((a) => a.slug === "elixio-coins")} />
-        <RowActions onEdit={() => onEdit(p)} onDel={() => onDel(p.id)} />
+        <RowActions onEdit={() => onEdit(p)} onDel={() => onDel(p)} />
       </div>
     );
   };

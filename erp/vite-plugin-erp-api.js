@@ -1,4 +1,12 @@
-import { handleAuthLogin, handleErpData, handleErpHealth, handleAuthStatus } from "./server/erp-api-handlers.js";
+import {
+  handleAuthLogin,
+  handleErpData,
+  handleErpHealth,
+  handleAuthStatus,
+  handleErpHistory,
+  handleErpHistoryRestore,
+  handleErpSeedStockin,
+} from "./server/erp-api-handlers.js";
 import { handleContratoEnviar, handleContratoPublico } from "./server/contrato-api-handlers.js";
 import { handleAddendumEnviar, handleAddendumPublico } from "./server/addendum-api-handlers.js";
 import { handleFacturacionEnviarDetalle } from "./server/facturacion-api-handlers.js";
@@ -9,6 +17,9 @@ const ROUTES = {
   "/api/auth/status": handleAuthStatus,
   "/api/erp/data": handleErpData,
   "/api/erp/health": handleErpHealth,
+  "/api/erp/history": handleErpHistory,
+  "/api/erp/history-restore": handleErpHistoryRestore,
+  "/api/erp/seed-stockin": handleErpSeedStockin,
   "/api/contrato/enviar": handleContratoEnviar,
   "/api/contrato/publico": handleContratoPublico,
   "/api/addendum/enviar": handleAddendumEnviar,

@@ -1,5 +1,13 @@
 import { verifyPassword, createToken, requireAuth, passwordRequired } from "./auth.js";
-import { loadErpData, saveErpData, isCloudBackupEnabled, probeSupabaseConnection } from "./supabase-erp.js";
+import {
+  loadErpData,
+  saveErpData,
+  isCloudBackupEnabled,
+  probeSupabaseConnection,
+  listBackupHistory,
+  restoreBackupSnapshot,
+} from "./supabase-erp.js";
+import { mergeStockinSeed } from "../src/lib/stockin-lavanda-seed.js";
 
 async function readJsonBody(req) {
   if (req.body && typeof req.body === "object") return req.body;
@@ -91,6 +99,112 @@ export async function handleErpData(req, res, env = process.env) {
     res.statusCode = 405;
     res.setHeader("Content-Type", "application/json");
     res.end(JSON.stringify({ error: "Method not allowed" }));
+  } catch (e) {
+    res.statusCode = 500;
+    res.setHeader("Content-Type", "application/json");
+    res.end(JSON.stringify({ error: e.message || "Error interno" }));
+  }
+}
+
+export async function handleErpHistory(req, res, env = process.env) {
+  if (!requireAuth(req, res, env)) return;
+
+  try {
+    if (req.method === "GET") {
+      if (!isCloudBackupEnabled(env)) {
+        res.statusCode = 503;
+        res.setHeader("Content-Type", "application/json");
+        res.end(JSON.stringify({ error: "Supabase no configurado." }));
+        return;
+      }
+      const items = await listBackupHistory(30, env);
+      res.statusCode = 200;
+      res.setHeader("Content-Type", "application/json");
+      res.end(JSON.stringify({ items }));
+      return;
+    }
+
+    res.statusCode = 405;
+    res.setHeader("Content-Type", "application/json");
+    res.end(JSON.stringify({ error: "Method not allowed" }));
+  } catch (e) {
+    res.statusCode = 500;
+    res.setHeader("Content-Type", "application/json");
+    res.end(JSON.stringify({ error: e.message || "Error interno" }));
+  }
+}
+
+export async function handleErpHistoryRestore(req, res, env = process.env) {
+  if (req.method !== "POST") {
+    res.statusCode = 405;
+    res.setHeader("Content-Type", "application/json");
+    res.end(JSON.stringify({ error: "Method not allowed" }));
+    return;
+  }
+  if (!requireAuth(req, res, env)) return;
+
+  try {
+    if (!isCloudBackupEnabled(env)) {
+      res.statusCode = 503;
+      res.setHeader("Content-Type", "application/json");
+      res.end(JSON.stringify({ error: "Supabase no configurado." }));
+      return;
+    }
+
+    const data = await readJsonBody(req);
+    if (!data.id) {
+      res.statusCode = 400;
+      res.setHeader("Content-Type", "application/json");
+      res.end(JSON.stringify({ error: "Falta id del backup." }));
+      return;
+    }
+
+    const restored = await restoreBackupSnapshot(data.id, env);
+    res.statusCode = 200;
+    res.setHeader("Content-Type", "application/json");
+    res.end(JSON.stringify({ ok: true, ...restored }));
+  } catch (e) {
+    res.statusCode = 500;
+    res.setHeader("Content-Type", "application/json");
+    res.end(JSON.stringify({ error: e.message || "Error interno" }));
+  }
+}
+
+export async function handleErpSeedStockin(req, res, env = process.env) {
+  if (req.method !== "POST") {
+    res.statusCode = 405;
+    res.setHeader("Content-Type", "application/json");
+    res.end(JSON.stringify({ error: "Method not allowed" }));
+    return;
+  }
+  if (!requireAuth(req, res, env)) return;
+
+  try {
+    if (!isCloudBackupEnabled(env)) {
+      res.statusCode = 503;
+      res.setHeader("Content-Type", "application/json");
+      res.end(JSON.stringify({ error: "Supabase no configurado." }));
+      return;
+    }
+
+    const current = (await loadErpData(env)) ?? { clientes: [], proyectos: [], dataVersion: 2 };
+    const merged = mergeStockinSeed(current.clientes, current.proyectos);
+    const updatedAt = await saveErpData(
+      { clientes: merged.clientes, proyectos: merged.proyectos, dataVersion: current.dataVersion ?? 2 },
+      env
+    );
+
+    res.statusCode = 200;
+    res.setHeader("Content-Type", "application/json");
+    res.end(
+      JSON.stringify({
+        ok: true,
+        updatedAt,
+        clientes: merged.clientes.length,
+        proyectos: merged.proyectos.length,
+        stockin: true,
+      })
+    );
   } catch (e) {
     res.statusCode = 500;
     res.setHeader("Content-Type", "application/json");
