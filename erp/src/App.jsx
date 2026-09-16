@@ -176,21 +176,29 @@ function ErpPanel({ session, onLogout }) {
           const cloud = await fetchErpData();
           setSyncError(null);
           setSyncState("ok");
-          if (Array.isArray(cloud.clientes) && (cloud.clientes.length || cloud.proyectos?.length)) {
+          if (Array.isArray(cloud.clientes)) {
             nextClientes = cloud.clientes;
             nextProyectos = cloud.proyectos ?? [];
+            if (!nextClientes.length && !nextProyectos.length) {
+              const localC = (await store.get("clientes", null)) ?? [];
+              const localP = (await store.get("proyectos", null)) ?? [];
+              if (localC.length || localP.length) {
+                nextClientes = localC;
+                nextProyectos = localP;
+                if (!migratedRef.current) {
+                  migratedRef.current = true;
+                  try {
+                    await saveErpData({ clientes: nextClientes, proyectos: nextProyectos, dataVersion: DATA_VERSION });
+                  } catch (e) {
+                    setSyncState("error");
+                    setSyncError(e.message || "Error de respaldo");
+                  }
+                }
+              }
+            }
           } else {
             nextClientes = (await store.get("clientes", null)) ?? [];
             nextProyectos = (await store.get("proyectos", null)) ?? [];
-            if ((nextClientes.length || nextProyectos.length) && !migratedRef.current) {
-              migratedRef.current = true;
-              try {
-                await saveErpData({ clientes: nextClientes, proyectos: nextProyectos, dataVersion: DATA_VERSION });
-              } catch (e) {
-                setSyncState("error");
-                setSyncError(e.message || "Error de respaldo");
-              }
-            }
           }
         } catch (e) {
           setSyncState("error");
