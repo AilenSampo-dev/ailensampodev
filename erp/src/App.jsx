@@ -276,7 +276,9 @@ function ErpPanel({ session, onLogout }) {
     const c = clientes.find((x) => x.id === p?.clienteId);
     if (p && c) {
       const addendum = obtenerAddendumElixio(p, c);
-      setModal({ tipo: "addendum", proyecto: mergeAddendumEnProyecto(p, addendum), cliente: c, addendum });
+      const proyectoActualizado = mergeAddendumEnProyecto(p, addendum);
+      saveAddendum(proyectoActualizado);
+      setModal({ tipo: "addendum", proyecto: proyectoActualizado, cliente: c, addendum });
     }
   };
 

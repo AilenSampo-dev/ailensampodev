@@ -78,7 +78,9 @@ export default function AddendumModal({ proyecto, cliente, addendum, onSave, onC
     setEnviando(true);
     setEnvioMsg(null);
     try {
-      const r = await enviarAddendumAlCliente(proyecto.id, doc.id, html);
+      const draft = { ...doc, html };
+      persistir(mergeAddendumEnProyecto(proyecto, draft));
+      const r = await enviarAddendumAlCliente(proyecto.id, doc.id, html, draft);
       const next = {
         ...doc,
         html,
