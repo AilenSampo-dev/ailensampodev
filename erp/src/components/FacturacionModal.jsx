@@ -180,7 +180,7 @@ function DetalleHtmlActions({ registro, cliente, onEnviado }) {
     setEnviando(true);
     setError("");
     try {
-      await enviarDetalleFacturacionPorEmail({
+      const r = await enviarDetalleFacturacionPorEmail({
         to,
         templateKey,
         cliente: cliente.negocio,
@@ -189,7 +189,8 @@ function DetalleHtmlActions({ registro, cliente, onEnviado }) {
         mes: registro.mes,
       });
       onEnviado();
-      window.alert(`Detalle enviado a ${to}.`);
+      const copiaTxt = r.copiaAdmin ? `\nCopia CC: ${r.copiaAdmin}` : "";
+      window.alert(`Detalle enviado a ${to}.${copiaTxt}`);
     } catch (e) {
       setError(e.message || "No se pudo enviar.");
     } finally {

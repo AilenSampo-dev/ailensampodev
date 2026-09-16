@@ -1,10 +1,12 @@
+import { attachAdminCopy, normalizeEmail, resolveAdminEmail } from "./brevo-admin-copy.js";
+
 /**
  * Envío de certificado PDF vía Brevo (compartido dev + producción).
  */
 export async function enviarCertificadoBrevo(data, env = process.env) {
   const apiKey = env.BREVO_API_KEY;
-  const fromEmail = env.BREVO_FROM_EMAIL || env.PROPOSAL_NOTIFY_EMAIL;
-  const adminEmail = env.ADMIN_EMAIL || env.PROPOSAL_NOTIFY_EMAIL || fromEmail;
+  const fromEmail = normalizeEmail(env.BREVO_FROM_EMAIL || env.PROPOSAL_NOTIFY_EMAIL);
+  const adminEmail = resolveAdminEmail(env);
 
   if (!apiKey || !fromEmail) {
     const err = new Error("Configurá BREVO_API_KEY y BREVO_FROM_EMAIL en las variables de entorno.");
@@ -12,7 +14,7 @@ export async function enviarCertificadoBrevo(data, env = process.env) {
     throw err;
   }
 
-  const to = String(data.to || "").trim();
+  const to = normalizeEmail(data.to);
   const pdfBase64 = String(data.pdfBase64 || "");
   const filename = String(data.filename || "certificado-aceptacion.pdf");
   const cliente = String(data.cliente || "");
@@ -44,9 +46,7 @@ export async function enviarCertificadoBrevo(data, env = process.env) {
     attachment: [{ name: filename, content: pdfBase64 }],
   };
 
-  if (adminEmail && adminEmail !== to) {
-    payload.bcc = [{ email: adminEmail }];
-  }
+  const copiaAdmin = attachAdminCopy(payload, to, adminEmail);
 
   const brevo = await fetch("https://api.brevo.com/v3/smtp/email", {
     method: "POST",
@@ -70,5 +70,5 @@ export async function enviarCertificadoBrevo(data, env = process.env) {
     throw err;
   }
 
-  return { ok: true, to, copiaAdmin: adminEmail && adminEmail !== to ? adminEmail : null };
+  return { ok: true, to, copiaAdmin };
 }

@@ -1,10 +1,12 @@
+import { attachAdminCopy, normalizeEmail, resolveAdminEmail } from "./brevo-admin-copy.js";
+
 /**
  * Email al cliente con enlace para revisar y confirmar un addendum.
  */
 export async function enviarEnlaceAddendumBrevo(data, env = process.env) {
   const apiKey = env.BREVO_API_KEY;
-  const fromEmail = env.BREVO_FROM_EMAIL || env.PROPOSAL_NOTIFY_EMAIL;
-  const adminEmail = env.ADMIN_EMAIL || env.PROPOSAL_NOTIFY_EMAIL || fromEmail;
+  const fromEmail = normalizeEmail(env.BREVO_FROM_EMAIL || env.PROPOSAL_NOTIFY_EMAIL);
+  const adminEmail = resolveAdminEmail(env);
 
   if (!apiKey || !fromEmail) {
     const err = new Error("Configurá BREVO_API_KEY y BREVO_FROM_EMAIL.");
@@ -12,7 +14,7 @@ export async function enviarEnlaceAddendumBrevo(data, env = process.env) {
     throw err;
   }
 
-  const to = String(data.to || "").trim();
+  const to = normalizeEmail(data.to);
   const url = String(data.url || "");
   const cliente = String(data.cliente || "");
   const titulo = String(data.titulo || "Addendum");
@@ -48,9 +50,7 @@ export async function enviarEnlaceAddendumBrevo(data, env = process.env) {
     textContent,
   };
 
-  if (adminEmail && adminEmail !== to) {
-    payload.bcc = [{ email: adminEmail }];
-  }
+  const copiaAdmin = attachAdminCopy(payload, to, adminEmail);
 
   const brevo = await fetch("https://api.brevo.com/v3/smtp/email", {
     method: "POST",
@@ -73,5 +73,5 @@ export async function enviarEnlaceAddendumBrevo(data, env = process.env) {
     throw err;
   }
 
-  return { ok: true, to };
+  return { ok: true, to, copiaAdmin };
 }
