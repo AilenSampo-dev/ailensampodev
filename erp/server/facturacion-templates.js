@@ -1,6 +1,7 @@
 import { readFileSync } from "fs";
 import { dirname, join } from "path";
 import { fileURLToPath } from "url";
+import { publicAppUrl } from "./contrato-publico.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const TEMPLATE_DIR = join(__dirname, "templates", "facturacion");
@@ -38,4 +39,10 @@ export function getFacturacionTemplateHtml(templateKey) {
 
 export function urlPreviewFacturacion(templateKey) {
   return FACTURACION_TEMPLATES[templateKey]?.previewPath || null;
+}
+
+export function urlFacturacionPublica(templateKey, env = process.env) {
+  const path = urlPreviewFacturacion(templateKey);
+  if (!path) return null;
+  return `${publicAppUrl(env)}${path}`;
 }

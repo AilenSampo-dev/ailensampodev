@@ -1,4 +1,5 @@
 import { attachAdminCopy, normalizeEmail, resolveAdminEmail } from "./brevo-admin-copy.js";
+import { transactionalEmailHtml } from "./email-brand.js";
 
 /**
  * Email al cliente con enlace único para firmar el contrato.
@@ -26,26 +27,35 @@ export async function enviarEnlaceFirmaBrevo(data, env = process.env) {
     throw err;
   }
 
+  const saludo = `Hola${representante ? ` ${representante}` : ""},`;
+  const intro = `Te enviamos el contrato${proyecto ? ` — <strong>${proyecto}</strong>` : ""}${cliente ? ` (${cliente})` : ""} para revisar y aceptar. Al confirmar recibirás el certificado con la huella digital del documento.`;
+
   const textContent = [
-    `Hola${representante ? ` ${representante}` : ""},`,
+    saludo,
     "",
-    `Te enviamos el contrato${proyecto ? ` — ${proyecto}` : ""}${cliente ? ` (${cliente})` : ""} para revisar y aceptar.`,
-    "",
-    "Abrí este enlace único, leé el documento y firmá con tu nombre completo como representante legal:",
+    `Contrato${proyecto ? ` — ${proyecto}` : ""}${cliente ? ` (${cliente})` : ""} para revisar y aceptar.`,
     "",
     url,
-    "",
-    "Al aceptar recibirás por email el certificado con la huella digital del documento.",
     "",
     "s(a) · Ailen Sampo · Sistemas a medida",
     "www.ailensampo.com",
   ].join("\n");
+
+  const htmlContent = transactionalEmailHtml({
+    saludo,
+    intro,
+    ctaHref: url,
+    ctaLabel: "Ver y aceptar contrato",
+    nota: "Enlace único e intransferible. Firmá con tu nombre completo como representante legal.",
+    linkFallback: "Si el botón no funciona, copiá este enlace:",
+  });
 
   const payload = {
     sender: { name: "Ailen Sampo · s(a)", email: fromEmail },
     to: [{ email: to, name: representante || cliente }],
     subject: `Contrato para aceptar · ${proyecto || "Documento"}`,
     textContent,
+    htmlContent,
   };
 
   const copiaAdmin = attachAdminCopy(payload, to, adminEmail);

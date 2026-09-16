@@ -1,7 +1,8 @@
 import { attachAdminCopy, normalizeEmail, resolveAdminEmail } from "./brevo-admin-copy.js";
+import { transactionalEmailHtml } from "./email-brand.js";
 
 /**
- * Email al cliente con enlace para revisar y confirmar un addendum.
+ * Email al cliente con botón para revisar y confirmar un addendum.
  */
 export async function enviarEnlaceAddendumBrevo(data, env = process.env) {
   const apiKey = env.BREVO_API_KEY;
@@ -26,28 +27,38 @@ export async function enviarEnlaceAddendumBrevo(data, env = process.env) {
     throw err;
   }
 
+  const saludo = `Hola${representante ? ` ${representante}` : ""},`;
+  const intro = `Te enviamos el addendum <strong>${titulo}</strong>${cliente ? ` (${cliente})` : ""} para revisar y confirmar. Podés confirmar respondiendo a este mail o usando el botón de abajo.`;
+
   const textContent = [
-    `Hola${representante ? ` ${representante}` : ""},`,
+    saludo,
     "",
-    `Te enviamos el addendum "${titulo}"${cliente ? ` (${cliente})` : ""} para revisar y confirmar.`,
+    `Addendum "${titulo}"${cliente ? ` (${cliente})` : ""} para revisar y confirmar.`,
     "",
-    "Podés confirmar de dos formas:",
-    "· Respondiendo a este mail con tu conformidad, o",
-    "· Abriendo el enlace, leyendo el documento y confirmando con tu nombre completo:",
-    "",
+    "Abrí el documento y confirmá con tu nombre completo:",
     url,
     "",
-    "Este addendum complementa el contrato ya firmado; no requiere el proceso completo de firma electrónica del contrato madre.",
+    "También podés responder a este mail con tu conformidad.",
     "",
     "s(a) · Ailen Sampo · Sistemas a medida",
     "www.ailensampo.com",
   ].join("\n");
 
+  const htmlContent = transactionalEmailHtml({
+    saludo,
+    intro,
+    ctaHref: url,
+    ctaLabel: "Ver y confirmar addendum",
+    nota: "Este addendum complementa el contrato ya firmado. Si preferís, respondé a este mail con tu conformidad.",
+    linkFallback: "Si el botón no funciona, copiá este enlace:",
+  });
+
   const payload = {
-    sender: { name: "Ailen Sampo · s(a)", email: fromEmail },
+    sender: { name: "Ailén Sampo · s(a)", email: fromEmail },
     to: [{ email: to, name: representante || cliente }],
     subject: `Addendum para confirmar · ${titulo}`,
     textContent,
+    htmlContent,
   };
 
   const copiaAdmin = attachAdminCopy(payload, to, adminEmail);
@@ -66,7 +77,7 @@ export async function enviarEnlaceAddendumBrevo(data, env = process.env) {
     const errText = await brevo.text();
     let msg = `Brevo: ${errText.slice(0, 200)}`;
     if (errText.includes("unrecognised IP") || errText.includes("unrecognized IP")) {
-      msg = "Brevo bloqueo esta IP. Autorizala en app.brevo.com → Security → Authorized IPs.";
+      msg = "Brevo bloqueó esta IP. Autorizala en app.brevo.com → Security → Authorized IPs.";
     }
     const err = new Error(msg);
     err.status = 502;
