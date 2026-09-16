@@ -1,3 +1,5 @@
+import { mergeStockinSeed } from "../src/lib/stockin-lavanda-seed.js";
+
 const ROW_ID = "main";
 const HISTORY_KEEP = 30;
 
@@ -204,45 +206,43 @@ export async function loadErpData(env = process.env) {
   }
 
   const rows = await res.json();
-  if (!rows.length) {
-    return { clientes: [], proyectos: [], dataVersion: 2, updatedAt: null };
-  }
-
   const row = rows[0];
   const sanitized = sanitizeErpPayload({
-    clientes: row.clientes ?? [],
-    proyectos: row.proyectos ?? [],
+    clientes: row?.clientes ?? [],
+    proyectos: row?.proyectos ?? [],
   });
 
   const result = {
     clientes: sanitized.clientes,
     proyectos: sanitized.proyectos,
-    dataVersion: row.data_version ?? 2,
-    updatedAt: row.updated_at ?? null,
+    dataVersion: row?.data_version ?? 2,
+    updatedAt: row?.updated_at ?? null,
   };
 
-  if (!result.clientes.length && !result.proyectos.length) {
-    const { mergeStockinSeed } = await import("../src/lib/stockin-lavanda-seed.js");
-    const seeded = mergeStockinSeed([], []);
-    const updatedAt = await saveErpData(
-      {
-        clientes: seeded.clientes,
-        proyectos: seeded.proyectos,
-        dataVersion: result.dataVersion,
-      },
-      env,
-      { skipSnapshot: true }
-    );
-    return {
+  return ensureStockinIfEmpty(result, env);
+}
+
+async function ensureStockinIfEmpty(result, env) {
+  if (result.clientes.length || result.proyectos.length) return result;
+
+  const seeded = mergeStockinSeed([], []);
+  const updatedAt = await saveErpData(
+    {
       clientes: seeded.clientes,
       proyectos: seeded.proyectos,
-      dataVersion: result.dataVersion,
-      updatedAt: updatedAt ?? new Date().toISOString(),
-      seeded: true,
-    };
-  }
+      dataVersion: result.dataVersion ?? 2,
+    },
+    env,
+    { skipSnapshot: true }
+  );
 
-  return result;
+  return {
+    clientes: seeded.clientes,
+    proyectos: seeded.proyectos,
+    dataVersion: result.dataVersion ?? 2,
+    updatedAt: updatedAt ?? new Date().toISOString(),
+    seeded: true,
+  };
 }
 
 function payloadFingerprint(clientes, proyectos) {
