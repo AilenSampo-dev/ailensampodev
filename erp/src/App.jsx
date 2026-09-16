@@ -9,7 +9,7 @@ import ConfirmDeleteModal from "./components/ConfirmDeleteModal.jsx";
 import BackupHistoryPanel from "./components/BackupHistoryPanel.jsx";
 import { obtenerAddendumElixio, mergeAddendumEnProyecto } from "./lib/addendum-model.js";
 import { asegurarPipeline, mergePipelineEnProyecto, etapaLabel } from "./lib/proyecto-etapas.js";
-import { checkAuthStatus, fetchErpData, saveErpData, logout as logoutSession, getToken } from "./lib/erp-api.js";
+import { checkAuthStatus, fetchErpData, saveErpData, seedStockinLavanda, logout as logoutSession, getToken } from "./lib/erp-api.js";
 
 /**
  * Panel de clientes — s(a)
@@ -165,6 +165,7 @@ function ErpPanel({ session, onLogout }) {
   const [syncError, setSyncError] = useState(null);
   const [deleteConfirm, setDeleteConfirm] = useState(null);
   const migratedRef = useRef(false);
+  const skipEmptySyncRef = useRef(true);
 
   useEffect(() => {
     (async () => {
@@ -233,6 +234,8 @@ function ErpPanel({ session, onLogout }) {
 
   useEffect(() => {
     if (!ready || !session.cloudBackup) return;
+    if (skipEmptySyncRef.current && !clientes.length && !proyectos.length) return;
+    skipEmptySyncRef.current = false;
     setSyncState("pending");
     const timer = setTimeout(async () => {
       try {
@@ -246,6 +249,25 @@ function ErpPanel({ session, onLogout }) {
     }, 900);
     return () => clearTimeout(timer);
   }, [clientes, proyectos, ready, session.cloudBackup]);
+
+  const restaurarStockin = async () => {
+    if (!window.confirm("¿Restaurar Stockin Lavanda en el ERP?")) return;
+    try {
+      setSyncState("pending");
+      await seedStockinLavanda();
+      const cloud = await fetchErpData();
+      if (Array.isArray(cloud.clientes)) {
+        setClientes(cloud.clientes);
+        setProyectos(cloud.proyectos ?? []);
+        skipEmptySyncRef.current = false;
+      }
+      setSyncState("ok");
+      setSyncError(null);
+    } catch (e) {
+      setSyncState("error");
+      setSyncError(e.message || "No se pudo restaurar Stockin");
+    }
+  };
 
   const activos = clientes.filter((c) => c.estado === "Activo");
   const mrr = activos.reduce((s, c) => s + (Number(c.feeMensual) || 0), 0);
@@ -457,6 +479,7 @@ function ErpPanel({ session, onLogout }) {
             onAddendum={abrirAddendum}
             onEtapas={abrirEtapas}
             highlightId={highlightCliente}
+            onRestaurarStockin={restaurarStockin}
             onClearHighlight={() => setHighlightCliente(null)} />
         )}
         {view === "proyectos" && (
@@ -578,8 +601,13 @@ function RowActions({ onEdit, onDel }) {
   );
 }
 
-function Empty({ texto }) {
-  return <div style={{ padding: "40px 0", color: t.faint, fontFamily: t.fMono, fontSize: 13 }}>{texto}</div>;
+function Empty({ texto, action }) {
+  return (
+    <div style={{ padding: "40px 0" }}>
+      <div style={{ color: t.faint, fontFamily: t.fMono, fontSize: 13, marginBottom: action ? 16 : 0 }}>{texto}</div>
+      {action}
+    </div>
+  );
 }
 
 function Dashboard({ mrr, activos, prospectos, enConstruccion, enProduccion, pendienteCobro, total }) {
@@ -632,7 +660,7 @@ function ContratoBtn({ onClick, aceptado, enviado }) {
   );
 }
 
-function Clientes({ clientes, proyectos, onNew, onEdit, onDel, onNewProyecto, onEditProyecto, onDelProyecto, onContrato, onFacturacion, onAddendum, onEtapas, highlightId, onClearHighlight }) {
+function Clientes({ clientes, proyectos, onNew, onEdit, onDel, onNewProyecto, onEditProyecto, onDelProyecto, onContrato, onFacturacion, onAddendum, onEtapas, onRestaurarStockin, highlightId, onClearHighlight }) {
   useEffect(() => {
     if (!highlightId) return;
     document.getElementById(`cliente-${highlightId}`)?.scrollIntoView({ behavior: "smooth", block: "center" });
@@ -643,7 +671,22 @@ function Clientes({ clientes, proyectos, onNew, onEdit, onDel, onNewProyecto, on
   return (
     <>
       <Header action={<AddBtn onClick={onNew}>Cliente</AddBtn>}>Clientes</Header>
-      {clientes.length === 0 ? <Empty texto="Sin clientes todavía." /> : (
+      {clientes.length === 0 ? (
+        <Empty
+          texto="Sin clientes todavía."
+          action={
+            onRestaurarStockin ? (
+              <button
+                type="button"
+                onClick={onRestaurarStockin}
+                style={{ background: t.pink, color: "#fff", border: "none", borderRadius: 99, padding: "10px 18px", fontSize: 13, fontWeight: 700 }}
+              >
+                Restaurar Stockin Lavanda
+              </button>
+            ) : null
+          }
+        />
+      ) : (
         <div>
           {clientes.map((c) => {
             const proys = proyectos.filter((p) => p.clienteId === c.id);
