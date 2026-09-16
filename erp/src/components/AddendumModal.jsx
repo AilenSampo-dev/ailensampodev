@@ -91,7 +91,9 @@ export default function AddendumModal({ proyecto, cliente, addendum, onSave, onC
         firmaUrl: r.url,
       };
       persistir(next);
-      setEnvioMsg({ ok: true, to: r.to, url: r.url });
+      setEnvioMsg({ ok: true, to: r.to, url: r.url, copiaAdmin: r.copiaAdmin });
+      const copiaTxt = r.copiaAdmin ? `\nCopia CC: ${r.copiaAdmin}` : "";
+      window.alert(`Addendum enviado a ${r.to}.${copiaTxt}`);
     } catch (e) {
       setEnvioMsg({ error: e.message });
     } finally {
@@ -243,7 +245,10 @@ export default function AddendumModal({ proyecto, cliente, addendum, onSave, onC
                   El cliente puede confirmar <strong>respondiendo al mail</strong> o usando el enlace (nombre + conformidad).
                 </p>
                 {envioMsg?.ok && (
-                  <p style={{ fontSize: 12, color: t.mint, marginBottom: 12 }}>Enviado a {envioMsg.to}</p>
+                  <p style={{ fontSize: 12, color: t.mint, marginBottom: 12 }}>
+                    Enviado a {envioMsg.to}
+                    {envioMsg.copiaAdmin ? ` · Copia CC: ${envioMsg.copiaAdmin}` : ""}
+                  </p>
                 )}
                 {doc.enviadoAt && !envioMsg?.ok && (
                   <p style={{ fontSize: 12, color: t.muted, marginBottom: 12 }}>

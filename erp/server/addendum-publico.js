@@ -126,7 +126,7 @@ export async function enviarAddendumAlCliente({ proyectoId, addendumId, html, ad
   await saveErpData(data, env);
 
   const url = addendumUrl(token, env);
-  await enviarEnlaceAddendumBrevo(
+  const mail = await enviarEnlaceAddendumBrevo(
     {
       to,
       url,
@@ -137,7 +137,7 @@ export async function enviarAddendumAlCliente({ proyectoId, addendumId, html, ad
     env
   );
 
-  return { ok: true, to, token, url };
+  return { ok: true, to, token, url, copiaAdmin: mail.copiaAdmin || null };
 }
 
 export async function obtenerAddendumPublico(token, env = process.env) {

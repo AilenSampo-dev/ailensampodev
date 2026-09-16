@@ -1,12 +1,13 @@
 import { FACTURACION_TEMPLATES, getFacturacionTemplateHtml } from "./facturacion-templates.js";
+import { attachAdminCopy, normalizeEmail, resolveAdminEmail } from "./brevo-admin-copy.js";
 
 /**
  * Envío de detalle de facturación HTML vía Brevo (dev + producción).
  */
 export async function enviarDetalleFacturacionBrevo(data, env = process.env) {
   const apiKey = env.BREVO_API_KEY;
-  const fromEmail = env.BREVO_FROM_EMAIL || env.PROPOSAL_NOTIFY_EMAIL;
-  const adminEmail = env.ADMIN_EMAIL || env.PROPOSAL_NOTIFY_EMAIL || fromEmail;
+  const fromEmail = normalizeEmail(env.BREVO_FROM_EMAIL || env.PROPOSAL_NOTIFY_EMAIL);
+  const adminEmail = resolveAdminEmail(env);
 
   if (!apiKey || !fromEmail) {
     const err = new Error("Configurá BREVO_API_KEY y BREVO_FROM_EMAIL en las variables de entorno.");
@@ -14,7 +15,7 @@ export async function enviarDetalleFacturacionBrevo(data, env = process.env) {
     throw err;
   }
 
-  const to = String(data.to || "").trim();
+  const to = normalizeEmail(data.to);
   const templateKey = String(data.templateKey || "").trim();
   const cliente = String(data.cliente || "Stockin Lavanda");
   const representante = String(data.representante || "").trim();
@@ -54,9 +55,7 @@ export async function enviarDetalleFacturacionBrevo(data, env = process.env) {
     htmlContent,
   };
 
-  if (adminEmail && adminEmail !== to) {
-    payload.bcc = [{ email: adminEmail }];
-  }
+  const copiaAdmin = attachAdminCopy(payload, to, adminEmail);
 
   const brevo = await fetch("https://api.brevo.com/v3/smtp/email", {
     method: "POST",
@@ -80,5 +79,5 @@ export async function enviarDetalleFacturacionBrevo(data, env = process.env) {
     throw err;
   }
 
-  return { ok: true, to, templateKey, copiaAdmin: adminEmail && adminEmail !== to ? adminEmail : null };
+  return { ok: true, to, templateKey, copiaAdmin };
 }
