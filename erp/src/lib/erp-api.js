@@ -63,6 +63,21 @@ export async function saveErpData(payload) {
   });
 }
 
+export async function fetchBackupHistory() {
+  return apiFetch("/api/erp/history");
+}
+
+export async function restoreBackup(id) {
+  return apiFetch("/api/erp/history-restore", {
+    method: "POST",
+    body: JSON.stringify({ id }),
+  });
+}
+
+export async function seedStockinLavanda() {
+  return apiFetch("/api/erp/seed-stockin", { method: "POST", body: "{}" });
+}
+
 export function logout() {
   clearToken();
 }

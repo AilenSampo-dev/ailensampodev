@@ -1,4 +1,5 @@
 const ROW_ID = "main";
+const HISTORY_KEEP = 30;
 
 /** Normaliza URL copiada con comillas, slash final o connection string postgres. */
 export function normalizeSupabaseUrl(raw = "") {
@@ -170,6 +171,9 @@ async function supabaseFetch(url, options, action) {
 }
 
 function parseSupabaseError(err, action) {
+  if (err.includes("erp_backup_history") && (err.includes("does not exist") || err.includes("PGRST205"))) {
+    return "Falta la tabla erp_backup_history. Ejecutá erp/supabase/migration-backup-history.sql en Supabase.";
+  }
   if (err.includes("erp_backup") && (err.includes("does not exist") || err.includes("PGRST205"))) {
     return "Falta la tabla erp_backup en Supabase. Ejecutá erp/supabase/schema.sql en el SQL Editor.";
   }
@@ -218,9 +222,183 @@ export async function loadErpData(env = process.env) {
   };
 }
 
-export async function saveErpData({ clientes, proyectos, dataVersion = 2 }, env = process.env) {
+function payloadFingerprint(clientes, proyectos) {
+  return JSON.stringify({ clientes: clientes ?? [], proyectos: proyectos ?? [] });
+}
+
+async function insertBackupSnapshot({ clientes, proyectos, dataVersion = 2, source = "auto" }, env) {
   const cfg = supabaseConfig(env);
   if (!cfg) return null;
+
+  const sanitized = sanitizeErpPayload({ clientes, proyectos });
+  const body = {
+    clientes: sanitized.clientes,
+    proyectos: sanitized.proyectos,
+    data_version: dataVersion,
+    source,
+    clientes_count: sanitized.clientes.length,
+    proyectos_count: sanitized.proyectos.length,
+    created_at: new Date().toISOString(),
+  };
+
+  const res = await supabaseFetch(
+    `${cfg.url}/rest/v1/erp_backup_history`,
+    {
+      method: "POST",
+      headers: { ...headers(cfg.key), Prefer: "return=minimal" },
+      body: JSON.stringify(body),
+    },
+    "historial"
+  );
+
+  if (!res.ok) {
+    const err = await res.text();
+    throw new Error(parseSupabaseError(err, "historial"));
+  }
+
+  return true;
+}
+
+async function pruneBackupHistory(env, keep = HISTORY_KEEP) {
+  const cfg = supabaseConfig(env);
+  if (!cfg) return;
+
+  const listRes = await supabaseFetch(
+    `${cfg.url}/rest/v1/erp_backup_history?select=id&order=created_at.desc&offset=${keep}&limit=100`,
+    { headers: headers(cfg.key) },
+    "historial"
+  );
+  if (!listRes.ok) return;
+
+  const stale = await listRes.json();
+  if (!stale.length) return;
+
+  const ids = stale.map((r) => r.id).join(",");
+  await supabaseFetch(
+    `${cfg.url}/rest/v1/erp_backup_history?id=in.(${ids})`,
+    { method: "DELETE", headers: headers(cfg.key) },
+    "historial"
+  );
+}
+
+export async function listBackupHistory(limit = HISTORY_KEEP, env = process.env) {
+  const cfg = supabaseConfig(env);
+  if (!cfg) return [];
+
+  const res = await supabaseFetch(
+    `${cfg.url}/rest/v1/erp_backup_history?select=id,source,clientes_count,proyectos_count,created_at&order=created_at.desc&limit=${limit}`,
+    { headers: headers(cfg.key) },
+    "historial"
+  );
+
+  if (!res.ok) {
+    const err = await res.text();
+    throw new Error(parseSupabaseError(err, "historial"));
+  }
+
+  return res.json();
+}
+
+export async function loadBackupSnapshot(id, env = process.env) {
+  const cfg = supabaseConfig(env);
+  if (!cfg) return null;
+
+  const res = await supabaseFetch(
+    `${cfg.url}/rest/v1/erp_backup_history?id=eq.${encodeURIComponent(id)}&select=id,clientes,proyectos,data_version,created_at`,
+    { headers: headers(cfg.key) },
+    "historial"
+  );
+
+  if (!res.ok) {
+    const err = await res.text();
+    throw new Error(parseSupabaseError(err, "historial"));
+  }
+
+  const rows = await res.json();
+  if (!rows.length) return null;
+
+  const row = rows[0];
+  const sanitized = sanitizeErpPayload({
+    clientes: row.clientes ?? [],
+    proyectos: row.proyectos ?? [],
+  });
+
+  return {
+    id: row.id,
+    clientes: sanitized.clientes,
+    proyectos: sanitized.proyectos,
+    dataVersion: row.data_version ?? 2,
+    createdAt: row.created_at,
+  };
+}
+
+export async function restoreBackupSnapshot(id, env = process.env) {
+  const snapshot = await loadBackupSnapshot(id, env);
+  if (!snapshot) throw new Error("Backup no encontrado.");
+
+  const current = await loadErpData(env);
+  if (current && (current.clientes?.length || current.proyectos?.length)) {
+    await insertBackupSnapshot(
+      {
+        clientes: current.clientes,
+        proyectos: current.proyectos,
+        dataVersion: current.dataVersion,
+        source: "pre-restore",
+      },
+      env
+    );
+  }
+
+  const updatedAt = await saveErpData(
+    {
+      clientes: snapshot.clientes,
+      proyectos: snapshot.proyectos,
+      dataVersion: snapshot.dataVersion,
+    },
+    env,
+    { skipSnapshot: true }
+  );
+
+  await pruneBackupHistory(env);
+
+  return {
+    clientes: snapshot.clientes,
+    proyectos: snapshot.proyectos,
+    dataVersion: snapshot.dataVersion,
+    updatedAt,
+    restoredFrom: snapshot.createdAt,
+  };
+}
+
+export async function saveErpData(
+  { clientes, proyectos, dataVersion = 2 },
+  env = process.env,
+  { skipSnapshot = false } = {}
+) {
+  const cfg = supabaseConfig(env);
+  if (!cfg) return null;
+
+  if (!skipSnapshot) {
+    try {
+      const current = await loadErpData(env);
+      const nextFp = payloadFingerprint(clientes, proyectos);
+      const curFp = payloadFingerprint(current?.clientes, current?.proyectos);
+      if (current && curFp !== nextFp && (current.clientes?.length || current.proyectos?.length)) {
+        await insertBackupSnapshot(
+          {
+            clientes: current.clientes,
+            proyectos: current.proyectos,
+            dataVersion: current.dataVersion,
+            source: "auto",
+          },
+          env
+        );
+        await pruneBackupHistory(env);
+      }
+    } catch (e) {
+      if (e.message?.includes("erp_backup_history")) throw e;
+    }
+  }
 
   const sanitized = sanitizeErpPayload({ clientes, proyectos });
   const body = {

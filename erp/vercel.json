@@ -53,6 +53,15 @@
     },
     "api/erp/health.js": {
       "maxDuration": 15
+    },
+    "api/erp/history.js": {
+      "maxDuration": 15
+    },
+    "api/erp/history-restore.js": {
+      "maxDuration": 30
+    },
+    "api/erp/seed-stockin.js": {
+      "maxDuration": 30
     }
   }
 }

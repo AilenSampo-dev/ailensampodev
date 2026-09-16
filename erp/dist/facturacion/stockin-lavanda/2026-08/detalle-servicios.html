@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Detalle de facturación · Stockin Lavanda · s(a)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,400;0,6..12,600;0,6..12,700;0,6..12,900;1,6..12,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --night-plum:#3A1E66;
+    --soft-lilac:#E1ADFF;
+    --orchid-pink:#F656BF;
+    --orange:#FF6437;
+    --blue:#6882EB;
+    --mint:#ABE3D2;
+    --grey:#4D4F54;
+    --ink:#1a1030;
+    --paper:#ffffff;
+    --paper-2:#faf7fe;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Nunito Sans',system-ui,sans-serif;color:var(--ink);background:var(--night-plum);line-height:1.55;font-size:15.5px}
+  .mono{font-family:'DM Mono',monospace}
+  .page{max-width:800px;margin:0 auto;background:var(--paper);padding:56px 60px;position:relative}
+  .page+.page{margin-top:24px}
+  .paren{color:var(--orchid-pink)}
+  .eyebrow{font-family:'DM Mono',monospace;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--orchid-pink);margin-bottom:12px;display:block}
+  .kicker{width:40px;height:4px;background:var(--orchid-pink);border-radius:2px;margin-bottom:20px}
+  h1{font-size:30px;font-weight:900;color:var(--night-plum);letter-spacing:-.02em;margin-bottom:6px}
+  .sub{color:var(--grey);font-size:15px;margin-bottom:28px}
+  h3{font-size:14px;color:var(--night-plum);font-weight:800;margin:24px 0 4px}
+
+  .meta-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:30px}
+  .meta-box{background:var(--paper-2);border-radius:12px;padding:14px 18px}
+  .meta-box .l{font-family:'DM Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--grey)}
+  .meta-box .v{font-weight:800;color:var(--night-plum);font-size:15px;margin-top:2px}
+
+  table{width:100%;border-collapse:collapse;margin:14px 0 6px;font-size:14px}
+  th{text-align:left;font-family:'DM Mono',monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--grey);padding:9px 10px;border-bottom:2px solid var(--night-plum)}
+  td{padding:10px;border-bottom:1px solid #eee;vertical-align:top}
+  td.num{text-align:right;font-family:'DM Mono',monospace;white-space:nowrap}
+  tr:last-child td{border-bottom:none}
+  .row-sub td{border-top:2px solid var(--night-plum);font-weight:800;color:var(--night-plum)}
+  .row-bonif td{color:var(--orchid-pink);font-weight:700}
+  .row-neto td{background:var(--night-plum);color:#fff;font-weight:900;font-size:16px;border-radius:0}
+  .row-neto td:first-child{border-radius:10px 0 0 10px}
+  .row-neto td:last-child{border-radius:0 10px 10px 0}
+
+  .hl{background:linear-gradient(180deg,transparent 8%,var(--mint) 8% 88%,transparent 88%);padding:0 4px;font-weight:700;color:var(--night-plum)}
+  .note{background:var(--paper-2);border-left:4px solid var(--orchid-pink);border-radius:0 10px 10px 0;padding:14px 18px;margin:22px 0;font-size:13.5px;color:var(--grey)}
+  .note strong{color:var(--night-plum)}
+
+  .foot{font-size:11.5px;color:var(--grey);border-top:1px solid #eee;padding-top:14px;margin-top:36px;display:flex;justify-content:space-between}
+
+  @media print{
+    body{background:#fff}
+    .page{max-width:none;margin:0;padding:34px 40px;page-break-after:always}
+    .page+.page{margin-top:0}
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+  <span class="eyebrow">s <span class="paren">(</span>a<span class="paren">)</span> · Detalle de facturación</span>
+  <div class="kicker"></div>
+  <h1>Licencia de uso — Mes 2</h1>
+  <p class="sub">Respaldo de valorización del programa Elixio Coins — evolución fuera del Anexo A.</p>
+
+  <div class="meta-grid">
+    <div class="meta-box"><div class="l">Cliente</div><div class="v">Stockin Lavanda</div></div>
+    <div class="meta-box"><div class="l">Concepto</div><div class="v">Licencia de uso, mes 2</div></div>
+    <div class="meta-box"><div class="l">Período de desarrollo</div><div class="v">Septiembre 2026</div></div>
+    <div class="meta-box"><div class="l">Neto facturado</div><div class="v">USD 1.500</div></div>
+  </div>
+
+  <h3>Detalle de desarrollo — Programa Elixio Coins</h3>
+  <table>
+    <tr><th>Componente</th><th class="num">USD</th></tr>
+    <tr><td>Motor Elixio Coins en ERP — acreditación, elegibilidad, reversos por NC/cancelación</td><td class="num">1.200</td></tr>
+    <tr><td>Portal cliente elixio.com.ar — login DNI, saldo, historial, canje, PWA</td><td class="num">1.600</td></tr>
+    <tr><td>Canje en mostrador — vouchers ELX-…, integración con Pedidos</td><td class="num">700</td></tr>
+    <tr><td>Ofertas exclusivas — ABM, activación por cliente, códigos OFR-…</td><td class="num">400</td></tr>
+    <tr><td>Gestión interna /elixio-coins — participantes, simulador, estadísticas</td><td class="num">800</td></tr>
+    <tr><td>Sorteos y premios — mecánica, aviso ganador, export</td><td class="num">350</td></tr>
+    <tr><td>Contenidos y legales — bases y condiciones, privacidad, términos</td><td class="num">200</td></tr>
+    <tr><td>Infraestructura dominio Elixio — DNS, Nginx, HTTPS, routing</td><td class="num">100</td></tr>
+    <tr><td>Configuración GA4 (Google Analytics 4) en portal Elixio</td><td class="num">200</td></tr>
+    <tr class="row-sub"><td>Valor de mercado — Elixio Coins, sep</td><td class="num">5.550</td></tr>
+    <tr class="row-bonif"><td>Bonificación de desarrollo — 100% (evolución bonificada)</td><td class="num">−5.550</td></tr>
+    <tr class="row-neto"><td>Neto desarrollo — Elixio Coins</td><td class="num">USD 0</td></tr>
+  </table>
+
+  <div class="note">
+    <span class="hl">Elixio Coins es una evolución</span> acordada con posterioridad al contrato original, fuera del Anexo A (cláusula 6). Se bonifica en su totalidad, en los mismos términos que el desarrollo del ERP.
+  </div>
+
+  <h3>Licencia de uso, operación y evolución — mes 2</h3>
+  <p class="sub" style="margin-bottom:10px;font-size:13.5px">Concepto independiente del desarrollo — cláusula 6 del contrato. Precio fijo mensual, no derivado de la bonificación anterior.</p>
+  <table>
+    <tr><th>Componente incluido</th><th class="num"></th></tr>
+    <tr><td>Uso y operación — infraestructura gestionada, backups verificados, monitoreo, uptime, mesa de tickets</td><td class="num">—</td></tr>
+    <tr><td>Evolución — mantenimiento al día con ARCA y plataformas integradas, mejoras continuas</td><td class="num">—</td></tr>
+    <tr><td>Consumo — capacidades IA/mensajería cuando se incorporen (facturado aparte según uso real)</td><td class="num">—</td></tr>
+    <tr class="row-neto"><td>Total licencia — mes 2</td><td class="num">USD 1.500</td></tr>
+  </table>
+
+  <div class="note">
+    <strong>Total facturado, mes 2:</strong> Desarrollo bonificado (USD 0) + Licencia de uso (USD 1.500) = <span class="hl">USD 1.500</span> neto.
+  </div>
+
+  <h3 style="margin-top:34px">Resumen del período (2 mensualidades)</h3>
+  <table>
+    <tr><th>Concepto</th><th class="num">USD</th></tr>
+    <tr><td>Valor de mercado del desarrollo — ERP (jun–ago)</td><td class="num">32.950</td></tr>
+    <tr><td>Valor de mercado del desarrollo — Elixio Coins (sep)</td><td class="num">5.550</td></tr>
+    <tr class="row-sub"><td>Total valor de mercado desarrollado</td><td class="num">38.500</td></tr>
+    <tr class="row-bonif"><td>Bonificación de desarrollo — 100%</td><td class="num">−38.500</td></tr>
+    <tr><td>Licencia de uso, mes 1</td><td class="num">1.500</td></tr>
+    <tr><td>Licencia de uso, mes 2</td><td class="num">1.500</td></tr>
+    <tr class="row-neto"><td>Neto cobrado — 2 facturas</td><td class="num">USD 3.000</td></tr>
+  </table>
+
+  <div class="foot">
+    <span class="mono">s (a) · Sistemas a medida</span>
+    <span>Detalle de facturación · 02</span>
+  </div>
+</div>
+
+</body>
+</html>
