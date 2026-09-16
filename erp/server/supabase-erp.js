@@ -214,12 +214,35 @@ export async function loadErpData(env = process.env) {
     proyectos: row.proyectos ?? [],
   });
 
-  return {
+  const result = {
     clientes: sanitized.clientes,
     proyectos: sanitized.proyectos,
     dataVersion: row.data_version ?? 2,
     updatedAt: row.updated_at ?? null,
   };
+
+  if (!result.clientes.length && !result.proyectos.length) {
+    const { mergeStockinSeed } = await import("../src/lib/stockin-lavanda-seed.js");
+    const seeded = mergeStockinSeed([], []);
+    const updatedAt = await saveErpData(
+      {
+        clientes: seeded.clientes,
+        proyectos: seeded.proyectos,
+        dataVersion: result.dataVersion,
+      },
+      env,
+      { skipSnapshot: true }
+    );
+    return {
+      clientes: seeded.clientes,
+      proyectos: seeded.proyectos,
+      dataVersion: result.dataVersion,
+      updatedAt: updatedAt ?? new Date().toISOString(),
+      seeded: true,
+    };
+  }
+
+  return result;
 }
 
 function payloadFingerprint(clientes, proyectos) {
@@ -376,7 +399,9 @@ export async function saveErpData(
   { skipSnapshot = false } = {}
 ) {
   const cfg = supabaseConfig(env);
-  if (!cfg) return null;
+  if (!cfg) {
+    throw new Error("Supabase no configurado. Agregá SUPABASE_URL y SUPABASE_SERVICE_ROLE_KEY.");
+  }
 
   if (!skipSnapshot) {
     try {
