@@ -39,7 +39,42 @@ function updateAddendumInData(data, proyectoId, addendumId, patch) {
   return nextAddendums[aIdx];
 }
 
-export async function enviarAddendumAlCliente({ proyectoId, addendumId, html }, env = process.env) {
+function findAddendumInProyecto(proyecto, { addendumId, addendumSnapshot }) {
+  const list = proyecto.addendums || [];
+  let found = list.find((a) => a.id === addendumId);
+  if (!found && addendumSnapshot?.id) {
+    found = list.find((a) => a.id === addendumSnapshot.id);
+  }
+  if (!found && addendumSnapshot?.slug) {
+    found = list.find((a) => a.slug === addendumSnapshot.slug);
+  }
+  return found;
+}
+
+/** Inserta o actualiza el addendum desde el ERP local antes de enviar por mail. */
+function upsertAddendumInData(data, proyectoId, snapshot, html) {
+  const pIdx = data.proyectos.findIndex((p) => p.id === proyectoId);
+  if (pIdx < 0 || !snapshot?.id) return null;
+
+  const proyecto = data.proyectos[pIdx];
+  const addendums = [...(proyecto.addendums || [])];
+  const idx = addendums.findIndex(
+    (a) => a.id === snapshot.id || (snapshot.slug && a.slug === snapshot.slug)
+  );
+  const merged = {
+    ...(idx >= 0 ? addendums[idx] : {}),
+    ...snapshot,
+    html: html || snapshot.html || (idx >= 0 ? addendums[idx].html : ""),
+  };
+
+  if (idx >= 0) addendums[idx] = merged;
+  else addendums.push(merged);
+
+  data.proyectos[pIdx] = { ...proyecto, addendums };
+  return merged;
+}
+
+export async function enviarAddendumAlCliente({ proyectoId, addendumId, html, addendum: addendumSnapshot }, env = process.env) {
   if (!isCloudBackupEnabled(env)) {
     const err = new Error("Configurá Supabase para enviar addendums con enlace al cliente.");
     err.status = 503;
@@ -54,9 +89,14 @@ export async function enviarAddendumAlCliente({ proyectoId, addendumId, html }, 
     throw err;
   }
 
-  const addendum = (proyecto.addendums || []).find((a) => a.id === addendumId);
+  let addendum = findAddendumInProyecto(proyecto, { addendumId, addendumSnapshot });
+  if (!addendum && addendumSnapshot) {
+    addendum = upsertAddendumInData(data, proyectoId, addendumSnapshot, html);
+  }
   if (!addendum) {
-    const err = new Error("Addendum no encontrado.");
+    const err = new Error(
+      "Addendum no encontrado en Supabase. Guardá el borrador en Redactar e intentá de nuevo."
+    );
     err.status = 404;
     throw err;
   }
@@ -75,7 +115,7 @@ export async function enviarAddendumAlCliente({ proyectoId, addendumId, html }, 
   }
 
   const token = addendum.firmaToken || crypto.randomUUID();
-  updateAddendumInData(data, proyectoId, addendumId, {
+  updateAddendumInData(data, proyectoId, addendum.id, {
     html: html || addendum.html,
     firmaToken: token,
     estado: "enviado",

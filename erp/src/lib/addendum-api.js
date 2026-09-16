@@ -1,6 +1,6 @@
 import { getToken } from "./erp-api.js";
 
-export async function enviarAddendumAlCliente(proyectoId, addendumId, html) {
+export async function enviarAddendumAlCliente(proyectoId, addendumId, html, addendum) {
   const token = getToken();
   const res = await fetch("/api/addendum/enviar", {
     method: "POST",
@@ -8,7 +8,7 @@ export async function enviarAddendumAlCliente(proyectoId, addendumId, html) {
       "Content-Type": "application/json",
       ...(token ? { Authorization: `Bearer ${token}` } : {}),
     },
-    body: JSON.stringify({ proyectoId, addendumId, html }),
+    body: JSON.stringify({ proyectoId, addendumId, html, addendum }),
   });
   const data = await res.json().catch(() => ({}));
   if (!res.ok) throw new Error(data.error || "No se pudo enviar el addendum.");
