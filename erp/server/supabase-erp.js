@@ -1,4 +1,9 @@
 import { mergeStockinSeed } from "./stockin-lavanda-seed.js";
+import {
+  enrichProyectosConFirmas,
+  loadFirmasForProyectos,
+  syncFirmasFromProyectos,
+} from "./firmas-erp.js";
 
 const ROW_ID = "main";
 const HISTORY_KEEP = 30;
@@ -172,9 +177,42 @@ async function supabaseFetch(url, options, action) {
   return res;
 }
 
+function dbDeps(cfg) {
+  return { cfg, headers, supabaseFetch };
+}
+
+function proyectosNeedHashRepair(before, after) {
+  for (let i = 0; i < after.length; i++) {
+    const prev = before[i]?.contratoAceptacion?.contentHash;
+    const next = after[i]?.contratoAceptacion?.contentHash;
+    if (!prev && next) return true;
+
+    const prevAds = before[i]?.addendums || [];
+    const nextAds = after[i]?.addendums || [];
+    for (let j = 0; j < nextAds.length; j++) {
+      if (prevAds[j]?.aceptacion?.contentHash) continue;
+      if (nextAds[j]?.aceptacion?.contentHash) return true;
+    }
+  }
+  return false;
+}
+
+async function enrichProyectosFromDb(proyectos, env) {
+  const cfg = supabaseConfig(env);
+  if (!cfg || !proyectos?.length) return proyectos;
+
+  const deps = dbDeps(cfg);
+  const ids = proyectos.map((p) => p.id);
+  const firmas = await loadFirmasForProyectos(ids, deps);
+  return enrichProyectosConFirmas(proyectos, firmas);
+}
+
 function parseSupabaseError(err, action) {
   if (err.includes("erp_backup_history") && (err.includes("does not exist") || err.includes("PGRST205"))) {
     return "Falta la tabla erp_backup_history. Ejecutá erp/supabase/migration-backup-history.sql en Supabase.";
+  }
+  if (err.includes("erp_firmas") && (err.includes("does not exist") || err.includes("PGRST205"))) {
+    return "Falta la tabla erp_firmas. Ejecutá erp/supabase/migration-firmas.sql en Supabase.";
   }
   if (err.includes("erp_backup") && (err.includes("does not exist") || err.includes("PGRST205"))) {
     return "Falta la tabla erp_backup en Supabase. Ejecutá erp/supabase/schema.sql en el SQL Editor.";
@@ -212,14 +250,35 @@ export async function loadErpData(env = process.env) {
     proyectos: row?.proyectos ?? [],
   });
 
+  const proyectosEnriched = await enrichProyectosFromDb(sanitized.proyectos, env);
+  const repaired = proyectosNeedHashRepair(sanitized.proyectos, proyectosEnriched);
+
   const result = {
     clientes: sanitized.clientes,
-    proyectos: sanitized.proyectos,
+    proyectos: proyectosEnriched,
     dataVersion: row?.data_version ?? 2,
     updatedAt: row?.updated_at ?? null,
   };
 
-  return ensureStockinIfEmpty(result, env);
+  const stocked = await ensureStockinIfEmpty(result, env);
+
+  if (repaired && stocked.proyectos?.length && !stocked.seeded) {
+    try {
+      await saveErpData(
+        {
+          clientes: stocked.clientes,
+          proyectos: stocked.proyectos,
+          dataVersion: stocked.dataVersion,
+        },
+        env,
+        { skipSnapshot: true }
+      );
+    } catch {
+      /* lectura no debe fallar si el reparo no persiste */
+    }
+  }
+
+  return stocked;
 }
 
 async function ensureStockinIfEmpty(result, env) {
@@ -346,10 +405,12 @@ export async function loadBackupSnapshot(id, env = process.env) {
     proyectos: row.proyectos ?? [],
   });
 
+  const proyectos = await enrichProyectosFromDb(sanitized.proyectos, env);
+
   return {
     id: row.id,
     clientes: sanitized.clientes,
-    proyectos: sanitized.proyectos,
+    proyectos,
     dataVersion: row.data_version ?? 2,
     createdAt: row.created_at,
   };
@@ -453,5 +514,12 @@ export async function saveErpData(
   }
 
   const rows = await res.json();
+
+  try {
+    await syncFirmasFromProyectos(sanitized.proyectos ?? [], dbDeps(cfg));
+  } catch (e) {
+    if (e.message?.includes("erp_firmas")) throw e;
+  }
+
   return rows[0]?.updated_at ?? body.updated_at;
 }

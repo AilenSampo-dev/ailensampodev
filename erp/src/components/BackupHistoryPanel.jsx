@@ -135,7 +135,7 @@ export default function BackupHistoryPanel({ onRestored }) {
       )}
 
       <p style={{ fontFamily: t.fMono, fontSize: 8, color: t.faint, lineHeight: 1.4, marginTop: 6, marginBottom: 0 }}>
-        Guarda los últimos 30 cambios en Supabase.
+        Guarda los últimos 30 cambios en Supabase. Las huellas SHA-256 de contratos firmados se guardan aparte y se restauran solas.
       </p>
     </div>
   );

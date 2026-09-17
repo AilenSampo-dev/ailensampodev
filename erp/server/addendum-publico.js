@@ -1,6 +1,6 @@
 import crypto from "crypto";
 import { loadErpData, saveErpData, isCloudBackupEnabled } from "./supabase-erp.js";
-import { validarNombreEscrito } from "../src/lib/huella-browser.js";
+import { calcularHuella, validarNombreEscrito } from "../src/lib/huella-browser.js";
 import { enviarEnlaceAddendumBrevo } from "./enviar-enlace-addendum-brevo.js";
 import { publicAppUrl } from "./contrato-publico.js";
 
@@ -219,11 +219,14 @@ export async function aceptarAddendumPublico(body, req, env = process.env) {
   }
 
   const acceptedAt = new Date();
+  const contentHash = await calcularHuella(html);
   const aceptacion = {
     typedName,
     clientEmail: emailCliente(cliente) || "—",
     ipAddress: clientIp(req),
     userAgent: String(body.userAgent || req.headers?.["user-agent"] || "").slice(0, 512),
+    contentHash,
+    acceptedAt: acceptedAt.toISOString(),
     metodo: "web",
     fecha: acceptedAt.toLocaleString("es-AR", { dateStyle: "long", timeStyle: "medium" }),
     nota: null,
