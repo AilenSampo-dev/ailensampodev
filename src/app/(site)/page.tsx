@@ -19,21 +19,25 @@ export default function HomePage() {
   return (
     <>
       <main className={styles.hero} {...sectionProps("hero")}>
+        {/* SEALED hero — ver .cursor/rules/hero-sealed.mdc */}
         <SectionTag section="hero" />
-        <GridOverlay />        <StatusBadge variant="hero" className={styles.heroStatus} />
+        <GridOverlay />
+        <StatusBadge variant="hero" className={styles.heroStatus} />
         <div className={styles.scene}>
-          <WindowFrame variant="light" className={styles.windowLight} buzz>
-            Si vos frenas
-            <br />
-            y tu negocio
-            <br />
-            se detiene
-            <br />
-            con vos...
-          </WindowFrame>
+          <div className={styles.windowLight}>
+            <WindowFrame variant="light" buzz>
+              Si vos frenas
+              <br />
+              y tu negocio
+              <br />
+              se detiene
+              <br />
+              con vos...
+            </WindowFrame>
+          </div>
 
           <div className={`${styles.windowDarkWrap} anim-messenger-buzz-delayed`}>
-            <WindowFrame variant="dark" className={styles.windowDark}>
+            <WindowFrame variant="dark">
               Estás sosteniendo a
               <br />
               pulso lo que podría
@@ -49,14 +53,19 @@ export default function HomePage() {
               height={130}
             />
 
-            <span className={styles.bangs} aria-hidden="true">
-              (!!)
-            </span>
+            <img
+              className={styles.admiracion}
+              src="/assets/recursos-graficos/face-admiracion-yellow.svg"
+              alt=""
+              width={130}
+              height={130}
+            />
           </div>
         </div>
       </main>
 
       <section className={styles.tickerWrap} {...sectionProps("ticker")}>
+        {/* SEALED ticker — ver .cursor/rules/hero-sealed.mdc */}
         <SectionTag section="ticker" tone="light" />
         <Ticker lead={TICKER_LEAD} emphasis={TICKER_EMPHASIS} />
       </section>

@@ -1,3 +1,4 @@
+/* SEALED — ticker (slide 01). Ver .cursor/rules/hero-sealed.mdc */
 import styles from "./Ticker.module.css";
 
 type TickerProps = {

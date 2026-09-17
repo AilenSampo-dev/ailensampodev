@@ -1,3 +1,4 @@
+/* SEALED — hero + ticker (slide 01). No editar salvo pedido explícito. Ver .cursor/rules/hero-sealed.mdc */
 .hero {
   position: relative;
   flex: 0 0 auto;
@@ -18,7 +19,7 @@
   );
 }
 
-.heroStatus {
+.hero .heroStatus {
   display: none;
 }
 
@@ -28,6 +29,7 @@
   width: min(100%, 42rem);
   height: min(52vh, 22rem);
   min-height: 18rem;
+  overflow: visible;
 }
 
 .windowLight {
@@ -44,39 +46,32 @@
   left: 28%;
   width: min(62%, 24rem);
   z-index: 3;
-}
-
-.windowDark {
-  width: 100%;
+  overflow: visible;
 }
 
 .warning {
   position: absolute;
   z-index: 5;
-  left: -2.35rem;
-  bottom: -1.65rem;
+  left: -2.75rem;
+  bottom: -2.15rem;
   width: 6.75rem;
   height: auto;
   transform: rotate(-6deg);
   pointer-events: none;
 }
 
-.bangs {
+.admiracion {
   position: absolute;
-  z-index: 5;
-  top: -1.35rem;
-  right: 0.15rem;
-  font-family: "Courier New", Courier, monospace;
-  font-size: clamp(1.45rem, 2.6vw, 1.9rem);
-  font-weight: 700;
-  line-height: 1;
-  color: #faf26f;
+  z-index: 6;
+  top: -3.35rem;
+  right: -1.85rem;
+  width: clamp(5.25rem, 13vw, 8.25rem);
+  height: auto;
   transform: rotate(4deg);
-  letter-spacing: 0.02em;
   pointer-events: none;
 }
 
-/* Tablet */
+/* Tablet — solo espaciado; proporciones del hero igual que desktop */
 @media (max-width: 900px) {
   .hero {
     padding: 2rem 1.5rem 2.25rem;
@@ -85,30 +80,7 @@
   }
 
   .scene {
-    width: min(100%, 34rem);
-    height: auto;
-    min-height: 19rem;
-  }
-
-  .windowLight {
-    width: min(52%, 16rem);
-  }
-
-  .windowDarkWrap {
-    top: 36%;
-    left: 22%;
-    width: min(68%, 21rem);
-  }
-
-  .warning {
-    left: -2rem;
-    bottom: -1.45rem;
-    width: 5.85rem;
-  }
-
-  .bangs {
-    top: -1.15rem;
-    font-size: 1.65rem;
+    width: min(100%, 42rem);
   }
 }
 
@@ -118,72 +90,77 @@
     flex: 0 0 auto;
     align-items: center;
     justify-content: flex-start;
-    padding: 0.75rem 1rem 1rem;
+    padding: 0.75rem 1rem 0.35rem;
     min-height: auto;
   }
 
-  .heroStatus {
+  .hero .heroStatus {
     display: flex;
     position: relative;
     z-index: 2;
     justify-content: center;
     width: 100%;
     max-width: 42rem;
-    margin-bottom: 0.75rem;
+    margin-bottom: 2.35rem;
   }
 
   .scene {
-    width: 100%;
-    max-width: 42rem;
+    width: min(20.5rem, calc(100% - 0.5rem));
+    margin-inline: auto;
     height: min(50vh, 20rem);
     min-height: 17.5rem;
   }
 
   .windowLight {
+    left: 5%;
     width: min(46%, 17.5rem);
   }
 
   .windowDarkWrap {
     top: 38%;
-    left: 28%;
+    left: 33%;
     width: min(62%, 24rem);
   }
 
   .warning {
-    left: -1.75rem;
-    bottom: -1.45rem;
-    width: 5.75rem;
+    left: -2.45rem;
+    bottom: -2.05rem;
+    width: 5.5rem;
   }
 
-  .bangs {
-    top: -1.2rem;
-    right: 0.1rem;
-    font-size: 1.5rem;
+  .admiracion {
+    top: -2.85rem;
+    right: -1.65rem;
+    width: clamp(5.25rem, 18vw, 7.75rem);
   }
 }
 
 @media (max-width: 400px) {
   .hero {
-    padding: 0.7rem 0.85rem 0.9rem;
+    padding: 0.7rem 0.85rem 0.25rem;
   }
 
   .scene {
+    width: min(19rem, calc(100% - 0.25rem));
     min-height: 16.5rem;
     height: min(46vh, 18.5rem);
   }
 
   .warning {
-    width: 5.25rem;
-    left: -1.55rem;
-    bottom: -1.25rem;
+    width: 5.15rem;
+    left: -2.2rem;
+    bottom: -1.85rem;
   }
 
-  .bangs {
-    font-size: 1.35rem;
-    top: -1.05rem;
+  .admiracion {
+    top: -2.55rem;
+    right: -1.45rem;
+    width: clamp(4.75rem, 19vw, 6.75rem);
   }
 }
 
 .tickerWrap {
   position: relative;
 }
+
+/* —— fin bloque SEALED hero + ticker —— */
