@@ -18,16 +18,16 @@ export function wrapEmailShell(innerHtml, { preheader = "" } = {}) {
   return `<!DOCTYPE html>
 <html lang="es">
 <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
-<body style="margin:0;padding:0;background-color:${SA.plum};font-family:${SA.font};color:${SA.ink};">
+<body style="margin:0;padding:0;background-color:${SA.paper};font-family:${SA.font};color:${SA.ink};">
 ${pre}
-<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:${SA.plum};">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:${SA.paper};">
 <tr><td align="center" style="padding:28px 16px;">
-  <table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" style="max-width:600px;width:100%;background-color:${SA.paper};">
+  <table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" style="max-width:600px;width:100%;background-color:${SA.paper};border:1px solid rgba(26,14,51,0.08);">
     <tr><td style="padding:40px 36px;font-family:${SA.font};font-size:15px;line-height:1.55;color:${SA.ink};">
 ${innerHtml}
     </td></tr>
   </table>
-  <p style="margin:16px 0 0;font-family:${SA.mono};font-size:11px;color:#d4c4e8;text-align:center;">s (a) · Ailen Sampó · Sistemas a medida</p>
+  <p style="margin:16px 0 0;font-family:${SA.mono};font-size:11px;color:${SA.grey};text-align:center;">s (a) · Ailen Sampó · Sistemas a medida</p>
 </td></tr>
 </table>
 </body>
