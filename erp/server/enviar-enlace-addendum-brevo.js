@@ -70,6 +70,7 @@ export async function enviarEnlaceAddendumBrevo(data, env = process.env) {
     payload,
     to,
     adminEmail,
+    env,
     adminCopy: {
       subject: `[Copia ERP] Addendum enviado · ${titulo}`,
       textContent: [

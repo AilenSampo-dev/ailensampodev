@@ -67,6 +67,7 @@ export async function enviarEnlaceFirmaBrevo(data, env = process.env) {
     payload,
     to,
     adminEmail,
+    env,
     adminCopy: {
       subject: `[Copia ERP] Contrato enviado · ${proyecto || "Documento"}`,
       textContent: [

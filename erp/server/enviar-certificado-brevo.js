@@ -55,6 +55,7 @@ export async function enviarCertificadoBrevo(data, env = process.env) {
     payload,
     to,
     adminEmail,
+    env,
     adminCopy: {
       subject: `[Copia ERP] Certificado enviado · ${proyecto || "Contrato"}`,
       textContent: [

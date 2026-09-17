@@ -1,4 +1,4 @@
-import { adminCopyRecipient, normalizeEmail } from "./brevo-admin-copy.js";
+import { adminCopyRecipients, normalizeEmail } from "./brevo-admin-copy.js";
 
 function parseBrevoError(errText) {
   let msg = `Brevo: ${errText.slice(0, 200)}`;
@@ -49,23 +49,29 @@ export async function sendWithAdminCopy({
   to,
   adminEmail,
   adminCopy,
+  env,
 }) {
   const dest = normalizeEmail(to);
   await postBrevoEmail(apiKey, payload);
 
-  const admin = adminCopyRecipient(dest, adminEmail);
-  if (!admin || !adminCopy) {
-    return { ok: true, to: dest, copiaAdmin: null };
+  const admins = adminCopyRecipients(dest, env || { ADMIN_EMAIL: adminEmail, BREVO_FROM_EMAIL: fromEmail });
+  if (!admins.length || !adminCopy) {
+    return { ok: true, to: dest, copiaAdmin: null, copiaAdmins: [] };
   }
 
   await postBrevoEmail(apiKey, {
     sender: { name: "Ailen Sampo · s(a)", email: fromEmail },
-    to: [{ email: admin, name: "Ailen Sampo · copia" }],
+    to: admins.map((email) => ({ email, name: "Ailen Sampo · copia" })),
     subject: adminCopy.subject,
     textContent: adminCopy.textContent,
     htmlContent: adminCopy.htmlContent,
     attachment: adminCopy.attachment,
   });
 
-  return { ok: true, to: dest, copiaAdmin: admin };
+  return {
+    ok: true,
+    to: dest,
+    copiaAdmin: admins.join(", "),
+    copiaAdmins: admins,
+  };
 }

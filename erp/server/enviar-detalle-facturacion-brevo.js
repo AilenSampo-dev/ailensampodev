@@ -84,6 +84,7 @@ export async function enviarDetalleFacturacionBrevo(data, env = process.env) {
     payload,
     to,
     adminEmail,
+    env,
     adminCopy: {
       subject: `[Copia ERP] Facturación enviada · ${titulo}`,
       textContent: [
