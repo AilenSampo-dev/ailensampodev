@@ -17,7 +17,11 @@
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^4.3.4",
+    "esbuild": "^0.25.12",
     "vite": "^6.0.7"
+  },
+  "engines": {
+    "node": "20.x"
   },
   "allowScripts": {
     "esbuild": true

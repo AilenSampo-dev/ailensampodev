@@ -1,5 +1,6 @@
 import { FACTURACION_TEMPLATES, urlFacturacionPublica } from "./facturacion-templates.js";
-import { attachAdminCopy, normalizeEmail, resolveAdminEmail } from "./brevo-admin-copy.js";
+import { normalizeEmail, resolveAdminEmail } from "./brevo-admin-copy.js";
+import { sendWithAdminCopy } from "./brevo-send.js";
 import { transactionalEmailHtml } from "./email-brand.js";
 
 /**
@@ -75,29 +76,37 @@ export async function enviarDetalleFacturacionBrevo(data, env = process.env) {
     htmlContent,
   };
 
-  const copiaAdmin = attachAdminCopy(payload, to, adminEmail);
+  const adminIntro = `Copia ERP — detalle <strong>${titulo}</strong> enviado a <strong>${to}</strong> (${cliente}).`;
 
-  const brevo = await fetch("https://api.brevo.com/v3/smtp/email", {
-    method: "POST",
-    headers: {
-      accept: "application/json",
-      "content-type": "application/json",
-      "api-key": apiKey,
+  const result = await sendWithAdminCopy({
+    apiKey,
+    fromEmail,
+    payload,
+    to,
+    adminEmail,
+    adminCopy: {
+      subject: `[Copia ERP] Facturación enviada · ${titulo}`,
+      textContent: [
+        "Copia ERP — detalle de facturación enviado al cliente.",
+        "",
+        `Documento: ${titulo}`,
+        `Cliente: ${cliente}`,
+        `Enviado a: ${to}`,
+        "",
+        url,
+        "",
+        "s(a) · Ailen Sampo · Sistemas a medida",
+      ].join("\n"),
+      htmlContent: transactionalEmailHtml({
+        saludo: "Hola,",
+        intro: adminIntro,
+        ctaHref: url,
+        ctaLabel: "Abrir detalle de facturación",
+        nota: "Este mail es tu copia de respaldo. Revisá spam si no aparece en unos minutos.",
+        linkFallback: "Enlace enviado al cliente:",
+      }),
     },
-    body: JSON.stringify(payload),
   });
 
-  if (!brevo.ok) {
-    const errText = await brevo.text();
-    let msg = `Brevo: ${errText.slice(0, 200)}`;
-    if (errText.includes("unrecognised IP") || errText.includes("unrecognized IP")) {
-      msg =
-        "Brevo bloqueó esta IP. Entrá a app.brevo.com → Security → Authorized IPs y agregá tu IP actual (o desactivá la restricción).";
-    }
-    const err = new Error(msg);
-    err.status = 502;
-    throw err;
-  }
-
-  return { ok: true, to, templateKey, url, copiaAdmin };
+  return { ...result, templateKey, url };
 }

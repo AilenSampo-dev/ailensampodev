@@ -191,7 +191,9 @@ function DetalleHtmlActions({ registro, cliente, onEnviado }) {
         mes: registro.mes,
       });
       onEnviado();
-      const copiaTxt = r.copiaAdmin ? `\nCopia CC: ${r.copiaAdmin}` : "";
+      const copiaTxt = r.copiaAdmin
+        ? `\nCopia enviada a ${r.copiaAdmin} (mail aparte; revisá spam si no aparece).`
+        : "";
       const urlTxt = r.url || documentUrl ? `\nEnlace: ${r.url || documentUrl}` : "";
       window.alert(`Detalle enviado a ${to}.${copiaTxt}${urlTxt}`);
     } catch (e) {

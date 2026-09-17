@@ -1,4 +1,5 @@
-import { attachAdminCopy, normalizeEmail, resolveAdminEmail } from "./brevo-admin-copy.js";
+import { normalizeEmail, resolveAdminEmail } from "./brevo-admin-copy.js";
+import { sendWithAdminCopy } from "./brevo-send.js";
 
 /**
  * Envío de certificado PDF vía Brevo (compartido dev + producción).
@@ -46,29 +47,29 @@ export async function enviarCertificadoBrevo(data, env = process.env) {
     attachment: [{ name: filename, content: pdfBase64 }],
   };
 
-  const copiaAdmin = attachAdminCopy(payload, to, adminEmail);
+  const attachment = [{ name: filename, content: pdfBase64 }];
 
-  const brevo = await fetch("https://api.brevo.com/v3/smtp/email", {
-    method: "POST",
-    headers: {
-      accept: "application/json",
-      "content-type": "application/json",
-      "api-key": apiKey,
+  return sendWithAdminCopy({
+    apiKey,
+    fromEmail,
+    payload,
+    to,
+    adminEmail,
+    adminCopy: {
+      subject: `[Copia ERP] Certificado enviado · ${proyecto || "Contrato"}`,
+      textContent: [
+        "Copia ERP — certificado de aceptación enviado al cliente.",
+        "",
+        `Proyecto: ${proyecto || "—"}`,
+        `Cliente: ${cliente || "—"}`,
+        `Enviado a: ${to}`,
+        `Firmante: ${typedName || "—"}`,
+        "",
+        "El PDF va adjunto en este mail.",
+        "",
+        "s(a) · Ailen Sampo · Sistemas a medida",
+      ].join("\n"),
+      attachment,
     },
-    body: JSON.stringify(payload),
   });
-
-  if (!brevo.ok) {
-    const errText = await brevo.text();
-    let msg = `Brevo: ${errText.slice(0, 200)}`;
-    if (errText.includes("unrecognised IP") || errText.includes("unrecognized IP")) {
-      msg =
-        "Brevo bloqueo esta IP. Entra a app.brevo.com → Security → Authorized IPs y agrega tu IP actual (o desactiva la restriccion).";
-    }
-    const err = new Error(msg);
-    err.status = 502;
-    throw err;
-  }
-
-  return { ok: true, to, copiaAdmin };
 }

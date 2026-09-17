@@ -92,7 +92,9 @@ export default function AddendumModal({ proyecto, cliente, addendum, onSave, onC
       };
       persistir(next);
       setEnvioMsg({ ok: true, to: r.to, url: r.url, copiaAdmin: r.copiaAdmin });
-      const copiaTxt = r.copiaAdmin ? `\nCopia CC: ${r.copiaAdmin}` : "";
+      const copiaTxt = r.copiaAdmin
+        ? `\n\nCopia enviada a ${r.copiaAdmin} (mail aparte; revisá spam si no aparece en 2 min).`
+        : "";
       window.alert(`Addendum enviado a ${r.to}.${copiaTxt}`);
     } catch (e) {
       setEnvioMsg({ error: e.message });
@@ -247,7 +249,7 @@ export default function AddendumModal({ proyecto, cliente, addendum, onSave, onC
                 {envioMsg?.ok && (
                   <p style={{ fontSize: 12, color: t.mint, marginBottom: 12 }}>
                     Enviado a {envioMsg.to}
-                    {envioMsg.copiaAdmin ? ` · Copia CC: ${envioMsg.copiaAdmin}` : ""}
+                    {envioMsg.copiaAdmin ? ` · Copia a ${envioMsg.copiaAdmin}` : ""}
                   </p>
                 )}
                 {doc.enviadoAt && !envioMsg?.ok && (

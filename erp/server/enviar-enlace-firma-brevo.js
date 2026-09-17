@@ -1,4 +1,5 @@
-import { attachAdminCopy, normalizeEmail, resolveAdminEmail } from "./brevo-admin-copy.js";
+import { normalizeEmail, resolveAdminEmail } from "./brevo-admin-copy.js";
+import { sendWithAdminCopy } from "./brevo-send.js";
 import { transactionalEmailHtml } from "./email-brand.js";
 
 /**
@@ -58,28 +59,35 @@ export async function enviarEnlaceFirmaBrevo(data, env = process.env) {
     htmlContent,
   };
 
-  const copiaAdmin = attachAdminCopy(payload, to, adminEmail);
+  const adminIntro = `Copia ERP — contrato${proyecto ? ` <strong>${proyecto}</strong>` : ""} enviado a <strong>${to}</strong>${cliente ? ` (${cliente})` : ""}.`;
 
-  const brevo = await fetch("https://api.brevo.com/v3/smtp/email", {
-    method: "POST",
-    headers: {
-      accept: "application/json",
-      "content-type": "application/json",
-      "api-key": apiKey,
+  return sendWithAdminCopy({
+    apiKey,
+    fromEmail,
+    payload,
+    to,
+    adminEmail,
+    adminCopy: {
+      subject: `[Copia ERP] Contrato enviado · ${proyecto || "Documento"}`,
+      textContent: [
+        "Copia ERP — enlace de firma enviado al cliente.",
+        "",
+        `Proyecto: ${proyecto || "—"}`,
+        `Cliente: ${cliente || "—"}`,
+        `Enviado a: ${to}`,
+        "",
+        url,
+        "",
+        "s(a) · Ailen Sampo · Sistemas a medida",
+      ].join("\n"),
+      htmlContent: transactionalEmailHtml({
+        saludo: "Hola,",
+        intro: adminIntro,
+        ctaHref: url,
+        ctaLabel: "Abrir enlace de firma",
+        nota: "Este mail es tu copia de respaldo. Revisá spam si no aparece en unos minutos.",
+        linkFallback: "Enlace enviado al cliente:",
+      }),
     },
-    body: JSON.stringify(payload),
   });
-
-  if (!brevo.ok) {
-    const errText = await brevo.text();
-    let msg = `Brevo: ${errText.slice(0, 200)}`;
-    if (errText.includes("unrecognised IP") || errText.includes("unrecognized IP")) {
-      msg = "Brevo bloqueo esta IP. Autorizala en app.brevo.com → Security → Authorized IPs.";
-    }
-    const err = new Error(msg);
-    err.status = 502;
-    throw err;
-  }
-
-  return { ok: true, to, copiaAdmin };
 }
