@@ -7,23 +7,41 @@ export function resolveAdminEmail(env = process.env) {
   return normalizeEmail(env.ADMIN_EMAIL || env.PROPOSAL_NOTIFY_EMAIL || from);
 }
 
-/** Casillas que reciben copia: ADMIN_EMAIL + BREVO_FROM_EMAIL (hola@), sin duplicar ni copiar al cliente. */
+/** Casilla de copia: ADMIN_EMAIL o, si falta, BREVO_FROM_EMAIL (hola@). */
 export function adminCopyRecipients(to, env = process.env) {
   const dest = normalizeEmail(to).toLowerCase();
   const from = normalizeEmail(env.BREVO_FROM_EMAIL || env.PROPOSAL_NOTIFY_EMAIL);
-  const admin = normalizeEmail(env.ADMIN_EMAIL || env.PROPOSAL_NOTIFY_EMAIL);
+  const admin = normalizeEmail(env.ADMIN_EMAIL || from);
 
-  const seen = new Set();
-  const out = [];
-  for (const raw of [admin, from]) {
-    const email = normalizeEmail(raw);
-    if (!email.includes("@")) continue;
-    const key = email.toLowerCase();
-    if (key === dest || seen.has(key)) continue;
-    seen.add(key);
-    out.push(email);
+  const email = admin.includes("@") ? admin : from;
+  if (!email.includes("@") || email.toLowerCase() === dest) return [];
+  return [email];
+}
+
+/**
+ * Remitente para copias internas. Si la copia va a hola@, no usar hola@ como From
+ * (Zoho rebota el bucle). Usar BREVO_INTERNAL_SENDER (ej. @brevosend.com de Brevo).
+ */
+export function resolveAdminCopyMail(fromEmail, recipients, env = process.env) {
+  const from = normalizeEmail(fromEmail);
+  const inbox = recipients.map((r) => normalizeEmail(r).toLowerCase());
+  const loopRisk = inbox.includes(from.toLowerCase());
+
+  const internal = normalizeEmail(env.BREVO_INTERNAL_SENDER);
+  const senderEmail =
+    loopRisk && internal.includes("@") && internal.toLowerCase() !== from.toLowerCase()
+      ? internal
+      : from;
+
+  const mail = {
+    sender: { name: "Ailen Sampo · copia ERP", email: senderEmail },
+  };
+
+  if (senderEmail.toLowerCase() !== from.toLowerCase()) {
+    mail.replyTo = { email: from, name: "Ailen Sampo · s(a)" };
   }
-  return out;
+
+  return mail;
 }
 
 /** @deprecated Usar adminCopyRecipients */
