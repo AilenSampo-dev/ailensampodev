@@ -7,7 +7,7 @@ import {
   listBackupHistory,
   restoreBackupSnapshot,
 } from "./supabase-erp.js";
-import { mergeStockinSeed } from "../src/lib/stockin-lavanda-seed.js";
+import { mergeStockinSeed } from "./stockin-lavanda-seed.js";
 
 async function readJsonBody(req) {
   if (req.body && typeof req.body === "object") return req.body;
