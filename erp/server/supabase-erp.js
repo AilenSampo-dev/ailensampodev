@@ -1,4 +1,4 @@
-import { mergeStockinSeed } from "../src/lib/stockin-lavanda-seed.js";
+import { mergeStockinSeed } from "./stockin-lavanda-seed.js";
 
 const ROW_ID = "main";
 const HISTORY_KEEP = 30;

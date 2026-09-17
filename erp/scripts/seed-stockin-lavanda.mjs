@@ -24,7 +24,7 @@ if (!process.env.SUPABASE_URL?.trim() || !process.env.SUPABASE_SERVICE_ROLE_KEY?
   process.exit(1);
 }
 
-const { mergeStockinSeed } = await import(pathToFileURL(resolve(erpRoot, "src/lib/stockin-lavanda-seed.js")).href);
+const { mergeStockinSeed } = await import(pathToFileURL(resolve(erpRoot, "server/stockin-lavanda-seed.js")).href);
 const { loadErpData, saveErpData, isCloudBackupEnabled } = await import(
   pathToFileURL(resolve(erpRoot, "server/supabase-erp.js")).href
 );
