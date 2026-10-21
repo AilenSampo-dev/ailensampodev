@@ -8,6 +8,9 @@ type SectionTagProps = {
 };
 
 export default function SectionTag({ section, tone = "dark" }: SectionTagProps) {
+  // Etiqueta de desarrollo: no se publica.
+  if (process.env.NODE_ENV === "production") return null;
+
   const meta = SECTIONS[section];
 
   return (

@@ -23,3 +23,6 @@ desktop.ini
 
 # Notas privadas
 notas_privadas/
+
+# Caché de TypeScript
+*.tsbuildinfo

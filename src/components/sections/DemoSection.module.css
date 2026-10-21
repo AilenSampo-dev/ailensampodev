@@ -209,13 +209,16 @@
   background: #d63da5;
 }
 
+/* Banda de chips: ancho completo, pegada al borde inferior de la sección.
+   Continúa en el panel de ArchitectureSection (mismo degradé arriba). */
 .tagsWrap {
   position: relative;
   z-index: 1;
-  margin: 0;
-  padding: 1.35rem 1rem 1.5rem;
-  border-radius: 1.35rem 1.35rem 0 0;
-  background: linear-gradient(180deg, #c945a8 0%, #b83898 100%);
+  width: 100vw;
+  margin: 0 calc(50% - 50vw) -1.75rem; /* -1.75rem = padding-bottom de .section (mobile) */
+  padding: 1.5rem 1rem 1.75rem;
+  border-radius: 2rem 2rem 0 0;
+  background: linear-gradient(90deg, #a2479b 0%, #e85fbf 100%);
 }
 
 .tags {
@@ -234,18 +237,24 @@
 .tag {
   flex: 0 0 auto;
   scroll-snap-align: start;
-  min-height: 2.65rem;
-  padding: 0.6rem 0.95rem;
-  border: 1.5px solid rgba(250, 249, 247, 0.75);
-  border-radius: 999px;
+  min-height: 2.5rem;
+  padding: 0.55rem 1.1rem;
+  border: 1px solid rgba(250, 249, 247, 0.55);
+  border-radius: 0.4rem;
   background: transparent;
-  color: #faf9f7;
+  color: rgba(250, 249, 247, 0.85);
   font-family: "Nunito Sans", sans-serif;
-  font-size: 0.76rem;
-  font-weight: 600;
+  font-size: 0.85rem;
+  font-weight: 400;
   white-space: nowrap;
   cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
   -webkit-tap-highlight-color: transparent;
+}
+
+.tag:hover {
+  color: #faf9f7;
+  border-color: rgba(250, 249, 247, 0.85);
 }
 
 .tag:active {
@@ -300,13 +309,17 @@
   }
 
   .tagsWrap {
-    padding: 1.5rem 1.25rem 1.75rem;
-    border-radius: 1.75rem 1.75rem 0 0;
+    margin-bottom: -2rem; /* padding-bottom de .section en ≥640px */
+    padding: 2.5rem 1.5rem 2.25rem;
+    border-radius: 3rem 3rem 0 0;
   }
 
   .tags {
     flex-wrap: wrap;
     justify-content: center;
+    gap: 0.75rem 1.25rem;
+    max-width: 44rem;
+    margin: 0 auto;
     overflow: visible;
   }
 }
