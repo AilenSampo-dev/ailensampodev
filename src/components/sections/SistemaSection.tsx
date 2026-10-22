@@ -40,7 +40,7 @@ const CHAT = [
     key: "empiezo",
     question: "¿por dónde empiezo?",
     answer:
-      "> Mandale un audio a tu sistema roto: tocá el botón de abajo y contame qué te consume el tiempo. Lo escucho yo.",
+      "> Mandame un audio: tocá el botón de abajo y contame qué te consume el tiempo. Lo escucho yo.",
   },
   {
     key: "secreto",
@@ -50,7 +50,7 @@ const CHAT = [
   },
 ] as const;
 
-const AUDIO_LABEL = "¿Tu sistema está roto? Mandale un audio";
+const AUDIO_LABEL = "¿Tu sistema está roto? Mandame un audio";
 
 // Línea de comandos de la terminal
 const HELP = "> comandos: audio · bug · mail · proyectos · secreto · ayuda";
@@ -61,7 +61,7 @@ function runCommand(raw: string): CommandResult {
   if (!cmd) return { text: HELP };
   if (["ayuda", "help", "?", "comandos"].includes(cmd)) return { text: HELP };
   if (["audio", "whatsapp", "wsp", "wpp", "contacto", "contactar"].includes(cmd))
-    return { text: "> abriendo WhatsApp… mandale un audio a tu sistema roto 🎙️", action: "audio" };
+    return { text: "> abriendo WhatsApp… mandame un audio y contame qué se rompe 🎙️", action: "audio" };
   if (["bug", "error", "reportar", "roto"].includes(cmd))
     return { text: "> abriendo error.exe… contame qué se rompe.", action: "bug" };
   if (["mail", "email", "correo"].includes(cmd)) return { text: `> ${CONTACT_EMAIL}`, action: "mail" };

@@ -6,7 +6,7 @@ import { sectionProps } from "./sections";
 import styles from "./ContactSection.module.css";
 
 // Contacto — réplica de Canva "Sitio web" DAHM0M2xh8E, pág. 6 (el footer es un componente aparte).
-// El mockup no tiene botón: la ventana "Próximo paso" abre WhatsApp ("mandale un audio a tu sistema roto").
+// El mockup no tiene botón: la ventana "Próximo paso" abre WhatsApp ("mandame un audio").
 const CONTACT_HREF = WHATSAPP_URL;
 
 export default function ContactSection() {
