@@ -1,4 +1,5 @@
-import Link from "next/link";
+import { WHATSAPP_URL, whatsappUrl } from "@/lib/contacto";
+import ArchitecturePdfForm from "./ArchitecturePdfForm";
 import SectionTag from "./SectionTag";
 import type { GeneratedArchitecture } from "./demoTasks";
 import { sectionProps } from "./sections";
@@ -18,7 +19,7 @@ export default function ArchitectureSection({ task, architecture, onRetry }: Arc
   const loading = architecture === null;
 
   return (
-    <section className={styles.section} {...sectionProps("arquitectura")}>
+    <section className={`${styles.section} ${shared.gridWhite}`} {...sectionProps("arquitectura")}>
       <SectionTag section="arquitectura" />
       <div className={styles.panel}>
         <p className={styles.panelEyebrow}>
@@ -56,7 +57,7 @@ export default function ArchitectureSection({ task, architecture, onRetry }: Arc
         </div>
       </div>
 
-      <div className={`${styles.value} ${shared.gridWhite}`}>
+      <div className={styles.value}>
         <h2 className={styles.valueTitle}>
           <span>De manual</span>
           <span className={styles.valueMark} role="img" aria-label="a" />
@@ -67,12 +68,27 @@ export default function ArchitectureSection({ task, architecture, onRetry }: Arc
             ? "Esta arquitectura la armó una IA en segundos, con módulos que construyo. Imaginate lo que hacemos en 4 semanas."
             : "Este boceto se armó en un clic. Imaginate lo que construimos mirando tu negocio por dentro."}
         </p>
+        {architecture ? <ArchitecturePdfForm key={architecture.consultaId} consultaId={architecture.consultaId} /> : null}
       </div>
 
       <div className={styles.cta}>
-        <Link href="/#contacto" className={shared.btnPrimary}>
+        {/* Abre WhatsApp con la arquitectura que generó: llega con contexto */}
+        <a
+          href={
+            architecture
+              ? whatsappUrl(
+                  `Hola Ailén, quiero este sistema para "${task}": ${architecture.cards
+                    .map((card) => card.title)
+                    .join(" + ")}. ¿Lo charlamos?`,
+                )
+              : WHATSAPP_URL
+          }
+          target="_blank"
+          rel="noopener noreferrer"
+          className={shared.btnPrimary}
+        >
           Quiero este sistema
-        </Link>
+        </a>
         <button type="button" className={`${shared.btnGhost} ${styles.ctaBtn}`} onClick={onRetry}>
           Probar otra tarea
         </button>

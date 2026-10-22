@@ -352,3 +352,21 @@
     width: min(100%, 18rem);
   }
 }
+
+/* Desktop ancho: caritas al tamaño del mockup (~17% del ancho). La derecha se corta contra el borde,
+   como en Canva; la izquierda a la altura del campo de texto. Debajo de 1100px quedan como antes. */
+@media (min-width: 1100px) {
+  .faceLeft {
+    width: clamp(12rem, 17vw, 16rem);
+    left: 1vw;
+    bottom: 33%;
+    transform: rotate(-6deg);
+  }
+
+  .faceRight {
+    width: clamp(12rem, 17vw, 16rem);
+    right: -2vw;
+    top: 10%;
+    transform: rotate(8deg);
+  }
+}

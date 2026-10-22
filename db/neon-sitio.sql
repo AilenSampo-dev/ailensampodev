@@ -29,3 +29,13 @@ create table if not exists leads (
 );
 create index if not exists leads_estado_idx on leads (estado, created_at desc);
 create unique index if not exists leads_email_consulta_idx on leads (lower(email), consulta_id);
+
+-- alertas: avisos que el sitio te manda por mail (ej. la IA del demo dejó de responder).
+-- Sirve para mandar como máximo uno por día por tipo.
+create table if not exists alertas (
+  id          bigint generated always as identity primary key,
+  tipo        text not null,
+  detalle     text,
+  enviado_at  timestamptz not null default now()
+);
+create index if not exists alertas_tipo_idx on alertas (tipo, enviado_at desc);

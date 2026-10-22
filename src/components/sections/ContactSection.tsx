@@ -1,35 +1,72 @@
-import Link from "next/link";
-import WindowFrame from "@/components/layout/WindowFrame";
+import { WHATSAPP_URL } from "@/lib/contacto";
+import { DemoFaceWink } from "./DemoFaces";
+import ContactActions from "./ContactActions";
 import SectionTag from "./SectionTag";
 import { sectionProps } from "./sections";
 import styles from "./ContactSection.module.css";
+
+// Contacto — réplica de Canva "Sitio web" DAHM0M2xh8E, pág. 6 (el footer es un componente aparte).
+// El mockup no tiene botón: la ventana "Próximo paso" abre WhatsApp ("mandale un audio a tu sistema roto").
+const CONTACT_HREF = WHATSAPP_URL;
 
 export default function ContactSection() {
   return (
     <section className={styles.section} {...sectionProps("contacto")}>
       <SectionTag section="contacto" />
-      <img className={styles.warning} src="/assets/recursos-graficos/important.svg" alt="" width={72} height={72} />
-      <span className={styles.smiley} aria-hidden="true">
-        ( ^_− )
-      </span>
 
       <div className={styles.scene}>
-        <WindowFrame variant="light" className={styles.windowLight}>
-          Próximo paso
-        </WindowFrame>
+        {/* Inclinación en el contenedor; el zumbido (mismo que el hero) en la ventana de adentro */}
+        <div className={styles.windowLight}>
+          <a
+            className={`${styles.frame} ${styles.frameLight} anim-messenger-buzz`}
+            href={CONTACT_HREF}
+            aria-label="Próximo paso: mandame un audio por WhatsApp"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <span className={styles.bar} aria-hidden="true">
+              <i />
+              <i />
+              <i />
+            </span>
+            <span className={styles.lightText}>
+              Próximo
+              <br />
+              paso
+            </span>
+          </a>
+        </div>
 
-        <WindowFrame variant="dark" className={styles.windowDark}>
-          Llegaste hasta acá con lo que tenías,
-          <br />
-          ahora construimos lo que falta.
-        </WindowFrame>
+        <img
+          className={styles.warning}
+          src="/assets/recursos-graficos/important.svg"
+          alt=""
+          width={160}
+          height={160}
+        />
+
+        <div className={styles.windowDark}>
+          <div className={`${styles.frame} ${styles.frameDark} anim-messenger-buzz-delayed`}>
+            <span className={styles.bar} aria-hidden="true">
+              <i />
+              <i />
+              <i />
+            </span>
+            <p className={styles.darkText}>
+              Llegaste hasta acá
+              <br />
+              con lo que tenías, ahora
+              <br />
+              construimos lo que falta.
+            </p>
+          </div>
+        </div>
+
+        {/* Misma carita animada que la demo (guiña cada 3,6 s), en amarillo */}
+        <DemoFaceWink className={styles.wink} />
       </div>
 
-      <div className={styles.actions}>
-        <Link href="mailto:hola@ailensampo.com" className={styles.cta}>
-          Escribime
-        </Link>
-      </div>
+      <ContactActions />
     </section>
   );
 }

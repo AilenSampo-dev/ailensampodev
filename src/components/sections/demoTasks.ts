@@ -86,7 +86,8 @@ const KEYWORD_RULES: { pattern: RegExp; tag: DemoTaskTag }[] = [
   { pattern: /whats|consult|mensaj|respond|respuest|pregunt|instagram|mail|dm/i, tag: "Respuestas infinitas" },
 ];
 
-function matchTag(task: string): DemoTaskTag | null {
+/** Chip al que corresponde un texto (exacto o por palabras clave). null si no matchea. */
+export function matchDemoTag(task: string): DemoTaskTag | null {
   const normalized = task.trim();
   const exact = DEMO_TASK_TAGS.find((tag) => tag.toLowerCase() === normalized.toLowerCase());
   if (exact) return exact;
@@ -113,6 +114,6 @@ export function resolveDemoTaskLabel(task: string): string {
 
 export function getArchitectureForTask(task: string): ArchitectureBlueprint {
   const label = resolveDemoTaskLabel(task);
-  const tag = matchTag(label);
+  const tag = matchDemoTag(label);
   return tag ? BLUEPRINTS[tag] : customBlueprint(label);
 }

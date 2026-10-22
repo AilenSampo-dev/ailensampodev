@@ -243,3 +243,90 @@
     padding-inline: 3.5rem;
   }
 }
+
+/* PDF por mail */
+.pdfForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  max-width: 30rem;
+  margin: 1.75rem auto 0;
+}
+
+.pdfLabel {
+  font-family: "Nunito Sans", sans-serif;
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #3a1e66;
+}
+
+.pdfRow {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  width: 100%;
+}
+
+.pdfRow input {
+  flex: 1;
+  height: 3rem;
+  padding: 0 1rem;
+  border: 2px solid #3a1e66;
+  border-radius: 6px;
+  background: #ffffff;
+  color: #3a1e66;
+  font-family: "Nunito Sans", sans-serif;
+  font-size: 0.95rem;
+}
+
+.pdfRow input:focus {
+  outline: 2px solid #f656bf;
+  outline-offset: 1px;
+}
+
+.pdfRow button {
+  height: 3rem;
+  padding: 0 1.4rem;
+  border: none;
+  border-radius: 6px;
+  background: #f656bf;
+  color: #ffffff;
+  font-family: "Nunito Sans", sans-serif;
+  font-size: 0.9rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  box-shadow: 3px 3px 0 #3a1e66;
+  cursor: pointer;
+}
+
+.pdfRow button:disabled {
+  opacity: 0.6;
+}
+
+.pdfPrivacy {
+  font-family: "Nunito Sans", sans-serif;
+  font-size: 0.72rem;
+  color: #3a1e66;
+  opacity: 0.7;
+  text-align: center;
+}
+
+.pdfOk {
+  max-width: 30rem;
+  margin: 1.75rem auto 0;
+  padding: 0.9rem 1.1rem;
+  background: #fffbdb;
+  border-left: 4px solid #faf26f;
+  color: #3a1e66;
+  font-family: "Nunito Sans", sans-serif;
+  font-size: 0.92rem;
+  text-align: left;
+}
+
+@media (min-width: 640px) {
+  .pdfRow {
+    flex-direction: row;
+  }
+}

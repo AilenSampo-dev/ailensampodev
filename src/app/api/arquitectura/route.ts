@@ -2,6 +2,7 @@ import { randomUUID } from "crypto";
 import { after, NextResponse } from "next/server";
 import { CATALOGO, MODULOS_POR_ID } from "@/content/sistema/catalogo";
 import { getArchitectureForTask, type ArchCard, type GeneratedArchitecture } from "@/components/sections/demoTasks";
+import { alertarUnaVez } from "@/lib/alertas";
 import { getSql } from "@/lib/db";
 import { getClientIp, hashIp } from "@/lib/ip";
 
@@ -12,7 +13,10 @@ import { getClientIp, hashIp } from "@/lib/ip";
 // Cada respuesta se registra en Neon (tabla consultas) DESPUÉS de responder, sin demorar a la persona.
 
 const BASE_URL = process.env.AI_BASE_URL ?? "https://api.groq.com/openai/v1";
-const MODEL = process.env.AI_MODEL ?? "llama-3.3-70b-versatile";
+// llama-3.3-70b-versatile fue dado de baja por Groq (2026). Modelos de producción: openai/gpt-oss-20b / -120b.
+// Si Groq da de baja este también, la IA responde 404 y el demo cae a reglas: cambiar AI_MODEL en .env.local.
+const MODEL = process.env.AI_MODEL ?? "openai/gpt-oss-20b";
+const IS_REASONING = MODEL.startsWith("openai/gpt-oss");
 const TIMEOUT_MS = 7000;
 const MAX_TASK = 280;
 
@@ -73,6 +77,29 @@ function validate(raw: unknown): AiResult | null {
 
 const DOTS: ArchCard["dot"][] = ["rose", "yellow", "aqua"];
 
+
+// Fallas de configuración (no se arreglan esperando) → mail a Ailén, máx. 1 por día por tipo.
+function avisarFalla(status: number) {
+  const casos: Record<number, [string, string, string, string]> = {
+    404: ["ia-modelo", "La IA del demo dejó de responder: modelo no disponible",
+      `Groq respondió 404 para el modelo "${MODEL}" (probablemente lo dio de baja). El demo "Te lo demuestro" está usando las reglas de respaldo.`,
+      "Entrá a console.groq.com/docs/models, elegí un modelo de producción y cargalo como AI_MODEL en las variables de entorno de Vercel (y en .env.local). Después redeployá."],
+    401: ["ia-clave", "La IA del demo dejó de responder: clave inválida",
+      "Groq rechazó la clave (401). El demo está usando las reglas de respaldo.",
+      "Generá una clave nueva en console.groq.com y reemplazá GROQ_API_KEY en Vercel (y en .env.local). Después redeployá."],
+    403: ["ia-clave", "La IA del demo dejó de responder: acceso denegado",
+      "Groq rechazó el pedido (403). El demo está usando las reglas de respaldo.",
+      "Revisá en console.groq.com que la cuenta y la clave sigan activas."],
+    429: ["ia-cupo", "La IA del demo llegó al límite del plan gratuito",
+      "Groq respondió 429 (cupo agotado). Hasta que se renueve, el demo usa las reglas de respaldo.",
+      "Si pasa seguido, mirá el uso en console.groq.com → Limits. Puede ser tráfico real (buena noticia) o alguien abusando del demo."],
+  };
+  const caso = casos[status];
+  if (!caso) return; // 5xx o caídas temporales: no avisar
+  const [tipo, asunto, detalle, queHacer] = caso;
+  after(() => alertarUnaVez(tipo, asunto, detalle, queHacer));
+}
+
 async function askAi(task: string, apiKey: string): Promise<AiResult | null> {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), TIMEOUT_MS);
@@ -84,7 +111,9 @@ async function askAi(task: string, apiKey: string): Promise<AiResult | null> {
       body: JSON.stringify({
         model: MODEL,
         temperature: 0.4,
-        max_tokens: 500,
+        // gpt-oss razona antes de responder: razonamiento corto y margen de tokens para que llegue al JSON.
+        max_tokens: IS_REASONING ? 1500 : 500,
+        ...(IS_REASONING ? { reasoning_effort: "low" } : {}),
         response_format: { type: "json_object" },
         messages: [
           { role: "system", content: SYSTEM_PROMPT },
@@ -93,7 +122,12 @@ async function askAi(task: string, apiKey: string): Promise<AiResult | null> {
       }),
     });
     if (!response.ok) {
-      console.warn("[arquitectura] proveedor IA respondió", response.status);
+      avisarFalla(response.status);
+      console.warn(
+        "[arquitectura] proveedor IA respondió",
+        response.status,
+        response.status === 404 ? `— el modelo "${MODEL}" no existe o fue dado de baja: cambiá AI_MODEL` : "",
+      );
       return null;
     }
     const payload = await response.json();

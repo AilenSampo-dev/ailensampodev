@@ -1,5 +1,7 @@
 # Dependencias
 node_modules/
+erp/node_modules/
+erp/dist/
 .next/
 out/
 

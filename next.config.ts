@@ -9,6 +9,7 @@ const nextConfig: NextConfig = {
   outputFileTracingIncludes: {
     "/api/proposals/[slug]/document": ["./src/content/propuestas/**/*"],
     "/p/[slug]": ["./src/content/propuestas/**/*"],
+    "/api/arquitectura/pdf": ["./src/lib/pdf/fonts/**/*"],
   },
   webpack(config) {
     config.module.rules.push({

@@ -4,6 +4,7 @@ import { useCallback, useRef, useState } from "react";
 import DemoSection from "./DemoSection";
 import ArchitectureSection from "./ArchitectureSection";
 import { resolveDemoTaskLabel, type GeneratedArchitecture } from "./demoTasks";
+import { demoStore } from "./demoStore";
 import { generateArchitecture } from "./generateArchitecture";
 
 export default function DemoBlock() {
@@ -17,12 +18,15 @@ export default function DemoBlock() {
     const id = ++requestId.current;
     setTask(label);
     setArchitecture(null); // muestra el estado "armando…"
+    demoStore.set({ task: label, architecture: null });
     setShowArchitecture(true);
     requestAnimationFrame(() => {
       document.getElementById("arquitectura")?.scrollIntoView({ behavior: "smooth", block: "start" });
     });
     generateArchitecture(label).then((result) => {
-      if (id === requestId.current) setArchitecture(result); // ignora respuestas de pedidos viejos
+      if (id !== requestId.current) return; // ignora respuestas de pedidos viejos
+      setArchitecture(result);
+      demoStore.set({ architecture: result });
     });
   }, []);
 
@@ -30,6 +34,7 @@ export default function DemoBlock() {
   const handleRetry = useCallback(() => {
     requestId.current++;
     setShowArchitecture(false);
+    demoStore.set({ task: null, architecture: null });
     requestAnimationFrame(() => {
       document.getElementById("demo")?.scrollIntoView({ behavior: "smooth", block: "start" });
     });

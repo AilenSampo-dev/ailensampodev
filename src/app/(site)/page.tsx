@@ -2,10 +2,10 @@ import GridOverlay from "@/components/layout/GridOverlay";
 import StatusBadge from "@/components/layout/StatusBadge";
 import Ticker from "@/components/layout/Ticker";
 import WindowFrame from "@/components/layout/WindowFrame";
+import Footer from "@/components/layout/Footer";
 import ChaosSection from "@/components/sections/ChaosSection";
 import ContactSection from "@/components/sections/ContactSection";
 import DemoBlock from "@/components/sections/DemoBlock";
-import PortfolioSection from "@/components/sections/PortfolioSection";
 import SectionTag from "@/components/sections/SectionTag";
 import SistemaSection from "@/components/sections/SistemaSection";
 import { sectionProps } from "@/components/sections/sections";
@@ -73,7 +73,7 @@ export default function HomePage() {
       <ChaosSection />
       <ContactSection />
       <SistemaSection />
-      <PortfolioSection />
+      <Footer />
     </>
   );
 }
