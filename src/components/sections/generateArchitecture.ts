@@ -27,6 +27,8 @@ export async function generateArchitecture(rawTask: string): Promise<GeneratedAr
       cards: [data.cards[0], data.cards[1], data.cards[2]],
       valueText: data.valueText,
       source: data.source === "ia" ? "ia" : "reglas",
+      tipo: data.tipo === "mixta" || data.tipo === "charla" ? data.tipo : "sistema",
+      nota: typeof data.nota === "string" ? data.nota : undefined,
       consultaId: data.id,
     };
   } catch {

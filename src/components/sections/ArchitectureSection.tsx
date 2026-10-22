@@ -17,18 +17,26 @@ const LOADING_SLOTS = ["rose", "yellow", "aqua"] as const;
 
 export default function ArchitectureSection({ task, architecture, onRetry }: ArchitectureSectionProps) {
   const loading = architecture === null;
+  const charla = architecture?.tipo === "charla";
 
   return (
     <section className={`${styles.section} ${shared.gridWhite}`} {...sectionProps("arquitectura")}>
       <SectionTag section="arquitectura" />
       <div className={styles.panel}>
         <p className={styles.panelEyebrow}>
-          {loading ? "Armando tu arquitectura para:" : "Arquitectura generada para:"}
+          {loading ? "Armando tu arquitectura para:" : charla ? "Lo que me contaste:" : "Arquitectura generada para:"}
         </p>
         <div className={styles.query}>&ldquo;{task}&rdquo;</div>
 
         <div className={styles.cards} aria-live="polite" aria-busy={loading}>
-          {loading
+          {charla ? (
+            <div className={styles.charla}>
+              <p>{architecture?.nota}</p>
+              <a className={styles.charlaBtn} href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
+                <span aria-hidden="true">🎙️</span> Mandame un audio
+              </a>
+            </div>
+          ) : loading
             ? LOADING_SLOTS.map((dot, i) => (
                 <article
                   key={dot}
@@ -55,6 +63,7 @@ export default function ArchitectureSection({ task, architecture, onRetry }: Arc
                 </article>
               ))}
         </div>
+        {architecture?.tipo === "mixta" && architecture.nota ? <p className={styles.nota}>{architecture.nota}</p> : null}
       </div>
 
       <div className={styles.value}>
@@ -64,18 +73,20 @@ export default function ArchitectureSection({ task, architecture, onRetry }: Arc
           <span>automático</span>
         </h2>
         <p className={styles.valueText}>
-          {architecture?.source === "ia"
+          {charla
+            ? "Cada negocio es distinto: por eso primero escucho cómo funciona el tuyo y después construyo."
+            : architecture?.source === "ia"
             ? "Esta arquitectura la armó una IA en segundos, con módulos que construyo. Imaginate lo que hacemos en 4 semanas."
             : "Este boceto se armó en un clic. Imaginate lo que construimos mirando tu negocio por dentro."}
         </p>
-        {architecture ? <ArchitecturePdfForm key={architecture.consultaId} consultaId={architecture.consultaId} /> : null}
+        {architecture && !charla ? <ArchitecturePdfForm key={architecture.consultaId} consultaId={architecture.consultaId} /> : null}
       </div>
 
       <div className={styles.cta}>
         {/* Abre WhatsApp con la arquitectura que generó: llega con contexto */}
         <a
           href={
-            architecture
+            architecture && !charla
               ? whatsappUrl(
                   `Hola Ailén, quiero este sistema para "${task}": ${architecture.cards
                     .map((card) => card.title)
@@ -87,7 +98,7 @@ export default function ArchitectureSection({ task, architecture, onRetry }: Arc
           rel="noopener noreferrer"
           className={shared.btnPrimary}
         >
-          Quiero este sistema
+          {charla ? "Charlemos" : "Quiero este sistema"}
         </a>
         <button type="button" className={`${shared.btnGhost} ${styles.ctaBtn}`} onClick={onRetry}>
           Probar otra tarea

@@ -26,7 +26,7 @@ export default function HomePage() {
         <div className={styles.scene}>
           <div className={styles.windowLight}>
             <WindowFrame variant="light" buzz>
-              Si vos frenas
+              Si vos frenás
               <br />
               y tu negocio
               <br />

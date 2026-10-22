@@ -9,7 +9,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "legacy": "npx --yes serve@latest -l 3001 ."
+    "legacy": "npx --yes serve@latest -l 3001 .",
+    "test:demo": "node --env-file=.env.local scripts/test-demo.mjs"
   },
   "dependencies": {
     "@neondatabase/serverless": "^1.2.0",

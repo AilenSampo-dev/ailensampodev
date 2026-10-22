@@ -330,3 +330,56 @@
     flex-direction: row;
   }
 }
+
+/* Respuesta "charla": invitación a conversar en lugar de tarjetas */
+.charla {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+  max-width: 36rem;
+  margin: 0 auto;
+  padding: 1.75rem 1.5rem;
+  border: 1px solid rgba(250, 249, 247, 0.45);
+  border-radius: 0.6rem;
+  background: rgba(255, 255, 255, 0.08);
+  text-align: center;
+  animation: cardIn 0.45s ease-out both;
+}
+
+.charla p {
+  font-family: "Nunito Sans", sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  line-height: 1.45;
+}
+
+.charlaBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 3rem;
+  padding: 0 1.5rem;
+  border-radius: 6px;
+  background: #faf26f;
+  color: #3a1e66;
+  font-family: "Nunito Sans", sans-serif;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-decoration: none;
+  text-transform: uppercase;
+  box-shadow: 3px 3px 0 #1e0c39;
+}
+
+/* Respuesta "mixta": la línea sobre "lo otro" */
+.nota {
+  max-width: 36rem;
+  margin: 1.25rem auto 0;
+  font-family: "Nunito Sans", sans-serif;
+  font-size: 0.95rem;
+  font-style: italic;
+  line-height: 1.45;
+  text-align: center;
+  color: rgba(250, 249, 247, 0.9);
+}

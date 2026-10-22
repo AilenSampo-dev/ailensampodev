@@ -1,6 +1,7 @@
 import { randomUUID } from "crypto";
 import { after, NextResponse } from "next/server";
 import { CATALOGO, MODULOS_POR_ID } from "@/content/sistema/catalogo";
+import { CHARLA_TEXT, MIXTA_TEXT } from "@/content/sistema/textos";
 import { getArchitectureForTask, type ArchCard, type GeneratedArchitecture } from "@/components/sections/demoTasks";
 import { alertarUnaVez } from "@/lib/alertas";
 import { getSql } from "@/lib/db";
@@ -37,21 +38,40 @@ function rateLimited(key: string): boolean {
   return false;
 }
 
-const SYSTEM_PROMPT = `Sos el motor del demo del sitio de Ailén Sampó, arquitecta de sistemas digitales a medida.
-Una persona describe la tarea que le roba tiempo en su negocio. Elegí EXACTAMENTE 3 módulos del catálogo que, juntos, la resuelven, en orden lógico (entrada → proceso → resultado).
+const SYSTEM_PROMPT = `Sos el motor del demo del sitio de Ailén Sampó, arquitecta de sistemas digitales a medida
+(sistemas de gestión, automatizaciones, agentes de WhatsApp, webs y tiendas conectadas, facturación ARCA, integraciones).
+Una persona describe lo que le roba tiempo en su negocio. Tu trabajo es mostrarle qué sistema lo resuelve.
+
+PASO 1 — Nombrá el dolor real en una frase corta ("dolor"): qué le pasa, no qué módulo querés poner.
+PASO 2 — Decidí el "tipo":
+- "sistema": el dolor se resuelve con módulos del catálogo.
+- "mixta": una parte se resuelve con módulos y otra no es de sistemas (contenido, diseño, redes, contabilidad, legales).
+  Elegí los módulos solo para la parte de sistemas.
+- "charla": no es de sistemas, no se entiende, o no hay forma honesta de resolverlo con el catálogo. Sin módulos.
+PASO 3 — Si es "sistema" o "mixta", elegí EXACTAMENTE 3 módulos que ataquen ESE dolor de forma directa, en orden
+entrada (cómo llega) → proceso (qué hace el sistema) → resultado (qué ve ella). No elijas un módulo por parecido:
+respetá su "no elegir si". Si la consulta es vaga ("todo es un caos", "no sé por dónde empezar"), el primero es crm o erp.
 
 Catálogo (usá solo estos ids):
-${CATALOGO.map((m) => `- ${m.id}: ${m.nombre}. ${m.resuelve}`).join("\n")}
+${CATALOGO.map((m) => `- ${m.id}: ${m.nombre}. Resuelve: ${m.resuelve}. NO elegir si: ${m.noElegirSi}.`).join("\n")}
 
-Reglas de voz: español rioplatense con voseo, cálido y preciso, sin jerga técnica, sin promesas exageradas, sin signos de exclamación ni emojis. Hablale a "vos".
-- "porque": por qué ese módulo resuelve SU caso, concreto, máximo 80 caracteres.
+Voz: español rioplatense con voseo, cálido y preciso, sin jerga, sin exclamaciones ni emojis. Hablale a "vos".
+Palabras prohibidas → usá en su lugar: "citas" → "turnos"; "prospecto"/"lead" → "cliente"/"consulta";
+"almacena"/"gestiona"/"optimiza" → lo que pasa en su día ("te avisa", "queda anotado", "se completa solo");
+"usuario" → "vos" o "tu clienta". Sin promesas de tiempo ni de resultados ("en 2 semanas", "vas a vender el doble").
+- "porque": por qué ese módulo resuelve SU caso, mencionando lo que escribió, máximo 80 caracteres.
 - "resumen": una frase de máximo 160 caracteres sobre cómo cambia su día cuando el sistema trabaja por ella.
-Si el texto no es una tarea de negocio (insulto, broma, vacío, otro idioma sin sentido), elegí bot-whatsapp, crm y panel con textos genéricos.
 
-Respondé SOLO JSON con esta forma:
-{"modulos":[{"id":"...","porque":"..."},{"id":"...","porque":"..."},{"id":"...","porque":"..."}],"resumen":"..."}`;
+Respondé SOLO JSON:
+{"tipo":"sistema|mixta|charla","dolor":"...","modulos":[{"id":"...","porque":"..."}, ...],"resumen":"..."}
+Con "charla", "modulos" va vacío y "resumen" vacío.`;
 
-type AiResult = { modulos: { id: string; porque: string }[]; resumen: string };
+type AiResult = {
+  tipo: "sistema" | "mixta" | "charla";
+  dolor: string;
+  modulos: { id: string; porque: string }[];
+  resumen: string;
+};
 
 function clean(text: unknown, max: number): string {
   return String(text ?? "")
@@ -65,6 +85,9 @@ function clean(text: unknown, max: number): string {
 function validate(raw: unknown): AiResult | null {
   if (!raw || typeof raw !== "object") return null;
   const data = raw as Partial<AiResult>;
+  const tipo = data.tipo === "mixta" || data.tipo === "charla" ? data.tipo : "sistema";
+  const dolor = clean(data.dolor, 160);
+  if (tipo === "charla") return { tipo, dolor, modulos: [], resumen: "" };
   if (!Array.isArray(data.modulos)) return null;
   const seen = new Set<string>();
   const modulos = data.modulos
@@ -72,10 +95,16 @@ function validate(raw: unknown): AiResult | null {
     .slice(0, 3)
     .map((m) => ({ id: m.id, porque: clean(m.porque, 90) || MODULOS_POR_ID.get(m.id)!.resuelve }));
   if (modulos.length < 3) return null;
-  return { modulos, resumen: clean(data.resumen, 180) };
+  return { tipo, dolor, modulos, resumen: clean(data.resumen, 180) };
 }
 
 const DOTS: ArchCard["dot"][] = ["rose", "yellow", "aqua"];
+
+// Respuestas repetidas (los chips mandan siempre el mismo texto): se reusan 24 h en vez de pedirle de nuevo a la IA.
+// En memoria por instancia del servidor; alcanza para bajar mucho el consumo de cupo.
+const CACHE_MS = 24 * 60 * 60 * 1000;
+const cache = new Map<string, { at: number; result: AiResult }>();
+const cacheKey = (task: string) => task.toLowerCase().replace(/\s+/g, " ").trim();
 
 
 // Fallas de configuración (no se arreglan esperando) → mail a Ailén, máx. 1 por día por tipo.
@@ -100,6 +129,8 @@ function avisarFalla(status: number) {
   after(() => alertarUnaVez(tipo, asunto, detalle, queHacer));
 }
 
+let ultimoCupo: { hasta: number; segundos: number } | null = null;
+
 async function askAi(task: string, apiKey: string): Promise<AiResult | null> {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), TIMEOUT_MS);
@@ -122,6 +153,10 @@ async function askAi(task: string, apiKey: string): Promise<AiResult | null> {
       }),
     });
     if (!response.ok) {
+      if (response.status === 429) {
+        const segundos = Number(response.headers.get("retry-after")) || 30;
+        ultimoCupo = { hasta: Date.now() + segundos * 1000, segundos };
+      }
       avisarFalla(response.status);
       console.warn(
         "[arquitectura] proveedor IA respondió",
@@ -142,14 +177,20 @@ async function askAi(task: string, apiKey: string): Promise<AiResult | null> {
 }
 
 function toArchitecture(ai: AiResult, task: string): GeneratedArchitecture {
+  if (ai.tipo === "charla") {
+    // Sin módulos: la pantalla muestra la invitación a charlar. Las tarjetas genéricas quedan solo de respaldo.
+    return { ...getArchitectureForTask(task), source: "ia", tipo: "charla", nota: CHARLA_TEXT };
+  }
   const cards = ai.modulos.map((m, i) => {
     const modulo = MODULOS_POR_ID.get(m.id)!;
-    return { label: modulo.label, title: modulo.nombre, desc: m.porque, dot: DOTS[i % 3] };
+    return { id: m.id, label: modulo.label, title: modulo.nombre, desc: m.porque, dot: DOTS[i % 3] };
   });
   return {
     cards: [cards[0], cards[1], cards[2]],
     valueText: ai.resumen || getArchitectureForTask(task).valueText,
     source: "ia",
+    tipo: ai.tipo,
+    nota: ai.tipo === "mixta" ? MIXTA_TEXT : undefined,
   };
 }
 
@@ -163,13 +204,24 @@ export async function POST(request: Request) {
   }
   if (!task) return NextResponse.json({ error: "vacio" }, { status: 400 });
 
+  // Pruebas automáticas (npm run test:demo): con el token correcto no hay límite ni se registra en Neon.
+  const testToken = process.env.DEMO_TEST_TOKEN;
+  const isTest = Boolean(testToken) && request.headers.get("x-demo-test") === testToken;
+
   const visitante = hashIp(getClientIp(request));
-  if (rateLimited(visitante)) {
+  if (!isTest && rateLimited(visitante)) {
     return NextResponse.json({ error: "limite" }, { status: 429 });
   }
 
   const apiKey = process.env.AI_API_KEY ?? process.env.GROQ_API_KEY;
-  const ai = apiKey ? await askAi(task, apiKey) : null;
+  const key = cacheKey(task);
+  const cached = cache.get(key);
+  let ai: AiResult | null = cached && Date.now() - cached.at < CACHE_MS ? cached.result : null;
+  if (!ai && apiKey) {
+    ai = await askAi(task, apiKey);
+    if (ai) cache.set(key, { at: Date.now(), result: ai });
+  }
+  const sinCupo = !ai && ultimoCupo !== null && Date.now() < ultimoCupo.hasta;
   const architecture: GeneratedArchitecture = ai
     ? toArchitecture(ai, task)
     : { ...getArchitectureForTask(task), source: "reglas" };
@@ -177,16 +229,19 @@ export async function POST(request: Request) {
 
   after(async () => {
     const sql = getSql();
-    if (!sql) return;
+    if (!sql || isTest) return;
     try {
-      const modulos = architecture.cards.map(({ label, title, desc }) => ({ label, title, desc }));
+      const modulos =
+        architecture.tipo === "charla" ? [] : architecture.cards.map(({ label, title, desc }) => ({ label, title, desc }));
       await sql`insert into consultas (id, tarea, fuente, modulos, resumen, visitante)
                 values (${id}, ${task}, ${architecture.source}, ${JSON.stringify(modulos)}::jsonb,
-                        ${architecture.valueText}, ${visitante})`;
+                        ${architecture.tipo === "charla" ? "[charla] " + CHARLA_TEXT : architecture.valueText}, ${visitante})`;
     } catch (error) {
       console.warn("[arquitectura] no se pudo registrar la consulta:", (error as Error).message);
     }
   });
 
-  return NextResponse.json({ id, ...architecture });
+  // Solo para la prueba automática: le avisa que hubo 429 para que espere y reintente.
+  const extraTest = isTest && sinCupo ? { cupo: true, reintentarEn: ultimoCupo?.segundos } : {};
+  return NextResponse.json({ id, ...architecture, ...extraTest });
 }

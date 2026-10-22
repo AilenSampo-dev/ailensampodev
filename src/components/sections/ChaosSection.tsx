@@ -24,6 +24,8 @@ const MODULE_EMOJI: Record<string, string> = {
   BOT: "🤖", INBOX: "📥", CRM: "🗂️", FLOW: "⚡", AGENDA: "📅", AVISOS: "🔔", PRESUPUESTOS: "🧾",
   PLANTILLAS: "📄", COBROS: "💰", ARCA: "🧾", STOCK: "📦", PEDIDOS: "🚚", TIENDA: "🛍️", PANEL: "📊",
   REPORTES: "📈", EQUIPO: "👥", ERP: "🧩", CAPTURA: "📥", BASE: "📚", REGISTRO: "🗂️", CAJA: "💰", ENTRADA: "📥",
+  WEB: "🌐", "MEDICIÓN": "📏", "SEÑAS": "🎟️", PAGOS: "💳", CUOTAS: "🔁", "ENVÍOS": "📦", COMPRAS: "🛒", COSTOS: "🧮",
+  POSTVENTA: "💌", "CAMPAÑAS": "📣", FICHAS: "🗂️", INTEGRACIONES: "🔌",
 };
 
 const SYSTEM_MS = 5200;
@@ -43,7 +45,7 @@ export default function ChaosSection() {
 
   // Las cajas del modo sistema: los módulos de su arquitectura, o los del mockup.
   const steps = useMemo(() => {
-    if (!architecture) return DEFAULT_STEPS;
+    if (!architecture || architecture.tipo === "charla") return DEFAULT_STEPS;
     return architecture.cards.map((card) => ({
       text: `${MODULE_EMOJI[card.label] ?? "⚙️"} ${card.label}`,
       dot: card.dot,

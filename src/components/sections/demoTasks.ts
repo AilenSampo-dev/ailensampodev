@@ -12,6 +12,8 @@ export type DemoTaskTag = (typeof DEMO_TASK_TAGS)[number];
 export const DEFAULT_DEMO_TASK: DemoTaskTag = DEMO_TASK_TAGS[0];
 
 export type ArchCard = {
+  /** id del módulo del catálogo (solo en respuestas de la IA) */
+  id?: string;
   label: string;
   title: string;
   desc: string;
@@ -26,6 +28,10 @@ export type ArchitectureBlueprint = {
 /** Resultado que ve la persona: "ia" = generado con IA sobre el catálogo; "reglas" = respaldo local. */
 export type GeneratedArchitecture = ArchitectureBlueprint & {
   source: "ia" | "reglas";
+  /** sistema (por defecto) · mixta (módulos + nota) · charla (sin módulos: invitación a conversar) */
+  tipo?: "sistema" | "mixta" | "charla";
+  /** Texto extra: invitación a charlar (charla) o a hablar de "lo otro" (mixta) */
+  nota?: string;
   /** id de la consulta registrada en el servidor (para asociar el lead). Ausente si se generó solo en el navegador. */
   consultaId?: string;
 };
