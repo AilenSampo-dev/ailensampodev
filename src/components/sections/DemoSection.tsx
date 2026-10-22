@@ -66,7 +66,7 @@ export default function DemoSection({ onGenerate }: DemoSectionProps) {
               <input
                 type="text"
                 className={`${styles.input} ${showCursor ? styles.inputWaiting : ""}`}
-                placeholder="Ej: contesto los mismos WhatsApp todo el día"
+                placeholder="Escribí aquí"
                 value={input}
                 onChange={(event) => setInput(event.target.value)}
                 onFocus={() => setFocused(true)}
