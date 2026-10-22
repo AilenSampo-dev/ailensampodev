@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Operación y mantenimiento — Soulful Branding · Ailén Sampó</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,400;0,6..12,600;0,6..12,700;0,6..12,900;1,6..12,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --night-plum:#3A1E66;
+    --soft-lilac:#E1ADFF;
+    --orchid-pink:#F656BF;
+    --orange:#FF6437;
+    --blue:#6882EB;
+    --grey:#4D4F54;
+    --ink:#1a1030;
+    --paper:#ffffff;
+    --paper-2:#faf7fe;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth;overflow-x:clip;max-width:100%}
+  body{
+    font-family:'Nunito Sans',system-ui,sans-serif;
+    color:var(--ink);
+    background:var(--night-plum);
+    line-height:1.6;
+    font-size:16px;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:clip;
+    max-width:100%;
+  }
+  .mono{font-family:'DM Mono',monospace}
+  .page{
+    width:100%;max-width:820px;margin:0 auto;
+    background:var(--paper);
+    padding:64px 68px;
+    position:relative;
+    overflow-x:clip;
+  }
+  .page + .page{margin-top:28px}
+
+  h1,h2,h3{font-family:'Nunito Sans',sans-serif;font-weight:900;line-height:1.12;letter-spacing:-.02em}
+  h1{font-size:44px}
+  h2{font-size:27px;margin-bottom:18px;color:var(--night-plum)}
+  h3{font-size:19px;margin-bottom:10px;color:var(--night-plum);font-weight:700}
+  p{margin-bottom:14px}
+  strong{font-weight:700}
+  a{color:var(--orchid-pink)}
+
+  .paren{color:var(--orchid-pink);font-weight:400}
+  .eyebrow{
+    font-family:'DM Mono',monospace;
+    font-size:12px;letter-spacing:.18em;text-transform:uppercase;
+    color:var(--orchid-pink);margin-bottom:14px;display:block;
+  }
+  .lede{font-size:19px;color:var(--grey);font-weight:400}
+
+  .cover{
+    background:var(--night-plum);
+    color:#fff;
+    min-height:920px;
+    display:flex;flex-direction:column;justify-content:space-between;
+    padding:72px 68px;
+  }
+  .cover .mark{display:flex;align-items:center;gap:14px;font-size:15px;letter-spacing:.05em;font-weight:400;opacity:.95}
+  .cover .mark .mark-note{color:rgba(255,255,255,.85)}
+  .logo-mark{height:20px;width:auto;display:block;flex-shrink:0}
+  .foot .logo-mark{height:15px;width:auto;opacity:.9}
+  .cover h1{color:#fff;font-size:48px;max-width:16ch}
+  .cover h1 em{font-style:normal;color:var(--soft-lilac)}
+  .cover.cover-close{min-height:720px}
+  .cover.cover-close h1{font-size:30px;max-width:none;line-height:1.18}
+  .close-window-band{
+    margin:36px -68px 0;padding:44px 68px 52px;
+    background:var(--night-plum);
+    position:relative;z-index:1;overflow:visible;
+  }
+  .close-window-wrap{
+    position:relative;width:min(100%,24rem);margin:0 auto;
+    overflow:visible;
+  }
+  .win-frame{position:relative;width:100%}
+  .win-titlebar{
+    display:flex;align-items:center;gap:6px;
+    padding:6px 9px;background:#1c1034;
+  }
+  .win-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+  .win-dot.yellow{background:#faf26f}
+  .win-dot.rose{background:#f656bf}
+  .win-dot.aqua{background:#abe3d2}
+  .win-body{
+    padding:26px 22px 28px;font-size:clamp(1rem,2vw,1.25rem);
+    line-height:1.28;font-weight:600;text-align:center;
+    background:url("/assets/propuestas/soulful-branding/degrade-horizontal.svg") center/cover no-repeat;
+    color:var(--night-plum);
+  }
+  .win-warning{
+    position:absolute;z-index:2;left:-2.1rem;bottom:-1.45rem;
+    width:6.25rem;height:auto;transform:rotate(-6deg);pointer-events:none;
+  }
+  .win-bangs{
+    position:absolute;z-index:2;top:-1.2rem;right:0.1rem;
+    font-family:"Courier New",Courier,monospace;
+    font-size:clamp(1.35rem,2.4vw,1.85rem);font-weight:700;line-height:1;
+    color:#faf26f;transform:rotate(4deg);letter-spacing:.02em;pointer-events:none;
+  }
+  .cover .sub{font-size:18px;color:var(--soft-lilac);margin-top:22px;max-width:52ch;font-weight:400}
+  .cover-foot{display:flex;justify-content:space-between;align-items:flex-end;font-size:13px;opacity:.8;flex-wrap:wrap;gap:24px}
+  .cover-foot .mono{letter-spacing:.05em}
+  .cover.cover-close .cover-foot{padding-top:28px}
+  .binary{color:var(--orange);font-family:'DM Mono',monospace;font-size:13px;letter-spacing:.1em;opacity:.9}
+
+  .kicker-line{width:44px;height:4px;background:var(--orchid-pink);margin-bottom:24px;border-radius:2px}
+  section{margin-bottom:40px}
+
+  .callout{
+    background:var(--paper-2);
+    border-left:4px solid var(--orchid-pink);
+    padding:20px 24px;border-radius:0 10px 10px 0;
+    margin:22px 0;font-size:17px;
+  }
+  .callout.orange{border-color:var(--orange);background:rgba(255,100,55,.06)}
+  .callout.orange strong{color:var(--orange)}
+
+  table{width:100%;max-width:100%;border-collapse:collapse;margin:18px 0;font-size:15px;table-layout:fixed}
+  th{
+    text-align:left;font-family:'DM Mono',monospace;font-size:11px;
+    letter-spacing:.1em;text-transform:uppercase;color:var(--grey);
+    padding:10px 12px;border-bottom:2px solid var(--night-plum);
+    overflow-wrap:break-word;word-break:break-word;
+  }
+  td{padding:11px 12px;border-bottom:1px solid #eee;vertical-align:top;overflow-wrap:break-word;word-break:break-word}
+  td.num{text-align:right;font-family:'DM Mono',monospace;color:var(--night-plum)}
+  td.num.lilac{color:#7a4db8}
+  tr:last-child td{border-bottom:none}
+  .tot td{font-weight:900;color:var(--night-plum);border-top:2px solid var(--night-plum);font-size:16px}
+  .tot td.num{color:var(--orchid-pink);font-size:18px}
+  td.item-sub{display:block;font-family:'DM Mono',monospace;font-size:11px;color:var(--grey);margin-top:3px;letter-spacing:.02em}
+
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:18px 0}
+  .grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin:22px 0}
+  .card{background:var(--paper-2);border-radius:12px;padding:22px;border:1px solid rgba(225,173,255,.2)}
+  .card h3{margin-bottom:6px}
+  .card .tag{font-family:'DM Mono',monospace;font-size:12px;color:var(--blue);letter-spacing:.06em;margin-bottom:8px;display:block}
+  .card p{font-size:14.5px;color:var(--grey);margin-bottom:0;line-height:1.55}
+
+  ul.pins{list-style:none;margin:14px 0}
+  ul.pins li{padding:8px 0 8px 36px;position:relative;border-bottom:1px solid #f2f2f2}
+  ul.pins li:last-child{border-bottom:none}
+  ul.pins li:before{
+    content:"";position:absolute;left:0;top:10px;
+    width:24px;height:13px;
+    background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 407.04 228.96'%3E%3Cpath fill='%23F656BF' d='M67.15,133.32c6.29-35.28,49.56-73.42,88.99-80.13.71-.14.71,1,0,1.14-33.14,5.71-72.28,46.99-79.13,86.99-4.14,22.71,2.14,45.14,17.71,48.99.71.29.29,1.43-.43,1.14-19.85-4.57-31.28-33.85-27.14-58.13Z'/%3E%3Cpath fill='%23F656BF' d='M195.12,161.33c-8.09,0-14.46-2-19.11-6.01-4.64-4.01-6.96-9.26-6.96-15.77s2.3-12.12,6.9-15.89c4.6-3.77,11.23-5.65,19.88-5.65h24.4v-3.21c0-11.03-6.07-16.55-18.21-16.55-9.92,0-15.91,3.73-17.97,11.19h-13.45c1.19-7.06,4.58-12.54,10.18-16.43,5.59-3.89,12.75-5.83,21.49-5.83,9.92,0,17.52,2.34,22.79,7.02,5.28,4.68,7.92,11.43,7.92,20.24v31.78h6.43v13.81h-14.29v-10.95h-5c-2.46,3.81-5.83,6.81-10.12,8.99s-9.25,3.27-14.88,3.27ZM196.9,150.62c4.29,0,8.21-.87,11.79-2.62,3.57-1.75,6.39-4.13,8.45-7.14,2.06-3.01,3.1-6.31,3.1-9.88v-3.21h-23.57c-10,0-15,3.73-15,11.19,0,3.57,1.35,6.41,4.05,8.51,2.7,2.1,6.43,3.16,11.19,3.16Z'/%3E%3Cpath fill='%23F656BF' d='M252.47,190.31c33.42-5.71,72.42-47.14,79.27-86.99,4-22.71-2.29-45.14-17.57-48.99-1-.29-.29-1.57.43-1.14,19.85,4.57,31.28,33.85,26.85,58.13-6.29,35.28-49.42,73.42-88.99,80.13-.57.14-.57-1,0-1.14Z'/%3E%3C/svg%3E") no-repeat center / contain;
+  }
+  ul.pins li span{display:block;color:var(--grey);font-size:13.5px;margin-top:2px}
+
+  ul.check{list-style:none;margin:14px 0;display:grid;grid-template-columns:1fr 1fr;gap:8px 28px}
+  ul.check .h{grid-column:1/-1;font-family:'DM Mono',monospace;font-size:12px;letter-spacing:.12em;color:var(--night-plum);text-transform:uppercase;margin-bottom:4px}
+  ul.check li{padding-left:22px;position:relative;font-size:14.5px}
+  ul.check li:before{content:"( )";position:absolute;left:0;font-family:'DM Mono',monospace;color:var(--orchid-pink);font-size:13px}
+  ul.check li b{color:var(--orchid-pink)}
+
+  .feecard{
+    margin:24px 0;border:2px solid var(--night-plum);border-radius:14px;overflow:hidden;
+    background:var(--paper-2);
+  }
+  .winbar{display:flex;gap:7px;align-items:center;background:var(--night-plum);padding:11px 16px}
+  .winbar i{width:11px;height:11px;border-radius:50%;display:inline-block}
+  .win-r{background:#FF5F57}.win-y{background:#FEBC2E}.win-g{background:#28C840}
+  .winbar span{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.14em;color:var(--soft-lilac);margin-left:8px;text-transform:uppercase}
+  .feebody{padding:28px 28px 24px;display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center}
+  .feebody .kicker{font-family:'DM Mono',monospace;font-size:12px;color:var(--orchid-pink);letter-spacing:.1em;margin-bottom:8px}
+  .feebody h3{font-size:22px;margin-bottom:6px}
+  .feebody p{font-size:14.5px;color:var(--grey);margin-bottom:0;max-width:38ch}
+  .feeprice{text-align:right;white-space:nowrap}
+  .feeprice .big{font-size:48px;font-weight:900;color:var(--orchid-pink);line-height:1}
+  .feeprice .cur{font-family:'DM Mono',monospace;font-size:14px;color:var(--night-plum);letter-spacing:.06em}
+  .feeprice .per{font-family:'DM Mono',monospace;font-size:12px;color:var(--grey);margin-top:6px}
+
+  .sumgrid{margin:22px 0;border:1px solid #eee;border-radius:12px;overflow:hidden}
+  .sumrow{display:grid;grid-template-columns:1fr auto;gap:20px;padding:16px 20px;align-items:center;border-bottom:1px solid #eee}
+  .sumrow:last-child{border-bottom:none}
+  .sumrow .k{font-size:15px}
+  .sumrow .k span{display:block;font-size:13px;color:var(--grey);margin-top:2px}
+  .sumrow .v{font-family:'DM Mono',monospace;font-size:15px;color:var(--night-plum);text-align:right;white-space:nowrap}
+  .sumrow.hi{background:rgba(246,86,191,.08)}
+  .sumrow.hi .v{color:var(--orchid-pink);font-size:17px;font-weight:700}
+
+  .stacktags{margin-top:18px;display:flex;flex-wrap:wrap;gap:9px}
+  .stacktags span{font-family:'DM Mono',monospace;font-size:12px;color:var(--night-plum);border:1px solid rgba(58,30,102,.18);border-radius:999px;padding:6px 13px;background:var(--paper-2)}
+
+  .reftag{margin-top:14px;font-family:'DM Mono',monospace;font-size:12px;color:var(--grey);letter-spacing:.04em;line-height:1.6}
+  .reftag b{color:var(--night-plum);font-weight:500}
+  .vig{margin-top:18px;font-family:'DM Mono',monospace;font-size:12.5px;color:var(--grey);letter-spacing:.03em}
+  .extra{font-size:15px;color:var(--grey)}
+  .extra b{color:var(--night-plum);font-family:'DM Mono',monospace;font-size:14px}
+
+  .foot{font-size:12px;color:var(--grey);border-top:1px solid #eee;padding-top:16px;margin-top:40px;display:flex;justify-content:space-between}
+  .foot .mono{letter-spacing:.05em}
+
+  .grid-bg{
+    position:absolute;inset:0;z-index:0;pointer-events:none;
+    background-image:
+      linear-gradient(rgba(225,173,255,.20) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(225,173,255,.20) 1px, transparent 1px);
+    background-size:46px 46px;
+  }
+  .page > *{position:relative;z-index:1}
+  .cover .grid-bg{
+    background-image:
+      linear-gradient(rgba(255,255,255,.07) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,.07) 1px, transparent 1px);
+  }
+
+  .brand-scene{
+    margin-top:30px;display:flex;align-items:flex-end;gap:6px;
+    max-width:100%;min-width:0;
+  }
+  .brand-scene .dino{
+    width:86px;height:86px;flex-shrink:0;display:block;
+    image-rendering:pixelated;image-rendering:crisp-edges;
+  }
+  .speech{
+    position:relative;background:var(--blue);color:#fff;
+    font-size:15px;line-height:1.4;
+    padding:14px 18px;border-radius:16px;
+    max-width:min(82%,540px);margin-bottom:20px;
+  }
+  .speech::after{
+    content:'';position:absolute;left:-8px;bottom:14px;
+    width:0;height:0;border:8px solid transparent;
+    border-right-color:var(--blue);border-left:0;
+  }
+  .chat-greet{display:inline-flex;align-items:center;gap:10px}
+  .chat-greet .pix-wink{height:38px;width:38px;flex-shrink:0;display:block}
+
+  .clause{display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:center;margin-top:22px}
+  .clause img{width:40px;height:40px;opacity:.9}
+
+  .meta-grid{display:flex;flex-wrap:wrap;gap:28px 48px;margin-top:36px;padding-top:24px;border-top:1px solid rgba(255,255,255,.12)}
+  .meta-grid .k{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:rgba(250,246,255,.55);margin-bottom:5px}
+  .meta-grid .v{font-size:15px;color:#fff;font-weight:600}
+
+  @media print{
+    body{background:#fff}
+    .page{max-width:none;margin:0;padding:40px 44px;page-break-after:always}
+    .page+.page{margin-top:0}
+    .cover{min-height:100vh}
+  }
+  @media(max-width:640px){
+    body{font-size:15px;padding-bottom:80px}
+    .page{padding:32px 20px}
+    .page + .page{margin-top:16px}
+    .cover{padding:40px 22px;min-height:auto}
+    .close-window-band{margin:28px -22px 0;padding:32px 22px 36px}
+    .win-warning{left:-1.4rem;bottom:-1.2rem;width:5rem}
+    .win-bangs{top:-1rem;font-size:1.45rem}
+    h1,.cover h1{font-size:32px;line-height:1.08}
+    .cover.cover-close h1{font-size:24px}
+    h2{font-size:22px}
+    .lede{font-size:16px}
+    .grid2,.grid3,ul.check{grid-template-columns:1fr}
+    .feebody{grid-template-columns:1fr;text-align:left}
+    .feeprice{text-align:left}
+    .foot{flex-direction:column;gap:8px;align-items:flex-start}
+    .cover-foot{flex-direction:column;align-items:flex-start}
+    .brand-scene{flex-direction:column;align-items:flex-start}
+    .speech{max-width:100%;margin-bottom:0;margin-top:8px}
+    .speech::after{left:24px;bottom:auto;top:-8px;border-right-color:transparent;border-bottom-color:var(--blue);border-top:0}
+  }
+</style>
+</head>
+<body>
+
+<!-- ══════════ PORTADA ══════════ -->
+<div class="page cover">
+  <div class="grid-bg"></div>
+  <div class="mark"><img class="logo-mark" src="/assets/logos/sao-reduccion-pink.svg" alt="s(a)ó"><span class="mark-note">propuesta de operación</span></div>
+  <div>
+    <span class="binary">01001110101</span>
+    <h1>El sistema ya trabaja. Ahora hay que <em>sostenerlo en pie.</em></h1>
+    <p class="sub">Construir un sistema y mantenerlo vivo son dos cosas distintas. La primera ya está hecha. Esto es sobre la segunda — lo que hace que siga funcionando cuando nadie lo está mirando.</p>
+    <div class="meta-grid">
+      <div><div class="k">Cliente</div><div class="v">Soulful Branding</div></div>
+      <div><div class="k">Referencia</div><div class="v">Sofía Ciabattoni</div></div>
+      <div><div class="k">Fecha</div><div class="v">Julio 2026</div></div>
+      <div><div class="k">Sistema</div><div class="v">sofiaciabattoni.com</div></div>
+    </div>
+    <div class="brand-scene">
+      <svg class="dino" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges" aria-hidden="true"><path fill="#6882eb" d="M221.15,71.86v34.89h-4.99v4.98h-34.89v4.99h29.9v4.98h-4.98v4.98h-24.92v14.95h-4.98v9.97h14.95v19.94h-9.97v-9.98h-4.98v14.96h-4.98v9.97h-4.98v4.98h-4.98v4.98h-4.99v4.98h-4.98v19.94h-4.98v9.98h4.98v4.98h-19.94v-19.94h-14.95v4.98h-4.98v9.98h4.98v4.98h-19.94v-29.91h-4.98v-4.98h-4.98v-4.98h-4.98v-4.98h-4.98v-4.98h-4.98v-4.98h-4.98v-4.98h-4.98v-34.9h4.98v-4.98h4.98v4.98h4.98v4.98h4.98v4.98h4.98v4.98h4.98v4.98h14.96v-4.98h4.98v-4.98h4.98v-4.98h4.98v-4.98h4.98v-4.98h4.98v-4.98h4.98v-49.85h4.98v-4.98h4.98v-4.98h4.98v-4.98h64.8v4.98h4.99Z"/><path fill="#fff" d="M161.33,81.83h9.97v9.97h-9.97v-9.97ZM106.5,166.56v4.99h4.98v-4.99h-4.98ZM96.53,166.56v4.99h4.98v-4.99h-4.98ZM86.56,166.56v4.99h4.98v-4.99h-4.98ZM86.56,166.56v-4.98h-4.98v4.98h4.98ZM81.57,161.58v-4.98h-4.98v4.98h4.98ZM76.59,151.61h-4.98v4.98h4.98v-4.98ZM66.62,146.63v4.98h4.98v-4.98h-4.98ZM76.59,166.56v4.99h4.98v-4.99h-4.98ZM71.61,161.58v4.98h4.98v-4.98h-4.98ZM66.62,156.6v4.98h4.98v-4.98h-4.98ZM116.47,161.58h-4.98v4.98h4.98v-4.98ZM121.45,156.6h-4.98v4.98h4.98v-4.98ZM126.44,151.61h-4.98v4.98h4.98v-4.98ZM131.42,146.63h-4.98v4.98h4.98v-4.98ZM136.4,141.64h-4.98v4.98h4.98v-4.98ZM141.39,136.66h-4.98v4.98h4.98v-4.98ZM141.39,136.66h4.98v-4.98h-4.98v4.98ZM141.39,126.69h4.98v-4.98h-4.98v4.98ZM141.39,116.72h4.98v-4.99h-4.98v4.99ZM141.39,101.76v4.98h4.98v-4.98h-4.98ZM141.39,91.8v4.98h4.98v-4.98h-4.98ZM141.39,81.83v4.98h4.98v-4.98h-4.98ZM146.37,91.8h4.98v-4.98h-4.98v4.98ZM146.37,101.76h4.98v-4.98h-4.98v4.98ZM146.37,111.73h4.98v-4.98h-4.98v4.98ZM151.36,121.71v-4.98h-4.98v4.98h4.98ZM151.36,131.68v-4.98h-4.98v4.98h4.98ZM151.36,141.64v-4.98h-4.98v4.98h4.98ZM141.39,146.63h4.98v-4.98h-4.98v4.98ZM136.4,151.61h4.98v-4.98h-4.98v4.98ZM131.42,156.6h4.98v-4.98h-4.98v4.98ZM126.44,161.58h4.98v-4.98h-4.98v4.98ZM121.45,166.56h4.98v-4.98h-4.98v4.98ZM116.47,171.55h4.98v-4.99h-4.98v4.99ZM111.48,176.54h4.98v-4.98h-4.98v4.98ZM101.51,176.54h4.99v-4.98h-4.99v4.98ZM91.54,176.54h4.98v-4.98h-4.98v4.98ZM81.57,176.54h4.98v-4.98h-4.98v4.98ZM151.36,76.85h-4.98v4.98h4.98v-4.98ZM156.34,71.86h-4.98v4.98h4.98v-4.98ZM166.32,71.86h-4.98v4.98h4.98v-4.98ZM171.3,71.86v4.98h4.98v-4.98h-4.98ZM151.36,86.81h4.98v-4.98h-4.98v4.98ZM156.34,76.85v4.98h4.99v-4.98h-4.99ZM156.34,96.78v-4.98h-4.98v4.98h4.98ZM156.34,106.75v-4.98h-4.98v4.98h4.98Z"/></svg>
+      <div class="speech"><span class="chat-greet">Hola, Sofía <svg class="pix-wink" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges" aria-hidden="true"><path fill="#f656bf" fill-rule="evenodd" d="M86.77,115.51v-11.49h-11.5v11.49h-11.49v11.49h-11.49v45.99h11.49v-45.99h11.49v-11.49h11.5ZM109.76,161.49v11.49h11.49v11.49h68.98v-11.49h11.49v-11.49h-11.49v11.49h-68.98v-11.49h-11.49ZM224.73,172.99v11.49h-11.5v11.5h11.5v-11.5h11.49v-11.49h-11.49ZM236.23,172.99v-45.99h-11.49v-11.49h-11.5v-11.49h11.5v11.49h11.49v11.49h11.49v45.99h-11.49ZM167.25,138.5h45.99v-11.49h-45.99v11.49ZM132.76,127v11.49h11.49v-11.49h-11.49v-11.49h-11.5v-11.49h-11.49v11.49h-11.49v11.49h-11.49v11.49h11.49v-11.49h11.49v-11.49h11.49v11.49h11.5ZM75.27,172.99v11.49h11.5v11.5h-11.5v-11.5h-11.49v-11.49h11.49Z"/></svg></span><br><br>Así queda lo que sigue después de la construcción.</div>
+    </div>
+  </div>
+  <div class="cover-foot">
+    <div>
+      <div class="mono">SOULFUL BRANDING</div>
+      <div style="opacity:.6">At. Sofía Ciabattoni</div>
+    </div>
+    <div style="text-align:right">
+      <div class="mono">AILÉN SAMPÓ</div>
+      <div style="opacity:.6"><a href="https://www.ailensampo.com" target="_blank" rel="noopener" style="color:inherit">www.ailensampo.com</a> · Julio 2026 · v1</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ 01 · EN PRODUCCIÓN ══════════ -->
+<div class="page">
+  <div class="grid-bg"></div>
+  <span class="eyebrow">01 — Lo que hoy está en producción</span>
+  <div class="kicker-line"></div>
+  <h2>No es una web. Son tres sistemas que comparten una misma base.</h2>
+  <p class="lede">Cada uno resuelve una parte distinta del negocio. Juntos, van de la primera consulta de una clienta hasta la factura final — sin que tengas que saltar entre planillas, mails y carpetas.</p>
+
+  <div class="grid2" style="grid-template-columns:1fr">
+    <div class="card" style="display:grid;grid-template-columns:auto 1fr;gap:18px;align-items:start">
+      <span class="tag">tu escaparate</span>
+      <div>
+        <h3>Tu sitio, con tu voz</h3>
+        <p>Landing, portfolio, páginas legales y consentimiento de cookies. Editable por vos desde el panel, sin depender de nadie para cambiar un texto o subir un caso.</p>
+      </div>
+    </div>
+    <div class="card" style="display:grid;grid-template-columns:auto 1fr;gap:18px;align-items:start">
+      <span class="tag">tu orden</span>
+      <div>
+        <h3>El sistema que ordena el negocio</h3>
+        <p>Pipeline de leads, clientas, proyectos con sus fases y facturación seña / final. La operación entera en un solo lugar, con su propia seguridad y su propio tablero.</p>
+      </div>
+    </div>
+    <div class="card" style="display:grid;grid-template-columns:auto 1fr;gap:18px;align-items:start">
+      <span class="tag">tu venta</span>
+      <div>
+        <h3>Presupuestos que se envían solos</h3>
+        <p>Cada presupuesto vive en su propio link. La clienta lo abre, lo ve, lo aprueba o consulta — y vos te enterás cuándo lo miró. Con el deck de marca adentro.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot">
+    <span class="mono"><img class="logo-mark" src="/assets/logos/sao-reduccion-pink.svg" alt="s(a)ó"></span>
+    <span>Propuesta Soulful Branding · 01</span>
+  </div>
+</div>
+
+<!-- ══════════ 02 · VALOR ══════════ -->
+<div class="page">
+  <div class="grid-bg"></div>
+  <span class="eyebrow">02 — El valor de lo construido</span>
+  <div class="kicker-line"></div>
+  <h2>Lo que tenés funcionando.</h2>
+  <p class="lede">El intercambio de servicios que hicimos cubrió la construcción de todo esto. Este es su <strong>valor de referencia</strong>: lo que costaría hoy levantarlo desde cero, para que tengas dimensión real de lo que está en producción.</p>
+
+  <table>
+    <tr><th>Ítem</th><th style="text-align:right">Referencia</th></tr>
+    <tr>
+      <td>Núcleo del sistema<span class="item-sub">datos, seguridad, motor de la operación</span></td>
+      <td class="num lilac">USD 2.800</td>
+    </tr>
+    <tr>
+      <td>Sitio público completo<span class="item-sub">landing, portfolio, legales, cookies, analítica</span></td>
+      <td class="num lilac">USD 1.900</td>
+    </tr>
+    <tr>
+      <td>CRM — pipeline de leads y bandeja de contacto<span class="item-sub">con dashboard de métricas</span></td>
+      <td class="num lilac">USD 2.000</td>
+    </tr>
+    <tr>
+      <td>Motor de presupuestos con vista pública<span class="item-sub">estados, envío por mail, respuesta de la clienta</span></td>
+      <td class="num lilac">USD 1.800</td>
+    </tr>
+    <tr>
+      <td>Clientas y proyectos con fases<span class="item-sub">de lead ganado a proyecto en curso</span></td>
+      <td class="num lilac">USD 1.200</td>
+    </tr>
+    <tr>
+      <td>Editor de contenido y portfolio<span class="item-sub">autogestión del sitio</span></td>
+      <td class="num lilac">USD 900</td>
+    </tr>
+    <tr>
+      <td>Facturación seña / final<span class="item-sub">estados de cobro</span></td>
+      <td class="num lilac">USD 600</td>
+    </tr>
+    <tr class="tot">
+      <td>Valor de referencia</td>
+      <td class="num">USD 11.200</td>
+    </tr>
+  </table>
+
+  <p class="reftag">La construcción quedó cubierta por el intercambio de servicios que hicimos y está cerrada.</p>
+
+  <div class="foot">
+    <span class="mono"><img class="logo-mark" src="/assets/logos/sao-reduccion-pink.svg" alt="s(a)ó"></span>
+    <span>Propuesta Soulful Branding · 02</span>
+  </div>
+</div>
+
+<!-- ══════════ 03 · FEE ══════════ -->
+<div class="page">
+  <div class="grid-bg"></div>
+  <span class="eyebrow">03 — Operación y mantenimiento</span>
+  <div class="kicker-line"></div>
+  <h2>Un sistema en producción se degrada solo si nadie lo cuida.</h2>
+  <p class="lede">Las dependencias se actualizan, la seguridad cambia, aparecen casos que no estaban previstos. El mantenimiento es lo que mantiene todo esto de pie, mes a mes — <strong>y arranca cuando la construcción termina.</strong></p>
+
+  <div class="feecard">
+    <div class="winbar"><i class="win-r"></i><i class="win-y"></i><i class="win-g"></i><span>mantenimiento · operación</span></div>
+    <div class="feebody">
+      <div>
+        <div class="kicker">fee mensual</div>
+        <h3>El sistema, cuidado y en pie.</h3>
+        <p>Todo lo que hace que sigas usándolo sin sobresaltos, incluido de base.</p>
+      </div>
+      <div class="feeprice">
+        <div class="big">150</div>
+        <div class="cur">USD / mes</div>
+        <div class="per">gestión de infra incluida</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid3">
+    <div class="card">
+      <span class="tag">capa 01</span>
+      <h3>Base</h3>
+      <p>Uptime, backups y monitoreo. Que esté siempre arriba y nada se pierda.</p>
+    </div>
+    <div class="card">
+      <span class="tag">capa 02</span>
+      <h3>Vigencia técnica</h3>
+      <p>Actualizaciones de Next y Prisma y parches de seguridad. Sin esto, el sitio se rompe con el tiempo.</p>
+    </div>
+    <div class="card">
+      <span class="tag">capa 03</span>
+      <h3>Soporte</h3>
+      <p>Corrección de bugs de lo entregado + 2 hs mensuales de ajustes.</p>
+    </div>
+  </div>
+
+  <ul class="check">
+    <div class="h">Incluido en el fee</div>
+    <li>Uptime, backups y monitoreo</li>
+    <li>Actualizaciones de dependencias y seguridad</li>
+    <li>Corrección de bugs de lo entregado</li>
+    <li><b>2 hs / mes</b> de ajustes</li>
+    <li>Configuración y mantenimiento de infraestructura</li>
+  </ul>
+
+  <div class="foot">
+    <span class="mono"><img class="logo-mark" src="/assets/logos/sao-reduccion-pink.svg" alt="s(a)ó"></span>
+    <span>Propuesta Soulful Branding · 03</span>
+  </div>
+</div>
+
+<!-- ══════════ 04 · FUERA DEL FEE ══════════ -->
+<div class="page">
+  <div class="grid-bg"></div>
+  <span class="eyebrow">04 — Fuera del mantenimiento</span>
+  <div class="kicker-line"></div>
+  <h2>Lo que no entra en el fee.</h2>
+
+  <ul class="pins">
+    <li><strong>Funcionalidad nueva o módulos nuevos</strong><span>Todo lo que no exista hoy se cotiza antes de arrancar.</span></li>
+  </ul>
+
+  <p class="extra">Se cotiza al momento de evaluar lo que hay que desarrollar, aprobada antes de empezar.</p>
+
+  <div class="foot">
+    <span class="mono"><img class="logo-mark" src="/assets/logos/sao-reduccion-pink.svg" alt="s(a)ó"></span>
+    <span>Propuesta Soulful Branding · 04</span>
+  </div>
+</div>
+
+<!-- ══════════ 05 · INFRA ══════════ -->
+<div class="page">
+  <div class="grid-bg"></div>
+  <span class="eyebrow">05 — Infraestructura</span>
+  <div class="kicker-line"></div>
+  <p class="lede">La <strong>configuración y el mantenimiento</strong> de esa infra los cubro yo, dentro del fee. Mientras el uso entre en lo contemplado por los planes gratuitos, <strong>no hay costo extra</strong>. Si el negocio crece y supera esos límites, se habla antes de escalar.</p>
+
+  <div class="stacktags">
+    <span>Neon · PostgreSQL</span>
+    <span>Vercel</span>
+    <span>Resend</span>
+    <span>Blob storage</span>
+  </div>
+
+  <div class="foot">
+    <span class="mono"><img class="logo-mark" src="/assets/logos/sao-reduccion-pink.svg" alt="s(a)ó"></span>
+    <span>Propuesta Soulful Branding · 05</span>
+  </div>
+</div>
+
+<!-- ══════════ 06 · RESUMEN ══════════ -->
+<div class="page">
+  <div class="grid-bg"></div>
+  <span class="eyebrow">06 — En resumen</span>
+  <div class="kicker-line"></div>
+  <h2>Lo que se cobra de acá en más.</h2>
+
+  <div class="sumgrid">
+    <div class="sumrow hi">
+      <div class="k">Mantenimiento y operación<span>desde el mes que definamos</span></div>
+      <div class="v">USD 150 / mes</div>
+    </div>
+    <div class="sumrow">
+      <div class="k">Consumo de infraestructura<span>cuentas a tu nombre; planes gratuitos = sin costo</span></div>
+      <div class="v">directo al proveedor</div>
+    </div>
+    <div class="sumrow">
+      <div class="k">Construcción del sistema<span>cubierta por el intercambio</span></div>
+      <div class="v">cerrado</div>
+    </div>
+  </div>
+
+  <div class="foot">
+    <span class="mono"><img class="logo-mark" src="/assets/logos/sao-reduccion-pink.svg" alt="s(a)ó"></span>
+    <span>Propuesta Soulful Branding · 06</span>
+  </div>
+</div>
+
+<!-- ══════════ CIERRE ══════════ -->
+<div class="page cover cover-close">
+  <div class="grid-bg"></div>
+  <div class="mark"><img class="logo-mark" src="/assets/logos/sao-reduccion-pink.svg" alt="s(a)ó"></div>
+  <div>
+    <span class="binary">01001110101</span>
+    <h1>Ordeno lo que te consume, para que <em>pienses en lo que importa.</em></h1>
+  </div>
+  <div class="close-window-band">
+    <div class="close-window-wrap">
+      <span class="win-bangs" aria-hidden="true">(!!)</span>
+      <div class="win-frame">
+        <div class="win-titlebar">
+          <span class="win-dot yellow"></span>
+          <span class="win-dot rose"></span>
+          <span class="win-dot aqua"></span>
+        </div>
+        <div class="win-body">
+          El sistema ya está.<br>
+          Ahora toca sostenerlo
+        </div>
+      </div>
+      <img class="win-warning" src="/assets/recursos-graficos/important.svg" alt="" width="130" height="130">
+    </div>
+  </div>
+  <div class="cover-foot">
+    <div>
+      <div class="mono">AILÉN SAMPÓ</div>
+      <div style="opacity:.6"><a href="https://www.ailensampo.com" target="_blank" rel="noopener" style="color:inherit">www.ailensampo.com</a></div>
+      <div style="opacity:.6;margin-top:2px">Sistemas a medida · ailensampo.com</div>
+    </div>
+    <div style="text-align:right;opacity:.6">
+      <div class="mono">Julio 2026 · v1</div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

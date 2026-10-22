@@ -1,0 +1,108 @@
+/* Footer — Canva DAHM0M2xh8E pág. 6: banda #1e0c39 de 97px, logo secundario lila, menú violeta, estado. */
+.footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+  padding: 1.75rem 1rem;
+  background: #1e0c39;
+}
+
+.brand {
+  display: block;
+  line-height: 0;
+}
+
+/* Logo secundario "(a) Ailén" en lila: el SVG como máscara para poder colorearlo */
+.logo {
+  display: block;
+  width: 8.5rem;
+  aspect-ratio: 168 / 45.3;
+  background: #e1adff;
+  -webkit-mask: url("/assets/logos/(a)%20Ailen_logo%20secundario.svg") center / contain no-repeat;
+  mask: url("/assets/logos/(a)%20Ailen_logo%20secundario.svg") center / contain no-repeat;
+}
+
+.nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem 1.75rem;
+}
+
+.link {
+  color: #613ea4;
+  font-family: "Nunito Sans", sans-serif;
+  font-size: 0.8rem;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: color 0.15s ease;
+}
+
+.link:hover,
+.link:focus-visible {
+  color: #e1adff;
+}
+
+.status {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: #e1adff;
+  font-family: "Nunito Sans", sans-serif;
+  font-size: 0.9rem;
+}
+
+.dot {
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 50%;
+  background: #abe3d2;
+  animation: pulse 2.4s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(171, 227, 210, 0.5); }
+  50% { box-shadow: 0 0 0 6px rgba(171, 227, 210, 0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dot { animation: none; }
+}
+
+/* Desktop: medidas del mockup (base 1366px) */
+@media (min-width: 900px) {
+  .footer {
+    position: relative;
+    flex-direction: row;
+    justify-content: space-between;
+    height: min(7.09vw, 96.9px);
+    padding: 0 min(3.48vw, 47.5px);
+  }
+
+  .logo {
+    width: min(12.3vw, 168px);
+  }
+
+  .nav {
+    position: absolute;
+    left: 30.3%;
+    gap: 0;
+  }
+
+  .link {
+    width: min(9.6vw, 131px);
+    font-size: min(0.92vw, 12.6px);
+  }
+
+  .status {
+    gap: min(1.4vw, 19px);
+    font-size: min(1.12vw, 15.3px);
+  }
+
+  .dot {
+    width: min(0.9vw, 12.4px);
+    height: min(0.9vw, 12.4px);
+  }
+}

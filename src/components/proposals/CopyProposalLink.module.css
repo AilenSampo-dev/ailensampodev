@@ -1,0 +1,26 @@
+.wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+.input {
+  flex: 1 1 240px;
+  min-width: 0;
+  padding: 0.65rem 0.75rem;
+  border: 1px solid rgba(250, 249, 247, 0.15);
+  background: rgba(250, 249, 247, 0.04);
+  color: #faf9f7;
+  font: inherit;
+}
+
+.btn {
+  padding: 0.65rem 1rem;
+  border: none;
+  background: #aebff2;
+  color: #0e0e0e;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}

@@ -1,0 +1,524 @@
+/* "No es magia" — Canva DAHM0M2xh8E pág. 7 (1366×1092). Columna central = ancho de la terminal (598px).
+   Desktop (≥900px): medidas del mockup como min(vw, px). Mobile: misma composición apilada. */
+
+.section {
+  position: relative;
+  overflow: hidden;
+  padding: 3.5rem 1rem 3rem;
+  color: #ffffff;
+}
+
+.column {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 36rem;
+  margin: 0 auto;
+}
+
+.title {
+  margin-bottom: 2.5rem;
+  font-family: "Egyptian Slate", serif;
+  font-size: clamp(2rem, 8.5vw, 2.6rem);
+  font-weight: 700;
+  line-height: 1.14;
+  text-align: center;
+}
+
+/* ── Terminal ── */
+.terminal {
+  position: relative;
+  border: 1px solid #d9d9d9;
+  border-radius: 10px;
+  background: #6882eb;
+}
+
+.terminalBar {
+  display: flex;
+  align-items: center;
+  gap: 1.4rem;
+  height: 2.6rem;
+  padding: 0 1rem;
+  border-bottom: 1px solid #d9d9d9;
+}
+
+.dots {
+  display: flex;
+  gap: 0.6rem;
+}
+
+.dots i {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #f656bf;
+}
+
+.dots i:nth-child(2) { background: #faf26f; }
+.dots i:nth-child(3) { background: #abe3d2; }
+
+.terminalBar p,
+.prompt,
+.barRow {
+  font-family: "Nunito Sans", sans-serif;
+  letter-spacing: 0.17em;
+}
+
+.terminalBar p {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+}
+
+.terminalBody {
+  padding: 1.1rem 1rem 1.6rem;
+}
+
+.prompt {
+  font-size: 0.8rem;
+}
+
+.bars {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  margin-top: 0.9rem;
+}
+
+.barRow {
+  display: grid;
+  grid-template-columns: 1fr auto 2.6rem;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.72rem;
+}
+
+.cells {
+  display: flex;
+  gap: 2px;
+}
+
+.cells i {
+  width: 6px;
+  height: 10px;
+  background: #8ea5ff;
+}
+
+.cells i[data-on="rose"] { background: #f656bf; }
+.cells i[data-on="aqua"] { background: #abe3d2; }
+.cells i[data-on="gray"] { background: #d9d9d9; }
+
+.pct {
+  text-align: right;
+}
+
+/* Globo de diálogo */
+.bubble {
+  position: relative;
+  width: 86%;
+  min-height: 6.5rem;
+  margin-top: 1.1rem;
+  padding: 0.9rem 1rem;
+  border-radius: 8px;
+  background: #fffbdb;
+  color: #361f62;
+  font-family: "Nunito Sans", sans-serif;
+  font-size: 0.8rem;
+  line-height: 1.4;
+  letter-spacing: 0.08em;
+}
+
+.bubble::after {
+  content: "";
+  position: absolute;
+  left: 2.2rem;
+  bottom: -9px;
+  width: 20px;
+  height: 20px;
+  background: #fffbdb;
+  transform: rotate(49.7deg);
+}
+
+.bubble p + p {
+  margin-top: 1.1em;
+}
+
+.bubble p {
+  animation: fadeIn 0.25s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(3px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* Carita (misma animación que la demo), violeta oscuro */
+.terminal .wink {
+  position: absolute;
+  top: 9.5rem;
+  right: -2.5rem;
+  z-index: 3;
+  width: 7.5rem;
+  color: #3a1e66;
+  transform: rotate(12.09deg);
+  pointer-events: none;
+}
+
+/* ── Preguntas + mail ── */
+.lower {
+  position: relative;
+  margin-top: 1.15rem;
+}
+
+.mail {
+  position: absolute;
+  top: 1.5rem;
+  left: -1.5rem;
+  z-index: 0;
+  width: 8.5rem;
+  transform: rotate(-9.32deg);
+  pointer-events: none;
+}
+
+.chips {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.6rem 0.8rem;
+}
+
+.chip {
+  min-height: 2.4rem;
+  padding: 0 1.1rem;
+  border: 1px solid #d9d9d9;
+  border-radius: 999px;
+  background: transparent;
+  color: #ffffff;
+  font-family: "Nunito Sans", sans-serif;
+  font-size: 0.72rem;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.chip:hover,
+.chip:focus-visible,
+.chipActive {
+  background: #ffffff;
+  color: #3a1e66;
+}
+
+.form {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 2.6rem;
+}
+
+.formLabel {
+  font-family: "Nunito Sans", sans-serif;
+  font-size: 0.95rem;
+  letter-spacing: 0.2em;
+  text-align: center;
+}
+
+.inputWrap {
+  position: relative;
+  width: min(100%, 16.5rem);
+  margin-top: 1.35rem;
+}
+
+.inputWrap input {
+  width: 100%;
+  height: 2.6rem;
+  padding: 0 2.4rem;
+  border: none;
+  border-radius: 6px;
+  background: #e1adff;
+  color: #3a1e66;
+  font-family: "Nunito Sans", sans-serif;
+  font-size: 0.88rem;
+  text-align: center;
+}
+
+.inputWrap input::placeholder {
+  color: #3a1e66;
+  opacity: 0.85;
+}
+
+.inputWrap input:focus {
+  outline: 2px solid #faf26f;
+  outline-offset: 2px;
+}
+
+.inputWrap button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 2.4rem;
+  height: 100%;
+  border: none;
+  background: transparent;
+  color: #3a1e66;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.inputWrap button:disabled {
+  opacity: 0.4;
+}
+
+.privacy {
+  max-width: 22rem;
+  margin-top: 0.7rem;
+  font-family: "Nunito Sans", sans-serif;
+  font-size: 0.68rem;
+  line-height: 1.4;
+  text-align: center;
+  opacity: 0.7;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bubble p { animation: none; }
+}
+
+/* ── Desktop: medidas exactas del mockup (base 1366px) ── */
+@media (min-width: 900px) {
+  .section {
+    padding: min(17.4vw, 237.6px) 0 min(4.9vw, 67px);
+  }
+
+  .column {
+    width: min(43.76vw, 598px);
+    max-width: none;
+  }
+
+  .title {
+    width: min(51.9vw, 709px);
+    margin: 0 0 min(7.1vw, 97px) 50%;
+    font-size: min(4.87vw, 66.6px);
+    transform: translateX(-50%);
+  }
+
+  .terminalBar {
+    gap: min(1.65vw, 22.5px);
+    height: min(3.37vw, 46px);
+    padding: 0 min(1.67vw, 22.8px);
+  }
+
+  .dots {
+    gap: min(0.71vw, 9.7px);
+  }
+
+  .dots i {
+    width: min(0.89vw, 12.1px);
+    height: min(0.89vw, 12.1px);
+  }
+
+  .terminalBar p {
+    font-size: min(0.96vw, 13.1px);
+  }
+
+  .terminalBody {
+    padding: min(1.52vw, 20.8px) min(1.9vw, 26px) min(2.2vw, 30px) min(1.73vw, 23.7px);
+  }
+
+  .prompt {
+    font-size: min(1.06vw, 14.5px);
+  }
+
+  .bars {
+    gap: min(0.73vw, 10px);
+    margin-top: min(1.13vw, 15.5px);
+  }
+
+  .barRow {
+    grid-template-columns: min(18.75vw, 256.7px) auto 1fr;
+    gap: 0;
+    font-size: min(1.06vw, 14.5px);
+  }
+
+  .cells {
+    gap: min(0.117vw, 1.6px);
+  }
+
+  .cells i {
+    width: min(0.6vw, 8.24px);
+    height: min(0.91vw, 12.45px);
+  }
+
+  .bubble {
+    width: 79%;
+    min-height: min(9.36vw, 127.9px);
+    margin: min(1.3vw, 18px) 0 0 min(0.98vw, 13.4px);
+    padding: min(1.2vw, 16.3px) min(1.2vw, 16.4px);
+    font-size: min(1.06vw, 14.5px);
+    letter-spacing: 0.169em;
+  }
+
+  .bubble::after {
+    left: min(3.3vw, 45px);
+    width: min(1.9vw, 26px);
+    height: min(1.9vw, 26px);
+    bottom: max(-0.8vw, -11px);
+  }
+
+  .terminal .wink {
+    top: min(11.38vw, 155.5px);
+    right: auto;
+    left: 74.5%;
+    width: 36.2%;
+  }
+
+  .lower {
+    margin-top: min(1.36vw, 18.5px);
+  }
+
+  .mail {
+    top: max(-0.13vw, -1.8px);
+    left: -1.2%;
+    width: 37.6%;
+  }
+
+  .chips {
+    gap: min(0.95vw, 13px);
+  }
+
+  .chip {
+    min-height: min(2.82vw, 38.5px);
+    padding: 0 min(1.95vw, 26.6px);
+    font-size: 10.5px;
+  }
+
+  .form {
+    margin-top: min(3.2vw, 43.9px);
+  }
+
+  .formLabel {
+    font-size: min(1.14vw, 15.6px);
+    letter-spacing: 0.283em;
+  }
+
+  .inputWrap {
+    width: min(19.23vw, 262.7px);
+    margin-top: min(1.6vw, 22px);
+  }
+
+  .inputWrap input {
+    height: min(3vw, 41px);
+    font-size: min(1.03vw, 14.1px);
+  }
+}
+
+.barLabel {
+  white-space: nowrap;
+}
+
+/* Línea de comandos */
+.cmd {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1.3rem;
+  padding-top: 0.6rem;
+  border-top: 1px dashed rgba(217, 217, 217, 0.5);
+  font-family: "Courier New", Courier, monospace;
+}
+
+.cmdPrompt {
+  font-weight: 700;
+}
+
+.cmdInput {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  background: transparent;
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 0.85rem;
+  caret-color: #faf26f;
+}
+
+.cmdInput::placeholder {
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.cmdInput:focus {
+  outline: none;
+}
+
+.cmd:focus-within {
+  border-top-color: #faf26f;
+}
+
+/* Audio + bug */
+.audioBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: min(100%, 16.5rem);
+  height: 2.9rem;
+  margin-top: 1.35rem;
+  border-radius: 6px;
+  background: #e1adff;
+  color: #3a1e66;
+  font-family: "Nunito Sans", sans-serif;
+  font-size: 0.95rem;
+  font-weight: 800;
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  box-shadow: 3px 3px 0 #3a1e66;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.audioBtn:hover,
+.audioBtn:focus-visible {
+  transform: translate(-1px, -2px);
+  box-shadow: 4px 5px 0 #3a1e66;
+}
+
+.bugLink {
+  margin-top: 1rem;
+  border: none;
+  background: transparent;
+  color: #ffffff;
+  font-family: "Nunito Sans", sans-serif;
+  font-size: 0.78rem;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+  opacity: 0.85;
+}
+
+.bugLink span {
+  color: #faf26f;
+  text-decoration: none;
+}
+
+.bugLink:hover,
+.bugLink:focus-visible {
+  opacity: 1;
+}
+
+@media (min-width: 900px) {
+  .cmd {
+    margin-top: min(1.6vw, 22px);
+  }
+
+  .cmdInput {
+    font-size: min(1.03vw, 14px);
+  }
+
+  .audioBtn {
+    width: min(19.23vw, 262.7px);
+    height: min(3vw, 41px);
+    margin-top: min(1.6vw, 22px);
+    font-size: min(1.03vw, 14.1px);
+  }
+}

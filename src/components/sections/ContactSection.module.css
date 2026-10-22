@@ -1,0 +1,282 @@
+/* Contacto — réplica de Canva DAHM0M2xh8E pág. 6 (1366×625 sin el footer).
+   Desktop (≥900px): escena de 1366×625 escalada; posiciones en % del ancho y alturas en min(vw, px).
+   Mobile: mismas piezas apiladas. */
+
+.section {
+  position: relative;
+  overflow: hidden;
+  padding: 3rem 1rem 3.5rem;
+  background-color: #a3479b;
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.05) 1px, transparent 1px),
+    linear-gradient(155deg, #d95cb7 0%, #b24ea5 30%, #8a3d8f 62%, #57297c 100%);
+  background-size: 61px 61px, 61px 61px, auto;
+}
+
+.scene {
+  position: relative;
+  width: min(100%, 22rem);
+  height: 21rem;
+  margin: 0 auto;
+}
+
+/* Ventanas */
+.windowLight,
+.windowDark {
+  position: absolute;
+}
+
+/* La ventana en sí: ocupa todo el contenedor; el zumbido anima su transform */
+.frame {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  text-decoration: none;
+}
+
+.frameLight {
+  background: #e1adff;
+  transition: translate 0.2s ease, box-shadow 0.2s ease;
+}
+
+.frameDark {
+  background: #3a1e66;
+}
+
+.bar {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex: 0 0 auto;
+  height: 1.4rem;
+  padding-left: 0.6rem;
+  background: #1e0c39;
+}
+
+.bar i {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #f656bf;
+}
+
+.bar i:nth-child(2) { background: #faf26f; }
+.bar i:nth-child(3) { background: #abe3d2; }
+
+.windowLight {
+  z-index: 1;
+  top: 0;
+  left: 4%;
+  width: 62%;
+  height: 11rem;
+  transform: rotate(-8.06deg);
+}
+
+.frameLight:hover,
+.frameLight:focus-visible {
+  translate: 0 -6px;
+  box-shadow: 0 14px 30px rgba(30, 12, 57, 0.35);
+}
+
+.lightText {
+  display: grid;
+  flex: 1;
+  place-items: center;
+  padding-bottom: 1.4rem;
+  color: #ffffff;
+  font-family: "Egyptian Slate", serif;
+  font-size: 1.75rem;
+  font-weight: 700;
+  line-height: 1.21;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.windowDark {
+  z-index: 2;
+  top: 8.5rem;
+  right: 0;
+  width: 88%;
+  height: 10.5rem;
+  transform: rotate(2.01deg);
+}
+
+.darkText {
+  display: grid;
+  flex: 1;
+  place-items: center;
+  padding: 0 1rem;
+  color: #ffffff;
+  font-family: "Egyptian Slate", serif;
+  font-size: 1.2rem;
+  font-weight: 400;
+  line-height: 1.21;
+  text-align: center;
+}
+
+/* Íconos pixel */
+.warning,
+.wink {
+  position: absolute;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.warning {
+  top: 6.5rem;
+  left: -4%;
+  width: 6.5rem;
+  transform: rotate(-13.96deg);
+}
+
+/* .scene .wink le gana al color blanco por defecto de DemoFaces */
+.scene .wink {
+  color: #fff59f;
+}
+
+.wink {
+  top: 5rem;
+  right: -6%;
+  width: 7.5rem;
+  transform: rotate(7deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .frameLight {
+    transition: none;
+  }
+}
+
+@media (min-width: 640px) {
+  .scene {
+    width: min(100%, 34rem);
+    height: 24rem;
+  }
+
+  .lightText { font-size: 2rem; }
+  .darkText { font-size: 1.5rem; }
+}
+
+/* ── Desktop: posiciones exactas del mockup ─────────── */
+@media (min-width: 900px) {
+  .section {
+    padding: 0;
+  }
+
+  .scene {
+    width: min(100%, 1366px);
+    height: min(45.75vw, 625px);
+  }
+
+  .bar {
+    gap: min(0.42vw, 5.7px);
+    height: min(1.97vw, 26.9px);
+    padding-left: min(0.85vw, 11.6px);
+  }
+
+  .bar i {
+    width: min(0.51vw, 7px);
+    height: min(0.51vw, 7px);
+  }
+
+  .windowLight {
+    top: min(10.58vw, 144.6px);
+    left: 23.05%;
+    width: 22.65%;
+    height: min(17.56vw, 239.9px);
+  }
+
+  .lightText {
+    padding-bottom: 0;
+    font-size: min(2.58vw, 35.2px);
+  }
+
+  .windowDark {
+    top: min(18.87vw, 257.7px);
+    left: 41.93%;
+    right: auto;
+    width: 35.43%;
+    height: min(15.77vw, 215.5px);
+  }
+
+  .darkText {
+    font-size: min(2.41vw, 32.9px);
+  }
+
+  .warning {
+    top: min(22.46vw, 306.8px);
+    left: 18.33%;
+    width: 11.74%;
+  }
+
+  .wink {
+    top: min(11.79vw, 161.1px);
+    left: 71.37%;
+    right: auto;
+    width: 15.86%;
+  }
+}
+
+/* Acciones visibles (debajo de las ventanas) */
+.actions {
+  position: relative;
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.audioBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-width: 15rem;
+  height: 3.2rem;
+  padding: 0 1.75rem;
+  border-radius: 6px;
+  background: #faf26f;
+  color: #3a1e66;
+  font-family: "Nunito Sans", sans-serif;
+  font-size: 1rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-decoration: none;
+  text-transform: uppercase;
+  box-shadow: 4px 4px 0 #1e0c39;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.audioBtn:hover,
+.audioBtn:focus-visible {
+  transform: translate(-1px, -2px);
+  box-shadow: 5px 6px 0 #1e0c39;
+}
+
+.bugLink {
+  border: none;
+  background: transparent;
+  color: #ffffff;
+  font-family: "Nunito Sans", sans-serif;
+  font-size: 0.85rem;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+  opacity: 0.9;
+}
+
+.bugLink span {
+  color: #faf26f;
+}
+
+@media (min-width: 900px) {
+  /* La escena de desktop no tiene padding: el bloque va pegado debajo, con aire hasta el footer */
+  .actions {
+    margin-top: max(-4vw, -54px);
+    padding-bottom: min(4.4vw, 60px);
+  }
+}

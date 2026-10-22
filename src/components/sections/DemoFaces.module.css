@@ -1,0 +1,58 @@
+.face {
+  display: block;
+  color: #faf9f7;
+}
+
+.eyeOpen,
+.eyeClosed {
+  transform-origin: 198px 138px;
+}
+
+.eyeOpen {
+  animation: demo-eye-open 3.6s step-end infinite;
+}
+
+.eyeClosed {
+  animation: demo-eye-closed 3.6s step-end infinite;
+}
+
+@keyframes demo-eye-open {
+  0%,
+  86%,
+  100% {
+    opacity: 1;
+  }
+
+  88%,
+  94% {
+    opacity: 0;
+  }
+}
+
+@keyframes demo-eye-closed {
+  0%,
+  86%,
+  100% {
+    opacity: 0;
+  }
+
+  88%,
+  94% {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .eyeOpen,
+  .eyeClosed {
+    animation: none;
+  }
+
+  .eyeOpen {
+    opacity: 0;
+  }
+
+  .eyeClosed {
+    opacity: 1;
+  }
+}

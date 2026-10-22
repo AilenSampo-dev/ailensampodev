@@ -1,0 +1,166 @@
+/* SEALED — hero + ticker (slide 01). No editar salvo pedido explícito. Ver .cursor/rules/hero-sealed.mdc */
+.hero {
+  position: relative;
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 3.75rem - 3.5rem);
+  padding: 2.5rem 2.5rem 3.5rem;
+  overflow: hidden;
+  background: linear-gradient(
+    155deg,
+    #e462bb 0%,
+    #d456ad 22%,
+    #8f3f96 48%,
+    #5a2d82 72%,
+    #361f62 100%
+  );
+}
+
+.hero .heroStatus {
+  display: none;
+}
+
+.scene {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 42rem);
+  height: min(52vh, 22rem);
+  min-height: 18rem;
+  overflow: visible;
+}
+
+.windowLight {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: min(46%, 17.5rem);
+  z-index: 2;
+}
+
+.windowDarkWrap {
+  position: absolute;
+  top: 38%;
+  left: 28%;
+  width: min(62%, 24rem);
+  z-index: 3;
+  overflow: visible;
+}
+
+.warning {
+  position: absolute;
+  z-index: 5;
+  left: -2.75rem;
+  bottom: -2.15rem;
+  width: 6.75rem;
+  height: auto;
+  transform: rotate(-6deg);
+  pointer-events: none;
+}
+
+.admiracion {
+  position: absolute;
+  z-index: 6;
+  top: -3.35rem;
+  right: -1.85rem;
+  width: clamp(5.25rem, 13vw, 8.25rem);
+  height: auto;
+  transform: rotate(4deg);
+  pointer-events: none;
+}
+
+/* Tablet — solo espaciado; proporciones del hero igual que desktop */
+@media (max-width: 900px) {
+  .hero {
+    padding: 2rem 1.5rem 2.25rem;
+    min-height: auto;
+    flex: 0 0 auto;
+  }
+
+  .scene {
+    width: min(100%, 42rem);
+  }
+}
+
+/* Mobile — mismas proporciones que desktop */
+@media (max-width: 640px) {
+  .hero {
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0.75rem 1rem 0.35rem;
+    min-height: auto;
+  }
+
+  .hero .heroStatus {
+    display: flex;
+    position: relative;
+    z-index: 2;
+    justify-content: center;
+    width: 100%;
+    max-width: 42rem;
+    margin-bottom: 2.35rem;
+  }
+
+  .scene {
+    width: min(20.5rem, calc(100% - 0.5rem));
+    margin-inline: auto;
+    height: min(50vh, 20rem);
+    min-height: 17.5rem;
+  }
+
+  .windowLight {
+    left: 5%;
+    width: min(46%, 17.5rem);
+  }
+
+  .windowDarkWrap {
+    top: 38%;
+    left: 33%;
+    width: min(62%, 24rem);
+  }
+
+  .warning {
+    left: -2.45rem;
+    bottom: -2.05rem;
+    width: 5.5rem;
+  }
+
+  .admiracion {
+    top: -2.85rem;
+    right: -1.65rem;
+    width: clamp(5.25rem, 18vw, 7.75rem);
+  }
+}
+
+@media (max-width: 400px) {
+  .hero {
+    padding: 0.7rem 0.85rem 0.25rem;
+  }
+
+  .scene {
+    width: min(19rem, calc(100% - 0.25rem));
+    min-height: 16.5rem;
+    height: min(46vh, 18.5rem);
+  }
+
+  .warning {
+    width: 5.15rem;
+    left: -2.2rem;
+    bottom: -1.85rem;
+  }
+
+  .admiracion {
+    top: -2.55rem;
+    right: -1.45rem;
+    width: clamp(4.75rem, 19vw, 6.75rem);
+  }
+}
+
+.tickerWrap {
+  position: relative;
+}
+
+/* —— fin bloque SEALED hero + ticker —— */

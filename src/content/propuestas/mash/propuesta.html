@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Propuesta — Mash · Ailén Sampó</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,400;0,600;0,700;0,800;1,700;1,800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --plum:#3A1E66;
+  --plum-2:#2E1652;
+  --plum-3:#20103d;
+  --ink:#211538;
+  --lilac:#E1ADFF;
+  --lilac-soft:#F1E4FF;
+  --peri:#AEBFF2;
+  --pink:#F656BF;
+  --pink-ink:#B31E86;
+  --blue:#6882EB;
+  --blue-2:#5C64F2;
+  --yellow:#FAF26F;
+  --mint:#ABE3D2;
+  --orange:#FF6437;
+  --orange-ink:#D63F14;
+  --gray:#4D4F54;
+  --white:#fff;
+  --cream:var(--lilac-soft);
+  --muted:rgba(33,21,56,.56);
+  --line:rgba(33,21,56,.12);
+  --line-strong:rgba(33,21,56,.26);
+  --orange-deep:var(--plum);
+  --black:var(--ink);
+  --ok:var(--pink-ink);
+  --urgent:var(--orange-ink);
+  --pending:#8A6D00;
+  --card-shadow:5px 5px 0 var(--plum-3);
+  --card-shadow-pink:6px 6px 0 var(--pink);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{
+  background:linear-gradient(178deg,var(--plum) 0%,var(--plum-2) 55%,var(--plum-3) 100%);
+  background-attachment:fixed;
+  color:var(--white);
+  font-family:'Nunito Sans',system-ui,sans-serif;
+  font-weight:400;
+  line-height:1.62;
+  -webkit-font-smoothing:antialiased;
+  position:relative;
+  min-height:100vh;
+}
+body::before{
+  content:'';
+  position:fixed;
+  inset:0;
+  background-image:radial-gradient(circle,rgba(225,173,255,.16) 1px,transparent 1px);
+  background-size:6px 6px;
+  pointer-events:none;
+  opacity:.5;
+  z-index:0;
+}
+.rail{
+  position:fixed;top:0;bottom:0;width:44px;z-index:0;pointer-events:none;
+  display:flex;align-items:center;justify-content:center;
+  writing-mode:vertical-rl;text-orientation:mixed;
+  font-family:'DM Mono',monospace;font-size:15px;letter-spacing:.5em;
+  color:var(--lilac);opacity:.1;user-select:none;white-space:nowrap;overflow:hidden;
+}
+.rail-l{left:0}.rail-r{right:0}
+
+.wrap{max-width:960px;margin:0 auto;padding:0 24px 100px;position:relative;z-index:1}
+
+.eyebrow{
+  font-family:'DM Mono',monospace;font-size:12px;font-weight:500;
+  text-transform:uppercase;letter-spacing:.18em;color:var(--lilac);
+  display:inline-flex;align-items:center;gap:8px;
+}
+.eyebrow::before{content:'';width:16px;height:2px;background:var(--pink);display:inline-block}
+.mono{font-family:'DM Mono',monospace;font-variant-numeric:tabular-nums}
+
+.hero{padding:64px 0 48px}
+.hero-badge{
+  display:inline-block;font-family:'DM Mono',monospace;font-size:13px;letter-spacing:.14em;
+  color:var(--lilac);border:2px solid rgba(225,173,255,.4);border-radius:999px;
+  padding:5px 14px;margin-bottom:22px;
+}
+.hero h1{
+  font-family:'Nunito Sans';font-weight:800;font-size:clamp(34px,6vw,52px);
+  letter-spacing:-.02em;line-height:1.04;margin:6px 0 20px;max-width:20ch;color:var(--white);
+}
+.hero h1 em{font-style:italic;font-weight:800;color:var(--pink)}
+.hero .lead{font-size:17px;color:rgba(255,255,255,.86);max-width:60ch}
+.meta{display:flex;gap:30px;margin-top:34px;flex-wrap:wrap;font-size:11px;
+  text-transform:uppercase;letter-spacing:.12em;color:rgba(225,173,255,.7)}
+.meta b{display:block;color:var(--white);font-weight:400;font-size:14px;margin-top:4px;
+  letter-spacing:0;text-transform:none;font-family:'DM Mono',monospace}
+.meta a{color:inherit;text-decoration:none;border-bottom:1px solid rgba(246,86,191,.5)}
+.meta a:hover{color:var(--pink);border-bottom-color:var(--pink)}
+
+section{padding:50px 0;border-top:2px solid rgba(225,173,255,.16)}
+h2{font-family:'Nunito Sans';font-weight:800;font-size:clamp(22px,3.4vw,30px);
+  letter-spacing:-.02em;margin:10px 0 16px;color:var(--white);max-width:24ch}
+h3{font-family:'Nunito Sans';font-weight:700;font-size:18px;letter-spacing:-.01em;color:var(--ink)}
+p{margin-bottom:12px;max-width:64ch}
+p.dim{color:rgba(255,255,255,.72);font-size:14px}
+strong{font-weight:700}
+
+.card{background:var(--white);color:var(--ink);border:2.5px solid var(--ink);
+  border-radius:14px;padding:24px;box-shadow:var(--card-shadow)}
+.card-cream{background:var(--lilac-soft)}
+
+.etapa{margin-bottom:18px}
+.etapa-header{display:flex;align-items:stretch;border:2.5px solid var(--ink);
+  border-radius:14px;overflow:hidden;box-shadow:var(--card-shadow)}
+.etapa-num{background:var(--ink);color:var(--pink);font-family:'Nunito Sans';font-weight:800;
+  font-size:30px;padding:20px 24px;display:flex;align-items:center;justify-content:center;
+  min-width:76px;letter-spacing:-.02em}
+.etapa-body{background:var(--white);color:var(--ink);padding:22px 24px;flex:1;min-width:0}
+.etapa-body h3{margin-bottom:5px}
+.etapa-body .sub{font-size:13px;color:var(--muted);margin-bottom:12px}
+.etapa-price{font-family:'DM Mono';font-size:22px;font-weight:500;color:var(--pink-ink);margin-top:8px}
+.etapa-price small{font-size:12px;color:var(--muted);font-family:'Nunito Sans';font-weight:400;margin-left:6px}
+
+.req{display:inline-flex;align-items:center;gap:7px;font-size:11px;font-weight:700;
+  text-transform:uppercase;letter-spacing:.12em;background:var(--lilac);border:2px solid var(--ink);
+  color:var(--ink);padding:4px 11px;border-radius:7px;margin-bottom:11px}
+
+.feature-list{list-style:none;padding:0;display:flex;flex-direction:column;gap:6px}
+.feature-list li{display:flex;gap:11px;font-size:14px;color:var(--ink);padding:7px 0;
+  border-bottom:1px dotted var(--line)}
+.feature-list li:last-child{border-bottom:0}
+.feature-list .dot{width:9px;height:9px;border-radius:999px;background:var(--pink);
+  border:2px solid var(--ink);flex:none;margin-top:6px}
+
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
+.opt{background:var(--white);border:2.5px solid var(--ink);border-radius:14px;padding:20px;
+  box-shadow:var(--card-shadow)}
+.opt.rec{border-color:var(--pink);box-shadow:var(--card-shadow-pink)}
+.opt-badge{display:inline-block;font-family:'DM Mono';font-size:10px;font-weight:500;
+  text-transform:uppercase;letter-spacing:.12em;padding:5px 11px;border-radius:999px;
+  border:2px solid var(--ink);margin-bottom:11px}
+.badge-a{background:var(--lilac-soft);color:var(--ink)}
+.badge-rec{background:var(--pink);color:var(--white);border-color:var(--pink)}
+.opt h3{font-size:16px;margin-bottom:6px}
+.opt .opt-price{font-family:'DM Mono';font-size:20px;font-weight:500;margin-top:10px;color:var(--pink-ink)}
+.pros-cons{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.pros p,.cons p{font-family:'DM Mono';font-size:10px;font-weight:500;text-transform:uppercase;
+  letter-spacing:.08em;margin-bottom:5px}
+.pros p{color:var(--blue-2)}
+.cons p{color:var(--orange-ink)}
+.pros ul,.cons ul{list-style:none;padding:0;font-size:12px;color:var(--muted);
+  display:flex;flex-direction:column;gap:3px}
+.pros li::before{content:'+ ';color:var(--blue-2);font-family:'DM Mono'}
+.cons li::before{content:'– ';color:var(--orange-ink);font-family:'DM Mono'}
+
+.dep-chain{display:flex;align-items:center;gap:0;flex-wrap:wrap;margin:16px 0}
+.dep-step{background:rgba(225,173,255,.14);color:var(--lilac);font-family:'DM Mono';font-size:12px;
+  padding:6px 13px;border-radius:7px;font-weight:500;border:1px solid rgba(225,173,255,.28)}
+.dep-arrow{color:var(--pink);font-size:16px;padding:0 7px}
+.dep-step.active{background:var(--pink);color:var(--white);border-color:var(--pink)}
+
+.total-table{background:var(--white);border:2.5px solid var(--ink);border-radius:14px;
+  overflow:hidden;box-shadow:var(--card-shadow);margin-top:20px}
+.total-table .row{display:flex;justify-content:space-between;align-items:center;gap:14px;
+  padding:13px 20px;border-bottom:1px solid var(--line);font-size:15px;color:var(--ink)}
+.total-table .row:last-child{border-bottom:0}
+.total-table .row .mono{color:var(--ink)}
+.total-table .row.sub{padding:10px 20px 10px 36px;background:var(--lilac-soft)}
+.total-table .row.sub span:first-child{font-size:13px;color:var(--muted)}
+.total-table .row.sub .mono{font-size:13px;color:var(--muted)}
+.total-table .row.highlight{background:var(--pink);color:var(--white)}
+.total-table .row.highlight .mono{color:var(--white)}
+.total-table .row.big{padding:22px 20px;background:var(--ink);color:var(--white)}
+.total-table .row.big span:first-child{font-family:'Nunito Sans';font-weight:800;font-size:18px}
+.total-table .row.big .mono{font-family:'DM Mono';font-size:clamp(26px,5vw,34px);color:var(--pink)}
+.total-table .row.saving{background:var(--lilac-soft);border-left:4px solid var(--pink)}
+.total-table .row.saving span{color:var(--pink-ink);font-weight:700;font-size:14px}
+.total-table .row.saving .mono{color:var(--pink-ink)}
+
+.packs{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:20px}
+.pack{background:var(--white);color:var(--ink);border:2.5px solid var(--ink);border-radius:14px;
+  padding:22px;box-shadow:var(--card-shadow);display:flex;flex-direction:column}
+.pack.rec{border-color:var(--pink);box-shadow:var(--card-shadow-pink)}
+.pack-label{font-family:'DM Mono';font-size:10px;font-weight:500;text-transform:uppercase;
+  letter-spacing:.14em;margin-bottom:10px}
+.pack h3{font-family:'Nunito Sans';font-weight:800;font-size:19px;margin-bottom:14px}
+.pack .items{list-style:none;padding:0;font-size:13px;color:var(--muted);display:flex;
+  flex-direction:column;gap:5px;margin-bottom:16px;flex:1}
+.pack .items li::before{content:'( ) ';color:var(--pink);font-family:'DM Mono';font-weight:500}
+.pack .pack-total{border-top:2px solid var(--ink);padding-top:14px}
+.pack .pack-total .label{font-size:11px;color:var(--muted);text-transform:uppercase;
+  letter-spacing:.1em;margin-bottom:3px}
+.pack .pack-total .price{font-family:'DM Mono';font-size:26px;font-weight:500}
+.pack .pack-total .fee{font-size:12px;color:var(--muted);margin-top:4px}
+.pack .save-tag{display:inline-block;font-family:'DM Mono';font-size:11px;font-weight:500;
+  background:var(--pink);color:var(--white);padding:3px 10px;border-radius:999px;margin-top:8px}
+
+.infra-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--ink);
+  border:2.5px solid var(--ink);border-radius:14px;overflow:hidden;box-shadow:var(--card-shadow);margin-top:16px}
+.infra-cell{background:var(--white);padding:20px;color:var(--ink)}
+.infra-cell .l{font-family:'DM Mono';font-size:10px;font-weight:500;text-transform:uppercase;
+  letter-spacing:.12em;color:var(--muted);margin-bottom:8px}
+.infra-cell .v{font-family:'DM Mono';font-size:18px;font-weight:500;color:var(--pink-ink)}
+.infra-cell .d{font-size:12px;color:var(--muted);margin-top:6px}
+
+.fee-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--ink);
+  border:2.5px solid var(--ink);border-radius:14px;overflow:hidden;box-shadow:var(--card-shadow);margin-top:16px}
+.fee-cell{background:var(--white);color:var(--ink);padding:20px}
+.fee-cell .l{font-family:'DM Mono';font-size:10px;font-weight:500;text-transform:uppercase;
+  letter-spacing:.12em;color:var(--muted);margin-bottom:8px}
+.fee-cell .v{font-family:'DM Mono';font-size:20px;font-weight:500}
+.fee-cell .d{font-size:12px;color:var(--muted);margin-top:6px}
+
+.out{list-style:none;padding:0}
+.out li{display:flex;gap:13px;padding:13px 0;border-bottom:1px dotted rgba(225,173,255,.24);
+  font-size:14px;color:rgba(255,255,255,.9)}
+.out li:last-child{border-bottom:0}
+.out li strong{color:var(--white)}
+.out .x{color:var(--white);background:var(--orange);font-weight:700;font-size:11px;width:20px;
+  height:20px;border-radius:5px;display:flex;align-items:center;justify-content:center;flex:none;margin-top:2px}
+.out .bono{color:var(--white);background:var(--pink);font-family:'DM Mono';font-size:9px;font-weight:500;
+  width:auto;height:20px;padding:0 7px;border-radius:5px;display:flex;align-items:center;justify-content:center;
+  flex:none;margin-top:2px;letter-spacing:.06em;text-transform:uppercase}
+
+.pago{background:var(--white);border:2.5px solid var(--ink);border-radius:14px;overflow:hidden;
+  box-shadow:var(--card-shadow);margin-top:16px}
+.pago-row{display:flex;gap:18px;padding:16px 20px;border-bottom:1px solid var(--line);align-items:center}
+.pago-row:last-child{border-bottom:0}
+.pago-row .pc{font-family:'DM Mono';color:var(--white);background:var(--pink);font-size:18px;
+  font-weight:500;min-width:60px;flex:none;text-align:center;padding:8px 0;border-radius:8px}
+.pago-row .pt{font-size:14px;color:var(--ink)}
+.pago-row .pt small{display:block;font-size:12px;color:var(--muted);margin-top:3px}
+
+.warn{border-left:4px solid var(--orange);background:rgba(255,100,55,.14);padding:14px 18px;
+  margin:16px 0;font-size:14px;color:rgba(255,255,255,.9);border-radius:0 10px 10px 0}
+.warn b{color:var(--yellow);font-weight:700}
+.benefit{border-left:4px solid var(--pink);background:rgba(246,86,191,.12);padding:15px 18px;
+  margin:16px 0;font-size:14px;color:rgba(255,255,255,.92);border-radius:0 10px 10px 0}
+.benefit b{color:var(--lilac);font-weight:700}
+
+.close-cta{
+  margin-top:48px;padding:36px 0 4px;border-top:2px solid rgba(225,173,255,.16);
+  display:flex;align-items:flex-end;gap:16px;flex-wrap:wrap
+}
+.close-cta .chat-bubble{
+  position:relative;background:var(--white);color:var(--ink);border:2.5px solid var(--ink);
+  border-radius:16px;padding:18px 24px;font-family:'Nunito Sans';font-weight:800;
+  font-size:clamp(22px,4vw,30px);letter-spacing:-.02em;line-height:1.2;
+  box-shadow:var(--card-shadow);display:inline-flex;align-items:center;gap:12px
+}
+.close-cta .chat-bubble:after{
+  content:'';position:absolute;left:28px;bottom:-10px;border:10px solid transparent;
+  border-top-color:var(--ink);border-bottom:0
+}
+.close-cta .chat-bubble:before{
+  content:'';position:absolute;left:29px;bottom:-7px;border:9px solid transparent;
+  border-top-color:var(--white);border-bottom:0;z-index:1
+}
+.close-cta .wink{width:44px;height:44px;flex:none;display:block}
+
+footer{padding:44px 0 0;border-top:2px solid rgba(225,173,255,.16);margin-top:52px;
+  display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+footer a{color:inherit;text-decoration:none;transition:color .15s,opacity .15s}
+footer .sig{font-family:'DM Mono';font-size:16px;letter-spacing:.14em;color:var(--lilac);opacity:.85}
+footer a.sig:hover{color:var(--pink);opacity:1}
+footer .fine{margin-left:auto;font-size:12px;color:rgba(255,255,255,.55);text-align:right}
+footer a.fine:hover{color:var(--lilac)}
+
+:focus-visible{outline:3px solid var(--pink);outline-offset:2px;border-radius:4px}
+
+@media(max-width:820px){
+  .rail{display:none}
+  .wrap{padding:0 16px 72px}
+  .hero{padding:40px 0 32px}
+  .hero h1{font-size:clamp(28px,8vw,40px)}
+  .hero .lead{font-size:16px}
+  section{padding:36px 0}
+  h2{max-width:none;font-size:clamp(20px,5.5vw,26px)}
+  p{max-width:none}
+  .opts,.packs{grid-template-columns:1fr}
+  .pros-cons{grid-template-columns:1fr}
+  .infra-grid,.fee-grid{grid-template-columns:1fr}
+  .meta{gap:18px}
+  .card{padding:18px}
+
+  .etapa{margin-bottom:14px}
+  .etapa-header{flex-direction:column;align-items:stretch}
+  .etapa-num{
+    min-width:0;width:fit-content;align-self:flex-start;
+    margin:12px 12px 0;padding:4px 11px;font-size:13px;
+    border-radius:999px;line-height:1
+  }
+  .etapa-body{padding:10px 16px 18px}
+  .etapa-body h3{font-size:17px;line-height:1.28;margin-bottom:6px;max-width:none}
+  .etapa-body .sub{font-size:14px;line-height:1.45;margin-bottom:10px;max-width:none}
+  .etapa-price{font-size:20px}
+  .feature-list li{font-size:14px;line-height:1.45;align-items:flex-start;padding:8px 0}
+  .feature-list .dot{margin-top:5px}
+  .req{font-size:10px;margin-bottom:10px}
+  .opt{padding:16px}
+  .opt h3{font-size:15px;line-height:1.3}
+  .opt .opt-price{font-size:18px}
+  .dep-chain{gap:4px;margin:12px 0}
+  .dep-step{font-size:11px;padding:5px 10px}
+  .dep-arrow{font-size:14px;padding:0 4px}
+  .total-table .row{flex-direction:column;align-items:flex-start;gap:4px;padding:12px 16px}
+  .total-table .row.sub{padding-left:16px}
+  .total-table .row.big{padding:18px 16px}
+  .pago-row{flex-direction:column;align-items:flex-start;gap:10px;padding:14px 16px}
+  .pago-row .pc{min-width:52px;font-size:16px;padding:6px 0}
+  footer .fine{margin-left:0;text-align:left;width:100%}
+}
+@media(max-width:480px){
+  .wrap{padding:0 14px 64px}
+  .hero{padding:32px 0 24px}
+  .meta{gap:14px;font-size:10px}
+  .meta b{font-size:13px}
+  .etapa-num{margin:10px 10px 0;font-size:12px;padding:4px 10px}
+  .etapa-body{padding:8px 14px 16px}
+  .etapa-body h3{font-size:16px}
+  .feature-list li{font-size:13px}
+  .pros ul,.cons ul{font-size:11px}
+  .pack{padding:18px}
+  .pack h3{font-size:17px}
+  .pack .pack-total .price{font-size:22px}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="rail rail-l" aria-hidden="true">s (a) ó · s (a) ó · s (a) ó · s (a) ó · s (a) ó · s (a) ó · s (a) ó · s (a) ó · </div><div class="rail rail-r" aria-hidden="true">s (a) ó · s (a) ó · s (a) ó · s (a) ó · s (a) ó · s (a) ó · s (a) ó · s (a) ó · </div>
+<div class="wrap">
+
+  <div class="hero">
+    <div class="hero-badge">s (a) ó</div>
+    <div class="eyebrow">Propuesta · Mash Hongos Adaptógenos</div>
+    <h1>Un sistema que vende y recuerda <em>por vos</em>.</h1>
+    <p class="lead">Hoy cada venta depende de que estés disponible. Este sistema atiende el primer contacto, recuerda a tus clientes antes de que se queden sin gotero, y te muestra el estado de todo desde un solo lugar — sin que tengas que hacer nada.</p>
+    <div class="meta">
+      <div><span>Para</span><b>Mash Hongos Adaptógenos</b></div>
+      <div><span>Preparada por</span><b><a href="https://www.ailensampo.com" target="_blank" rel="noopener">Ailén Sampó</a></b></div>
+      <div><span>Vigencia</span><b>30 días</b></div>
+    </div>
+  </div>
+
+  <section>
+    <div class="eyebrow">01</div>
+    <h2>El sistema, etapa por etapa. Cada una depende de la anterior.</h2>
+    <p class="dim">No es una web suelta ni una automatización aislada. Es un sistema donde todo está conectado: los datos alimentan al agente, el agente dispara los recordatorios, y vos ves el estado de todo desde un solo lugar.</p>
+
+    <div class="etapa" style="margin-top:28px">
+      <div class="etapa-header">
+        <div class="etapa-num">1</div>
+        <div class="etapa-body">
+          <div class="req"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><rect x="4" y="0" width="2" height="4" fill="currentColor"/><rect x="4" y="6" width="2" height="4" fill="currentColor"/><rect x="0" y="4" width="4" height="2" fill="currentColor"/><rect x="6" y="4" width="4" height="2" fill="currentColor"/></svg> Base obligatoria de todo</div>
+          <h3>Núcleo — clientes, stock y calendario</h3>
+          <div class="sub">Es el cerebro de datos del sistema. Sin esto, lo demás no tiene con qué trabajar: el agente no sabe quién escribe, los recordatorios no saben a quién avisar, el stock no sabe cuándo va a faltar. Un panel propio con acceso desde el celular: cuando entra una venta, el recordatorio se agenda solo.</div>
+          <ul class="feature-list">
+            <li><span class="dot"></span><span><strong>Clientes y productos:</strong> quién toma qué, desde cuándo, cuánto le dura.</span></li>
+            <li><span class="dot"></span><span><strong>Calendario de reposición:</strong> el sistema calcula solo cuándo se le termina a cada cliente.</span></li>
+            <li><span class="dot"></span><span><strong>Stock y producción:</strong> sabe cuándo arrancás un lote y te avisa con tiempo para no quedarte sin stock.</span></li>
+            <li><span class="dot"></span><span><strong>Opt-in:</strong> registro legal de que cada cliente aceptó recibir mensajes. Obligatorio para los recordatorios.</span></li>
+          </ul>
+          <div class="etapa-price">USD 700</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="etapa">
+      <div class="dep-chain">
+        <span class="dep-step">Etapa 1</span>
+        <span class="dep-arrow">&#8594;</span>
+        <span class="dep-step active">Etapa 2</span>
+      </div>
+      <div class="etapa-header">
+        <div class="etapa-num">2</div>
+        <div class="etapa-body">
+          <h3>Agente de WhatsApp — atiende, recuerda y te muestra quién escribe</h3>
+          <div class="sub">Número dedicado al negocio. Cuando escribe Marina, ves que toma Reishi, le quedan 6 días y el recordatorio le sale mañana a las 10:00. Atiende consultas y recuerda reposiciones — es el módulo con mayor impacto directo en ventas. Necesita la Etapa 1 funcionando para responder con contexto real.</div>
+          <div class="etapa-price">USD 650</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="etapa">
+      <div class="dep-chain">
+        <span class="dep-step">Etapa 1</span>
+        <span class="dep-arrow">&#8594;</span>
+        <span class="dep-step">Etapa 2</span>
+        <span class="dep-arrow">&#8594;</span>
+        <span class="dep-step active">Etapa 3</span>
+      </div>
+      <div class="etapa-header">
+        <div class="etapa-num">3</div>
+        <div class="etapa-body">
+          <h3>Recordatorios de reposición automáticos</h3>
+          <div class="sub">El producto dura 30 días. Al día 25, a las 10:00, el sistema le escribe solo al cliente por WhatsApp — el canal que ya usa todos los días, con tasa de lectura altísima. Vos podés frenar el mensaje antes si no corresponde. Se apoya en el opt-in de la Etapa 1.</div>
+          <div class="etapa-price">USD 250</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="etapa">
+      <div class="dep-chain">
+        <span class="dep-step">Etapa 2</span>
+        <span class="dep-arrow">&#8594;</span>
+        <span class="dep-step active">Etapa 4</span>
+      </div>
+      <div class="etapa-header">
+        <div class="etapa-num">4</div>
+        <div class="etapa-body">
+          <h3>Agente de Instagram — responde DMs desde el mismo cerebro</h3>
+          <div class="sub">Mismo agente, mismo conocimiento del catálogo, nuevo canal. Cuando alguien te escribe por Instagram, el sistema responde igual que por WhatsApp. El agente ya existe: esto es una superficie adicional sobre lo mismo.</div>
+          <div class="etapa-price">USD 300</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="etapa">
+      <div class="dep-chain">
+        <span class="dep-step">Etapa 1</span>
+        <span class="dep-arrow">&#8594;</span>
+        <span class="dep-step active">Etapa 5</span>
+        <span style="font-size:12px;color:rgba(255,255,255,.5);padding:0 8px">(en paralelo a las demás)</span>
+      </div>
+      <div class="etapa-header">
+        <div class="etapa-num">5</div>
+        <div class="etapa-body">
+          <h3>Presencia web — captura a quien te llega por recomendación</h3>
+          <div class="sub">Hoy quien llega referido te busca y no te encuentra, o te escribe y se pierde. Una página con tus productos, beneficios y testimonios, cuyo trabajo es capturar el teléfono o el mail y llevarlo directo a WhatsApp. Se construye en paralelo, sin frenar las otras etapas.</div>
+          <div class="etapa-price">USD 450</div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <section>
+    <div class="eyebrow">02</div>
+    <h2>La inversión</h2>
+    <p class="dim">Un pago de construcción por etapas, y una mensualidad que mantiene todo el sistema vivo. Nada más — sin facturas externas ni sorpresas.</p>
+
+    <div class="total-table">
+      <div class="row"><span style="font-weight:600;color:var(--black)">Etapa 1 — Núcleo</span><span class="mono">USD 700</span></div>
+      <div class="row"><span style="font-weight:600;color:var(--black)">Etapa 2 — Agente de WhatsApp</span><span class="mono">USD 650</span></div>
+      <div class="row"><span style="font-weight:600;color:var(--black)">Etapa 3 — Recordatorios automáticos</span><span class="mono">USD 250</span></div>
+      <div class="row"><span style="font-weight:600;color:var(--black)">Etapa 4 — Agente de Instagram</span><span class="mono">USD 300</span></div>
+      <div class="row"><span style="font-weight:600;color:var(--black)">Etapa 5 — Presencia web</span><span class="mono">USD 450</span></div>
+      <div class="row"><span style="font-weight:600;color:var(--black)">Implementación y puesta en producción</span><span class="mono">USD 200</span></div>
+      <div class="row sub"><span>Configuración, permisos, opt-in legal, conexión de canales y salida a producción</span><span class="mono">incluido</span></div>
+      <div class="row big"><span>Construcción — sistema completo</span><span class="mono">USD 2.550</span></div>
+    </div>
+
+    <h3 style="color:var(--white);font-size:19px;margin:34px 0 4px">La mensualidad — lo que sostiene todo funcionando</h3>
+    <p class="dim">Dos cosas que no se ven pero son la razón por la que el sistema sigue trabajando cuando vos no estás mirando.</p>
+
+    <div class="fee-grid" style="margin-top:16px">
+      <div class="fee-cell">
+        <div class="l">Operación</div>
+        <div class="v" style="color:var(--pink-ink)">incluida</div>
+        <div class="d">El agente se mantiene afinado, los canales siguen vivos y tenés soporte cuando algo cambia. El sistema no se degrada solo.</div>
+      </div>
+      <div class="fee-cell">
+        <div class="l">Infraestructura</div>
+        <div class="v" style="color:var(--pink-ink)">incluida</div>
+        <div class="d">La capa invisible que sostiene todo las 24 horas: el motor que orquesta cada tarea, la inteligencia que responde y el lugar donde vive tu sistema.</div>
+      </div>
+      <div class="fee-cell" style="background:var(--lilac-soft)">
+        <div class="l">Fee mensual (desde el mes 4)</div>
+        <div class="v" style="color:var(--ok)">USD 150/mes</div>
+        <div class="d">Todo adentro: operación + infraestructura. Sin facturas externas.</div>
+      </div>
+    </div>
+
+    <div class="benefit" style="margin-top:20px">
+      <b>Primeros 3 meses — USD 250/mes.</b> En el arranque, el agente aprende de conversaciones reales: alguien revisa lo que responde, corrige lo que falla y le carga los casos que no estaban previstos. Ese entrenamiento asistido es lo que hace que, a partir del mes 4, el sistema responda solo y bien — y ahí la mensualidad baja a USD 150.
+    </div>
+  </section>
+
+  <section>
+    <div class="eyebrow">03</div>
+    <h2>Para tener en cuenta</h2>
+    <ul class="out">
+      <li><span class="x">&#10005;</span><span><strong>El sistema no asesora.</strong> No recomienda qu&eacute; tomar ni en qu&eacute; dosis. Pregunta el objetivo, presenta los productos del negocio que aplican, y deriva al asesor cuando el cliente quiere profundizar. El asesoramiento lo hac&eacute;s vos, siempre.</span></li>
+      <li><span class="bono">bonif.</span><span><strong>Textos comerciales y copy del agente.</strong> Te ayudamos a definir tono, respuestas y descripciones de productos para integrarlas al agente. Bonificado en esta propuesta.</span></li>
+      <li><span class="x">&#10005;</span><span><strong>Dise&ntilde;o gr&aacute;fico e identidad de marca.</strong> La interfaz del sistema est&aacute; incluida. El logo, la paleta y las fotograf&iacute;as de producto, no.</span></li>
+      <li><span class="bono">bonif.</span><span><strong>Migraci&oacute;n de datos hist&oacute;ricos.</strong> Carga inicial de clientes desde papel o chats al sistema. Bonificado en esta propuesta.</span></li>
+      <li><span class="x">&#10005;</span><span><strong>Cobro online / carrito de compras.</strong> El sistema lleva a la venta &mdash; el cobro lo hac&eacute;s vos. Si m&aacute;s adelante quer&eacute;s cobrar online, se cotiza como fase siguiente.</span></li>
+      <li><span class="x">&#10005;</span><span><strong>Soporte posterior a la entrega.</strong> Incluido en la mensualidad. Sin mensualidad activa, no hay soporte.</span></li>
+    </ul>
+  </section>
+
+  <section>
+    <div class="eyebrow">04</div>
+    <h2>Cu&aacute;ndo lo ten&eacute;s funcionando</h2>
+    <p class="dim">Las etapas 1 a 4 se construyen en orden &mdash; cada una necesita la anterior. La 5 corre en paralelo. El camino hasta producci&oacute;n completa es de <strong style="color:var(--white)">2 meses</strong>, no la suma de cada etapa por separado.</p>
+
+    <div class="total-table">
+      <div class="row"><span style="font-weight:600;color:var(--black)">Semana 1-3 &mdash; N&uacute;cleo (panel + datos)</span><span class="mono">Etapa 1</span></div>
+      <div class="row"><span style="font-weight:600;color:var(--black)">Semana 3-5 &mdash; Agente de WhatsApp</span><span class="mono">Etapa 2</span></div>
+      <div class="row"><span style="font-weight:600;color:var(--black)">Semana 5-6 &mdash; Recordatorios de reposici&oacute;n</span><span class="mono">Etapa 3</span></div>
+      <div class="row"><span style="font-weight:600;color:var(--black)">Semana 6-7 &mdash; Agente de Instagram</span><span class="mono">Etapa 4</span></div>
+      <div class="row sub"><span>Presencia web &mdash; en paralelo, desde la semana 1</span><span class="mono">Etapa 5</span></div>
+      <div class="row big"><span>Semana 7-8 &mdash; Producci&oacute;n + arranque del entrenamiento</span><span class="mono" style="font-size:16px">En vivo</span></div>
+    </div>
+
+    <div class="warn" style="margin-top:16px">
+      <b>Dos cosas que no dependen de m&iacute; y pueden mover la fecha.</b> La aprobaci&oacute;n externa para poder enviar los recordatorios (un tr&aacute;mite del sistema de mensajer&iacute;a que puede tardar unos d&iacute;as), y la entrega de tu contenido: textos del agente, fotos y datos de productos. Los plazos corren desde que recibo el contenido y los accesos, y se pausan mientras esperamos una aprobaci&oacute;n externa o material tuyo.
+    </div>
+  </section>
+
+  <section>
+    <div class="eyebrow">05</div>
+    <h2>Forma de pago</h2>
+    <p class="dim">Se firma el sistema completo y se paga contra la entrega de cada etapa. No pag&aacute;s nada que no hayas visto funcionar.</p>
+    <div class="pago">
+      <div class="pago-row">
+        <span class="pc">30%</span>
+        <span class="pt">A la firma.<small>Arranca el n&uacute;cleo (panel + datos).</small></span>
+      </div>
+      <div class="pago-row">
+        <span class="pc">35%</span>
+        <span class="pt">Contra entrega del n&uacute;cleo y el agente de WhatsApp funcionando.<small>Pod&eacute;s ver el sistema en vivo antes de seguir pagando.</small></span>
+      </div>
+      <div class="pago-row">
+        <span class="pc">35%</span>
+        <span class="pt">Contra entrega de la presencia web y el sistema en producci&oacute;n completo.<small>La mensualidad arranca el mes siguiente: USD 250 los primeros 3 meses (con entrenamiento), luego USD 150.</small></span>
+      </div>
+    </div>
+    <div class="benefit" style="margin-top:16px"><b>El precio de cada etapa queda reservado mientras la propuesta est&eacute; vigente.</b> Pod&eacute;s pagarla en el momento que te convenga &mdash; el sistema se firma entero, se paga por partes.</div>
+  </section>
+
+  <section class="close-cta" aria-label="Cierre">
+    <div class="chat-bubble">
+      &iquest;Comenzamos?
+      <img class="wink" src="/assets/face-wink.svg" alt="" width="44" height="44">
+    </div>
+  </section>
+
+  <footer>
+    <a class="sig" href="https://www.ailensampo.com" target="_blank" rel="noopener">Ailén Sampó</a>
+    <a class="fine" href="https://www.ailensampo.com" target="_blank" rel="noopener">Arquitectura de Sistemas Digitales · Esta propuesta tiene vigencia de 30 días.</a>
+  </footer>
+
+</div>
+</body>
+</html>
