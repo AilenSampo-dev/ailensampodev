@@ -5,6 +5,10 @@
   "framework": null,
   "rewrites": [
     {
+      "source": "/api/:path*",
+      "destination": "/api/router?__path=:path*"
+    },
+    {
       "source": "/calendario/:token",
       "destination": "/calendario/index.html"
     },
@@ -33,53 +37,9 @@
     }
   ],
   "functions": {
-    "api/contrato/publico.js": {
-      "maxDuration": 60
-    },
-    "api/contrato/enviar.js": {
-      "maxDuration": 30
-    },
-    "api/addendum/publico.js": {
-      "maxDuration": 60
-    },
-    "api/addendum/enviar.js": {
-      "maxDuration": 30
-    },
-    "api/certificado/enviar.js": {
-      "maxDuration": 30
-    },
-    "api/facturacion/enviar-detalle.js": {
-      "maxDuration": 30
-    },
-    "api/erp/data.js": {
-      "maxDuration": 30
-    },
-    "api/erp/health.js": {
-      "maxDuration": 15
-    },
-    "api/erp/history.js": {
-      "maxDuration": 15
-    },
-    "api/erp/history-restore.js": {
-      "maxDuration": 30
-    },
-    "api/erp/seed-stockin.js": {
-      "maxDuration": 30
-    },
-    "api/calendario/data.js": {
-      "maxDuration": 15,
-      "includeFiles": "server/calendario/**"
-    },
-    "api/calendario/img.js": {
-      "maxDuration": 15,
-      "includeFiles": "server/calendario/**"
-    },
-    "api/calendario/comentarios.js": {
-      "maxDuration": 15,
-      "includeFiles": "server/calendario/**"
-    },
-    "api/calendario/accesos.js": {
-      "maxDuration": 15
+    "api/router.js": {
+      "maxDuration": 60,
+      "includeFiles": "server/**"
     }
   }
 }

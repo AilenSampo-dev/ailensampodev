@@ -1,4 +1,4 @@
-import { handleErpHistoryRestore } from "../../server/erp-api-handlers.js";
+import { handleErpHistoryRestore } from "../../erp-api-handlers.js";
 
 export default async function handler(req, res) {
   await handleErpHistoryRestore(req, res, process.env);

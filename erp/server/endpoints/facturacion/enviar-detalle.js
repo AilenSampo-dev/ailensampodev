@@ -1,6 +1,7 @@
-import { enviarCertificadoBrevo } from "../../server/enviar-certificado-brevo.js";
+import { enviarDetalleFacturacionBrevo } from "../../enviar-detalle-facturacion-brevo.js";
+import { requireAuth } from "../../auth.js";
 
-/** Vercel / serverless: POST /api/certificado/enviar */
+/** Vercel / serverless: POST /api/facturacion/enviar-detalle */
 export default async function handler(req, res) {
   if (req.method !== "POST") {
     res.statusCode = 405;
@@ -9,9 +10,11 @@ export default async function handler(req, res) {
     return;
   }
 
+  if (!requireAuth(req, res, process.env)) return;
+
   try {
     const body = typeof req.body === "string" ? JSON.parse(req.body || "{}") : req.body || {};
-    const result = await enviarCertificadoBrevo(body);
+    const result = await enviarDetalleFacturacionBrevo(body);
     res.statusCode = 200;
     res.setHeader("Content-Type", "application/json");
     res.end(JSON.stringify(result));

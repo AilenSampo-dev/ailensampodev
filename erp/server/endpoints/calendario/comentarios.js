@@ -1,4 +1,4 @@
-import { handleCalendarioComentarios } from "../../server/calendario-api-handlers.js";
+import { handleCalendarioComentarios } from "../../calendario-api-handlers.js";
 
 export default async function handler(req, res) {
   await handleCalendarioComentarios(req, res, process.env);

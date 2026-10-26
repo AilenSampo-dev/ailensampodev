@@ -1,5 +1,5 @@
-import { handleAuthStatus } from "../../server/erp-api-handlers.js";
-import { passwordRequired } from "../../server/auth.js";
+import { handleAuthStatus } from "../../erp-api-handlers.js";
+import { passwordRequired } from "../../auth.js";
 
 export default async function handler(req, res) {
   if (req.method === "GET" && !passwordRequired(process.env)) {
