@@ -1,4 +1,10 @@
 import {
+  handleCalendarioData,
+  handleCalendarioImg,
+  handleCalendarioComentarios,
+  handleCalendarioAccesos,
+} from "./server/calendario-api-handlers.js";
+import {
   handleAuthLogin,
   handleErpData,
   handleErpHealth,
@@ -25,6 +31,10 @@ const ROUTES = {
   "/api/addendum/enviar": handleAddendumEnviar,
   "/api/addendum/publico": handleAddendumPublico,
   "/api/facturacion/enviar-detalle": handleFacturacionEnviarDetalle,
+  "/api/calendario/data": handleCalendarioData,
+  "/api/calendario/img": handleCalendarioImg,
+  "/api/calendario/comentarios": handleCalendarioComentarios,
+  "/api/calendario/accesos": handleCalendarioAccesos,
 };
 
 /** Dev: auth + backup ERP vía middleware Vite */
@@ -32,6 +42,12 @@ export function erpApiPlugin() {
   return {
     name: "erp-api",
     configureServer(server) {
+      // Igual que el rewrite de vercel.json: /calendario/<link> → página pública del calendario.
+      server.middlewares.use((req, _res, next) => {
+        const m = req.url?.match(/^\/calendario\/([A-Za-z0-9_-]+)\/?(\?.*)?$/);
+        if (m && m[1] !== "index.html") req.url = "/calendario/index.html";
+        next();
+      });
       server.middlewares.use(async (req, res, next) => {
         const path = req.url?.split("?")[0];
         const handler = ROUTES[path];

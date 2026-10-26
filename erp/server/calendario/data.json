@@ -1,0 +1,164 @@
+{
+  "actualizado": "2026-10-26",
+  "semanas": [
+    {"id": "s1", "nombre": "Semana 1", "rango": "26/10 – 1/11", "tema": "Te lo demuestro", "bajada": "Lanzamiento del sitio: mostrar lo que hago en lugar de explicarlo."},
+    {"id": "s2", "nombre": "Semana 2", "rango": "2/11 – 8/11", "tema": "Lo que no se ve", "bajada": "El trabajo invisible detrás de un sistema."},
+    {"id": "s3", "nombre": "Semana 3", "rango": "9/11 – 15/11", "tema": "Así se ve resuelto", "bajada": "Casos y resultados: el sistema funcionando."},
+    {"id": "s4", "nombre": "Semana 4", "rango": "16/11 – 22/11", "tema": "¿Y si fuera tu negocio?", "bajada": "Invitar a pensarlo para el propio negocio."},
+    {"id": "banco", "nombre": "Banco", "rango": "Sin fecha", "tema": "Piezas listas para usar", "bajada": "Fotos con frase armadas, para cubrir huecos o reemplazos."}
+  ],
+  "piezas": [
+    {
+      "id": "post-sitio-online", "semana": "s1", "fecha": "2026-10-27", "hora": "19:00",
+      "tipo": "post", "titulo": "Mi sitio ya está online", "pilar": "Lanzamiento",
+      "estado": "listo", "estadoTexto": "Listo · programar desde Canva",
+      "imagenes": ["img/post-sitio-online.png"], "formato": "4:5",
+      "canva": "https://www.canva.com/d/zHNrKBWAQIA-BNj",
+      "copy": "Mi sitio ya está online.\n\nLo que hago cuesta explicarlo con palabras. Por eso armé un lugar donde lo ves.\n\nEntrás a ailensampo.com, escribís la tarea que hoy te roba tiempo y tocás \"Generar Sistema\". En segundos, una IA te arma el esquema de cómo se resolvería: qué se automatiza, qué te llega a vos y dónde queda registrado.\n\nEs un primer boceto. El sistema de verdad lo diseño con vos, para tu negocio.\n\nEl link está en mi perfil.\n\n#sistemasamedida #emprendedorasargentinas #automatizacion #cordoba",
+      "notas": "Pasar los textos a Nunito Sans antes de programar."
+    },
+    {
+      "id": "historia-generar-sistema", "semana": "s1", "fecha": "2026-10-28", "hora": "13:00",
+      "tipo": "historia", "titulo": "Generar Sistema en vivo", "pilar": "3 · Detrás del sistema",
+      "estado": "falta", "estadoTexto": "Falta grabar",
+      "imagenes": [], "formato": "9:16",
+      "copy": "Texto arriba: \"Le pedí a mi sitio que resuelva la tarea que más escucho.\"\nSticker de link: ailensampo.com — \"Probá con la tuya\"",
+      "notas": "Grabación de pantalla del celu en ailensampo.com: escribir \"Responder lo mismo por WhatsApp todo el día\" y tocar Generar Sistema. Sin datos de clientas. Plan B: captura del esquema ya generado."
+    },
+    {
+      "id": "carrusel-1", "semana": "s1", "fecha": "2026-10-29", "hora": "19:00",
+      "tipo": "carrusel", "titulo": "Te lo demuestro #1 · Respuestas infinitas", "pilar": "1 · Nombrar lo invisible",
+      "estado": "listo", "estadoTexto": "Listo · programar en Business Suite",
+      "imagenes": ["img/carrusel1-s1.png", "img/carrusel1-s2.png"], "formato": "4:5",
+      "canva": "https://www.canva.com/d/-aF7TZKsXrout5-",
+      "copy": "Responder lo mismo por WhatsApp todo el día.\nPrecio. Horario. ¿Tenés stock? ¿Hacés envíos?\n\nNo es que tus clientas pregunten de más. Es que la respuesta vive solo en tu cabeza (y en tu celu).\n\nUn sistema lo ordena así:\n→ Un bot responde lo de siempre, a cualquier hora.\n→ Lo que sí necesita de vos te llega separado y ordenado.\n→ Cada conversación queda guardada: sabés quién preguntó qué y a quién volver a escribir.\n\nVos dejás de ser el contestador del negocio.\n\nEs la primera de una serie: cada semana, una tarea que roba tiempo y cómo se resuelve. La tuya la podés escribir en ailensampo.com.\n\n#sistemasamedida #emprendedorasargentinas #automatizacion #whatsappbusiness #cordoba",
+      "notas": "Canva no programa carruseles: bajar las 2 páginas en PNG y subir por Business Suite."
+    },
+    {
+      "id": "historia-encuesta-serie", "semana": "s1", "fecha": "2026-10-30", "hora": "13:00",
+      "tipo": "historia", "titulo": "Encuesta: ¿qué tarea te roba más tiempo?", "pilar": "Escuchar",
+      "estado": "listo", "estadoTexto": "Texto listo · se sube a mano",
+      "imagenes": [], "formato": "9:16",
+      "copy": "Texto: \"Esta semana te mostré cómo se resuelven las respuestas infinitas. ¿Cuál sigue?\"\nEncuesta: ¿Qué tarea te roba más tiempo?\nCobros que demoran / Clientes que se pierden / Reuniones sin control / Plantillas que nadie ve",
+      "notas": "Fondo lila liso desde Instagram. La opción más votada adelanta su carrusel."
+    },
+    {
+      "id": "historias-halloween", "semana": "s1", "fecha": "2026-10-31", "hora": "13:00",
+      "tipo": "historia", "titulo": "Halloween (bruja + calabaza)", "pilar": "3 · Detrás del sistema",
+      "estado": "listo", "estadoTexto": "Listo · subir brillo antes",
+      "imagenes": ["img/halloween-1.png", "img/halloween-2.png"], "formato": "9:16",
+      "canva": "https://www.canva.com/d/8gYpK6woeXQ5Ac-",
+      "copy": "Historia 1: \"Lo único mágico de mi trabajo: el negocio sigue andando mientras dormís.\"\nHistoria 2: \"Lo que da miedo no son los fantasmas. Son 47 mensajes sin responder.\"",
+      "notas": "Subir el brillo de las fotos en Canva (Editar › Ajustes) antes de bajarlas."
+    },
+    {
+      "id": "reel-cliente-exigente", "semana": "s1", "fecha": "2026-11-01", "hora": "19:00",
+      "tipo": "reel", "titulo": "Mi cliente más exigente", "pilar": "3 · Detrás del sistema",
+      "estado": "listo", "estadoTexto": "Listo · armar en Edits",
+      "imagenes": ["img/reel-exigente-1.png", "img/reel-exigente-2.png", "img/reel-exigente-3.png", "img/reel-exigente-4.png"], "formato": "9:16",
+      "canva": "https://www.canva.com/d/M77U9SgwkP8lpAN",
+      "copy": "Mi cliente más exigente no sabe leer, cambia los requerimientos cada cinco minutos y prueba todo antes de que lo termine.\nY tiene razón: el que usa el sistema es el que sabe si funciona.\nCon cada negocio hago lo mismo: primero escucho a quien lo va a usar todos los días. Recién después construyo.\n\n#sistemasamedida #emprendedorasargentinas #maternidadyemprendimiento #cordoba",
+      "notas": "1,5 s por imagen, la última 3 s, más el clip del juego (de espaldas). Música en Instagram."
+    },
+    {
+      "id": "carrusel-2", "semana": "s2", "fecha": "2026-11-03", "hora": "19:00",
+      "tipo": "carrusel", "titulo": "Te lo demuestro #2 · Cobros que demoran", "pilar": "1 · Nombrar lo invisible",
+      "estado": "en-proceso", "estadoTexto": "Por armar con la plantilla",
+      "imagenes": [], "formato": "4:5",
+      "copy": "", "notas": "Misma plantilla lila de la serie."
+    },
+    {
+      "id": "historia-coffee", "semana": "s2", "fecha": "2026-11-04", "hora": "13:00",
+      "tipo": "historia", "titulo": "Les presento a Coffee", "pilar": "3 · Detrás del sistema",
+      "estado": "falta", "estadoTexto": "Falta foto de Coffee",
+      "imagenes": [], "formato": "9:16",
+      "copy": "Les presento a Coffee.\nNueva integrante del equipo.\nEn una casa de mate, obvio que se iba a llamar así.\nTodavía no sabe nada de sistemas. Pero ya entendió lo más importante: dormir mientras todo funciona.",
+      "notas": "Foto de Coffee despierta, con la cara visible. Va antes del reel POV para que ya la conozcan."
+    },
+    {
+      "id": "post-post-it", "semana": "s2", "fecha": "2026-11-05", "hora": "19:00",
+      "tipo": "post", "titulo": "Así me llega cada negocio / Así lo dejo", "pilar": "2 · Caso real",
+      "estado": "falta", "estadoTexto": "Faltan las fotos post-it",
+      "imagenes": [], "formato": "4:5",
+      "copy": "", "notas": "Plan B si no salen las fotos: foto taza + laptop con \"Lo que no se ve de un sistema son las horas de entender cómo trabaja tu negocio.\""
+    },
+    {
+      "id": "reel-mate", "semana": "s2", "fecha": "2026-11-08", "hora": "19:00",
+      "tipo": "reel", "titulo": "El mate (stop-motion)", "pilar": "3 · Detrás del sistema",
+      "estado": "listo", "estadoTexto": "Listo · falta caption",
+      "imagenes": ["img/reel-mate-1.png", "img/reel-mate-2.png", "img/reel-mate-3.png", "img/reel-mate-4.png", "img/reel-mate-5.png"], "formato": "9:16",
+      "canva": "https://www.canva.com/d/P05zCOQNtQqwX3Q",
+      "copy": "Textos en pantalla:\nAsí se ve construir un sistema.\nFlujos. Reglas. Pruebas.\nHoras de esto.\nPara que vos no tengas que hacerlo.\nQue tu negocio funcione mientras te tomás este mate.",
+      "notas": "Caption por escribir."
+    },
+    {
+      "id": "carrusel-3", "semana": "s3", "fecha": "2026-11-10", "hora": "19:00",
+      "tipo": "carrusel", "titulo": "Te lo demuestro #3 · Clientes que se pierden", "pilar": "1 · Nombrar lo invisible",
+      "estado": "en-proceso", "estadoTexto": "Por armar",
+      "imagenes": [], "formato": "4:5", "copy": "", "notas": ""
+    },
+    {
+      "id": "caso-real", "semana": "s3", "fecha": "2026-11-12", "hora": "19:00",
+      "tipo": "post", "titulo": "Caso real: sistema externo / arquitectura interna", "pilar": "2 · Caso real",
+      "estado": "falta", "estadoTexto": "Falta permiso de la clienta",
+      "imagenes": [], "formato": "4:5", "copy": "", "notas": "Sin datos de clientas en pantalla."
+    },
+    {
+      "id": "reel-escapa-caos", "semana": "s3", "fecha": "2026-11-15", "hora": "19:00",
+      "tipo": "reel", "titulo": "Escapá del caos (juego del sitio)", "pilar": "Alcance",
+      "estado": "falta", "estadoTexto": "Falta grabar",
+      "imagenes": [], "formato": "9:16",
+      "copy": "Cierre: \"Probalo en ailensampo.com\"", "notas": "Grabación de pantalla jugando el juego del sitio."
+    },
+    {
+      "id": "carrusel-4", "semana": "s4", "fecha": "2026-11-17", "hora": "19:00",
+      "tipo": "carrusel", "titulo": "Te lo demuestro #4 · Reuniones sin control", "pilar": "1 · Nombrar lo invisible",
+      "estado": "en-proceso", "estadoTexto": "Por armar",
+      "imagenes": [], "formato": "4:5", "copy": "", "notas": ""
+    },
+    {
+      "id": "post-como-trabajo", "semana": "s4", "fecha": "2026-11-19", "hora": "19:00",
+      "tipo": "post", "titulo": "Cómo trabajo: del diagnóstico al sistema andando", "pilar": "4 · Frase ancla",
+      "estado": "falta", "estadoTexto": "Falta confirmar los pasos",
+      "imagenes": [], "formato": "4:5", "copy": "", "notas": "Degradé naranja→amarillo."
+    },
+    {
+      "id": "reel-pov", "semana": "s4", "fecha": "2026-11-22", "hora": "19:00",
+      "tipo": "reel", "titulo": "POV: tu negocio ya tiene sistema", "pilar": "3 · Detrás del sistema",
+      "estado": "en-proceso", "estadoTexto": "Video listo · falta voz en off",
+      "imagenes": ["img/reel-pov-1.jpg", "img/reel-pov-7.jpg", "img/reel-pov-16.jpg"], "formato": "9:16",
+      "copy": "Voz en off:\nCuando tu negocio tiene sistema…\nno sabés qué hacer con tanto silencio.\n\nLos pedidos entran solos.\nLos mensajes se responden.\nVos pensás la estrategia.\n\nMirás alrededor…\ny hasta Coffee descansa.\n\nEl sistema trabaja. Vos descansás.",
+      "notas": "Cortar 4–5 s. Zoom lento a Coffee entre los peluches con \"Coffee 🐾\" en pantalla. Subtítulos automáticos."
+    },
+    {
+      "id": "ej-silencio", "semana": "banco", "tipo": "post", "titulo": "El sistema trabaja. Vos tenés dos minutos en silencio para pensar.", "pilar": "4 · Frase ancla",
+      "estado": "listo", "estadoTexto": "Listo · sin fecha",
+      "imagenes": ["img/ej-silencio.png"], "formato": "4:5",
+      "canva": "https://www.canva.com/d/kWoDWbDJVZVGca3", "copy": "", "notas": "Caption por escribir."
+    },
+    {
+      "id": "ej-zapatillas", "semana": "banco", "tipo": "post", "titulo": "Pies arriba. El sistema sigue.", "pilar": "3 · Detrás del sistema",
+      "estado": "listo", "estadoTexto": "Listo · sin fecha",
+      "imagenes": ["img/ej-zapatillas.png"], "formato": "4:5",
+      "canva": "https://www.canva.com/d/kWoDWbDJVZVGca3", "copy": "", "notas": "También sirve como historia (pasar a 9:16)."
+    },
+    {
+      "id": "ej-cerrar-compu", "semana": "banco", "tipo": "post", "titulo": "Cerrar la compu y que nada se frene", "pilar": "4 · Frase ancla",
+      "estado": "listo", "estadoTexto": "Listo · sin fecha",
+      "imagenes": ["img/ej-cerrar-compu.png"], "formato": "4:5",
+      "canva": "https://www.canva.com/d/FnNS9zPJAklLL3V", "copy": "", "notas": ""
+    },
+    {
+      "id": "ej-no-se-nota", "semana": "banco", "tipo": "post", "titulo": "Un sistema bien hecho no se nota", "pilar": "4 · Frase ancla",
+      "estado": "listo", "estadoTexto": "Listo · sin fecha",
+      "imagenes": ["img/ej-no-se-nota.png"], "formato": "4:5",
+      "canva": "https://www.canva.com/d/7RI90CBliiFFVQ6", "copy": "", "notas": ""
+    },
+    {
+      "id": "ej-mate-celu", "semana": "banco", "tipo": "post", "titulo": "El mejor sistema te deja cebarte un mate sin mirar el celular", "pilar": "4 · Frase ancla",
+      "estado": "listo", "estadoTexto": "Listo · sin fecha",
+      "imagenes": ["img/ej-mate-celu.png"], "formato": "4:5",
+      "canva": "https://www.canva.com/d/xlPCLY7pV6yOAed", "copy": "", "notas": "Comparte mate con el reel del 8/11: no publicarlos en semanas seguidas."
+    }
+  ]
+}

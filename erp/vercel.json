@@ -5,6 +5,10 @@
   "framework": null,
   "rewrites": [
     {
+      "source": "/calendario/:token",
+      "destination": "/calendario/index.html"
+    },
+    {
       "source": "/((?!api/).*)",
       "destination": "/index.html"
     }
@@ -61,6 +65,21 @@
     },
     "api/erp/seed-stockin.js": {
       "maxDuration": 30
+    },
+    "api/calendario/data.js": {
+      "maxDuration": 15,
+      "includeFiles": "server/calendario/**"
+    },
+    "api/calendario/img.js": {
+      "maxDuration": 15,
+      "includeFiles": "server/calendario/**"
+    },
+    "api/calendario/comentarios.js": {
+      "maxDuration": 15,
+      "includeFiles": "server/calendario/**"
+    },
+    "api/calendario/accesos.js": {
+      "maxDuration": 15
     }
   }
 }

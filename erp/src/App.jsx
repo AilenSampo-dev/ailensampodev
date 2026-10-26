@@ -7,6 +7,7 @@ import EtapasProyectoModal, { EtapasBtn } from "./components/EtapasProyectoModal
 import LoginScreen from "./components/LoginScreen.jsx";
 import ConfirmDeleteModal from "./components/ConfirmDeleteModal.jsx";
 import BackupHistoryPanel from "./components/BackupHistoryPanel.jsx";
+import CalendarioAdmin from "./components/CalendarioAdmin.jsx";
 import { obtenerAddendumElixio, mergeAddendumEnProyecto } from "./lib/addendum-model.js";
 import { asegurarPipeline, mergePipelineEnProyecto, etapaLabel } from "./lib/proyecto-etapas.js";
 import { checkAuthStatus, fetchErpData, saveErpData, seedStockinLavanda, logout as logoutSession, getToken } from "./lib/erp-api.js";
@@ -387,6 +388,7 @@ function ErpPanel({ session, onLogout }) {
     { id: "dashboard", label: "Panel" },
     { id: "clientes", label: "Clientes" },
     { id: "proyectos", label: "Proyectos" },
+    { id: "calendario", label: "Calendario" },
   ];
 
   return (
@@ -463,6 +465,7 @@ function ErpPanel({ session, onLogout }) {
           <div style={{ color: t.muted, fontFamily: t.fMono, fontSize: 13 }}>Cargando datos…</div>
         ) : (
           <>
+        {view === "calendario" && <CalendarioAdmin t={t} />}
         {view === "dashboard" && (
           <Dashboard {...{ mrr, activos: activos.length, prospectos, enConstruccion, enProduccion, pendienteCobro, total: clientes.length }} />
         )}

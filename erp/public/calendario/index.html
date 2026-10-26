@@ -1,0 +1,317 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<meta name="referrer" content="no-referrer">
+</head>
+<body>
+<title>Calendario s(a)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito+Sans:opsz,wght@6..12,400;6..12,600;6..12,800&family=Silkscreen&display=swap">
+<style>
+/* Layout: weeks as stacked bands; each piece is a "window" card from the site (3-dot bar + date), images in a swipe strip */
+:root{
+  --bg:#faf7ff; --surface:#ffffff; --ink:#2a1650; --muted:#6c5c8c; --line:#e6dcf7;
+  --violeta:#3a1e66; --lila:#e4d2ff; --rosa:#e94fae; --menta:#bfe9da; --amarillo:#fff1a3; --naranja:#ff8a55; --azul:#6b7fe8;
+  --bar:#221040; --chip:#f1e9ff;
+  --ok:#1f8a5b; --ok-bg:#dff5ea; --wip:#9a6a00; --wip-bg:#fff3cc; --no:#b4234f; --no-bg:#fde3ea;
+  --display:"Nunito Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --pixel:"Silkscreen","Courier New",monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#140a24; --surface:#1e1233; --ink:#f1e9ff; --muted:#b3a3d1; --line:#34235a;
+  --lila:#3b2566; --chip:#2b1a4a; --bar:#0c0517; --amarillo:#5a4b10; --menta:#1d4a3c;
+  --ok:#7fe0b0; --ok-bg:#12382a; --wip:#ffd66b; --wip-bg:#3d3010; --no:#ff8fb0; --no-bg:#40142a; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#140a24; --surface:#1e1233; --ink:#f1e9ff; --muted:#b3a3d1; --line:#34235a;
+  --lila:#3b2566; --chip:#2b1a4a; --bar:#0c0517; --amarillo:#5a4b10; --menta:#1d4a3c;
+  --ok:#7fe0b0; --ok-bg:#12382a; --wip:#ffd66b; --wip-bg:#3d3010; --no:#ff8fb0; --no-bg:#40142a; color-scheme:dark}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background:var(--bg);color:var(--ink);font-family:var(--display);font-size:15px;line-height:1.5;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 48px}
+.wrap{max-width:1180px;margin:0 auto}
+header.top{padding-block:28px 8px;display:flex;flex-wrap:wrap;gap:12px 24px;align-items:flex-end;justify-content:space-between}
+.brand{display:flex;flex-direction:column;gap:4px}
+.brand small{font-family:var(--pixel);font-size:11px;letter-spacing:.08em;color:var(--rosa);text-transform:uppercase}
+h1{font-size:clamp(28px,5vw,44px);font-weight:800;margin:0;line-height:1.05;text-wrap:balance;color:var(--ink)}
+.meta{color:var(--muted);font-size:13px}
+.legend{display:flex;gap:8px;flex-wrap:wrap}
+nav.filters{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding-block:12px;display:flex;flex-direction:column;gap:8px;border-bottom:1px solid var(--line)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+.row{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}
+.row::-webkit-scrollbar{display:none}
+.fbtn{flex:none;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:6px 14px;font:600 13px var(--display);cursor:pointer}
+.fbtn[aria-pressed="true"]{background:var(--violeta);border-color:var(--violeta);color:#fff}
+:root[data-theme="dark"] .fbtn[aria-pressed="true"]{background:var(--rosa);border-color:var(--rosa)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .fbtn[aria-pressed="true"]{background:var(--rosa);border-color:var(--rosa)}}
+.fbtn:focus-visible,.copybtn:focus-visible,.thumb:focus-visible,a:focus-visible,.lb button:focus-visible{outline:2px solid var(--rosa);outline-offset:2px}
+section.week{padding-block:28px 8px;display:flex;flex-direction:column;gap:16px}
+.whead{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px}
+.whead .tag{font-family:var(--pixel);font-size:11px;background:var(--amarillo);color:var(--ink);padding:3px 8px;border-radius:4px;letter-spacing:.04em}
+.whead h2{margin:0;font-size:24px;font-weight:800;text-wrap:balance}
+.whead .rango{color:var(--muted);font-size:14px;font-variant-numeric:tabular-nums}
+.whead p{flex-basis:100%;margin:0;color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,320px),1fr));gap:18px;align-items:start}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden;display:flex;flex-direction:column;min-width:0}
+.bar{background:var(--bar);color:#efe6ff;display:flex;align-items:center;gap:10px;padding:8px 12px}
+.dots{display:flex;gap:5px}.dots i{width:8px;height:8px;border-radius:50%;display:block}
+.dots i:nth-child(1){background:#ff6fb5}.dots i:nth-child(2){background:#ffe066}.dots i:nth-child(3){background:#8fe3c4}
+.bar .when{font-family:var(--pixel);font-size:11px;letter-spacing:.05em;font-variant-numeric:tabular-nums;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.strip{display:flex;gap:8px;overflow-x:auto;padding:12px;background:var(--chip);scroll-snap-type:x mandatory}
+.thumb{flex:none;border:0;padding:0;background:none;cursor:zoom-in;border-radius:8px;overflow:hidden;scroll-snap-align:start;max-width:100%}
+.thumb img{display:block;height:230px;width:auto;max-width:none;border-radius:8px}
+.strip.single{justify-content:center}
+.empty{margin:12px;border:2px dashed var(--line);border-radius:10px;min-height:150px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;color:var(--muted);text-align:center;padding:16px;font-size:13px}
+.empty b{font-family:var(--pixel);font-size:12px;font-weight:400;color:var(--rosa)}
+.body{padding:14px 16px 16px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.pills{display:flex;flex-wrap:wrap;gap:6px}
+.pill{font-size:12px;font-weight:700;padding:2px 10px;border-radius:999px;background:var(--chip);color:var(--ink)}
+.pill.t-post{background:var(--lila)}.pill.t-carrusel{background:var(--lila)}
+.pill.t-reel{background:var(--rosa);color:#fff}.pill.t-historia{background:var(--menta)}
+.st{font-size:12px;font-weight:700;padding:2px 10px;border-radius:999px}
+.st.listo{background:var(--ok-bg);color:var(--ok)}.st.en-proceso{background:var(--wip-bg);color:var(--wip)}.st.falta{background:var(--no-bg);color:var(--no)}
+.card h3{margin:0;font-size:18px;line-height:1.25;font-weight:800;text-wrap:balance}
+.pilar{font-size:12px;color:var(--muted);margin-top:-4px}
+.copy{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px 12px;white-space:pre-wrap;font-size:14px;max-height:180px;overflow:auto;overflow-wrap:anywhere}
+.copy.open{max-height:none}
+.copyhead{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.copyhead span{font-family:var(--pixel);font-size:11px;color:var(--muted);letter-spacing:.05em}
+.copybtn{border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:8px;padding:4px 10px;font:600 12px var(--display);cursor:pointer}
+.more{background:none;border:0;color:var(--rosa);font:700 12px var(--display);cursor:pointer;padding:0;align-self:flex-start}
+.notas{font-size:13px;color:var(--muted);border-left:3px solid var(--amarillo);padding-left:10px}
+.links a{color:var(--rosa);font-weight:700;font-size:13px;text-decoration:none}
+.links a:hover{text-decoration:underline}
+.nores{color:var(--muted);padding-block:32px;text-align:center}
+.lb{position:fixed;inset:0;z-index:20;background:rgba(12,5,23,.9);display:flex;align-items:center;justify-content:center;
+  padding:max(16px,env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) max(16px,env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
+.lb img{max-height:86vh;max-width:100%;border-radius:10px}
+.lb .ctl{position:absolute;top:calc(12px + env(safe-area-inset-top,0px));right:calc(12px + env(safe-area-inset-right,0px));display:flex;gap:8px}
+.lb button{background:#fff;color:#2a1650;border:0;border-radius:999px;padding:8px 14px;font:700 14px var(--display);cursor:pointer}
+.lb .nav{position:absolute;bottom:calc(16px + env(safe-area-inset-bottom,0px));left:0;right:0;display:flex;justify-content:center;gap:10px}
+.lb .count{color:#fff;font-family:var(--pixel);font-size:12px;align-self:center}
+@media (prefers-reduced-motion:no-preference){.card{transition:transform .15s ease}.card:hover{transform:translateY(-2px)}}
+/* Comentarios (ERP) */
+.coms{border-top:1px solid var(--line);padding-top:10px;display:flex;flex-direction:column;gap:8px}
+.coms h4{margin:0;font-family:var(--pixel);font-size:11px;font-weight:400;letter-spacing:.05em;color:var(--muted)}
+.com{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:8px 10px;font-size:13px;white-space:pre-wrap;overflow-wrap:anywhere}
+.com.mine{border-color:var(--lila)}
+.com.ailen{background:var(--chip);border-color:var(--rosa)}
+.com.done{opacity:.55}
+.com .who{display:flex;justify-content:space-between;gap:8px;font-weight:800;font-size:12px;margin-bottom:2px;white-space:normal}
+.com .who time{font-weight:600;color:var(--muted)}
+.com .ok{font-family:var(--pixel);font-size:10px;color:var(--ok)}
+.comform{display:flex;flex-direction:column;gap:6px}
+.comform textarea{width:100%;min-height:64px;resize:vertical;border:1px solid var(--line);border-radius:10px;padding:8px 10px;background:var(--surface);color:var(--ink);font:14px var(--display)}
+.comform textarea:focus{outline:2px solid var(--rosa);outline-offset:1px}
+.comform button{align-self:flex-end;border:0;border-radius:999px;background:var(--violeta);color:#fff;padding:6px 16px;font:700 13px var(--display);cursor:pointer}
+.comform button:disabled{opacity:.5;cursor:default}
+.comerr{font-size:12px;color:var(--no)}
+.viewer{font-size:13px;color:var(--muted)}
+.thumb img.loading{background:var(--line);min-width:120px}
+.denied{max-width:520px;margin:15vh auto 0;text-align:center;display:flex;flex-direction:column;gap:12px}
+.denied b{font-family:var(--pixel);color:var(--rosa);font-weight:400}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <div class="brand">
+      <small>s(a) · Ailén Sampó · @ailensampo</small>
+      <h1>Calendario de contenido</h1>
+      <span class="meta" id="meta">Cargando piezas…</span>
+    </div>
+    <div class="legend" aria-label="Estados">
+      <span class="st listo">Listo</span><span class="st en-proceso">En proceso</span><span class="st falta">Falta material</span>
+    </div>
+  </header>
+
+  <nav class="filters" aria-label="Filtros">
+    <div class="row" id="fWeeks" role="group" aria-label="Semana"></div>
+    <div class="row" id="fTypes" role="group" aria-label="Tipo"></div>
+  </nav>
+
+  <main id="main"><p class="nores">Cargando el calendario…</p></main>
+</div>
+
+<div class="lb" id="lb" hidden role="dialog" aria-modal="true" aria-label="Imagen ampliada">
+  <div class="ctl"><button type="button" id="lbClose">Cerrar</button></div>
+  <img id="lbImg" alt="">
+  <div class="nav"><button type="button" id="lbPrev">‹ Anterior</button><span class="count" id="lbCount"></span><button type="button" id="lbNext">Siguiente ›</button></div>
+</div>
+
+<script>
+(function(){
+  // Acceso: /calendario/<link> (persona invitada) · #t=<link> (local) · #s=<sesión del ERP> (Ailén, abierto desde el ERP)
+  const hash=new URLSearchParams(location.hash.slice(1));
+  const pathTok=(location.pathname.match(/^\/calendario\/([A-Za-z0-9_-]{16,64})\/?$/)||[])[1]||"";
+  const VIEW_TOKEN=hash.get("t")||pathTok;
+  const SESSION=hash.get("s")||"";
+  if(hash.has("s")||hash.has("t")) history.replaceState(null,"",location.pathname); // no dejar credenciales en la barra
+  const AUTH=SESSION?{Authorization:"Bearer "+SESSION}:VIEW_TOKEN?{"x-cal-token":VIEW_TOKEN}:null;
+
+  const TYPES={post:"Post",carrusel:"Carrusel",historia:"Historia",reel:"Reel"};
+  const DAYS=["dom","lun","mar","mié","jue","vie","sáb"];
+  const MONTHS=["ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic"];
+  let data=null, comentarios=[], viewer=null, week="todas", type="todos";
+  try{const s=JSON.parse(localStorage.getItem("cal-sa-filtros")||"{}"); if(s.week)week=s.week; if(s.type)type=s.type;}catch(e){}
+
+  const $=id=>document.getElementById(id);
+  const el=(tag,cls,text)=>{const n=document.createElement(tag); if(cls)n.className=cls; if(text!=null)n.textContent=text; return n;};
+
+  function denied(msg){
+    document.querySelector(".wrap").textContent="";
+    const d=el("div","denied"); d.append(el("b",null,"s(a) · calendario"), el("h1",null,"No pudimos abrir el calendario"), el("p","meta",msg));
+    document.querySelector(".wrap").append(d);
+  }
+  if(!AUTH){ denied("Este link no es válido. Pedile a Ailén uno nuevo."); return; }
+
+  // Imágenes: se piden con el link (no son públicas) y se muestran desde memoria.
+  const imgCache=new Map();
+  function imgUrl(f){
+    if(!imgCache.has(f)) imgCache.set(f, fetch("/api/calendario/img?f="+encodeURIComponent(f),{headers:AUTH})
+      .then(r=>{if(!r.ok)throw new Error(r.status);return r.blob();}).then(b=>URL.createObjectURL(b)));
+    return imgCache.get(f);
+  }
+
+  function fmtDate(p){
+    if(!p.fecha) return "Sin fecha";
+    const [y,m,d]=p.fecha.split("-").map(Number); const dt=new Date(y,m-1,d);
+    return `${DAYS[dt.getDay()]} ${d} ${MONTHS[m-1]}${p.hora?" · "+p.hora.replace(":00","")+" h":""}`;
+  }
+  function fmtWhen(iso){const d=new Date(iso); return `${d.getDate()} ${MONTHS[d.getMonth()]} · ${String(d.getHours()).padStart(2,"0")}:${String(d.getMinutes()).padStart(2,"0")}`;}
+  function save(){try{localStorage.setItem("cal-sa-filtros",JSON.stringify({week,type}));}catch(e){}}
+
+  function filters(){
+    const fw=$("fWeeks"), ft=$("fTypes"); fw.textContent=""; ft.textContent="";
+    const wopts=[["todas","Todas las semanas"],...data.semanas.map(s=>[s.id,s.id==="banco"?"Banco de piezas":`${s.nombre} · ${s.rango}`])];
+    wopts.forEach(([id,label])=>{const b=el("button","fbtn",label); b.type="button"; b.setAttribute("aria-pressed",String(week===id)); b.onclick=()=>{week=id;save();filters();render();}; fw.append(b);});
+    [["todos","Todos los tipos"],...Object.entries(TYPES)].forEach(([id,label])=>{const b=el("button","fbtn",label); b.type="button"; b.setAttribute("aria-pressed",String(type===id)); b.onclick=()=>{type=id;save();filters();render();}; ft.append(b);});
+  }
+
+  function comBlock(p){
+    const box=el("div","coms");
+    const list=comentarios.filter(c=>c.pieza_id===p.id);
+    box.append(el("h4",null,list.length?`COMENTARIOS (${list.length})`:"COMENTARIOS"));
+    list.forEach(c=>{
+      const isAilen=c.autor==="Ailén";
+      const it=el("div","com"+(isAilen?" ailen":viewer&&c.autor===viewer.nombre?" mine":"")+(c.resuelto?" done":""));
+      const who=el("div","who"); who.append(el("span",null,c.autor)); const tm=el("time",null,fmtWhen(c.created_at)); tm.dateTime=c.created_at; who.append(tm);
+      it.append(who, document.createTextNode(c.texto));
+      if(c.resuelto){it.append(el("div","ok","✓ resuelto"));}
+      box.append(it);
+    });
+    const form=el("form","comform");
+    const ta=el("textarea"); ta.placeholder="Dejá un comentario sobre esta pieza…"; ta.maxLength=1000; ta.setAttribute("aria-label",`Comentario sobre ${p.titulo}`);
+    const btn=el("button",null,"Comentar"); btn.type="submit";
+    const err=el("div","comerr"); err.hidden=true;
+    form.append(ta,btn,err);
+    form.onsubmit=async e=>{
+      e.preventDefault(); const texto=ta.value.trim(); if(!texto) return;
+      btn.disabled=true; err.hidden=true;
+      try{
+        const r=await fetch("/api/calendario/comentarios",{method:"POST",headers:{...AUTH,"Content-Type":"application/json"},body:JSON.stringify({piezaId:p.id,texto})});
+        const d=await r.json().catch(()=>({}));
+        if(!r.ok) throw new Error(d.error||"No se pudo guardar.");
+        comentarios.push(d.comentario); box.replaceWith(comBlock(p));
+      }catch(ex){err.textContent=ex.message; err.hidden=false; btn.disabled=false;}
+    };
+    box.append(form);
+    return box;
+  }
+
+  function card(p){
+    const c=el("article","card"); c.id="p-"+p.id;
+    const bar=el("div","bar"); const dots=el("div","dots"); dots.append(el("i"),el("i"),el("i"));
+    bar.append(dots, el("span","when",fmtDate(p))); c.append(bar);
+
+    if(p.imagenes&&p.imagenes.length){
+      const strip=el("div","strip"+(p.imagenes.length===1?" single":""));
+      p.imagenes.forEach((src,i)=>{
+        const b=el("button","thumb"); b.type="button"; b.setAttribute("aria-label",`Ver imagen ${i+1} de ${p.imagenes.length}: ${p.titulo}`);
+        const im=new Image(); im.alt=`${p.titulo} (${i+1}/${p.imagenes.length})`; im.className="loading";
+        im.style.height=p.formato==="9:16"?"260px":"230px";
+        imgUrl(src).then(u=>{im.src=u; im.className="";}).catch(()=>{im.alt="No se pudo cargar la imagen";});
+        b.append(im); b.onclick=()=>openLb(p.imagenes,i,p.titulo); strip.append(b);
+      });
+      c.append(strip);
+    } else {
+      const e=el("div","empty"); e.append(el("b",null,"Sin imagen todavía")); e.append(el("span",null,p.estadoTexto||"")); c.append(e);
+    }
+
+    const body=el("div","body");
+    const pills=el("div","pills");
+    pills.append(el("span","pill t-"+p.tipo,TYPES[p.tipo]||p.tipo));
+    if(p.formato) pills.append(el("span","pill",p.formato));
+    pills.append(el("span","st "+p.estado,p.estadoTexto||p.estado));
+    body.append(pills, el("h3",null,p.titulo));
+    if(p.pilar) body.append(el("div","pilar","Pilar: "+p.pilar));
+
+    if(p.copy){
+      const head=el("div","copyhead"); head.append(el("span",null,p.tipo==="reel"||p.tipo==="historia"?"TEXTO":"CAPTION"));
+      const cb=el("button","copybtn","Copiar"); cb.type="button";
+      const box=el("div","copy",p.copy);
+      cb.onclick=()=>{
+        const done=()=>{cb.textContent="Copiado"; setTimeout(()=>cb.textContent="Copiar",1600);};
+        try{navigator.clipboard.writeText(p.copy).then(done,()=>selectText(box));}catch(e){selectText(box);}
+      };
+      head.append(cb); body.append(head, box);
+      if(p.copy.length>260){const m=el("button","more","Ver completo"); m.type="button"; m.onclick=()=>{box.classList.toggle("open"); m.textContent=box.classList.contains("open")?"Ver menos":"Ver completo";}; body.append(m);}
+    }
+    if(p.notas) body.append(el("div","notas",p.notas));
+    if(p.canva){const l=el("div","links"); const a=el("a",null,"Abrir en Canva →"); a.href=p.canva; a.target="_blank"; a.rel="noopener"; l.append(a); body.append(l);}
+    body.append(comBlock(p));
+    c.append(body);
+    return c;
+  }
+  function selectText(n){const r=document.createRange(); r.selectNodeContents(n); const s=getSelection(); s.removeAllRanges(); s.addRange(r);}
+
+  function render(){
+    const main=$("main"); main.textContent="";
+    let shown=0;
+    data.semanas.forEach(s=>{
+      if(week!=="todas"&&week!==s.id) return;
+      const items=data.piezas.filter(p=>p.semana===s.id&&(type==="todos"||p.tipo===type)).sort((a,b)=>(a.fecha||"9").localeCompare(b.fecha||"9"));
+      if(!items.length) return;
+      const sec=el("section","week"); sec.id=s.id;
+      const h=el("div","whead"); h.append(el("span","tag",s.id==="banco"?"BANCO":s.nombre.toUpperCase()), el("h2",null,s.tema), el("span","rango",s.rango), el("p",null,s.bajada));
+      const g=el("div","grid"); items.forEach(p=>g.append(card(p)));
+      sec.append(h,g); main.append(sec); shown+=items.length;
+    });
+    if(!shown) main.append(el("p","nores","No hay piezas con ese filtro."));
+  }
+
+  let lbList=[],lbI=0,lbLast=null;
+  function openLb(list,i,title){lbList=list;lbI=i;lbLast=document.activeElement;$("lbImg").alt=title;showLb();$("lb").hidden=false;$("lbClose").focus();}
+  function showLb(){imgUrl(lbList[lbI]).then(u=>$("lbImg").src=u); $("lbCount").textContent=`${lbI+1} / ${lbList.length}`; const many=lbList.length>1; $("lbPrev").hidden=!many; $("lbNext").hidden=!many;}
+  function closeLb(){$("lb").hidden=true; if(lbLast)lbLast.focus();}
+  $("lbClose").onclick=closeLb;
+  $("lbPrev").onclick=()=>{lbI=(lbI-1+lbList.length)%lbList.length;showLb();};
+  $("lbNext").onclick=()=>{lbI=(lbI+1)%lbList.length;showLb();};
+  $("lb").addEventListener("click",e=>{if(e.target.id==="lb")closeLb();});
+  document.addEventListener("keydown",e=>{if($("lb").hidden)return; if(e.key==="Escape")closeLb(); if(e.key==="ArrowRight")$("lbNext").click(); if(e.key==="ArrowLeft")$("lbPrev").click();});
+
+  fetch("/api/calendario/data",{headers:AUTH,cache:"no-store"}).then(async r=>{
+    const d=await r.json().catch(()=>({}));
+    if(r.status===401) throw Object.assign(new Error(d.error||"Este link no es válido o fue desactivado."),{denied:true});
+    if(!r.ok) throw new Error(d.error||"No se pudo cargar.");
+    return d;
+  }).then(d=>{
+    data=d.calendario; comentarios=d.comentarios||[]; viewer=d.viewer;
+    if(!data.semanas.some(s=>s.id===week)) week="todas";
+    const total=data.piezas.length, listas=data.piezas.filter(p=>p.estado==="listo").length;
+    const [y,m,dd]=data.actualizado.split("-").map(Number);
+    $("meta").textContent=`${total} piezas · ${listas} listas · actualizado el ${dd} de ${MONTHS[m-1]}`;
+    const v=el("span","viewer",viewer.admin?"Viendo como Ailén (tus comentarios los ve todo el equipo)":`Hola, ${viewer.nombre}. Podés comentar cada pieza; Ailén lee todo.`);
+    $("meta").after(v);
+    filters(); render();
+  }).catch(ex=>{
+    if(ex.denied) return denied(ex.message+" Pedile a Ailén uno nuevo.");
+    $("main").textContent=""; $("main").append(el("p","nores",ex.message||"No se pudo cargar el calendario. Recargá la página.")); $("meta").textContent="";
+  });
+})();
+</script>
+
+</body>
+</html>
