@@ -103,8 +103,10 @@
       "titulo": "Encuesta: ¿qué tarea te roba más tiempo?",
       "pilar": "Escuchar",
       "estado": "listo",
-      "estadoTexto": "Texto listo · se sube a mano",
-      "imagenes": [],
+      "estadoTexto": "Publicada · a mano",
+      "imagenes": [
+        "img/historia-encuesta.png"
+      ],
       "formato": "9:16",
       "copy": "Texto: \"Esta semana te mostré cómo se resuelven las respuestas infinitas. ¿Cuál sigue?\"\nEncuesta: ¿Qué tarea te roba más tiempo?\nCobros que demoran / Clientes que se pierden / Reuniones sin control / Plantillas que nadie ve",
       "notas": "Fondo lila liso desde Instagram. La opción más votada adelanta su carrusel."
