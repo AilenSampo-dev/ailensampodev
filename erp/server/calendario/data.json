@@ -157,14 +157,18 @@
       "fecha": "2026-11-03",
       "hora": "19:00",
       "tipo": "carrusel",
-      "titulo": "Te lo demuestro #2 · tema que gane la encuesta",
+      "titulo": "Te lo demuestro #2 · Cobros que demoran",
       "pilar": "1 · Nombrar lo invisible",
-      "estado": "en-proceso",
-      "estadoTexto": "Por armar · tema según encuesta",
-      "imagenes": [],
+      "estado": "listo",
+      "estadoTexto": "Listo · pasar a Nunito y programar en Business Suite",
+      "imagenes": [
+        "img/carrusel2-s1.png",
+        "img/carrusel2-s2.png"
+      ],
       "formato": "4:5",
-      "copy": "",
-      "notas": "No repetir WhatsApp. Textos con 100 px de margen en los bordes."
+      "copy": "Perseguir pagos que no llegan.\n\"¿Me pasás el alias?\" \"Te pago el viernes.\" Y el viernes pasa.\n\nNo es que tus clientas sean malas pagadoras. Es que el seguimiento depende de que vos te acuerdes.\n\nUn sistema lo ordena así:\n→ Un aviso sale solo antes del vencimiento.\n→ El link de pago va en el mismo mensaje.\n→ Sabés quién pagó, quién debe y desde cuándo.\n\nVos dejás de ser la cobradora del negocio.\n\nEs la segunda de la serie: cada semana, una tarea que roba tiempo y cómo se resuelve. La tuya la podés escribir en ailensampo.com.\n\n#sistemasamedida #emprendedorasargentinas #automatizacion #cobros #cordoba",
+      "notas": "No repetir WhatsApp. Textos con 100 px de margen en los bordes.",
+      "canva": "https://www.canva.com/d/NQb_hOOFrpTzFLi"
     },
     {
       "id": "historia-coffee",
@@ -174,12 +178,15 @@
       "tipo": "historia",
       "titulo": "Les presento a Coffee",
       "pilar": "3 · Detrás del sistema",
-      "estado": "falta",
-      "estadoTexto": "Falta foto de Coffee · 2 historias",
-      "imagenes": [],
+      "estado": "listo",
+      "estadoTexto": "Listo · a mano",
+      "imagenes": [
+        "img/coffee-1.png",
+        "img/coffee-2.png"
+      ],
       "formato": "9:16",
       "copy": "Historia 1 (Coffee en primer plano): \"Les presento a Coffee. Nueva integrante del equipo. En una casa de mate, obvio que se iba a llamar así.\"\nHistoria 2 (la misma foto más lejos, o Coffee durmiendo): \"Todavía no sabe nada de sistemas. Pero ya entendió lo más importante: dormir mientras todo funciona.\"",
-      "notas": "Idea de Eliana: dividir en 2 historias. Coffee va a ser personaje recurrente."
+      "notas": "Armadas con cuadros del video del 26/10 (Coffee durmiendo). Si sacás una foto de Coffee despierta, la cambio en la primera."
     },
     {
       "id": "post-post-it",
@@ -403,9 +410,10 @@
       "titulo": "Secuencia: mi cliente más exigente",
       "pilar": "3 · Detrás del sistema",
       "estado": "listo",
-      "estadoTexto": "Texto listo · a mano",
+      "estadoTexto": "Listo · a mano · la 3ª es el repost del reel",
       "imagenes": [
-        "img/reel-exigente-4.png"
+        "img/seq-1.png",
+        "img/seq-2.png"
       ],
       "formato": "9:16",
       "copy": "Historia 1: \"Hace unos días les mostré a mi cliente más exigente: mi hijo. Sabe exactamente lo que quiere, me lo pide y se enoja si no sale. Hasta en mi rato de mamá estoy programando.\"\nHistoria 2: \"¿Qué tiene que ver con mi trabajo? Todo. Lo primero que hago es escucharte, entender qué necesitás y armar algo que te sirva a vos, no algo genérico.\"\nHistoria 3: repost del reel + \"Acá está el reel en cuestión (dale amor, que mi cliente se enoja 😂).\"",
