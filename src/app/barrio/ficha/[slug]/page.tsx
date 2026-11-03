@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { NOMBRE_BARRIO } from "../../constants";
 import Header, { Footer, IconoWhatsApp } from "../../Header";
 import { FICHAS, PORTADAS, linkWhatsApp } from "../../data";
 import Galeria from "./Galeria";
@@ -16,7 +17,7 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const f = FICHAS.find((x) => x.slug === slug);
-  return { title: f ? `${f.nombre} — Directorio del barrio` : "Directorio del barrio" };
+  return { title: f ? `${f.nombre} — ${NOMBRE_BARRIO}` : NOMBRE_BARRIO };
 }
 
 export default async function FichaPage({ params }: Props) {

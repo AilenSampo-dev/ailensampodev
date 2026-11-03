@@ -1,14 +1,15 @@
 import Link from "next/link";
+import { NOMBRE_BARRIO } from "./constants";
 import styles from "./barrio.module.css";
 
-export const NOMBRE_BARRIO = "[NOMBRE DEL BARRIO]";
+export { NOMBRE_BARRIO };
 
 export default function Header() {
   return (
     <header className={styles.header}>
       <div className={`${styles.container} ${styles.headerInner}`}>
         <Link href="/barrio" className={styles.brand}>
-          <span className={`${styles.brandMark} ${styles.pixel}`} aria-hidden="true">B</span>
+          <span className={`${styles.brandMark} ${styles.pixel}`} aria-hidden="true">U</span>
           Hecho en {NOMBRE_BARRIO}
         </Link>
         <nav className={styles.nav} aria-label="Directorio">
