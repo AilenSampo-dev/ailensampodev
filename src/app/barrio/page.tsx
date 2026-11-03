@@ -16,7 +16,9 @@ export default function BarrioPage() {
             <div className={styles.step}>
               <span className={`${styles.stepNum} ${styles.pixel}`}>01</span>
               <h3 className={styles.stepTitle}>Buscás por rubro o palabra</h3>
-              <p className={styles.stepText}>Sin entrar a cinco grupos ni preguntar &quot;¿alguien conoce…?&quot;.</p>
+              <p className={styles.stepText}>
+                Lo mismo que en los grupos de WhatsApp, pero ordenado: buscás rubro o palabra y aparece al toque.
+              </p>
             </div>
             <div className={styles.step}>
               <span className={`${styles.stepNum} ${styles.pixel}`}>02</span>
@@ -38,7 +40,9 @@ export default function BarrioPage() {
         <div className={styles.sumate}>
           <div className={styles.sumateText}>
             <h2 className={styles.h2}>¿Vendés o hacés algo en el barrio?</h2>
-            <p>Cargalo una vez y que te encuentren cuando te necesitan, no cuando tu foto quedó enterrada en el grupo.</p>
+            <p>
+              Cargalo una vez y que te encuentren cuando te necesitan, también quien se sumó tarde al chat o no alcanzó a ver tu mensaje en el grupo.
+            </p>
           </div>
           <div className={styles.sumateCard}>
             <p>Tu ficha con fotos, horarios, entrega y formas de pago. Lista en 5 minutos, desde el celu.</p>

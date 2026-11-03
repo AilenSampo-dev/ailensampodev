@@ -31,7 +31,9 @@ export default function Directorio() {
         <div className={styles.heroInner}>
           <span className={`${styles.pill} ${styles.pixel}`}>{FICHAS.length} emprendimientos de vecinos</span>
           <h1 className={styles.h1}>Lo que buscás ya está en el barrio. Ahora también se encuentra.</h1>
-          <p className={styles.lead}>Todos los emprendimientos de los grupos de WhatsApp, ordenados por rubro. Sin scrollear mil fotos.</p>
+          <p className={styles.lead}>
+            Lo que ya compartimos en los grupos de vecinos, ordenado por rubro: para encontrarlo al toque y seguir recomendando entre todos.
+          </p>
           <form className={styles.searchBox} role="search" onSubmit={(e) => e.preventDefault()}>
             <label htmlFor="buscar" className={styles.srOnly}>Buscar en el directorio</label>
             <input

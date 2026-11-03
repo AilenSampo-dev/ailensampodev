@@ -29,6 +29,15 @@
   color: inherit;
 }
 
+/* .wrap a { color: inherit } pisa .btnDark; el texto quedaba violeta sobre violeta */
+.wrap .btnDark {
+  color: var(--b-white);
+}
+
+.wrap .btnOutline {
+  color: var(--b-ink);
+}
+
 .pixel {
   font-family: var(--font-pixel), ui-monospace, monospace;
 }
