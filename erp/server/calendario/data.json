@@ -30,6 +30,13 @@
       "bajada": "Invitar a pensarlo para el propio negocio."
     },
     {
+      "id": "s5",
+      "nombre": "Semana 5",
+      "rango": "23/11 – 29/11",
+      "tema": "Por definir",
+      "bajada": "Se arma el lunes 23/11."
+    },
+    {
       "id": "banco",
       "nombre": "Banco",
       "rango": "Sin fecha",
@@ -236,12 +243,16 @@
       "tipo": "carrusel",
       "titulo": "Te lo demuestro #3 · Clientes que se pierden",
       "pilar": "1 · Nombrar lo invisible",
-      "estado": "en-proceso",
-      "estadoTexto": "Por armar",
-      "imagenes": [],
+      "estado": "listo",
+      "estadoTexto": "Listo · publicar a mano mar 19 h",
+      "imagenes": [
+        "img/carrusel3-s1.png",
+        "img/carrusel3-s2.png"
+      ],
       "formato": "4:5",
-      "copy": "",
-      "notas": ""
+      "copy": "Clientas que compraron una vez y no volvieron.\nNo porque no les gustó. Porque nadie se acordó de escribirles.\n\nEn un negocio chico eso depende de tu memoria. Y tu memoria está ocupada en mil cosas.\n\nUn sistema lo ordena así:\n→ Guarda cada compra: quién, qué y cuándo.\n→ Te avisa quién dejó de venir.\n→ Le escribe con tu tono, en el momento justo.\n\nLa clienta que vuelve vale más que la que tenés que salir a buscar.\n\nEs la tercera de la serie: cada semana, una tarea que roba tiempo y cómo se resuelve. La tuya la podés escribir en ailensampo.com.\n\n#sistemasamedida #emprendedorasargentinas #automatizacion #clientes #cordoba",
+      "notas": "Títulos de tarjetas en la tipografía del sitio (excepción de la serie).",
+      "canva": "https://www.canva.com/d/zQvD7Or1fQUQUkU"
     },
     {
       "id": "caso-real",
@@ -363,16 +374,16 @@
       "id": "ej-silencio",
       "semana": "s3",
       "tipo": "post",
-      "titulo": "Post reflexivo: por qué hago lo que hago",
+      "titulo": "Lo que construyo, en realidad, es tiempo",
       "pilar": "4 · Frase ancla",
-      "estado": "en-proceso",
-      "estadoTexto": "Falta frase y caption",
+      "estado": "listo",
+      "estadoTexto": "Listo · revisar caption y publicar a mano sáb 12 h",
       "imagenes": [
-        "img/ej-silencio.png"
+        "img/post-tiempo.png"
       ],
       "formato": "4:5",
-      "canva": "https://www.canva.com/d/kWoDWbDJVZVGca3",
-      "copy": "",
+      "canva": "https://www.canva.com/d/5z1KYqAYagiyfF5",
+      "copy": "¿Por qué hago lo que hago?\n\nPorque vi demasiadas emprendedoras con un negocio que funciona… y sin un minuto para pensarlo. Respondiendo lo mismo diez veces, persiguiendo pagos, anotando pedidos donde se pueda.\n\nNo les falta talento. Les falta tiempo.\n\nUn sistema no te hace correr más rápido. Te devuelve esos minutos en silencio donde aparecen las ideas.\n\nEso es lo que construyo.\n\n#sistemasamedida #emprendedorasargentinas #calidaddevida #cordoba",
       "notas": "Idea de Eliana: cambiar la frase de la imagen por una breve y desarrollar en el caption por qué hacés lo que hacés. Sábado al mediodía.",
       "fecha": "2026-11-14",
       "hora": "12:00"
@@ -467,12 +478,16 @@
       "tipo": "historia",
       "titulo": "Secuencia: detrás del reel del mate",
       "pilar": "3 · Detrás del sistema",
-      "estado": "en-proceso",
-      "estadoTexto": "Por armar",
-      "imagenes": [],
+      "estado": "listo",
+      "estadoTexto": "Listo · a mano",
+      "imagenes": [
+        "img/historias-mate-1.png",
+        "img/historias-mate-2.png"
+      ],
       "formato": "9:16",
-      "copy": "",
-      "notas": "2–3 historias ampliando el reel del domingo + repost."
+      "copy": "Historia 1 (escritorio): «Así arranca cada sistema: mate, cuaderno y muchas preguntas.»\nHistoria 2 (tipeando): «Las horas de flujos y pruebas no se ven. Por eso después todo anda solo.»\nHistoria 3: repost del reel del mate + «Por si te lo perdiste 👇»",
+      "notas": "2–3 historias ampliando el reel del domingo + repost.",
+      "canva": "https://www.canva.com/d/3mJJCOea_kKkpLb"
     },
     {
       "id": "historias-pov",
@@ -488,6 +503,24 @@
       "formato": "9:16",
       "copy": "",
       "notas": "2–3 historias + repost del reel. Va el miércoles después del POV (25/11)."
+    },
+    {
+      "id": "reel-humor",
+      "semana": "s5",
+      "fecha": "2026-11-29",
+      "hora": "19:00",
+      "tipo": "reel",
+      "titulo": "Humor: «solo necesito una web»",
+      "pilar": "1 · Nombrar lo invisible",
+      "estado": "listo",
+      "estadoTexto": "Listo · Nunito + texto de abajo a los 2 s",
+      "imagenes": [
+        "img/reel-humor.png"
+      ],
+      "formato": "9:16",
+      "canva": "https://www.canva.com/d/opn_bySGgd69u6p",
+      "copy": "Textos en pantalla:\nCuando me dicen: «es algo simple, solo necesito una web»\nY yo ya veo los 47 WhatsApp, la planilla y los cobros anotados en un cuaderno.\n\nCaption:\nNunca es «solo una web». Es todo lo que pasa antes de que alguien te compre… y después.\nPor eso primero pregunto. Y después construyo.\n\n#sistemasamedida #emprendedorasargentinas #humoremprendedor #cordoba",
+      "notas": "Video recortado por Ailén (solo la parte de la cara). El reel POV del 22/11 no repite esa parte."
     }
   ]
 }
