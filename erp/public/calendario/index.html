@@ -91,6 +91,8 @@ section.week{padding-block:28px 8px;display:flex;flex-direction:column;gap:16px}
 .lb .ctl{position:absolute;top:calc(12px + env(safe-area-inset-top,0px));right:calc(12px + env(safe-area-inset-right,0px));display:flex;gap:8px}
 .lb button{background:#fff;color:#2a1650;border:0;border-radius:999px;padding:8px 14px;font:700 14px var(--display);cursor:pointer}
 .lb .nav{position:absolute;bottom:calc(16px + env(safe-area-inset-bottom,0px));left:0;right:0;display:flex;justify-content:center;gap:10px}
+.dlbtn{display:block;margin:8px 12px 0;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:8px;padding:6px 12px;font:700 13px var(--display);cursor:pointer}
+.dlbtn:focus-visible{outline:2px solid var(--rosa);outline-offset:2px}
 .lb .count{color:#fff;font-family:var(--pixel);font-size:12px;align-self:center}
 @media (prefers-reduced-motion:no-preference){.card{transition:transform .15s ease}.card:hover{transform:translateY(-2px)}}
 /* Comentarios (ERP) */
@@ -136,7 +138,7 @@ section.week{padding-block:28px 8px;display:flex;flex-direction:column;gap:16px}
 </div>
 
 <div class="lb" id="lb" hidden role="dialog" aria-modal="true" aria-label="Imagen ampliada">
-  <div class="ctl"><button type="button" id="lbClose">Cerrar</button></div>
+  <div class="ctl"><button type="button" id="lbDl">Descargar</button><button type="button" id="lbClose">Cerrar</button></div>
   <img id="lbImg" alt="">
   <div class="nav"><button type="button" id="lbPrev">‹ Anterior</button><span class="count" id="lbCount"></span><button type="button" id="lbNext">Siguiente ›</button></div>
 </div>
@@ -173,6 +175,11 @@ section.week{padding-block:28px 8px;display:flex;flex-direction:column;gap:16px}
     if(!imgCache.has(f)) imgCache.set(f, fetch("/api/calendario/img?f="+encodeURIComponent(f),{headers:AUTH})
       .then(r=>{if(!r.ok)throw new Error(r.status);return r.blob();}).then(b=>URL.createObjectURL(b)));
     return imgCache.get(f);
+  }
+
+  async function download(f){
+    try{const u=await imgUrl(f); const a=document.createElement("a"); a.href=u; a.download=f.split("/").pop(); document.body.append(a); a.click(); a.remove();}
+    catch(e){console.error("No se pudo descargar",f,e);}
   }
 
   function fmtDate(p){
@@ -236,6 +243,9 @@ section.week{padding-block:28px 8px;display:flex;flex-direction:column;gap:16px}
         b.append(im); b.onclick=()=>openLb(p.imagenes,i,p.titulo); strip.append(b);
       });
       c.append(strip);
+      const db=el("button","dlbtn",p.imagenes.length>1?`Descargar las ${p.imagenes.length} imágenes`:"Descargar imagen"); db.type="button";
+      db.onclick=async()=>{for(const f of p.imagenes){await download(f);await new Promise(r=>setTimeout(r,400));}};
+      c.append(db);
     } else {
       const e=el("div","empty"); e.append(el("b",null,"Sin imagen todavía")); e.append(el("span",null,p.estadoTexto||"")); c.append(e);
     }
@@ -287,6 +297,7 @@ section.week{padding-block:28px 8px;display:flex;flex-direction:column;gap:16px}
   function showLb(){imgUrl(lbList[lbI]).then(u=>$("lbImg").src=u); $("lbCount").textContent=`${lbI+1} / ${lbList.length}`; const many=lbList.length>1; $("lbPrev").hidden=!many; $("lbNext").hidden=!many;}
   function closeLb(){$("lb").hidden=true; if(lbLast)lbLast.focus();}
   $("lbClose").onclick=closeLb;
+  $("lbDl").onclick=()=>download(lbList[lbI]);
   $("lbPrev").onclick=()=>{lbI=(lbI-1+lbList.length)%lbList.length;showLb();};
   $("lbNext").onclick=()=>{lbI=(lbI+1)%lbList.length;showLb();};
   $("lb").addEventListener("click",e=>{if(e.target.id==="lb")closeLb();});
