@@ -1,5 +1,5 @@
 {
-  "actualizado": "2026-11-02",
+  "actualizado": "2026-11-04",
   "semanas": [
     {
       "id": "s1",
@@ -257,9 +257,9 @@
     },
     {
       "id": "reel-escapa-caos",
-      "semana": "s4",
-      "fecha": "2026-11-22",
-      "hora": "19:00",
+      "semana": "banco",
+      "fecha": null,
+      "hora": null,
       "tipo": "reel",
       "titulo": "Escapá del caos (juego del sitio)",
       "pilar": "Alcance",
@@ -268,7 +268,7 @@
       "imagenes": [],
       "formato": "9:16",
       "copy": "Cierre: \"Probalo en ailensampo.com\"",
-      "notas": "Grabación de pantalla jugando el juego del sitio. Alternativa: reel \"Detrás de una respuesta automática\" (flujo por dentro + voz en off, grabado en el entorno de prueba), idea de Eliana."
+      "notas": "Grabación de pantalla jugando el juego del sitio. Alternativa: reel \"Detrás de una respuesta automática\" (flujo por dentro + voz en off, grabado en el entorno de prueba), idea de Eliana. Pasa al banco: el 22/11 va el POV."
     },
     {
       "id": "carrusel-4",
@@ -286,6 +286,23 @@
       "notas": ""
     },
     {
+      "id": "historias-sofia",
+      "semana": "s4",
+      "fecha": "2026-11-18",
+      "hora": "13:00",
+      "tipo": "historia",
+      "titulo": "Secuencia: después del reel de Sofía",
+      "pilar": "2 · Caso real",
+      "estado": "listo",
+      "estadoTexto": "Listo · a mano",
+      "imagenes": [
+        "img/historia-sofia-wa.png"
+      ],
+      "formato": "9:16",
+      "copy": "Historia 1: captura del WhatsApp + «Esto me llegó después de la revisión de su sistema 🤍»\nHistoria 2: «Lo que más me gusta de construir a medida: el sistema se va pareciendo a quien lo usa.»\nHistoria 3: repost del reel + sticker de link a ailensampo.com",
+      "notas": "Reemplaza la secuencia del POV, que pasa al 25/11."
+    },
+    {
       "id": "post-como-trabajo",
       "semana": "s4",
       "fecha": "2026-11-21",
@@ -301,9 +318,29 @@
       "notas": "Pasa al sábado al mediodía. Degradé naranja→amarillo."
     },
     {
-      "id": "reel-pov",
+      "id": "reel-sofia",
       "semana": "s3",
       "fecha": "2026-11-15",
+      "hora": "19:00",
+      "tipo": "reel",
+      "titulo": "Caso real: la revisión con Sofía",
+      "pilar": "2 · Caso real",
+      "estado": "listo",
+      "estadoTexto": "Video listo · sumar música suave en Edits/IG",
+      "imagenes": [
+        "img/reel-sofia-1.jpg",
+        "img/reel-sofia-8.jpg",
+        "img/reel-sofia-16.jpg",
+        "img/reel-sofia-195.jpg"
+      ],
+      "formato": "9:16",
+      "copy": "Textos en pantalla:\nRevisión con una clienta. Me pedía ajustes… y llegó a esta parte:\n«Esto todavía no lo he visto. Lo estoy abriendo por primera vez, en vivo.»\n«¡Ay, lo separaste! No, sos crack.»\n«¿Qué carajos? Y acá me pusiste un preview. ¡Dale!»\n«Y el resto me parece increíble.»\nY después me escribió esto: [captura WhatsApp]\nUn sistema a medida no se entrega. Se construye con vos.\n\nCaption:\nSesión de revisión con Sofi. Me iba marcando ajustes, pantalla por pantalla. Y en un momento llegó a una parte que todavía no había visto.\n\nAsí trabajo: no te entrego algo cerrado. Lo vamos ajustando juntas hasta que el sistema se parezca a cómo trabajás vos.\n\nGracias, Sofi, por dejarme mostrarlo 🤍 [@ de Sofía]\n\n#sistemasamedida #emprendedoras #casoreal #automatizacion #cordoba",
+      "notas": "Permiso de Sofía confirmado (sin su cara). Video: reel-sofia.mp4 (te lo pasé por el chat). Sin datos de sus clientas en pantalla. Pedile que lo comparta o colaboración en IG."
+    },
+    {
+      "id": "reel-pov",
+      "semana": "s4",
+      "fecha": "2026-11-22",
       "hora": "19:00",
       "tipo": "reel",
       "titulo": "POV: tu negocio ya tiene sistema",
@@ -317,7 +354,7 @@
       ],
       "formato": "9:16",
       "copy": "Voz en off:\nCuando tu negocio tiene sistema…\nno sabés qué hacer con tanto silencio.\n\nLos pedidos entran solos.\nLos mensajes se responden.\nVos pensás la estrategia.\n\nMirás alrededor…\ny hasta Coffee descansa.\n\nEl sistema trabaja. Vos descansás.",
-      "notas": "Cortar 4–5 s. Zoom lento a Coffee entre los peluches con \"Coffee 🐾\" en pantalla. Subtítulos automáticos. Adelantado del 22/11: tiene los ingredientes del reel que mejor funcionó."
+      "notas": "Cortar 4–5 s. Zoom lento a Coffee entre los peluches con \"Coffee 🐾\" en pantalla. Subtítulos automáticos. Adelantado del 22/11: tiene los ingredientes del reel que mejor funcionó. Pasa al 22/11: el 15 va el reel de Sofía."
     },
     {
       "id": "ej-silencio",
@@ -436,9 +473,9 @@
     },
     {
       "id": "historias-pov",
-      "semana": "s4",
-      "fecha": "2026-11-18",
-      "hora": "13:00",
+      "semana": "banco",
+      "fecha": null,
+      "hora": null,
       "tipo": "historia",
       "titulo": "Secuencia: detrás del reel POV con Coffee",
       "pilar": "3 · Detrás del sistema",
@@ -447,7 +484,7 @@
       "imagenes": [],
       "formato": "9:16",
       "copy": "",
-      "notas": "2–3 historias + repost del reel."
+      "notas": "2–3 historias + repost del reel. Va el miércoles después del POV (25/11)."
     }
   ]
 }
