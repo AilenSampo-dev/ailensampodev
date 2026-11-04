@@ -37,6 +37,13 @@
       "bajada": "Se arma el lunes 23/11."
     },
     {
+      "id": "s6",
+      "nombre": "Semana 6",
+      "rango": "30/11 – 6/12",
+      "tema": "Por definir",
+      "bajada": "Se arma el lunes 30/11."
+    },
+    {
       "id": "banco",
       "nombre": "Banco",
       "rango": "Sin fecha",
@@ -521,6 +528,24 @@
       "canva": "https://www.canva.com/d/opn_bySGgd69u6p",
       "copy": "Textos en pantalla:\nCuando me dicen: «es algo simple, solo necesito una web»\nY yo ya veo los 47 WhatsApp, la planilla y los cobros anotados en un cuaderno.\n\nCaption:\nNunca es «solo una web». Es todo lo que pasa antes de que alguien te compre… y después.\nPor eso primero pregunto. Y después construyo.\n\n#sistemasamedida #emprendedorasargentinas #humoremprendedor #cordoba",
       "notas": "Video recortado por Ailén (solo la parte de la cara). El reel POV del 22/11 no repite esa parte."
+    },
+    {
+      "id": "reel-cuboverso",
+      "semana": "s6",
+      "fecha": "2026-12-06",
+      "hora": "19:00",
+      "tipo": "reel",
+      "titulo": "Cuboverso: sus dibujos, sus personajes",
+      "pilar": "3 · Detrás del sistema",
+      "estado": "listo",
+      "estadoTexto": "Listo · sumar música en IG",
+      "imagenes": [
+        "img/reel-augusto-0.jpg",
+        "img/reel-augusto-1.jpg"
+      ],
+      "formato": "9:16",
+      "copy": "Textos en pantalla:\nMi cliente más exigente dibuja sus personajes en papel…\n…y los quiere en su juego.\nCada dibujo, un personaje nuevo.\nÉl imagina. Yo lo hago funcionar.\nCon tu negocio hago lo mismo.\n\nCaption:\nÉl dibuja en papel. Yo construí el juego donde esos dibujos cobran vida.\n\nNo le di una plantilla. Le pregunté qué quería ver, y armé eso.\nCon cada negocio trabajo igual: vos me contás cómo lo imaginás, yo lo hago funcionar.\n\n#sistemasamedida #emprendedorasargentinas #desarrolloamedida #cordoba",
+      "notas": "Video: reel-augusto-cuboverso.mp4 (en tu Descargas y en el chat). Recortado para que no se vea el nombre en la remera ni la cara. Sin audio original: sumar música en IG."
     }
   ]
 }
