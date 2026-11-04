@@ -189,19 +189,22 @@
       "notas": "Armadas con cuadros del video del 26/10 (Coffee durmiendo). Si sacás una foto de Coffee despierta, la cambio en la primera."
     },
     {
-      "id": "post-post-it",
+      "id": "post-3-preguntas",
       "semana": "s2",
       "fecha": "2026-11-07",
       "hora": "12:00",
       "tipo": "post",
-      "titulo": "Así me llega cada negocio / Así lo dejo",
-      "pilar": "2 · Caso real",
-      "estado": "falta",
-      "estadoTexto": "Faltan las fotos post-it",
-      "imagenes": [],
+      "titulo": "Las 3 preguntas (chat)",
+      "pilar": "1 · Nombrar lo invisible",
+      "estado": "listo",
+      "estadoTexto": "Listo · pasar el cierre a Nunito y programar",
+      "imagenes": [
+        "img/post-3-preguntas.png"
+      ],
       "formato": "4:5",
-      "copy": "",
-      "notas": "Pasa al sábado al mediodía. Plan B si no salen las fotos: taza + laptop con \"Lo que no se ve de un sistema son las horas de entender cómo trabaja tu negocio.\""
+      "copy": "Antes de abrir cualquier herramienta, hago preguntas.\nLas respuestas me muestran dónde se está yendo tu tiempo, aunque vos no lo veas.\n\nRespondelas en voz baja. La que más te costó, ahí empieza tu sistema.\n\n#sistemasamedida #emprendedorasargentinas #organizacion #cordoba",
+      "notas": "Reemplaza la idea post-it (descartada). Formato chat: ventana + burbujas + dino escribiendo. Pasar a Nunito la frase de cierre en itálica.",
+      "canva": "https://www.canva.com/d/eIjgPGwi9l_e_vs"
     },
     {
       "id": "reel-mate",
