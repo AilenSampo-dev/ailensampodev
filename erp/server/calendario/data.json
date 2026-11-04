@@ -546,6 +546,40 @@
       "formato": "9:16",
       "copy": "Textos en pantalla:\nMi cliente más exigente dibuja sus personajes en papel…\n…y los quiere en su juego.\nCada dibujo, un personaje nuevo.\nÉl imagina. Yo lo hago funcionar.\nCon tu negocio hago lo mismo.\n\nCaption:\nÉl dibuja en papel. Yo construí el juego donde esos dibujos cobran vida.\n\nNo le di una plantilla. Le pregunté qué quería ver, y armé eso.\nCon cada negocio trabajo igual: vos me contás cómo lo imaginás, yo lo hago funcionar.\n\n#sistemasamedida #emprendedorasargentinas #desarrolloamedida #cordoba",
       "notas": "Video: reel-augusto-cuboverso.mp4 (en tu Descargas y en el chat). Recortado para que no se vea el nombre en la remera ni la cara. Sin audio original: sumar música en IG."
+    },
+    {
+      "id": "historia-video-sitio",
+      "semana": "s3",
+      "fecha": "2026-11-12",
+      "hora": "13:00",
+      "tipo": "historia",
+      "titulo": "Video del sitio: Te lo demuestro",
+      "pilar": "3 · Detrás del sistema",
+      "estado": "listo",
+      "estadoTexto": "Listo · a mano, con música",
+      "imagenes": [
+        "img/video-sitio.jpg"
+      ],
+      "formato": "9:16",
+      "copy": "Video: video-sitio.mp4 (en tu Descargas).\nTextos ya incluidos: «Mi sitio no te explica lo que hago.» «Te lo demuestra.» «Y te deja sentir el caos en 30 segundos.» «ailensampo.com».\nSumá: sticker de link a ailensampo.com + música.",
+      "notas": "Grabado desde la versión del repo."
+    },
+    {
+      "id": "historia-video-calendario",
+      "semana": "s4",
+      "fecha": "2026-11-19",
+      "hora": "13:00",
+      "tipo": "historia",
+      "titulo": "Video del calendario: mi propio sistema",
+      "pilar": "3 · Detrás del sistema",
+      "estado": "listo",
+      "estadoTexto": "Listo · a mano, con música",
+      "imagenes": [
+        "img/video-calendario.jpg"
+      ],
+      "formato": "9:16",
+      "copy": "Video: video-calendario.mp4 (en tu Descargas).\nTextos ya incluidos: «Me armé mi propio calendario de contenido.» «Lo comparto con un link y mi equipo comenta ahí.» «Cada pieza con su fecha, su imagen y su texto.» «Lo que armo para mi negocio, lo puedo armar para el tuyo.»\nSumá: sticker de link a ailensampo.com + música.",
+      "notas": "Sin notas internas ni comentarios visibles."
     }
   ]
 }
