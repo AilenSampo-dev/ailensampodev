@@ -1,5 +1,5 @@
 {
-  "actualizado": "2026-11-04",
+  "actualizado": "2026-11-11",
   "semanas": [
     {
       "id": "s1",
@@ -222,14 +222,14 @@
     },
     {
       "id": "reel-mate",
-      "semana": "s2",
-      "fecha": "2026-11-08",
-      "hora": "19:00",
+      "semana": "banco",
+      "fecha": null,
+      "hora": null,
       "tipo": "reel",
       "titulo": "El mate (stop-motion)",
       "pilar": "3 · Detrás del sistema",
-      "estado": "listo",
-      "estadoTexto": "Falta: clips de flujos/reglas/pruebas + Nunito",
+      "estado": "falta",
+      "estadoTexto": "No salió · rearmar con zoom de cintura para arriba o descartar",
       "imagenes": [
         "img/reel-mate-1.png",
         "img/reel-mate-2.png",
@@ -240,25 +240,25 @@
       "formato": "9:16",
       "canva": "https://www.canva.com/d/P05zCOQNtQqwX3Q",
       "copy": "Textos en pantalla:\nAsí se ve construir un sistema.\nFlujos. Reglas. Pruebas. (con un clip corto de cada una, grabado en el entorno de prueba; si no, cambiar por lo que se ve en la toma)\nHoras de esto.\nPara que vos no tengas que hacerlo.\nQue tu negocio funcione mientras vos te dedicás a lo que importa.\n\nCaption:\nEsto es lo que no se ve de un sistema: horas de flujos, reglas y pruebas.\nLo hago yo para que vos no tengas que hacerlo.\nPara que los turnos, los cobros y los mensajes se resuelvan sin que estés encima.\nY vos te puedas dedicar a lo que importa.\n\n#sistemasamedida #emprendedorasargentinas #automatizacion #cordoba",
-      "notas": "Ajustes por comentario de Eliana. Caption por escribir."
+      "notas": "Ailén no quiere fotos donde se marque la cola con el jean."
     },
     {
       "id": "carrusel-3",
-      "semana": "s3",
-      "fecha": "2026-11-10",
-      "hora": "19:00",
+      "semana": "banco",
+      "fecha": null,
+      "hora": null,
       "tipo": "carrusel",
       "titulo": "Te lo demuestro #3 · Clientes que se pierden",
       "pilar": "1 · Nombrar lo invisible",
-      "estado": "listo",
-      "estadoTexto": "Listo · publicar a mano mar 19 h",
+      "estado": "falta",
+      "estadoTexto": "Descartado · la serie se sentía repetitiva",
       "imagenes": [
         "img/carrusel3-s1.png",
         "img/carrusel3-s2.png"
       ],
       "formato": "4:5",
       "copy": "Clientas que compraron una vez y no volvieron.\nNo porque no les gustó. Porque nadie se acordó de escribirles.\n\nEn un negocio chico eso depende de tu memoria. Y tu memoria está ocupada en mil cosas.\n\nUn sistema lo ordena así:\n→ Guarda cada compra: quién, qué y cuándo.\n→ Te avisa quién dejó de venir.\n→ Le escribe con tu tono, en el momento justo.\n\nLa clienta que vuelve vale más que la que tenés que salir a buscar.\n\nEs la tercera de la serie: cada semana, una tarea que roba tiempo y cómo se resuelve. La tuya la podés escribir en ailensampo.com.\n\n#sistemasamedida #emprendedorasargentinas #automatizacion #clientes #cordoba",
-      "notas": "Títulos de tarjetas en la tipografía del sitio (excepción de la serie).",
+      "notas": "Se deja la serie «Te lo demuestro». Los martes pasan a mostrar partes del sitio.",
       "canva": "https://www.canva.com/d/zQvD7Or1fQUQUkU"
     },
     {
@@ -296,15 +296,15 @@
       "semana": "s4",
       "fecha": "2026-11-17",
       "hora": "19:00",
-      "tipo": "carrusel",
-      "titulo": "Te lo demuestro #4 · Reuniones sin control",
+      "tipo": "reel",
+      "titulo": "Sitio: «Mandale un audio a tu sistema roto»",
       "pilar": "1 · Nombrar lo invisible",
       "estado": "en-proceso",
-      "estadoTexto": "Por armar",
+      "estadoTexto": "Por armar · pieza del sitio (botón Mandar audio)",
       "imagenes": [],
       "formato": "4:5",
       "copy": "",
-      "notas": ""
+      "notas": "Reemplaza el carrusel #4. La encuesta del 13/11 la alimenta."
     },
     {
       "id": "historias-sofia",
@@ -483,7 +483,7 @@
       "fecha": "2026-11-11",
       "hora": "13:00",
       "tipo": "historia",
-      "titulo": "Secuencia: detrás del reel del mate",
+      "titulo": "Historias detrás de escena",
       "pilar": "3 · Detrás del sistema",
       "estado": "listo",
       "estadoTexto": "Listo · a mano",
@@ -492,7 +492,7 @@
         "img/historias-mate-2.png"
       ],
       "formato": "9:16",
-      "copy": "Historia 1 (escritorio): «Así arranca cada sistema: mate, cuaderno y muchas preguntas.»\nHistoria 2 (tipeando): «Las horas de flujos y pruebas no se ven. Por eso después todo anda solo.»\nHistoria 3: repost del reel del mate + «Por si te lo perdiste 👇»",
+      "copy": "Historia 1 (escritorio): «Así arranca cada sistema: mate, cuaderno y muchas preguntas.»\nHistoria 2 (tipeando): «Las horas de flujos y pruebas no se ven. Por eso después todo anda solo.»\n(Sin repost: el reel del mate no salió.)",
       "notas": "2–3 historias ampliando el reel del domingo + repost.",
       "canva": "https://www.canva.com/d/3mJJCOea_kKkpLb"
     },
@@ -549,8 +549,8 @@
     },
     {
       "id": "historia-video-sitio",
-      "semana": "s3",
-      "fecha": "2026-11-12",
+      "semana": "s5",
+      "fecha": "2026-11-26",
       "hora": "13:00",
       "tipo": "historia",
       "titulo": "Video del sitio: Te lo demuestro",
@@ -580,6 +580,23 @@
       "formato": "9:16",
       "copy": "Video: video-calendario.mp4 (en tu Descargas).\nTextos ya incluidos: «Me armé mi propio calendario de contenido.» «Lo comparto con un link y mi equipo comenta ahí.» «Cada pieza con su fecha, su imagen y su texto.» «Lo que armo para mi negocio, lo puedo armar para el tuyo.»\nSumá: sticker de link a ailensampo.com + música.",
       "notas": "Sin notas internas ni comentarios visibles."
+    },
+    {
+      "id": "reel-juego",
+      "semana": "s3",
+      "fecha": "2026-11-12",
+      "hora": "19:00",
+      "tipo": "reel",
+      "titulo": "Sitio: el juego «Escapá del caos»",
+      "pilar": "1 · Nombrar lo invisible",
+      "estado": "listo",
+      "estadoTexto": "Listo · sumar música en IG",
+      "imagenes": [
+        "img/reel-juego.jpg"
+      ],
+      "formato": "9:16",
+      "copy": "Textos en pantalla:\n¿Cuánto aguantás un lunes sin sistema? / 30 segundos. Probalo.\nAsí se ve tu lunes: pedidos, WhatsApp, cobros, turnos…\n0 resueltas. 70 perdidas. / No es que trabajes mal.\nCon sistema: 70 resueltas, 0 minutos tuyos. / Jugalo en ailensampo.com\n\nCaption:\nArmé un juego en mi sitio: 30 segundos para resolver lo que te llega un lunes cualquiera.\nPedidos, WhatsApp, cobros, turnos. Todo a la vez.\n\nSpoiler: nadie gana. Y no es porque trabajes mal.\nEs porque nadie diseñó el sistema que tu negocio necesita.\n\nProbalo en ailensampo.com y contame cuántas perdiste.\n\n#sistemasamedida #emprendedorasargentinas #organizacion #cordoba",
+      "notas": "Video: reel-juego.mp4 (en tu Descargas). Reemplaza el carrusel #3."
     }
   ]
 }
