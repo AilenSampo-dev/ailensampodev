@@ -1,0 +1,51 @@
+---
+description: Hero + ticker sellados (desktop y mobile) — no modificar salvo pedido explícito
+alwaysApply: true
+---
+
+# Hero + ticker sellados (slide 01)
+
+Las secciones **hero** y **ticker** están validadas en **desktop y mobile**. **No las modifiques** salvo pedido explícito del usuario (ej. "cambiá el hero", "ajustá el ticker en mobile").
+
+## Archivos protegidos
+
+| Archivo | Qué no tocar |
+|---------|----------------|
+| `src/app/(site)/page.tsx` | Bloques `styles.hero` y `styles.tickerWrap`; constantes `TICKER_LEAD` / `TICKER_EMPHASIS` |
+| `src/app/(site)/page.module.css` | Todo el bloque SEALED: `.hero`, `.heroStatus`, `.scene`, `.windowLight`, `.windowDarkWrap`, `.warning`, `.admiracion`, `.tickerWrap` y sus `@media` |
+| `src/components/layout/Ticker.tsx` | Componente completo |
+| `src/components/layout/Ticker.module.css` | Estilos desktop + `@media (max-width: 640px)` |
+| `public/assets/recursos-graficos/face-admiracion-yellow.svg` | SVG amarillo `(!!)` del hero |
+| `public/assets/recursos-graficos/important.svg` | Triángulo `!` del hero |
+
+## Hero — reglas (desktop + mobile)
+
+- Ventana clara: wrapper `div.windowLight` > `WindowFrame` (nunca ancho en el frame).
+- Ventana oscura: wrapper `div.windowDarkWrap` > `WindowFrame`.
+- Íconos (`important.svg`, `face-admiracion-yellow.svg`) anclados a `windowDarkWrap`.
+- Badge "Disponible…": **solo mobile** (`.hero .heroStatus`); **desktop** solo en nav.
+- **Desktop:** scene ancho completo; ventanas con proporciones base (`left: 0` / `28%`).
+- **Mobile (≤640px):** scene centrada (`~20.5rem`, `margin-inline: auto`); ventanas `left: 5%` / `33%`; espacio status→ventanas `margin-bottom: 2.35rem`.
+- No mezclar estilos mobile en desktop ni viceversa al editar otras secciones.
+
+## Ticker — reglas (desktop + mobile)
+
+- Fondo naranja `#ff6437`; copy en dos partes (`lead` + `emphasis` en bold).
+- **Desktop:** texto en una línea (`white-space: nowrap`).
+- **Mobile (≤640px):** dos líneas (`lead` y `emphasis` en bloques separados); padding reducido.
+- No cambiar copy del ticker al trabajar otras secciones.
+
+## Fuera de alcance (otras secciones)
+
+`DemoBlock` / demo visual, `ChaosSection`, `ContactSection`, etc. **sí se pueden** modificar según reglas propias; el **diseño del demo** está en `.cursor/rules/demo-sealed.mdc`.
+
+## Referencia
+
+- Mockup: `notas_privadas/_mockupSitio/slides/1.png`
+- Checklist: `docs/revisiones/slide-01.md`
+
+## Si hay que cambiar algo
+
+1. Confirmar con el usuario qué bloque y breakpoint (desktop / mobile / ambos).
+2. Cambiar **solo** lo pedido; no refactorizar layout ni "mejorar" proporciones adyacentes.
+3. Verificar en PC y celu antes de dar por cerrado.

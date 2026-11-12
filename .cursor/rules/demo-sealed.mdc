@@ -1,0 +1,57 @@
+---
+description: Demo sellada (desktop y mobile) — no modificar salvo pedido explícito
+alwaysApply: true
+---
+
+# Demo sellada (slide 02)
+
+La sección **demo** está validada en **desktop y mobile**. **No la modifiques** salvo pedido explícito del usuario (ej. "cambiá las caritas", "ajustá el typewriter en mobile").
+
+## Archivos protegidos
+
+| Archivo | Qué no tocar |
+|---------|----------------|
+| `src/components/sections/DemoSection.tsx` | Componente completo (typewriter, caritas, form, tags) |
+| `src/components/sections/DemoSection.module.css` | Todo el archivo, incluidos `@media` |
+| `src/components/sections/DemoFaces.tsx` | SVGs + fases de guiño |
+| `src/components/sections/DemoFaces.module.css` | Animaciones de ojos |
+
+## Fuera de alcance (permitido editar)
+
+- `DemoBlock.tsx` — lógica `onGenerate` → `ArchitectureSection` (no es diseño visual del demo).
+- `ArchitectureSection` y secciones posteriores.
+
+## Layout — reglas (desktop + mobile)
+
+- Fondo lila `#e1adff` + grilla 26px.
+- Card lavanda `#f3e8ff` dentro de `cardStage` con padding fluido (`--face-gutter-*`).
+- **Caritas fuera del card**, en los gutters del stage (no superpuestas al violeta).
+- **Mobile:** carita abajo más separada del card; arriba más elevada.
+- **Desktop (≥640px):** carita abajo con `translateX` negativo ~`-1.08` a `-1.14`; arriba `right: 0` + `translateX` positivo ~`0.58`–`0.64`.
+- Franja amarilla `#faf26f` inclinada; en mobile el copy puede partir en dos líneas (`white-space: normal`, `max-width`).
+- **Los tags de tareas** viven en la sección Arquitectura unificada (`.cursor/rules/demo-sealed.mdc` no aplica ahí).
+
+## Typewriter — reglas
+
+- Copy banner: `¿Qué tarea te está robando tiempo hoy?`
+- Arranca al entrar en vista (`BannerTypewriter` + `useLayoutEffect` / observer).
+- Cursor violeta `#5c64f2` en banner; al terminar pasa al input vacío.
+- No reemplazar por CSS animation ni `setInterval` global.
+
+## Caritas — reglas
+
+- Abajo izq.: `DemoFaceWink`, `winkPhase="first"`.
+- Arriba der.: `DemoFaceNeutralWink`, `winkPhase="second"`.
+- Guiños **alternados** (delay 1.8s en la segunda).
+- Color `#faf9f7`; no achicar ni pegar al borde de pantalla sin pedido.
+
+## Referencia
+
+- Mockup: `notas_privadas/_mockupSitio/slides/2.png`
+- Checklist: `docs/revisiones/slide-02.md`
+
+## Si hay que cambiar algo
+
+1. Confirmar bloque y breakpoint (desktop / mobile / ambos).
+2. Cambiar **solo** lo pedido; no refactorizar layout adyacente.
+3. Verificar en PC y celu antes de dar por cerrado.

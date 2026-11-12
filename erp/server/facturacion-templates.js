@@ -20,6 +20,18 @@ export const FACTURACION_TEMPLATES = {
     mes: "2026-08",
     previewPath: "/facturacion/stockin-lavanda/2026-08/detalle-servicios.html",
   },
+  "stockin-lavanda-2026-09": {
+    archivo: "stockin-lavanda-2026-09.html",
+    titulo: "Licencia de uso — Mes 3",
+    mes: "2026-09",
+    previewPath: "/facturacion/stockin-lavanda/2026-09/detalle-servicios.html",
+  },
+  "stockin-lavanda-2026-10": {
+    archivo: "stockin-lavanda-2026-10.html",
+    titulo: "Licencia de uso — Mes 4",
+    mes: "2026-10",
+    previewPath: "/facturacion/stockin-lavanda/2026-10/detalle-servicios.html",
+  },
 };
 
 const cache = new Map();

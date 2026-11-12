@@ -1,0 +1,46 @@
+# Copiá este archivo a clientes/<cliente>/YYYY-MM/registro.yaml
+
+cliente:
+  slug: stockin-lavanda
+  razon_social: ""
+  cuit: ""
+
+periodo:
+  mes: YYYY-MM          # ej. 2026-09
+  servicio_desde: ""    # ej. 2026-07-01
+  servicio_hasta: ""    # ej. 2026-09-14
+  etapa: ""             # ej. Etapa 1 — Facturación en producción
+
+documento_detalle:
+  numero: ""            # ej. DS-2026-009
+  fecha_emision: ""
+  html: detalle-servicios.html
+  pdf: adjuntos/detalle-servicios.pdf
+  enviado_al_cliente: false
+  fecha_envio: ""
+
+importe:
+  moneda: USD
+  subtotal: null
+  iva: null             # null si monotributo / según tu condición
+  total: null
+  tipo_cambio_bna: null # si facturás en ARS
+  total_ars: null
+
+factura_fiscal:
+  emitida: false
+  tipo: ""              # A | B | C
+  punto_venta: null
+  numero: null
+  cae: ""
+  vencimiento_cae: ""
+  pdf: adjuntos/factura-cae.pdf
+
+pago:
+  estado: pendiente     # pendiente | pagado | parcial
+  fecha: ""
+  monto_cobrado: null
+  comprobantes:
+    - adjuntos/comprobante-pago.pdf
+
+notas: ""

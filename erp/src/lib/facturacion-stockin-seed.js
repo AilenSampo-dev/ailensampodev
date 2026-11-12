@@ -31,6 +31,36 @@ const STOCKIN_MESES = [
     },
     notas: "Elixio Coins: desarrollo bonificado USD 0 + licencia mes 2 USD 1.500. Resumen período USD 3.000.",
   },
+  {
+    mes: "2026-09",
+    etapa: "Licencia de uso — Mes 3 · ERP + Elixio Coins sep–oct 2026",
+    servicioDesde: "2026-09-05",
+    servicioHasta: "2026-10-13",
+    documentoDetalle: {
+      numero: "DS-2026-009",
+      templateKey: "stockin-lavanda-2026-09",
+    },
+    importe: {
+      moneda: "USD",
+      total: "1500",
+    },
+    notas: "Alcance nuevo (Calendario comercial, Tableros IT) bonificado USD 0 + Elixio Coins bonificado USD 0 + licencia mes 3 USD 1.500.",
+  },
+  {
+    mes: "2026-10",
+    etapa: "Licencia de uso — Mes 4 · ERP + Elixio Coins oct–nov 2026",
+    servicioDesde: "2026-10-01",
+    servicioHasta: "2026-11-12",
+    documentoDetalle: {
+      numero: "DS-2026-010",
+      templateKey: "stockin-lavanda-2026-10",
+    },
+    importe: {
+      moneda: "USD",
+      total: "1500",
+    },
+    notas: "Alcance nuevo bonificado USD 0 + Elixio Coins bonificado USD 0 + licencia mes 4 USD 1.500.",
+  },
 ];
 
 export function esClienteStockin(cliente) {
